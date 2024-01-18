@@ -112,4 +112,8 @@ public final class Constants {
   public static class ShooterConstants {
     public static final int k_shooterMotor = 0;
   }
+
+  public static class HolderConstants {
+    public static final int k_holdingMotor = 0;
+  }
 }

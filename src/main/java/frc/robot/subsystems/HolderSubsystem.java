@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class ShooterSubsystem extends SubsystemBase {
-  private CANSparkFlex m_motor = new CANSparkFlex(Constants.ShooterConstants.k_shooterMotor, MotorType.kBrushless);
+public class HolderSubsystem extends SubsystemBase {
+  private CANSparkFlex m_motor = new CANSparkFlex(Constants.HolderConstants.k_holdingMotor, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_motor.getEncoder();
 
   private final double k_f = .012;
@@ -25,7 +25,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private double m_velocity = 0;
   /** Creates a new FrontSubsystem. */
-  public ShooterSubsystem() {}
+  public HolderSubsystem() {}
 
   public void setPower(double power) {
     m_motor.set(power);
@@ -51,7 +51,7 @@ public class ShooterSubsystem extends SubsystemBase {
     double power = m_PID.calculate(currentVelocity, m_velocity);
     setPower(power + (k_f * m_velocity));
     
-    SmartDashboard.putNumber("Shooter Front Velo", currentVelocity);
-    SmartDashboard.putNumber("Shooter Target Front Velocity", m_velocity);
+    SmartDashboard.putNumber("Holder Front Velo", currentVelocity);
+    SmartDashboard.putNumber("Holder Target Front Velocity", m_velocity);
   }
 }

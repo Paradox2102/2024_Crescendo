@@ -25,14 +25,18 @@ public class PivotSubsystem extends SubsystemBase {
   private boolean m_PIDOn = false;
   private double m_setPoint = Constants.ArmConstants.k_armStartingPos;
 
-  private CANSparkFlex m_armMotor = new CANSparkFlex(Constants.ArmConstants.k_ArmMotor, MotorType.kBrushless);
+  private CANSparkFlex m_armMotor = new CANSparkFlex(Constants.ArmConstants.k_armMotor, MotorType.kBrushless);
   RelativeEncoder m_armEncoder = m_armMotor.getEncoder();
 
   /** Creates a new PivotSubsystem. */
   public PivotSubsystem() {
     m_armMotor.restoreFactoryDefaults();
-    m_armMotor.setIdleMode(IdleMode.kBrake);
+    setBrakeMode(true);
     m_armEncoder.setPosition(Constants.ArmConstants.k_armStartingPos);
+  }
+
+  public void setBrakeMode(boolean brake) {
+    m_armMotor.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
   }
 
   public void setPower(double power) {

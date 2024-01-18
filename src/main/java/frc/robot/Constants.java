@@ -17,6 +17,9 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  public static boolean m_allianceRed = true;
+
+
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }

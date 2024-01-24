@@ -10,6 +10,8 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -26,13 +28,12 @@ public class PivotSubsystem extends SubsystemBase {
   private double m_setPoint = Constants.ArmConstants.k_armStartingPos;
 
   private CANSparkFlex m_armMotor = new CANSparkFlex(Constants.ArmConstants.k_armMotor, MotorType.kBrushless);
-  RelativeEncoder m_armEncoder = m_armMotor.getEncoder();
+  DutyCycleEncoder m_armEncoder = new DutyCycleEncoder(0);
 
   /** Creates a new PivotSubsystem. */
   public PivotSubsystem() {
     m_armMotor.restoreFactoryDefaults();
     setBrakeMode(true);
-    m_armEncoder.setPosition(Constants.ArmConstants.k_armStartingPos);
   }
 
   public void setBrakeMode(boolean brake) {
@@ -49,8 +50,12 @@ public class PivotSubsystem extends SubsystemBase {
     m_setPoint = angle;
   }
 
+  private double getRawAngle() {
+    return m_armEncoder.getAbsolutePosition();
+  }
+
   private double getAngleInDegrees() {
-    return m_armEncoder.getPosition() * Constants.ArmConstants.k_armTicksToDegrees;
+    return m_armEncoder.getAbsolutePosition() * Constants.ArmConstants.k_armTicksToDegrees;
   }
 
   private double setFterm(double angle) {
@@ -62,6 +67,7 @@ public class PivotSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Raw Encoder Value", getAngleInDegrees());
     if(m_PIDOn){
       m_power = setFterm(m_setPoint) + m_PID.calculate(getAngleInDegrees(), m_setPoint);
     }

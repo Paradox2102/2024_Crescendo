@@ -5,7 +5,6 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkFlex;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -13,19 +12,21 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.ApriltagsCamera.Logger;
 import frc.robot.Constants;
+import frc.robot.ParadoxField;
 
 public class PivotSubsystem extends SubsystemBase {
   private double m_power;
-  private double m_targetAngleInDegrees = 0;
+  // private double m_targetAngleInDegrees = 0;
 
-  private static final double k_f = 0;
-  private static final double k_p = 0;
+  private static final double k_f = 0.01567;
+  private static final double k_p = 0.00124878;
   private static final double k_i = 0;
   private static final double k_d = 0;
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
   private boolean m_PIDOn = false;
-  private double m_setPoint = Constants.ArmConstants.k_armStartingPos;
+  private double m_setPoint = 0;
 
   private CANSparkFlex m_armMotor = new CANSparkFlex(Constants.ArmConstants.k_armMotor, MotorType.kBrushless);
   DutyCycleEncoder m_armEncoder = new DutyCycleEncoder(0);
@@ -55,22 +56,25 @@ public class PivotSubsystem extends SubsystemBase {
   }
 
   private double getAngleInDegrees() {
-    return m_armEncoder.getAbsolutePosition() * Constants.ArmConstants.k_armTicksToDegrees;
+    return ParadoxField.normalizeAngle(m_armEncoder.getAbsolutePosition()*  Constants.ArmConstants.k_armTicksToDegrees - Constants.ArmConstants.k_armZeroAngle);
   }
 
-  private double setFterm(double angle) {
-    m_targetAngleInDegrees = angle;
-    double fTerm = (-k_f * Math.sin(Math.toRadians(m_targetAngleInDegrees)));
-    return fTerm;
-  }
+  // private double setFterm(double angle) {
+  //   m_targetAngleInDegrees = angle;
+  //   double fTerm = (-k_f * Math.sin(Math.toRadians(m_targetAngleInDegrees)));
+  //   return fTerm;
+  // }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Raw Encoder Value", getAngleInDegrees());
+    SmartDashboard.putNumber("Raw Encoder Value", getRawAngle());
+    SmartDashboard.putNumber("Angle in Degrees", getAngleInDegrees());
     if(m_PIDOn){
-      m_power = setFterm(m_setPoint) + m_PID.calculate(getAngleInDegrees(), m_setPoint);
+      m_power = m_PID.calculate(getAngleInDegrees(), m_setPoint);
     }
+    SmartDashboard.putNumber("Power", m_power);
+    // SmartDashboard.putNumber("F Term", setFterm(m_setPoint));
     m_armMotor.set(m_power);
   }
 }

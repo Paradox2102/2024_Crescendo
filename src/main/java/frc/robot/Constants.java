@@ -106,9 +106,9 @@ public final class Constants {
   }
 
   public static class ArmConstants {
-    public static final int k_armMotor = 0;
-    public static final double k_armStartingPos = 0;
-    public static final double k_armTicksToDegrees = 1;
+    public static final int k_armMotor = 9;
+    public static final double k_armZeroAngle = 97.63;
+    public static final double k_armTicksToDegrees = 90/0.76;
   }
 
   public static class ShooterConstants {

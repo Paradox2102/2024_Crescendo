@@ -132,18 +132,17 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    SmartDashboard.putNumber("ATurn FR", (m_frontRight.getAngleRadians()));///Math.PI);
-    SmartDashboard.putNumber("ATurn FL", m_frontLeft.getAngleRadians());// - (Math.PI / 2)) / Math.PI);
-    SmartDashboard.putNumber("ATurn BR", m_backRight.getAngleRadians());// + (Math.PI / 2)) / Math.PI);
-    SmartDashboard.putNumber("ATurn BL", m_backLeft.getAngleRadians());// + (Math.PI)) / Math.PI);
-    SmartDashboard.putNumber("Pose Est X", (m_tracker.getPose2dFRC().getTranslation().getX()));
-    SmartDashboard.putNumber("Pose Est Y", (m_tracker.getPose2dFRC().getTranslation().getY()));
-    SmartDashboard.putNumber("Pose Est Rot", (m_tracker.getPose2dFRC().getRotation().getDegrees()));
-    // System.out.println(m_tracker.getPose2dFRC().getRotation().getDegrees());
+    SmartDashboard.putNumber("Turn FR", (m_frontRight.getAngleRadians()));///Math.PI);
+    SmartDashboard.putNumber("Turn FL", m_frontLeft.getAngleRadians());// - (Math.PI / 2)) / Math.PI);
+    SmartDashboard.putNumber("Turn BR", m_backRight.getAngleRadians());// + (Math.PI / 2)) / Math.PI);
+    SmartDashboard.putNumber("Turn BL", m_backLeft.getAngleRadians());// + (Math.PI)) / Math.PI);
+    // SmartDashboard.putNumber("Pose Est X", (m_tracker.getPose2dFRC().getTranslation().getX()));
+    // SmartDashboard.putNumber("Pose Est Y", (m_tracker.getPose2dFRC().getTranslation().getY()));
+    // SmartDashboard.putNumber("Pose Est Rot", (m_tracker.getPose2dFRC().getRotation().getDegrees()));
+    SmartDashboard.putNumber("PIgeon2", m_gyro.getAngle());
 
-
-    m_tracker.update(m_frontCamera, m_backCamera);
-    m_field.setRobotPose(m_tracker.getPose2dFRC().getTranslation().getX(), m_tracker.getPose2dFRC().getTranslation().getY(), m_tracker.getPose2dFRC().getRotation());
+    // m_tracker.update(m_frontCamera, m_backCamera);
+    // m_field.setRobotPose(m_tracker.getPose2dFRC().getTranslation().getX(), m_tracker.getPose2dFRC().getTranslation().getY(), m_tracker.getPose2dFRC().getRotation());
   }
 
   /**

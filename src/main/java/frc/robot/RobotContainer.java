@@ -4,9 +4,12 @@
 
 package frc.robot;
 
+import frc.ApriltagsCamera.ApriltagsCamera;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -21,6 +24,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem(new ApriltagsCamera(0, 0, 0), new ApriltagsCamera(0, 0, 0));
+
+
+  private final CommandXboxController m_xbox = new CommandXboxController(0);
+  public final PositionTrackerPose m_tracker = new PositionTrackerPose(0, 0, m_driveSubsystem);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -30,6 +38,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+    m_driveSubsystem.setTracker(m_tracker);
   }
 
   /**
@@ -43,8 +52,12 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+     m_driveSubsystem.setDefaultCommand(new ArcadeDrive(
+        m_driveSubsystem, 
+        () -> m_xbox.getLeftX(), 
+        () -> m_xbox.getLeftY(),
+        () -> m_xbox.getRightX()
+      ));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.

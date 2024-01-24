@@ -25,22 +25,24 @@ public final class Constants {
   }
 
   public static class DriveConstants {
-    public static final int k_FRDriveMotor = 0; 
-    public static final int k_FLDriveMotor = 0;
-    public static final int k_BRDriveMotor = 0;
-    public static final int k_BLDriveMotor = 0;
+    public static final int k_FRTurningMotor = 4; 
+    public static final int k_FLTurningMotor = 2;
+    public static final int k_BRTurningMotor = 6;
+    public static final int k_BLTurningMotor = 8;
 
-    public static final int k_FRTurningMotor = 0;
-    public static final int k_FLTurningMotor = 0;
-    public static final int k_BRTurningMotor = 0;
-    public static final int k_BLTurningMotor = 0;
+    public static final int k_FRDriveMotor = 3;
+    public static final int k_FLDriveMotor = 1;
+    public static final int k_BRDriveMotor = 5;
+    public static final int k_BLDriveMotor = 7;
+
+    public static final double k_driveDeadband = 0.1;
 
     public static final double k_driveRadius = .475953574;
 
-    public static final double k_FLOffset = 0 - (Math.PI / 2);
-    public static final double k_FROffset = 0;
-    public static final double k_BLOffset = 0 +(Math.PI);
-    public static final double k_BROffset = 0 + (Math.PI / 2);
+    public static final double k_FLOffset = 1.67 - (Math.PI / 2);
+    public static final double k_FROffset = 2.21;
+    public static final double k_BLOffset = 2.25 +(Math.PI);
+    public static final double k_BROffset = 5.12 + (Math.PI / 2);
 
     public static final int k_drivingMotorPinionTeeth = 14;
 

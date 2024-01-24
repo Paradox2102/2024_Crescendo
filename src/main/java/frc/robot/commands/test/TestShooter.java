@@ -19,7 +19,8 @@ public class TestShooter extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setVelocityRPM(200);
+    // m_subsystem.setVelocityRPM(200);
+    m_subsystem.setPower(.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -29,6 +30,7 @@ public class TestShooter extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_subsystem.stop();
     m_subsystem.stop();
   }
 

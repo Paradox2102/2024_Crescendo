@@ -139,7 +139,7 @@ public class DriveSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("Pose Est X", (m_tracker.getPose2dFRC().getTranslation().getX()));
     // SmartDashboard.putNumber("Pose Est Y", (m_tracker.getPose2dFRC().getTranslation().getY()));
     // SmartDashboard.putNumber("Pose Est Rot", (m_tracker.getPose2dFRC().getRotation().getDegrees()));
-    SmartDashboard.putNumber("PIgeon2", m_gyro.getAngle());
+    SmartDashboard.putNumber("Pigeon2", m_gyro.getYaw().getValueAsDouble());
 
     // m_tracker.update(m_frontCamera, m_backCamera);
     // m_field.setRobotPose(m_tracker.getPose2dFRC().getTranslation().getX(), m_tracker.getPose2dFRC().getTranslation().getY(), m_tracker.getPose2dFRC().getRotation());

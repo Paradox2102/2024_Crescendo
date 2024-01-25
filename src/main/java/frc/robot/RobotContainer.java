@@ -11,6 +11,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ManualPivotCommand;
 import frc.robot.commands.test.TestPivot;
+import frc.robot.commands.test.TestPivotPID;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
@@ -68,7 +69,7 @@ public class RobotContainer {
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_driverController.leftBumper().whileTrue(new ManualPivotCommand(m_pivotSubsystem, 0.25));
     m_driverController.rightBumper().whileTrue(new ManualPivotCommand(m_pivotSubsystem, -0.25));
-    m_driverController.x().onTrue(new TestPivot(m_pivotSubsystem, 30));
+    m_driverController.x().toggleOnTrue(new TestPivotPID(m_pivotSubsystem));
   }
 
   /**

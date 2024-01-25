@@ -20,11 +20,12 @@ public class PivotSubsystem extends SubsystemBase {
   private double m_power;
   // private double m_targetAngleInDegrees = 0;
 
-  private static final double k_f = 0.01567;
-  private static final double k_p = 0.002;
-  private static final double k_i = 0;
+  private final double k_outwardFF = -0.015;
+  private final double k_inwardFF = 0.015;
+  private static final double k_p = 0.015;
+  private static final double k_i = 0.035;
   private static final double k_d = 0;
-  private static final double k_deadzone = 0.5;
+  private static final double k_iZone = 6;
   private static final double k_holdPower = 0;
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
   private boolean m_PIDOn = false;
@@ -37,6 +38,8 @@ public class PivotSubsystem extends SubsystemBase {
   public PivotSubsystem() {
     m_armMotor.restoreFactoryDefaults();
     setBrakeMode(true);
+    m_armEncoder.setPositionOffset(-0.8);
+    m_PID.setIZone(k_iZone);
   }
 
   public void setBrakeMode(boolean brake) {
@@ -72,16 +75,26 @@ public class PivotSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Raw Encoder Value", getRawAngle());
     SmartDashboard.putNumber("Angle in Degrees", getAngleInDegrees());
+    double FF;
+    double pid;
+    double angle = getAngleInDegrees();
+    if (angle < 25) {
+      FF = k_inwardFF;
+    } else if (angle > 45) {
+      FF = k_outwardFF;
+    } else {
+      FF = 0;
+    }
     if(m_PIDOn){
-      if (Math.abs(getAngleInDegrees() - m_setPoint) >= k_deadzone){
-      m_power = -m_PID.calculate(getAngleInDegrees(), m_setPoint);
-      } else {
-      m_power = k_holdPower * Math.signum(-m_PID.calculate(getAngleInDegrees(), m_setPoint));
-      }
+      pid = m_PID.calculate(angle, m_setPoint);
+      m_power = FF + pid;
+    } else {
+      pid = 0;
     }
     SmartDashboard.putNumber("Power", m_power);
     SmartDashboard.putNumber("Calculated Error", Math.abs(getAngleInDegrees() - m_setPoint));
     SmartDashboard.putNumber("Set Point", m_setPoint);
+    SmartDashboard.putNumber("Pivot PID", pid);
     m_armMotor.set(m_power);
   }
 }

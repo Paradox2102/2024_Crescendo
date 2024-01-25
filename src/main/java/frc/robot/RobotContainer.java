@@ -11,6 +11,8 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ManualPivotCommand;
 import frc.robot.commands.test.TestPivot;
+import frc.robot.commands.test.TestPivotPID;
+import frc.robot.commands.test.TestShooter;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.PivotSubsystem;

@@ -68,7 +68,7 @@ public class RobotContainer {
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_driverController.leftBumper().whileTrue(new ManualPivotCommand(m_pivotSubsystem, 0.25));
     m_driverController.rightBumper().whileTrue(new ManualPivotCommand(m_pivotSubsystem, -0.25));
-    m_driverController.x().onTrue(new TestPivot(m_pivotSubsystem));
+    m_driverController.x().onTrue(new TestPivot(m_pivotSubsystem, 30));
   }
 
   /**

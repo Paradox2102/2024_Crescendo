@@ -12,15 +12,17 @@ import frc.robot.subsystems.PivotSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TestPivot extends InstantCommand {
   PivotSubsystem m_subsystem;
-  public TestPivot(PivotSubsystem subsystem) {
+  private double m_angle;
+  public TestPivot(PivotSubsystem subsystem, double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_subsystem = subsystem;
+    m_angle = angle;
     addRequirements(m_subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setPosition(30);
+    m_subsystem.setPosition(-m_angle);
   }
 }

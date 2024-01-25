@@ -112,7 +112,7 @@ public final class Constants {
   }
 
   public static class ShooterConstants {
-    public static final int k_shooterMotor = 11;
+    public static final int k_shooterMotor = 10;
   }
 
   public static class HolderConstants {

@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -17,15 +18,19 @@ public class ShooterSubsystem extends SubsystemBase {
   private CANSparkFlex m_motor = new CANSparkFlex(Constants.ShooterConstants.k_shooterMotor, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_motor.getEncoder();
 
-  private final double k_p = .00025;
-  private final double k_i = 0;
+  private final double k_p = .00007;
+  private final double k_i = .001;
   private final double k_d = 0;
-  private final double k_deadZone = 100;
+  private final double k_iZone = 100;
+  private final double k_deadZone = 20;
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
 
   private double m_velocity = 0;
   /** Creates a new FrontSubsystem. */
-  public ShooterSubsystem() {}
+  public ShooterSubsystem() {
+    setBrakeMode(true);
+    m_PID.setIZone(k_iZone);
+  }
 
   public void setPower(double power) {
     m_motor.set(power);
@@ -37,6 +42,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public double getVelocityRPM() {
     return m_encoder.getVelocity();
+  }
+
+  public void setBrakeMode(boolean brake) {
+    m_motor.setIdleMode(IdleMode.kBrake);
   }
 
   public void stop() {
@@ -51,13 +60,10 @@ public class ShooterSubsystem extends SubsystemBase {
     
     double power = m_PID.calculate(currentVelocity, m_velocity);
     boolean intaking = m_velocity > 0;
-    if (F + power < k_deadZone){
-      setPower(F);
-    } else {
-      setPower(F + power);
-    }
+    setPower(F + power);
     
     SmartDashboard.putNumber("Shooter Front Velo", currentVelocity);
     SmartDashboard.putNumber("Shooter Target Front Velocity", m_velocity);
+    SmartDashboard.putNumber("Shooter Power", F + power);
   }
 }

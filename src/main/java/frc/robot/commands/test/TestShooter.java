@@ -19,7 +19,7 @@ public class TestShooter extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setVelocityRPM(500);
+    m_subsystem.setVelocityRPM(1500);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

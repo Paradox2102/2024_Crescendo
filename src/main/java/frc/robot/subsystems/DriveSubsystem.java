@@ -72,17 +72,17 @@ public class DriveSubsystem extends SubsystemBase {
         new Translation2d(-.33655, .33655),
         new Translation2d(-.33655, -.33655));
 
-    PositionTrackerPose m_tracker = null;
+    PositionTrackerPose m_tracker;
     ApriltagsCamera m_frontCamera;
     ApriltagsCamera m_backCamera;
 
   /** Creates a new DriveSubsystem. */
-  public DriveSubsystem(ApriltagsCamera frontCamera, ApriltagsCamera backCamera) {
+  public DriveSubsystem() {
     m_gyro.reset();
     SmartDashboard.putData("Field", m_field);
 
-    m_frontCamera = frontCamera;
-    m_backCamera = backCamera;
+    // m_frontCamera = frontCamera;
+    // m_backCamera = backCamera;
 
     AutoBuilder.configureHolonomic(
       this::getPose, 
@@ -141,9 +141,9 @@ public class DriveSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("Pose Est Rot", (m_tracker.getPose2dFRC().getRotation().getDegrees()));
     SmartDashboard.putNumber("Pigeon2", m_gyro.getYaw().getValueAsDouble());
     SmartDashboard.putNumber("Gyro Rotation2D", getGyroRotation2d().getDegrees());
-    SmartDashboard.putNumber("Tracker Rotation2D", m_tracker.getPose2d().getRotation().getDegrees());
+    SmartDashboard.putNumber("Tracker Rotation2D", m_tracker.getPose2dFRC().getRotation().getDegrees());
 
-    // m_tracker.update(m_frontCamera, m_backCamera);
+    m_tracker.update(m_frontCamera, m_backCamera);
     // m_field.setRobotPose(m_tracker.getPose2dFRC().getTranslation().getX(), m_tracker.getPose2dFRC().getTranslation().getY(), m_tracker.getPose2dFRC().getRotation());
   }
 

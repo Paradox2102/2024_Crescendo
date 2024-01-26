@@ -120,6 +120,6 @@ public final class Constants {
   }
 
   public static class HolderConstants {
-    public static final int k_holdingMotor = 0;
+    public static final int k_holdingMotor = 10;
   }
 }

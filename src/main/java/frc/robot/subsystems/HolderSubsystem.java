@@ -18,15 +18,17 @@ public class HolderSubsystem extends SubsystemBase {
   private CANSparkFlex m_motor = new CANSparkFlex(Constants.HolderConstants.k_holdingMotor, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_motor.getEncoder();
 
-  private final double k_f = .012;
-  private final double k_p = 0;
-  private final double k_i = 0;
+  private final double k_p = .00008;
+  private final double k_i = .0026;
   private final double k_d = 0;
+  private final double k_iZone = 100;
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
 
   private double m_velocity = 0;
   /** Creates a new FrontSubsystem. */
-  public HolderSubsystem() {}
+  public HolderSubsystem() {
+    m_PID.setIZone(k_iZone);
+  }
 
   public void setPower(double power) {
     m_motor.set(power);
@@ -53,8 +55,9 @@ public class HolderSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     double currentVelocity = getVelocityRPM();
     
+    double F = m_velocity / 5000.0;
     double power = m_PID.calculate(currentVelocity, m_velocity);
-    setPower(power + (k_f * m_velocity));
+    setPower(F + power);
     
     SmartDashboard.putNumber("Holder Front Velo", currentVelocity);
     SmartDashboard.putNumber("Holder Target Front Velocity", m_velocity);

@@ -15,6 +15,7 @@ import frc.robot.commands.test.TestPivotPID;
 import frc.robot.commands.test.TestShooter;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.HolderSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -33,6 +34,7 @@ public class RobotContainer {
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  private final HolderSubsystem m_holderSubsystem = new HolderSubsystem();
 
 
   private final CommandXboxController m_xbox = new CommandXboxController(0);
@@ -69,9 +71,8 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().toggleOnTrue(new TestShooter(m_shooterSubsystem));
-    m_driverController.leftBumper().whileTrue(new ManualPivotCommand(m_pivotSubsystem, 0.25));
-    m_driverController.rightBumper().whileTrue(new ManualPivotCommand(m_pivotSubsystem, -0.25));
+    m_driverController.rightTrigger().whileTrue(new TestShooter(m_shooterSubsystem, m_holderSubsystem, false));
+    m_driverController.leftTrigger().whileTrue(new TestShooter(m_shooterSubsystem, m_holderSubsystem, true));
     m_driverController.x().toggleOnTrue(new TestPivotPID(m_pivotSubsystem));
   }
 

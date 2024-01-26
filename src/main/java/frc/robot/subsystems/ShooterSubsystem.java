@@ -22,7 +22,6 @@ public class ShooterSubsystem extends SubsystemBase {
   private final double k_i = .002;
   private final double k_d = 0;
   private final double k_iZone = 150;
-  private final double k_deadZone = 20;
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
 
   private double m_velocity = 0;

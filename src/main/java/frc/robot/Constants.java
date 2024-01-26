@@ -9,23 +9,26 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean
+ * constants. This class should not be used for any other purpose. All constants
+ * should be declared
  * globally (i.e. public static). Do not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
   public static boolean m_allianceRed = true;
-
 
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
 
   public static class DriveConstants {
-    public static final int k_FRTurningMotor = 4; 
+    public static final int k_FRTurningMotor = 4;
     public static final int k_FLTurningMotor = 2;
     public static final int k_BRTurningMotor = 6;
     public static final int k_BLTurningMotor = 8;
@@ -41,7 +44,7 @@ public final class Constants {
 
     public static final double k_FLOffset = 1.67 - (Math.PI / 2);
     public static final double k_FROffset = 2.21;
-    public static final double k_BLOffset = 2.25 +(Math.PI);
+    public static final double k_BLOffset = 2.25 + (Math.PI);
     public static final double k_BROffset = 5.12 + (Math.PI / 2);
 
     public static final int k_drivingMotorPinionTeeth = 14;
@@ -53,7 +56,8 @@ public final class Constants {
 
     public static final double k_driveTicksToMetersVelocity = ((k_wheelDiameterMeters * Math.PI)
         / k_drivingMotorReduction) / 60.0;
-    public static final double k_driveTicksToMetersPosition = (k_wheelDiameterMeters * Math.PI) / k_drivingMotorReduction;
+    public static final double k_driveTicksToMetersPosition = (k_wheelDiameterMeters * Math.PI)
+        / k_drivingMotorReduction;
     public static final double k_turnTicksToDegreesVelocity = (2 * Math.PI) / 60.0;
     public static final double k_turnTicksToRadiansPosition = (2 * Math.PI);
 
@@ -68,41 +72,41 @@ public final class Constants {
     public static final double k_driveWheelFreeSpeedRps = (k_drivingMotorFreeSpeedRps * k_wheelCircumferenceMeters)
         / k_drivingMotorReduction;
 
-  // Swerve Module Drive PID
-  public static final double k_driveP = 0.04;
-  public static final double k_driveI = 0;
-  public static final double k_driveD = 0;
-  public static final double k_driveFF = 1 / k_driveWheelFreeSpeedRps;
-  public static final double k_drivingMinOutput = -1;
-  public static final double k_drivingMaxOutput = 1;
+    // Swerve Module Drive PID
+    public static final double k_driveP = 0.04;
+    public static final double k_driveI = 0;
+    public static final double k_driveD = 0;
+    public static final double k_driveFF = 1 / k_driveWheelFreeSpeedRps;
+    public static final double k_drivingMinOutput = -1;
+    public static final double k_drivingMaxOutput = 1;
 
-  // Swerve Module Turn PID
-  public static final double k_turnP = 1;
-  public static final double k_turnI = 0;
-  public static final double k_turnD = 0;
-  public static final double k_turnFF = 0;
-  public static final double k_turningMinOutput = -1;
-  public static final double k_turningMaxOutput = 1;
+    // Swerve Module Turn PID
+    public static final double k_turnP = 1;
+    public static final double k_turnI = 0;
+    public static final double k_turnD = 0;
+    public static final double k_turnFF = 0;
+    public static final double k_turningMinOutput = -1;
+    public static final double k_turningMaxOutput = 1;
 
-  public static final int k_driveMotorCurrentLimit = 50; // amps
-  public static final int k_turnMotorCurrentLimit = 20; // amps
+    public static final int k_driveMotorCurrentLimit = 50; // amps
+    public static final int k_turnMotorCurrentLimit = 20; // amps
 
-  // Driving Constants
-  public static final double k_maxSpeedMetersPerSecond = 4.8;
-  public static final double k_maxDriveAcceleration = 3;
-  public static final double k_maxAngularSpeed = Math.PI; // radians per second
-  public static final double k_maxAngularAcceleration = Math.PI;
+    // Driving Constants
+    public static final double k_maxSpeedMetersPerSecond = 4.8;
+    public static final double k_maxDriveAcceleration = 3;
+    public static final double k_maxAngularSpeed = Math.PI; // radians per second
+    public static final double k_maxAngularAcceleration = Math.PI;
 
-  public static final double k_directionSlewRate = 3; // radians per second
-  public static final double k_magnitudeSlewRate = 3.25; // percent per second (1 = 100%)
-  public static final double k_rotationalSlewRate = 3; // percent per second (1 = 100%)
+    public static final double k_directionSlewRate = 3; // radians per second
+    public static final double k_magnitudeSlewRate = 3.25; // percent per second (1 = 100%)
+    public static final double k_rotationalSlewRate = 3; // percent per second (1 = 100%)
 
-  public static final SwerveModuleState[] k_defaultState = {
-      new SwerveModuleState(0, new Rotation2d(Math.PI / 4)),
-      new SwerveModuleState(0, new Rotation2d(3 * Math.PI / 4)),
-      new SwerveModuleState(0, new Rotation2d(3 * Math.PI / 4)),
-      new SwerveModuleState(0, new Rotation2d(Math.PI / 4))
-  };
+    public static final SwerveModuleState[] k_defaultState = {
+        new SwerveModuleState(0, new Rotation2d(Math.PI / 4)),
+        new SwerveModuleState(0, new Rotation2d(3 * Math.PI / 4)),
+        new SwerveModuleState(0, new Rotation2d(3 * Math.PI / 4)),
+        new SwerveModuleState(0, new Rotation2d(Math.PI / 4))
+    };
   }
 
   public static class ArmConstants {

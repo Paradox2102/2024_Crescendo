@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -29,6 +30,10 @@ public class HolderSubsystem extends SubsystemBase {
 
   public void setPower(double power) {
     m_motor.set(power);
+  }
+
+  public void setBrakeMode(boolean brake) {
+    m_motor.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
   }
 
   public void setVelocityRPM(double velocity) {

@@ -92,8 +92,8 @@ public class PositionTrackerPose {
 			m_driveSubsystem.getModulePosition()
 		);
 		if (!DriverStation.isAutonomous()) {
-			frontCamera.processRegions(m_poseEstimator);
-			rearCamera.processRegions(m_poseEstimator);
+			// frontCamera.processRegions(m_poseEstimator);
+			// rearCamera.processRegions(m_poseEstimator);
 		}
 
 		Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();

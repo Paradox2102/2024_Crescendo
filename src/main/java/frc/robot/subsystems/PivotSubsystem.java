@@ -60,7 +60,7 @@ public class PivotSubsystem extends SubsystemBase {
     return m_armEncoder.getAbsolutePosition();
   }
 
-  private double getAngleInDegrees() {
+  public double getAngleInDegrees() {
     return ParadoxField.normalizeAngle(m_armEncoder.getAbsolutePosition()*  Constants.ArmConstants.k_armTicksToDegrees - Constants.ArmConstants.k_armZeroAngle);
   }
 

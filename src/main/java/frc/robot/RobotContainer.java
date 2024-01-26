@@ -10,6 +10,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ManualPivotCommand;
+import frc.robot.commands.test.D2Intake;
 import frc.robot.commands.test.TestPivot;
 import frc.robot.commands.test.TestPivotPID;
 import frc.robot.commands.test.TestShooter;
@@ -19,6 +20,7 @@ import frc.robot.subsystems.HolderSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -38,6 +40,7 @@ public class RobotContainer {
 
 
   private final CommandXboxController m_xbox = new CommandXboxController(0);
+  private final CommandJoystick m_joystick = new CommandJoystick(1);
   public final PositionTrackerPose m_tracker = new PositionTrackerPose(0, 0, m_driveSubsystem);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -71,9 +74,16 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.rightTrigger().whileTrue(new TestShooter(m_shooterSubsystem, m_holderSubsystem, false));
-    m_driverController.leftTrigger().whileTrue(new TestShooter(m_shooterSubsystem, m_holderSubsystem, true));
+    m_driverController.rightTrigger().whileTrue(new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, false));
+    m_driverController.leftTrigger().whileTrue(new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, true));
     m_driverController.x().toggleOnTrue(new TestPivotPID(m_pivotSubsystem));
+
+    m_joystick.button(1).whileTrue(new D2Intake(m_shooterSubsystem, m_holderSubsystem, false));
+    m_joystick.button(2).whileTrue(new D2Intake(m_shooterSubsystem, m_holderSubsystem, true));
+  }
+
+  public double getThrottle() {
+    return m_joystick.getThrottle();
   }
 
   /**

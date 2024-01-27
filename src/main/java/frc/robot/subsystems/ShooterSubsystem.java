@@ -18,10 +18,10 @@ public class ShooterSubsystem extends SubsystemBase {
   private CANSparkFlex m_motor = new CANSparkFlex(Constants.ShooterConstants.k_shooterMotor, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_motor.getEncoder();
 
-  private final double k_p = .0002;
-  private final double k_i = .002;
+  private final double k_p = .0005; // .0004
+  private final double k_i = .0003;// .002
   private final double k_d = 0;
-  private final double k_iZone = 150;
+  private final double k_iZone = 200;
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
 
   private double m_velocity = 0;
@@ -55,15 +55,20 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     double currentVelocity = getVelocityRPM();
-    double F = m_velocity / 5000.0;
+    double F = m_velocity / 5250.0;
+    double finalPower;
     
     double power = m_PID.calculate(currentVelocity, m_velocity);
-    boolean intaking = m_velocity > 0;
-    setPower(F + power);
+    if (m_velocity == 0) {
+      finalPower = 0;
+    } else {
+      finalPower = F + power;
+    }
+    setPower(finalPower);
     
     SmartDashboard.putNumber("Shooter Front Velo", currentVelocity);
     SmartDashboard.putNumber("Shooter Target Front Velocity", m_velocity);
-    SmartDashboard.putNumber("Shooter Power", F + power);
+    SmartDashboard.putNumber("Shooter Power", finalPower);
     SmartDashboard.putBoolean("Shoot Speaker", Constants.k_speaker);
   }
 }

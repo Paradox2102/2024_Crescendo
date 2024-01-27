@@ -129,7 +129,7 @@ public final class Constants {
   public static class HolderConstants {
     public static final int k_holdingMotor = 10;
     public static final double k_intakeVelocityRPM = -500;
-    public static final double k_speakerVelocityRPM = 3000;
+    public static final double k_speakerVelocityRPM = 3500;
     public static final double k_ampVelocityRPM = 1000;
   }
 

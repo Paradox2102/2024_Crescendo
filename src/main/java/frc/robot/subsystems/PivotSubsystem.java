@@ -27,6 +27,7 @@ public class PivotSubsystem extends SubsystemBase {
   private static final double k_d = 0;
   private static final double k_iZone = 6;
   private static final double k_holdPower = 0;
+  private static final double k_deadzone = .5;
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
   private boolean m_PIDOn = false;
   private double m_setPoint = 0;
@@ -85,12 +86,12 @@ public class PivotSubsystem extends SubsystemBase {
     } else {
       FF = 0;
     }
-    if(m_PIDOn){
+    if(Math.abs(getAngleInDegrees() - m_setPoint) > k_deadzone){
       pid = m_PID.calculate(angle, m_setPoint);
-      m_power = FF + pid;
     } else {
       pid = 0;
     }
+    m_power = FF + pid;
     SmartDashboard.putNumber("Power", m_power);
     SmartDashboard.putNumber("Calculated Error", Math.abs(getAngleInDegrees() - m_setPoint));
     SmartDashboard.putNumber("Set Point", m_setPoint);

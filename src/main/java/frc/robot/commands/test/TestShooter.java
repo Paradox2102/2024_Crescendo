@@ -44,10 +44,10 @@ public class TestShooter extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_shoot && Math.abs(m_shooterSubsystem.getVelocityRPM() + 2000) < 25) {
-      if (Constants.k_speaker) {
+    if (m_shoot) {
+      if (Constants.k_speaker && Math.abs(m_shooterSubsystem.getVelocityRPM() - Constants.ShooterConstants.k_speakerVelocityRPM) < 25) {
         m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerVelocityRPM);
-      } else {
+      } else if (Math.abs(m_shooterSubsystem.getVelocityRPM() - Constants.ShooterConstants.k_ampVelocityRPM) < 25) {
         m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_ampVelocityRPM);
       }
     }

@@ -24,13 +24,14 @@ public class AutoPickUpGamePiece extends Command {
   DoubleSupplier m_y;
   DoubleSupplier m_rot;
 
-  private double k_f = .25;
-  private double k_p = .0004;
-  private double k_i = 0;
-  private double k_d = .3;
+  private final double k_f = .1;
+  private final double k_p = 0;
+  private final double k_i = 0;
+  private final double k_d = 0;
+  private final double k_iZone = 10;
   PIDController m_pid = new PIDController(k_p, k_i, k_d);
 
-  double k_deadzone = 10;
+  double k_deadzone = 30;
   double k_minPower = .1;
   double m_setpoint = 0;
 
@@ -43,6 +44,7 @@ public class AutoPickUpGamePiece extends Command {
     m_x = x;
     m_y = y;
     m_rot = rot;
+    m_pid.setIZone(k_iZone);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_driveSubsystem, m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem);
   }
@@ -77,7 +79,8 @@ public class AutoPickUpGamePiece extends Command {
     } else {
       x = Math.abs(x);
       y = Math.abs(y);
-      m_driveSubsystem.drive(x, 0, -rot, false, true);
+      double input = x > y ? x : y;
+      m_driveSubsystem.drive(input, 0, -rot, false, true);
     }
   }
 

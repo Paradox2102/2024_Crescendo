@@ -51,7 +51,7 @@ public class PivotSubsystem extends SubsystemBase {
     m_power = power;
   }
 
-  public void setPosition(double angle) {
+  public void setPositionDegrees(double angle) {
     m_PIDOn = true;
     m_setPoint = angle;
   }

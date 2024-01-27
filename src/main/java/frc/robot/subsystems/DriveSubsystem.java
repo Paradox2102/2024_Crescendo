@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.ApriltagsCamera.ApriltagsCamera;
+import frc.VisionCamera.Camera;
+import frc.VisionCamera.Camera.CameraFrame;
 import frc.robot.Constants;
 import frc.robot.ParadoxField;
 import frc.robot.PositionTrackerPose;
@@ -57,6 +59,9 @@ public class DriveSubsystem extends SubsystemBase {
   // The gyro sensor
   private final Pigeon2 m_gyro = new Pigeon2(0);
 
+  // Game Piece Tracking Camera
+  Camera m_visionCamera;
+
   // Slew rate filter variables for controlling lateral acceleration
   private double m_currentRotation = 0.0;
   private double m_currentTranslationDir = 0.0;
@@ -80,6 +85,7 @@ public class DriveSubsystem extends SubsystemBase {
   public DriveSubsystem() {
     m_gyro.reset();
     SmartDashboard.putData("Field", m_field);
+    m_visionCamera = new Camera();
 
     // m_frontCamera = frontCamera;
     // m_backCamera = backCamera;
@@ -118,6 +124,23 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void setTracker(PositionTrackerPose tracker) {
     m_tracker = tracker;
+  }
+
+  public double getRotationalDistanceFromGamePiece() {
+    CameraFrame frame = m_visionCamera.getCurrentFrame();
+    if (frame.isVisible()) {
+      return frame.getTargetCenter();
+    } else {
+      return 99999999;
+    }
+  }
+
+  public double getTargetCenter() {
+    return m_visionCamera.getCurrentFrame().getCenterOfTarget();
+  }
+
+  public double getCenterLine() {
+    return m_visionCamera.getCurrentFrame().getCenterLine();
   }
 
   public SwerveModulePosition[] getModulePosition() {

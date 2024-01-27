@@ -11,18 +11,18 @@ import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class TestShooter extends Command {
-  ShooterSubsystem m_subsystem;
+  ShooterSubsystem m_shooterSubsystem;
   HolderSubsystem m_holderSubsystem;
   PivotSubsystem m_pivotSubsystem;
   boolean m_shoot;
   /** Creates a new TestShooter. */
   public TestShooter(ShooterSubsystem shooterSubsystem, HolderSubsystem holderSubsystem, PivotSubsystem pivotSubsystem, boolean shoot) {
-    m_subsystem = shooterSubsystem;
+    m_shooterSubsystem = shooterSubsystem;
     m_holderSubsystem = holderSubsystem;
     m_pivotSubsystem = pivotSubsystem;
     m_shoot = shoot;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_subsystem, m_holderSubsystem);
+    addRequirements(m_shooterSubsystem, m_holderSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -30,31 +30,35 @@ public class TestShooter extends Command {
   public void initialize() {
     if (m_shoot) {
       if (Constants.k_speaker){
-        m_subsystem.setVelocityRPM(-4000);
+        m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerVelocityRPM);
       } else {
-        m_subsystem.setVelocityRPM(-2000);
+        m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_ampVelocityRPM);
       }
     } else {
-      m_subsystem.setVelocityRPM(2000);
-      m_holderSubsystem.setVelocityRPM(-500);
-      m_pivotSubsystem.setPosition(118.8);
+      m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
+      m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
+      m_pivotSubsystem.setPositionDegrees(Constants.ArmConstants.k_intakePositionDegrees);
     }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_shoot && Math.abs(m_subsystem.getVelocityRPM() + 2000) < 25) {
-      m_holderSubsystem.setVelocityRPM(1000);
+    if (m_shoot && Math.abs(m_shooterSubsystem.getVelocityRPM() + 2000) < 25) {
+      if (Constants.k_speaker) {
+        m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerVelocityRPM);
+      } else {
+        m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_ampVelocityRPM);
+      }
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_subsystem.stop();
+    m_shooterSubsystem.stop();
     m_holderSubsystem.stop();
-    m_pivotSubsystem.setPosition(1);
+    m_pivotSubsystem.setPositionDegrees(1);
   }
 
   // Returns true when the command should end.

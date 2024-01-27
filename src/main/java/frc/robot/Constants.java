@@ -113,14 +113,24 @@ public final class Constants {
     public static final int k_armMotor = 9;
     public static final double k_armZeroAngle = -63;
     public static final double k_armTicksToDegrees = 360;
+
+    // Positions
+    public static final double k_intakePositionDegrees = 118.8;
+    public static final double k_resetPositionDegrees = 0;
   }
 
   public static class ShooterConstants {
     public static final int k_shooterMotor = 11;
+    public static final double k_intakeVelocityRPM = 2000;
+    public static final double k_speakerVelocityRPM = -4000;
+    public static final double k_ampVelocityRPM = -2000;
   }
 
   public static class HolderConstants {
     public static final int k_holdingMotor = 10;
+    public static final double k_intakeVelocityRPM = -500;
+    public static final double k_speakerVelocityRPM = 3000;
+    public static final double k_ampVelocityRPM = 1000;
   }
 
   public static boolean k_speaker = true;

@@ -2,27 +2,32 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.test;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TestPivot extends InstantCommand {
-  PivotSubsystem m_subsystem;
-  private double m_angle;
-  public TestPivot(PivotSubsystem subsystem, double angle) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    m_subsystem = subsystem;
+public class ResetGyro extends InstantCommand {
+  DriveSubsystem m_subsystem;
+  double m_angle;
+  public ResetGyro(DriveSubsystem driveSubsystem, double angle) {
+    m_subsystem = driveSubsystem;
     m_angle = angle;
-    addRequirements(m_subsystem);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setPositionDegrees(-m_angle);
+    m_subsystem.setHeading(m_angle);
+  System.out.println("GyroReset initialize");
+  }
+
+  @Override
+  public boolean runsWhenDisabled() {
+    return true;
   }
 }

@@ -19,7 +19,7 @@ public class TestPivotPID extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setPosition(118.8);
+    m_subsystem.setPositionDegrees(118.8);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -29,7 +29,7 @@ public class TestPivotPID extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_subsystem.setPosition(0);
+    m_subsystem.setPositionDegrees(0);
   }
 
   // Returns true when the command should end.

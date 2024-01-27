@@ -12,6 +12,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.commands.test.IncrementPivotCommand;
+import frc.robot.commands.test.TestPivot;
 import frc.robot.commands.test.TestPivotPID;
 import frc.robot.commands.test.TestShooter;
 import frc.robot.subsystems.DriveSubsystem;
@@ -19,6 +20,10 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.HolderSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -50,6 +55,8 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     m_driveSubsystem.setTracker(m_tracker);
+    NamedCommands.registerCommand("shoot", new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, true));
+    NamedCommands.registerCommand("intake", new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, false));
   }
 
   /**
@@ -115,6 +122,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return new PathPlannerAuto("center 2 piece");
   }
 }

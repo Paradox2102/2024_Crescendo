@@ -10,6 +10,7 @@ import frc.robot.commands.AutoOrientCommand;
 import frc.robot.commands.AutoPickUpGamePiece;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.RevCommand;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.commands.test.IncrementPivotCommand;
 import frc.robot.commands.test.TestPivot;
@@ -57,6 +58,7 @@ public class RobotContainer {
     m_driveSubsystem.setTracker(m_tracker);
     NamedCommands.registerCommand("shoot", new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, true));
     NamedCommands.registerCommand("intake", new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, false));
+    NamedCommands.registerCommand("rev shooter", new RevCommand(m_shooterSubsystem));
   }
 
   /**
@@ -94,7 +96,7 @@ public class RobotContainer {
     m_driverController.povRight().onTrue(new ResetGyro(m_driveSubsystem, -90));
     m_driverController.povLeft().onTrue(new ResetGyro(m_driveSubsystem, 90));
 
-    m_joystick.button(1).whileTrue(new D2Intake(m_shooterSubsystem, m_holderSubsystem, false));
+    m_joystick.button(1).whileTrue(new RevCommand(m_shooterSubsystem));
     m_joystick.button(2).whileTrue(new D2Intake(m_shooterSubsystem, m_holderSubsystem, true));
     m_joystick.button(6).onTrue(new IncrementPivotCommand(m_pivotSubsystem, true));
     m_joystick.button(4).onTrue(new IncrementPivotCommand(m_pivotSubsystem, false));

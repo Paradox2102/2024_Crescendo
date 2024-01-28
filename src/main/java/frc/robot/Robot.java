@@ -77,12 +77,13 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    Constants.k_speaker = m_robotContainer.getThrottle() < 0;
   }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    Constants.k_speaker = m_robotContainer.getThrottle() < 0;
+  }
 
   @Override
   public void testInit() {

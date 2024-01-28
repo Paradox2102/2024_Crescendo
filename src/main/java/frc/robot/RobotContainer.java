@@ -77,23 +77,23 @@ public class RobotContainer {
       () -> m_driverController.getRightX()
     ));
 
-    m_driverController.rightTrigger().whileTrue(new AutoPickUpGamePiece(
-      m_driveSubsystem, 
-      m_pivotSubsystem, 
-      m_shooterSubsystem, 
-      m_holderSubsystem, 
-      () -> m_driverController.getLeftY(), 
-      () -> m_driverController.getLeftX(),
-      () -> m_driverController.getRightX()
-    ));
+    // m_driverController.rightTrigger().whileTrue(new AutoPickUpGamePiece(
+    //   m_driveSubsystem, 
+    //   m_pivotSubsystem, 
+    //   m_shooterSubsystem, 
+    //   m_holderSubsystem, 
+    //   () -> m_driverController.getLeftY(), 
+    //   () -> m_driverController.getLeftX(),
+    //   () -> m_driverController.getRightX()
+    // ));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // HAHAHHAHAHA JULIA IS COOLER THAN YOU
-    // m_driverController.rightTrigger().whileTrue(new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, false));
+    m_driverController.rightTrigger().whileTrue(new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, false));
     m_driverController.leftTrigger().whileTrue(new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, true));
     m_driverController.leftBumper().toggleOnTrue(new TestPivotPID(m_pivotSubsystem));
-    m_driverController.rightTrigger().whileTrue(new AutoPickUpGamePiece(m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, () -> m_driverController.getLeftY(), () -> m_driverController.getLeftX(), () -> m_driverController.getRightX()));
+    //m_driverController.rightTrigger().whileTrue(new AutoPickUpGamePiece(m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, () -> m_driverController.getLeftY(), () -> m_driverController.getLeftX(), () -> m_driverController.getRightX()));
 
     m_driverController.y().onTrue(new AutoOrientCommand(m_driveSubsystem, 180, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));
     m_driverController.a().onTrue(new AutoOrientCommand(m_driveSubsystem, 0, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));
@@ -122,6 +122,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return new PathPlannerAuto("center 2 piece");
+    return new PathPlannerAuto("wing 4 piece");
   }
 }

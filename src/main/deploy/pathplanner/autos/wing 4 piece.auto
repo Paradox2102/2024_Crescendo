@@ -41,15 +41,22 @@
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "intake"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ground pickup"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.25
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "intake"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -95,12 +102,6 @@
                 "data": {
                   "name": "intake"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ground pickup"
-                }
               }
             ]
           }
@@ -138,12 +139,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "wing 2 to 1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ground pickup"
                 }
               },
               {

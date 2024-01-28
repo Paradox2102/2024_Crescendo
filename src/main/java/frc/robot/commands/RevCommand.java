@@ -11,7 +11,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class RevCommand extends Command {
   ShooterSubsystem m_subsystem;
   /** Creates a new RevCommand. */
-  public RevCommand(ShooterSubsystem subsytem, Boolean speaker) {
+  public RevCommand(ShooterSubsystem subsytem) {
     m_subsystem = subsytem;
     // Use addRequirements() here to declare subsystem dependencies.
   }

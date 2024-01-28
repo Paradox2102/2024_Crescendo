@@ -10,7 +10,7 @@ import frc.robot.subsystems.HolderSubsystem;
 
 public class FeedCommand extends Command {
   HolderSubsystem m_subsystem;
-  public FeedCommand(HolderSubsystem subsystem, Boolean speaker) {
+  public FeedCommand(HolderSubsystem subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
   }

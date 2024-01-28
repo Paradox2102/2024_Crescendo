@@ -58,6 +58,7 @@ public class RobotContainer {
     m_driveSubsystem.setTracker(m_tracker);
     NamedCommands.registerCommand("shoot", new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, true));
     NamedCommands.registerCommand("intake", new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, false));
+    NamedCommands.registerCommand("rev shooter", new RevCommand(m_shooterSubsystem));
   }
 
   /**
@@ -95,7 +96,7 @@ public class RobotContainer {
     m_driverController.povRight().onTrue(new ResetGyro(m_driveSubsystem, -90));
     m_driverController.povLeft().onTrue(new ResetGyro(m_driveSubsystem, 90));
 
-    m_joystick.button(1).whileTrue(new RevCommand(m_shooterSubsystem, Constants.k_speaker));
+    m_joystick.button(1).whileTrue(new RevCommand(m_shooterSubsystem));
     m_joystick.button(2).whileTrue(new D2Intake(m_shooterSubsystem, m_holderSubsystem, true));
     m_joystick.button(6).onTrue(new IncrementPivotCommand(m_pivotSubsystem, true));
     m_joystick.button(4).onTrue(new IncrementPivotCommand(m_pivotSubsystem, false));

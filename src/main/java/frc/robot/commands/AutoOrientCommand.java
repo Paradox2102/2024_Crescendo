@@ -18,11 +18,11 @@ public class AutoOrientCommand extends Command {
   DoubleSupplier m_x;
   double m_angle;
   double k_deadzone = 2.5;
-  double k_minPower = .1;
 
+  private double k_f = .15;
   private double k_p = .013;
   private double k_i = 0;
-  private double k_d = .000002;
+  private double k_d = 0;
   PIDController m_pid = new PIDController(k_p, k_i, k_d);
 
   public AutoOrientCommand(DriveSubsystem driveSubsystem, double angle, DoubleSupplier y, DoubleSupplier x) {
@@ -45,7 +45,7 @@ public class AutoOrientCommand extends Command {
     double y = m_y.getAsDouble();
     double heading = m_subsystem.getHeadingInDegrees();
     double rot = m_pid.calculate(heading, m_angle);
-    rot = Math.abs(rot) < k_minPower ? k_minPower * Math.signum(rot): rot;
+    rot += (k_f * Math.signum(rot));
     m_subsystem.drive(-y, x, rot, true, true);
   }
 

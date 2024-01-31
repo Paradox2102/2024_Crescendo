@@ -16,7 +16,7 @@
  *    Contact: robotics@gabysoft.com
  */
 
-package frc.ApriltagsCamera;
+package frc.apriltagsCamera;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -282,6 +282,7 @@ public class Network
 				catch (Exception ex)
 				{
 					Logger.log("Network",  3, "Receiver exception: " + ex);
+					// ex.printStackTrace(System.out);
 				}
 				
 				closeConnection();
@@ -341,7 +342,9 @@ public class Network
 						{
 							command += (char) ch;
 						}
-					} while (ch > 0);
+					} while (true); //while (ch > 0);
+
+					// Logger.log("Network", 1, "Read loop exit");
 				}
 				catch (Exception ex)
 				{

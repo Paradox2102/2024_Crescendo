@@ -48,10 +48,6 @@ public class PositionTrackerPose {
 	}
 
 	public Pose2d getPose2d() {
-		return ParadoxField.pose2dFromFRC(m_poseEstimator.getEstimatedPosition());
-	}
-
-	public Pose2d getPose2dFRC() {
 		return m_poseEstimator.getEstimatedPosition();
 	}
 
@@ -62,15 +58,6 @@ public class PositionTrackerPose {
 			ParadoxField.rotation2dFromParadoxAngle(angleInDegrees), 
 			m_driveSubsystem.getModulePosition(), 
 			ParadoxField.pose2dFromParadox(x, y, angleInDegrees)
-		);
-	}
-
-	public void setXYAngleFRC(double x, double y, double angleInDegrees) {
-		Logger.log("PositionTracker", 1, String.format("x=%f, y=%f, angle=%f", x, y, angleInDegrees));
-		m_poseEstimator.resetPosition(
-			m_driveSubsystem.getGyroRotation2d(), 
-			m_driveSubsystem.getModulePosition(), 
-			new Pose2d(x, y, Rotation2d.fromDegrees(angleInDegrees))
 		);
 	}
 
@@ -98,10 +85,9 @@ public class PositionTrackerPose {
 
 		Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
 		if (alliance.isPresent()) {
-			m_posServer.setAllianceColor(alliance.get() == DriverStation.Alliance.Red);
+			// m_posServer.setAllianceColor(alliance.get() == DriverStation.Alliance.Red);
 		}
 		Pose2d pos = m_poseEstimator.getEstimatedPosition();
-		pos = ParadoxField.pose2dFromFRC(pos);
 		SmartDashboard.putNumber("xPos", pos.getX());
 		SmartDashboard.putNumber("yPos", pos.getY());
 		SmartDashboard.putNumber("Robot Angle", pos.getRotation().getDegrees());
@@ -128,11 +114,10 @@ public class PositionTrackerPose {
 		// }
 		Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
 		if (alliance.isPresent()) {
-			m_posServer.setAllianceColor(alliance.get() == DriverStation.Alliance.Red);
+			// m_posServer.setAllianceColor(alliance.get() == DriverStation.Alliance.Red);
 		}
 
 		Pose2d pos = m_poseEstimator.getEstimatedPosition();
-		pos = ParadoxField.pose2dFromFRC(pos);
 		SmartDashboard.putNumber("xPos", pos.getX());
 		SmartDashboard.putNumber("yPos", pos.getY());
 		SmartDashboard.putNumber("Robot Angle", pos.getRotation().getDegrees());

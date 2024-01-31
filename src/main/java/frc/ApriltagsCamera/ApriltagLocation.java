@@ -1,16 +1,16 @@
-package frc.ApriltagsCamera;
+package frc.apriltagsCamera;
 
 public class ApriltagLocation {
     int m_tag;
-	public double m_xInches;
-	public double m_yInches;
+	public double m_xMeters;
+	public double m_yMeters;
 	public double m_targetAngleDegrees;
 	// public int m_invalidCount = 0;
 
 	public ApriltagLocation(int tag, double x, double y, double angle) {
 		m_tag = tag;
-		m_xInches = x;
-		m_yInches = y;
+		m_xMeters = x;
+		m_yMeters = y;
 		m_targetAngleDegrees = angle;
 	}   
 }

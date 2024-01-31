@@ -4,20 +4,21 @@
 
 package frc.robot;
 
+import frc.ApriltagsCamera.PositionServer;
+import frc.ApriltagsCamera.ApriltagsCamera;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutoOrientCommand;
 import frc.robot.commands.AutoPickUpGamePiece;
-import frc.robot.commands.Autos;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.RevCommand;
+import frc.robot.commands.apriltags.SetApriltagsDashboard;
+import frc.robot.commands.apriltags.SetApriltagsLogging;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.commands.test.IncrementPivotCommand;
-import frc.robot.commands.test.TestPivot;
 import frc.robot.commands.test.TestPivotPID;
 import frc.robot.commands.test.TestShooter;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.HolderSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -38,14 +39,17 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  private final ApriltagsCamera m_apriltagCamera = new ApriltagsCamera();
+
+  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera);
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final HolderSubsystem m_holderSubsystem = new HolderSubsystem();
 
   private final CommandJoystick m_joystick = new CommandJoystick(1);
   public final PositionTrackerPose m_tracker = new PositionTrackerPose(0, 0, m_driveSubsystem);
+
+  PositionServer m_posServer = new PositionServer();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -59,6 +63,15 @@ public class RobotContainer {
     NamedCommands.registerCommand("shoot", new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, true));
     NamedCommands.registerCommand("intake", new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, false));
     NamedCommands.registerCommand("rev shooter", new RevCommand(m_shooterSubsystem));
+
+    m_apriltagCamera.setCameraInfo(0, 0, 0);
+    m_apriltagCamera.connect("10.21.2.11", 5800);
+
+    m_posServer.start();
+  }
+
+  private boolean getPositionServerButtonState(int button) {
+    return m_posServer.getButtonState(button);
   }
 
   /**
@@ -71,6 +84,10 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    new Trigger(() -> getPositionServerButtonState(1)).onTrue(new SetApriltagsLogging(m_apriltagCamera, true));
+    new Trigger(() -> getPositionServerButtonState(2)).onTrue(new SetApriltagsLogging(m_apriltagCamera, false));
+    new Trigger(() -> getPositionServerButtonState(3)).onTrue(new SetApriltagsDashboard(m_apriltagCamera, true));
+    new Trigger(() -> getPositionServerButtonState(4)).onTrue(new SetApriltagsDashboard(m_apriltagCamera, false));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     m_driveSubsystem.setDefaultCommand(new ArcadeDrive(
       m_driveSubsystem, 

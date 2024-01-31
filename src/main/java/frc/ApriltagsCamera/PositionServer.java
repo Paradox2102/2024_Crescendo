@@ -1,10 +1,9 @@
-package frc.ApriltagsCamera;
+package frc.apriltagsCamera;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import frc.ApriltagsCamera.Network.NetworkReceiver;
-import frc.robot.Constants;
+import frc.apriltagsCamera.Network.NetworkReceiver;
 
 public class PositionServer implements NetworkReceiver {
     private Network m_network = new Network();
@@ -15,6 +14,8 @@ public class PositionServer implements NetworkReceiver {
     private boolean m_newPos = true;
     private Object m_lock = new Object();
     private Object m_recvLock = new Object();
+    private static int k_maxButtons = 100;
+    private boolean[] m_buttonStates = new boolean[k_maxButtons]; 
     // private Gyro m_gyro;
 
     double m_testX = 10*12;
@@ -77,8 +78,8 @@ public class PositionServer implements NetworkReceiver {
 
     public void setPosition(double x, double y, double angle) {
         synchronized (m_lock) {
-            m_xPos = x * 12;
-            m_yPos = y * 12;
+            m_xPos = x;
+            m_yPos = y;
             m_angle = angle;
             m_newPos = true;
         }
@@ -86,21 +87,21 @@ public class PositionServer implements NetworkReceiver {
 
     boolean m_redAlliance;
 
-    public void setAllianceColor(boolean red)
-    {
-        Constants.m_allianceRed = red;
-        ApriltagLocations.setColor(!red);
-        
-        if (red != m_redAlliance)
-        {
-            m_redAlliance = red;
-
-            if (m_connected)
-            {
-                sendAllianceColor();
-            }
-        }
-    }
+//    public void setAllianceColor(boolean red)
+//    {
+//        Constants.m_allianceRed = red;
+//        ApriltagLocations.setColor(!red);
+//        
+//        if (red != m_redAlliance)
+//        {
+//            m_redAlliance = red;
+//
+//            if (m_connected)
+//            {
+//                sendAllianceColor();
+//            }
+//        }
+//    }
 
     public class BezierData {
         public double m_x1; // In feet
@@ -210,25 +211,53 @@ public class PositionServer implements NetworkReceiver {
         }
     }
 
+    public boolean getButtonState(int buttonNo)
+    {
+        boolean state = false;
+
+        if ((buttonNo >= 0) && (buttonNo < k_maxButtons))
+        {
+            state = m_buttonStates[buttonNo];
+            m_buttonStates[buttonNo] = false;
+        }
+
+        if (state)
+        {
+            Logger.log("PositionServer", 1, String.format("Button %d true", buttonNo));
+        }
+
+        return(state);
+    }
+
+    void processButton(String cmd)
+    {
+        // Logger.log("PositionServer", 1, cmd);
+        
+        int[] arg = ApriltagsCamera.parseIntegers(cmd, 1);
+
+        if (arg != null)
+        {
+            int buttonNo = arg[0];
+
+            Logger.log("PositionServer", 1, String.format("Button %d pressed", buttonNo));
+
+            if ((buttonNo >= 0) && (buttonNo < k_maxButtons))
+            {
+                m_buttonStates[buttonNo] = true;
+            }
+        }
+        else {
+            Logger.log("PositionServer", 1, "processButton: bad command");
+        }
+    }
+
     @Override
     public void processData(String data) {
         Logger.log("PositionServer", -1, String.format("Data: %s", data));
 
         switch (data.charAt(0)) {
-            case 'P': // path
-                processPath(data.substring(1).trim());
-                break;
-
-            case 'B': // Bezier curve
-                processBezier(data.substring(1).trim());
-                break;
-
-            case 'E': // End
-                processEnd(data.substring(1).trim());
-                break;
-
-            case 'T':   // Target Info
-                processTarget(data.substring(1).trim());
+            case 'B': // button
+                processButton(data.substring(1).trim());
                 break;
 
             case 'k':   // keep alive

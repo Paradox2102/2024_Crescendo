@@ -78,17 +78,18 @@ public class DriveSubsystem extends SubsystemBase {
         new Translation2d(-.33655, -.33655));
 
     PositionTrackerPose m_tracker;
-    ApriltagsCamera m_frontCamera;
-    ApriltagsCamera m_backCamera;
+    ApriltagsCamera m_apriltagCamera;;
 
   /** Creates a new DriveSubsystem. */
-  public DriveSubsystem() {
+  public DriveSubsystem(ApriltagsCamera apriltagCamera) {
     m_gyro.reset();
     SmartDashboard.putData("Field", m_field);
     m_visionCamera = new Camera();
 
-    // m_frontCamera = frontCamera;
-    // m_backCamera = backCamera;
+    m_apriltagCamera = apriltagCamera;
+
+    m_apriltagCamera.setCameraInfo(0, 0, 0);
+    m_apriltagCamera.connect("10.21.2.11", 5800);
 
     AutoBuilder.configureHolonomic(
       this::getPose, 
@@ -164,9 +165,9 @@ public class DriveSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("Pose Est Rot", (m_tracker.getPose2dFRC().getRotation().getDegrees()));
     SmartDashboard.putNumber("Pigeon2", m_gyro.getYaw().getValueAsDouble());
     SmartDashboard.putNumber("Gyro Rotation2D", getGyroRotation2d().getDegrees());
-    SmartDashboard.putNumber("Tracker Rotation2D", m_tracker.getPose2dFRC().getRotation().getDegrees());
+    SmartDashboard.putNumber("Tracker Rotation2D", m_tracker.getPose2d().getRotation().getDegrees());
 
-    m_tracker.update(m_frontCamera, m_backCamera);
+    m_tracker.update(m_apriltagCamera);
     // m_field.setRobotPose(m_tracker.getPose2dFRC().getTranslation().getX(), m_tracker.getPose2dFRC().getTranslation().getY(), m_tracker.getPose2dFRC().getRotation());
   }
 
@@ -176,7 +177,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return The pose.
    */
   public Pose2d getPose() {
-    return m_tracker.getPose2dFRC();
+    return m_tracker.getPose2d();
   }
 
   public Field2d getField() {
@@ -209,7 +210,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @param pose The pose to which to set the odometry.
    */
   public void resetOdometry(Pose2d pose) {
-    m_tracker.setXYAngleFRC(pose.getX(), pose.getY(), pose.getRotation().getDegrees());
+    m_tracker.setXYAngle(pose.getX(), pose.getY(), pose.getRotation().getDegrees());
 }
 
   /**
@@ -352,7 +353,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Zeroes the heading of the robot. */
   public void setHeading(double angle) {
-    m_tracker.setXYAngleFRC(m_tracker.getPose2dFRC().getX(), m_tracker.getPose2dFRC().getY(), angle);
+    m_tracker.setXYAngle(m_tracker.getPose2d().getX(), m_tracker.getPose2d().getY(), angle);
   }
 
   /**
@@ -361,7 +362,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeadingInDegrees() {
-    double angle = m_tracker.getPose2dFRC().getRotation().getDegrees();
+    double angle = m_tracker.getPose2d().getRotation().getDegrees();
     return ParadoxField.normalizeAngle(angle);
   }
 }

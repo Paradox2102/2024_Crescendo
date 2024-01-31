@@ -88,9 +88,6 @@ public class DriveSubsystem extends SubsystemBase {
 
     m_apriltagCamera = apriltagCamera;
 
-    m_apriltagCamera.setCameraInfo(0, 0, 0);
-    m_apriltagCamera.connect("10.21.2.11", 5800);
-
     AutoBuilder.configureHolonomic(
       this::getPose, 
       this::resetOdometry, 

@@ -109,10 +109,10 @@ public final class Constants {
     };
   }
 
-  public static class ArmConstants {
-    public static final int k_armMotor = 9;
-    public static final double k_armZeroAngle = 106;
-    public static final double k_armTicksToDegrees = 360;
+  public static class PivotConstants {
+    public static final int k_pivotMotor = 9;
+    public static final double k_pivotZeroAngle = 106;
+    public static final double k_pivotTicksToDegrees = 360;
 
     // Positions
     public static final double k_intakePositionDegrees = 118.8;

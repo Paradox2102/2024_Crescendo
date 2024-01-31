@@ -32,19 +32,19 @@ public class PivotSubsystem extends SubsystemBase {
   private boolean m_PIDOn = false;
   private double m_setPoint = 0;
 
-  private CANSparkFlex m_armMotor = new CANSparkFlex(Constants.ArmConstants.k_armMotor, MotorType.kBrushless);
-  DutyCycleEncoder m_armEncoder = new DutyCycleEncoder(0);
+  private CANSparkFlex m_pivotMotor = new CANSparkFlex(Constants.PivotConstants.k_pivotMotor, MotorType.kBrushless);
+  DutyCycleEncoder m_pivotEncoder = new DutyCycleEncoder(0);
 
   /** Creates a new PivotSubsystem. */
   public PivotSubsystem() {
-    m_armMotor.restoreFactoryDefaults();
+    m_pivotMotor.restoreFactoryDefaults();
     setBrakeMode(true);
-    m_armEncoder.setPositionOffset(-0.8);
+    m_pivotEncoder.setPositionOffset(-0.8);
     m_PID.setIZone(k_iZone);
   }
 
   public void setBrakeMode(boolean brake) {
-    m_armMotor.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
+    m_pivotMotor.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
   }
 
   public void setPower(double power) {
@@ -58,11 +58,11 @@ public class PivotSubsystem extends SubsystemBase {
   }
 
   private double getRawAngle() {
-    return m_armEncoder.getAbsolutePosition();
+    return m_pivotEncoder.getAbsolutePosition();
   }
 
   public double getAngleInDegrees() {
-    return ParadoxField.normalizeAngle(m_armEncoder.getAbsolutePosition()*  Constants.ArmConstants.k_armTicksToDegrees - Constants.ArmConstants.k_armZeroAngle);
+    return ParadoxField.normalizeAngle(m_pivotEncoder.getAbsolutePosition()*  Constants.PivotConstants.k_pivotTicksToDegrees - Constants.PivotConstants.k_pivotZeroAngle);
   }
 
   // private double setFterm(double angle) {
@@ -96,6 +96,6 @@ public class PivotSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Calculated Error", Math.abs(getAngleInDegrees() - m_setPoint));
     SmartDashboard.putNumber("Set Point", m_setPoint);
     SmartDashboard.putNumber("Pivot PID", pid);
-    m_armMotor.set(m_power);
+    m_pivotMotor.set(m_power);
   }
 }

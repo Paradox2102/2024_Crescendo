@@ -3,7 +3,10 @@
   "robotLength": 0.6731,
   "holonomicMode": true,
   "pathFolders": [
-    "source side 3"
+    "mobility",
+    "move to shoot",
+    "shoot to piece",
+    "start to piece"
   ],
   "autoFolders": [],
   "defaultMaxVel": 4.8,

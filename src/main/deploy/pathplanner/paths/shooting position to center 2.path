@@ -43,7 +43,7 @@
     "rotateFast": true
   },
   "reversed": false,
-  "folder": null,
+  "folder": "shoot to piece",
   "previewStartingState": {
     "rotation": 15.0,
     "velocity": 0

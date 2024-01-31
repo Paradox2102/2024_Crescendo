@@ -37,7 +37,7 @@ public class TestShooter extends Command {
     } else {
       m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
       m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
-      m_pivotSubsystem.setPositionDegrees(Constants.ArmConstants.k_intakePositionDegrees);
+      m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
     }
   }
 

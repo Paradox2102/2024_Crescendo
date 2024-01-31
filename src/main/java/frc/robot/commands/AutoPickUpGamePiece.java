@@ -52,7 +52,7 @@ public class AutoPickUpGamePiece extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_pivotSubsystem.setPositionDegrees(Constants.ArmConstants.k_intakePositionDegrees);
+    m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
     m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
     m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
   }
@@ -87,7 +87,7 @@ public class AutoPickUpGamePiece extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_pivotSubsystem.setPositionDegrees(Constants.ArmConstants.k_resetPositionDegrees);
+    m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
     m_shooterSubsystem.stop();
     m_holderSubsystem.stop();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
   }

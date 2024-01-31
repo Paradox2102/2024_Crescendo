@@ -16,7 +16,7 @@
  *    Contact: robotics@gabysoft.com
  */
 
-package frc.apriltagsCamera;
+package frc.ApriltagsCamera;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -48,7 +48,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *        performs keep-alive functions that detect a disconnect.
  *
  */
-public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkReceiver {
+public class ApriltagsCamera implements frc.ApriltagsCamera.Network.NetworkReceiver {
 	// public Pose2d m_pose2d = new Pose2d(0, 0, new Rotation2d(0));
 	private boolean m_log = false;
 	private static double k_maxLogTime = 2.5 * 60; // Length of a match

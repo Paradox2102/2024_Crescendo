@@ -12,11 +12,11 @@ import frc.robot.commands.AutoOrientCommand;
 import frc.robot.commands.AutoPickUpGamePiece;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.RevCommand;
+import frc.robot.commands.SetPivotAngleCommand;
 import frc.robot.commands.apriltags.SetApriltagsDashboard;
 import frc.robot.commands.apriltags.SetApriltagsLogging;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.commands.test.IncrementPivotCommand;
-import frc.robot.commands.test.TestPivotPID;
 import frc.robot.commands.test.TestShooter;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HolderSubsystem;
@@ -100,7 +100,7 @@ public class RobotContainer {
     // cancelling on release.
     // m_driverController.rightTrigger().whileTrue(new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, false));
     m_driverController.leftTrigger().whileTrue(new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, true));
-    m_driverController.leftBumper().toggleOnTrue(new TestPivotPID(m_pivotSubsystem));
+    m_driverController.leftBumper().toggleOnTrue(new SetPivotAngleCommand(m_pivotSubsystem, Constants.ArmConstants.k_intakePositionDegrees));
     m_driverController.rightTrigger().whileTrue(new AutoPickUpGamePiece(m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, () -> m_driverController.getLeftY(), () -> m_driverController.getLeftX(), () -> m_driverController.getRightX()));
 
     m_driverController.y().onTrue(new AutoOrientCommand(m_driveSubsystem, 180, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));

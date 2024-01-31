@@ -133,5 +133,9 @@ public final class Constants {
     public static final double k_ampVelocityRPM = 1000;
   }
 
+  public static class ElevatorConstants {
+    public static final int k_elevatorMotor = 0;
+  }
+
   public static boolean k_speaker = true;
 }

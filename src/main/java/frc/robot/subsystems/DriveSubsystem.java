@@ -23,7 +23,7 @@ import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.ApriltagsCamera.ApriltagsCamera;
+import frc.apriltagsCamera.ApriltagsCamera;
 import frc.VisionCamera.Camera;
 import frc.VisionCamera.Camera.CameraFrame;
 import frc.robot.Constants;

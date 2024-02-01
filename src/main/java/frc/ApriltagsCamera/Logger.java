@@ -16,7 +16,7 @@
  *    Contact: robotics@gabysoft.com
  */
 
-package frc.ApriltagsCamera;
+package frc.apriltagsCamera;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import frc.ApriltagsCamera.Network.NetworkReceiver;
+import frc.apriltagsCamera.Network.NetworkReceiver;
 
 /**
  * 

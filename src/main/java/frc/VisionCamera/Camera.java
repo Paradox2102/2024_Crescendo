@@ -1,6 +1,6 @@
 package frc.VisionCamera;
 
-import frc.ApriltagsCamera.Logger;
+import frc.apriltagsCamera.Logger;
 import frc.VisionCamera.PiCamera.PiCameraRegion;
 import frc.VisionCamera.PiCamera.PiCameraRegions;
 

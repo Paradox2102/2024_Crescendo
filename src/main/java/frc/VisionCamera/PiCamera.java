@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import frc.ApriltagsCamera.Logger;
-import frc.ApriltagsCamera.Network;
+import frc.apriltagsCamera.Logger;
+import frc.apriltagsCamera.Network;
 
 
 /**

@@ -1,4 +1,4 @@
-package frc.ApriltagsCamera;
+package frc.apriltagsCamera;
 
 public class ApriltagLocation {
     int m_tag;

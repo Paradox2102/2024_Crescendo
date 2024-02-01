@@ -16,7 +16,7 @@
  *    Contact: robotics@gabysoft.com
  */
 
-package frc.ApriltagsCamera;
+package frc.apriltagsCamera;
 
 import java.io.IOException;
 import java.io.InputStream;

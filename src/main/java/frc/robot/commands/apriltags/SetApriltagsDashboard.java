@@ -5,8 +5,8 @@
 package frc.robot.commands.apriltags;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.ApriltagsCamera.ApriltagsCamera;
-import frc.ApriltagsCamera.Logger;
+import frc.apriltagsCamera.ApriltagsCamera;
+import frc.apriltagsCamera.Logger;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:

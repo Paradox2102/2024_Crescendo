@@ -1,9 +1,9 @@
-package frc.ApriltagsCamera;
+package frc.apriltagsCamera;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import frc.ApriltagsCamera.Network.NetworkReceiver;
+import frc.apriltagsCamera.Network.NetworkReceiver;
 
 public class PositionServer implements NetworkReceiver {
     private Network m_network = new Network();

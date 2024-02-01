@@ -4,8 +4,8 @@
 
 package frc.robot;
 
-import frc.ApriltagsCamera.PositionServer;
-import frc.ApriltagsCamera.ApriltagsCamera;
+import frc.apriltagsCamera.PositionServer;
+import frc.apriltagsCamera.ApriltagsCamera;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutoOrientCommand;

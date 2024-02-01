@@ -52,7 +52,7 @@ public class Camera {
     }
 
     public Camera() {
-        m_camera.connect(m_ip, 5800);
+        // m_camera.connect(m_ip, 5800);
     }
 
     public void setLight(boolean on) {

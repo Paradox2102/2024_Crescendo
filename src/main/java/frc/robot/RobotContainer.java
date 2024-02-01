@@ -40,6 +40,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   ApriltagsCamera m_apriltagCamera = new ApriltagsCamera();
+  PositionServer m_posServer =new PositionServer();
 
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera);
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
@@ -47,9 +48,9 @@ public class RobotContainer {
   private final HolderSubsystem m_holderSubsystem = new HolderSubsystem();
 
   private final CommandJoystick m_joystick = new CommandJoystick(1);
-  public final PositionTrackerPose m_tracker = new PositionTrackerPose(0, 0, m_driveSubsystem);
+  public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);
 
-  PositionServer m_posServer = new PositionServer();
+
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =

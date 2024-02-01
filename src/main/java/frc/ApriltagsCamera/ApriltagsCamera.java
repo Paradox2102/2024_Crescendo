@@ -135,7 +135,7 @@ public class ApriltagsCamera implements frc.ApriltagsCamera.Network.NetworkRecei
 	static final int k_maxCameras = 2;
 	static final int k_maxTags = 16;
 	ApriltagsQueue m_queue[][] = new ApriltagsQueue[k_maxCameras][k_maxTags];
-	boolean m_dashboard = false;
+	boolean m_dashboard = true;
 	static int k_maxDistance = 110; // Max distance for update in inches
 
 	/**
@@ -252,9 +252,9 @@ public class ApriltagsCamera implements frc.ApriltagsCamera.Network.NetworkRecei
 
 				// SmartDashboard.putNumber("update d", d);
 
-				if (d > (k_maxDistance / ApriltagLocations.k_inPerM)) {
-					return;
-				}
+				// if (d > (k_maxDistance / ApriltagLocations.k_inPerM)) {
+				// 	return;
+				// }
 
 				double dy = d * Math.sin(b);
 				double dx = d * Math.cos(b);

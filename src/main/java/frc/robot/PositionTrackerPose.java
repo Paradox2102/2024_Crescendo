@@ -21,9 +21,10 @@ public class PositionTrackerPose {
 	private DriveSubsystem m_driveSubsystem;
 	public PositionServer m_posServer;
 
-	public PositionTrackerPose(double x, double y, DriveSubsystem driveSubsystem) {
+	public PositionTrackerPose(PositionServer posServer, double x, double y, DriveSubsystem driveSubsystem) {
 		super();
 		m_driveSubsystem = driveSubsystem;
+		m_posServer = posServer;
 
 		// For the extended constructor, the default values are:
 		// VecBuilder.fill(0.02, 0.02, 0.01) - SD of internal state
@@ -43,8 +44,8 @@ public class PositionTrackerPose {
 			ParadoxField.pose2dFromParadox(0, 0, 90)
 		);
 
-		m_posServer = new PositionServer();
-		m_posServer.start();
+		// m_posServer = new PositionServer();
+		// m_posServer.start();
 	}
 
 	public Pose2d getPose2d() {

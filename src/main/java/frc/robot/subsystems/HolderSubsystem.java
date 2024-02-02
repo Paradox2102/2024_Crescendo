@@ -54,9 +54,24 @@ public class HolderSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     double currentVelocity = getVelocityRPM();
     
-    double F = m_velocity / 5000.0;
+    double F = m_velocity / 5350.0;
+
     double power = m_PID.calculate(currentVelocity, m_velocity);
-    setPower(F + power);
+    double finalPower;
+
+
+    // If not shooting, make sure gamepiece is stowed, else shoot
+    if (!Constants.m_isShooting) {
+      if (!Constants.m_isGamePieceStowed) {
+        // Move the motor in direction depending on which way to stow
+        finalPower = Constants.m_shootIntakeSide ? -Constants.HolderConstants.k_adjustGamePieceRPM : Constants.HolderConstants.k_adjustGamePieceRPM;
+      } else {
+        finalPower = 0;
+      }
+    } else {
+      finalPower = F + power;
+    }
+    setPower(finalPower);
     
     SmartDashboard.putNumber("Holder Front Velo", currentVelocity);
     SmartDashboard.putNumber("Holder Target Front Velocity", m_velocity);

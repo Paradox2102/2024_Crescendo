@@ -29,6 +29,7 @@ public class IntakeCommand extends Command {
     m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
     m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
     m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
+    Constants.m_runningShooterAndHolder = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,9 +39,10 @@ public class IntakeCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_holderSubsystem.setVelocityRPM(0);
-    m_shooterSubsystem.setVelocityRPM(0);
+    m_holderSubsystem.stop();
+    m_shooterSubsystem.stop();
     m_pivotSubsystem.setPositionDegrees(0);
+    Constants.m_runningShooterAndHolder = false;
   }
 
   // Returns true when the command should end.

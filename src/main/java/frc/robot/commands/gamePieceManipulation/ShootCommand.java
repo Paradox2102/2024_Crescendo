@@ -62,8 +62,8 @@ public class ShootCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooterSubsystem.setVelocityRPM(0);
-    m_holderSubsystem.setVelocityRPM(0);
+    m_shooterSubsystem.stop();
+    m_holderSubsystem.stop();
     Constants.m_runningShooterAndHolder = false;
   }
 

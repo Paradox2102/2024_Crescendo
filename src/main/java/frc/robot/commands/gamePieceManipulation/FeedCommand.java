@@ -2,23 +2,33 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.gamePieceManipulation;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.HolderSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class FeedCommand extends Command {
-  HolderSubsystem m_subsystem;
-  public FeedCommand(HolderSubsystem subsystem) {
-    m_subsystem = subsystem;
+ShooterSubsystem m_shooterSubsystem;
+  HolderSubsystem m_holderSubsystem;
+
+  /** Creates a new RevCommand. */
+  public FeedCommand(ShooterSubsystem shooterSubsystem, HolderSubsystem holderSubsystem) {
+    m_shooterSubsystem = shooterSubsystem;
+    m_holderSubsystem = holderSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_shooterSubsystem, m_holderSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setVelocityRPM(Constants.m_speaker ? Constants.HolderConstants.k_speakerFeedVelocityRPM : Constants.HolderConstants.k_ampFeedVelocityRPM);
+    if (Constants.m_shootIntakeSide) {
+      m_holderSubsystem.setVelocityRPM(Constants.m_speaker ? Constants.HolderConstants.k_speakerFeedVelocityRPM : Constants.HolderConstants.k_ampFeedVelocityRPM);
+    } else {
+      m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerFeedVelocityRPM);
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -28,7 +38,8 @@ public class FeedCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_subsystem.stop();
+    m_shooterSubsystem.stop();
+    m_holderSubsystem.stop();
   }
 
   // Returns true when the command should end.

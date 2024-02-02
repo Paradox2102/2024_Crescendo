@@ -124,6 +124,7 @@ public final class Constants {
     public static final double k_intakeVelocityRPM = 2000;
     public static final double k_speakerVelocityRPM = -4000;
     public static final double k_ampVelocityRPM = -2000;
+    public static final double k_deadzone = 25;
   }
 
   public static class HolderConstants {
@@ -137,5 +138,8 @@ public final class Constants {
     public static final int k_elevatorMotor = 0;
   }
 
-  public static boolean k_speaker = true;
+  public static boolean m_speaker = true;
+  public static boolean m_shootIntakeSide = true;
+  public static boolean m_hasGamePiece = false;
+  public static boolean m_isGamePieceStowed = false;
 }

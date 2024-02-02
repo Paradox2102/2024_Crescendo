@@ -20,6 +20,6 @@ public class TogglerSpeakerAmpMode extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Constants.k_speaker = m_speakerMode;
+    Constants.m_speaker = m_speakerMode;
   }
 }

@@ -19,7 +19,7 @@ public class RevCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setVelocityRPM(Constants.k_speaker ? Constants.ShooterConstants.k_speakerVelocityRPM : Constants.ShooterConstants.k_ampVelocityRPM);
+    m_subsystem.setVelocityRPM(Constants.m_speaker ? Constants.ShooterConstants.k_speakerVelocityRPM : Constants.ShooterConstants.k_ampVelocityRPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

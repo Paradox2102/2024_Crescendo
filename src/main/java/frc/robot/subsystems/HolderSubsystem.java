@@ -18,6 +18,8 @@ public class HolderSubsystem extends SubsystemBase {
   private CANSparkFlex m_motor = new CANSparkFlex(Constants.HolderConstants.k_holdingMotor, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_motor.getEncoder();
 
+  private double m_finalPower = 0;
+
   private final double k_p = .00008;
   private final double k_i = .0026;
   private final double k_d = 0;
@@ -27,6 +29,12 @@ public class HolderSubsystem extends SubsystemBase {
   /** Creates a new FrontSubsystem. */
   public HolderSubsystem() {
     m_PID.setIZone(k_iZone);
+    setBrakeMode(true);
+    m_motor.setInverted(true);
+  }
+
+  public boolean isReady() {
+    return Math.abs(m_finalPower) < Constants.HolderConstants.k_deadzone;
   }
 
   public void setPower(double power) {
@@ -57,21 +65,20 @@ public class HolderSubsystem extends SubsystemBase {
     double F = m_velocity / 5350.0;
 
     double power = m_PID.calculate(currentVelocity, m_velocity);
-    double finalPower;
 
 
     // If not shooting, make sure gamepiece is stowed, else shoot
-    if (!Constants.m_isShooting) {
+    if (!Constants.m_runningShooterAndHolder) {
       if (!Constants.m_isGamePieceStowed) {
         // Move the motor in direction depending on which way to stow
-        finalPower = Constants.m_shootIntakeSide ? -Constants.HolderConstants.k_adjustGamePieceRPM : Constants.HolderConstants.k_adjustGamePieceRPM;
+        m_finalPower = Constants.m_shootIntakeSide ? -Constants.HolderConstants.k_adjustGamePieceRPM : Constants.HolderConstants.k_adjustGamePieceRPM;
       } else {
-        finalPower = 0;
+        m_finalPower = 0;
       }
     } else {
-      finalPower = F + power;
+      m_finalPower = F + power;
     }
-    setPower(finalPower);
+    setPower(m_finalPower);
     
     SmartDashboard.putNumber("Holder Front Velo", currentVelocity);
     SmartDashboard.putNumber("Holder Target Front Velocity", m_velocity);

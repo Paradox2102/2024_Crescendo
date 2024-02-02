@@ -24,15 +24,22 @@ public class ShooterSubsystem extends SubsystemBase {
   private final double k_iZone = 200;
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
 
+  private double m_finalPower = 0;
+
   private double m_velocity = 0;
   /** Creates a new FrontSubsystem. */
   public ShooterSubsystem() {
     setBrakeMode(true);
     m_PID.setIZone(k_iZone);
+    m_motor.setInverted(false);
   }
 
   public void setPower(double power) {
     m_motor.set(power);
+  }
+
+  public boolean isReady() {
+    return Math.abs(m_finalPower) < Constants.ShooterConstants.k_deadzone;
   }
 
   public void setVelocityRPM(double velocity) {
@@ -56,28 +63,27 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     double currentVelocity = getVelocityRPM();
     double F = m_velocity / 5350.0;
-    double finalPower;
 
-    Constants.m_isShooting = m_velocity != 0;
+    Constants.m_runningShooterAndHolder = m_velocity != 0;
     
     double power = m_PID.calculate(currentVelocity, m_velocity);
 
     // If not shooting, make sure gamepiece is stowed, else shoot
-    if (!Constants.m_isShooting) {
+    if (!Constants.m_runningShooterAndHolder) {
       if (!Constants.m_isGamePieceStowed) {
         // Move the motor in direction depending on which way to stow
-        finalPower = Constants.m_shootIntakeSide ? -Constants.ShooterConstants.k_adjustGamePieceRPM : Constants.ShooterConstants.k_adjustGamePieceRPM;
+        m_finalPower = Constants.m_shootIntakeSide ? -Constants.ShooterConstants.k_adjustGamePieceRPM : Constants.ShooterConstants.k_adjustGamePieceRPM;
       } else {
-        finalPower = 0;
+        m_finalPower = 0;
       }
     } else {
-      finalPower = F + power;
+      m_finalPower = F + power;
     }
-    setPower(finalPower);
+    setPower(m_finalPower);
     
     SmartDashboard.putNumber("Shooter Front Velo", currentVelocity);
     SmartDashboard.putNumber("Shooter Target Front Velocity", m_velocity);
-    SmartDashboard.putNumber("Shooter Power", finalPower);
+    SmartDashboard.putNumber("Shooter Power", m_finalPower);
     SmartDashboard.putBoolean("Shoot Speaker", Constants.m_speaker);
   }
 }

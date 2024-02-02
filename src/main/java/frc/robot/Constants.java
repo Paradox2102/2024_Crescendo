@@ -119,7 +119,7 @@ public final class Constants {
     public static final double k_resetPositionDegrees = 0;
   }
 
-  // Positiv velocities means shooting, negative is intake
+  // Negative velocities means shooting, positive is intake
   public static class ShooterConstants {
     public static final int k_shooterMotor = 11;
     public static final double k_intakeVelocityRPM = 2000;
@@ -135,16 +135,18 @@ public final class Constants {
     public static final int k_backSensor = 0;
   }
 
-  // Negative velocities means shooting, positive is intake
+  // Positive velocities means shooting, negative is intake
   public static class HolderConstants {
     public static final int k_holdingMotor = 10;
-    public static final double k_intakeVelocityRPM = -500;
-    public static final double k_ampVelocityRPM = -4000;
-    public static final double k_speakerVelocityRPM = -2000;
-    public static final double k_speakerFeedVelocityRPM = 3500;
-    public static final double k_ampFeedVelocityRPM = 1000;
 
-    public static final double k_adjustGamePieceRPM = -50;
+    public static final double k_intakeVelocityRPM = 500;
+    public static final double k_ampVelocityRPM = 4000;
+    public static final double k_speakerVelocityRPM = 2000;
+    public static final double k_speakerFeedVelocityRPM = -3500;
+    public static final double k_ampFeedVelocityRPM = -1000;
+
+    public static final double k_deadzone = 25;
+    public static final double k_adjustGamePieceRPM = 50;
   }
 
   public static class ElevatorConstants {
@@ -156,5 +158,5 @@ public final class Constants {
   public static boolean m_shootIntakeSide = true;
   public static boolean m_hasGamePiece = false;
   public static boolean m_isGamePieceStowed = false;
-  public static boolean m_isShooting = false;
+  public static boolean m_runningShooterAndHolder = false;
 }

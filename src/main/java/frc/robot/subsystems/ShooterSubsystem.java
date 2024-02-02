@@ -59,9 +59,13 @@ public class ShooterSubsystem extends SubsystemBase {
     double currentVelocity = getVelocityRPM();
     double F = m_velocity / 5350.0;
     double finalPower;
+
+    Constants.m_isShooting = m_velocity != 0;
     
     double power = m_PID.calculate(currentVelocity, m_velocity);
-    if (m_velocity == 0) {
+
+    // If not shooting, make sure gamepiece is stowed, else shoot
+    if (!Constants.m_isShooting) {
       finalPower = 0;
     } else {
       finalPower = F + power;

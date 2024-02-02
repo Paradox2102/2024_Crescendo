@@ -21,8 +21,8 @@ import frc.robot.commands.test.TestShooter;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HolderSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.ShooterSensors;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.triggers.ToggleTrigger;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -41,12 +41,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   ApriltagsCamera m_apriltagCamera = new ApriltagsCamera();
-  PositionServer m_posServer =new PositionServer();
+  PositionServer m_posServer = new PositionServer();
 
+  private final ShooterSensors m_shooterSensors = new ShooterSensors();
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera);
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
-  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-  private final HolderSubsystem m_holderSubsystem = new HolderSubsystem();
+  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem(m_shooterSensors);
+  private final HolderSubsystem m_holderSubsystem = new HolderSubsystem(m_shooterSensors);
 
   private final CommandJoystick m_joystick = new CommandJoystick(1);
   public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);

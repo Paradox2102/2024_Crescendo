@@ -126,8 +126,8 @@ public final class Constants {
     public static final double k_ampVelocityRPM = -2000;
     public static final double k_deadzone = 25;
 
-    public static final double k_frontSensors = 0;
-    public static final double k_backSensors = 0;
+    public static final int k_frontSensor = 0;
+    public static final int k_backSensor = 0;
   }
 
   public static class HolderConstants {

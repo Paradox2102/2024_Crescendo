@@ -30,6 +30,10 @@ public class ElevatorSubsystem extends SubsystemBase {
     return m_elevatorEncoder.getPosition();
   }
 
+  public double getCookedElevatorPosition() {
+    return m_elevatorEncoder.getPosition() * Constants.ElevatorConstants.k_ticksToInches;
+  }
+
   public void setPower(double power) {
     m_power = power;
   }
@@ -40,10 +44,12 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    //show the extention of 
+    //power
+    SmartDashboard.putNumber("Elevator Power", m_power);
+
+    //show how the elevator is positioned
     SmartDashboard.putNumber("Elevator Raw Position", getRawElevatorPosition());
+    SmartDashboard.putNumber("Elevator Cooked Position", getCookedElevatorPosition());
     // This method will be called once per scheduler run
-    //position (extend)
-    //conversion factor ticks --> inches
   }
 }

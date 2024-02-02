@@ -16,7 +16,7 @@
  *    Contact: robotics@gabysoft.com
  */
 
-package frc.VisionCamera;
+package frc.visionCamera;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

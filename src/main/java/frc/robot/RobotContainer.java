@@ -46,8 +46,8 @@ public class RobotContainer {
   private final ShooterSensors m_shooterSensors = new ShooterSensors();
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera);
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
-  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem(m_shooterSensors);
-  private final HolderSubsystem m_holderSubsystem = new HolderSubsystem(m_shooterSensors);
+  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  private final HolderSubsystem m_holderSubsystem = new HolderSubsystem();
 
   private final CommandJoystick m_joystick = new CommandJoystick(1);
   public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);

@@ -46,9 +46,9 @@ public class TestShooter extends Command {
   public void execute() {
     if (m_shoot) {
       if (Constants.m_speaker && Math.abs(m_shooterSubsystem.getVelocityRPM() - Constants.ShooterConstants.k_speakerVelocityRPM) < Constants.ShooterConstants.k_deadzone) {
-        m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerVelocityRPM);
+        m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerFeedVelocityRPM);
       } else if (Math.abs(m_shooterSubsystem.getVelocityRPM() - Constants.ShooterConstants.k_ampVelocityRPM) < Constants.ShooterConstants.k_deadzone) {
-        m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_ampVelocityRPM);
+        m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_ampFeedVelocityRPM);
       }
     }
   }

@@ -18,7 +18,7 @@ public class FeedCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setVelocityRPM(Constants.m_speaker ? Constants.HolderConstants.k_speakerVelocityRPM : Constants.HolderConstants.k_ampVelocityRPM);
+    m_subsystem.setVelocityRPM(Constants.m_speaker ? Constants.HolderConstants.k_speakerFeedVelocityRPM : Constants.HolderConstants.k_ampFeedVelocityRPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

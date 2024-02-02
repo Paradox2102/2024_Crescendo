@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -46,5 +47,8 @@ public class ShooterSensors extends SubsystemBase {
     // This method will be called once per scheduler run
     Constants.m_hasGamePiece = hasGamePiece();
     Constants.m_isGamePieceStowed = isGamePieceStowed();
+
+    SmartDashboard.putNumber("Front Sensor", getFrontDistance());
+    SmartDashboard.putNumber("Back Sensor", getBackDistance());
   }
 }

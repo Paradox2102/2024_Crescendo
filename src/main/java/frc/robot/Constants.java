@@ -131,7 +131,7 @@ public final class Constants {
     public static final double k_adjustGamePieceRPM = 50;
 
     public static final int k_frontSensor = 0;
-    public static final int k_backSensor = 0;
+    public static final int k_backSensor = 1;
   }
 
   // Positive is intake. negative is shoot intake side
@@ -150,6 +150,8 @@ public final class Constants {
     public static final int k_elevatorMotor = 0;
     public static final double k_ticksToInches = 0;
   }
+
+  public static final double k_idealShootingDistanceMeters = 3;
 
   public static boolean m_speaker = true;
   public static boolean m_shootIntakeSide = true;

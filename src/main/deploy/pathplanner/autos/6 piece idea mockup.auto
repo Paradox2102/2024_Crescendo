@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.75,
+      "y": 6.6
+    },
+    "rotation": -120.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "6 piece start"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "6 piece middle"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "6 piece end"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

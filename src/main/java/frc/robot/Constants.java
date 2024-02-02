@@ -138,7 +138,6 @@ public final class Constants {
   // Positive is intake. negative is shoot intake side
   public static class HolderConstants {
     public static final int k_holdingMotor = 10;
-
     public static final double k_intakeVelocityRPM = 500;
     public static final double k_ampVelocityRPM = 4000;
     public static final double k_speakerVelocityRPM = 2000;

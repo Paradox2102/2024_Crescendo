@@ -18,6 +18,7 @@ public class ShootCommand extends Command {
     // Use addRequirements() here to declare subsystem dependencies.
     m_shooterSubsystem = shooterSubsystem;
     m_holderSubsystem = holderSubsystem;
+    addRequirements(m_shooterSubsystem, m_holderSubsystem);
   }
 
   // Called when the command is initially scheduled.

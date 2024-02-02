@@ -1,8 +1,8 @@
-package frc.VisionCamera;
+package frc.visionCamera;
 
 import frc.apriltagsCamera.Logger;
-import frc.VisionCamera.PiCamera.PiCameraRegion;
-import frc.VisionCamera.PiCamera.PiCameraRegions;
+import frc.visionCamera.PiCamera.PiCameraRegion;
+import frc.visionCamera.PiCamera.PiCameraRegions;
 
 public class Camera {
     // @SuppressWarnings("unused")

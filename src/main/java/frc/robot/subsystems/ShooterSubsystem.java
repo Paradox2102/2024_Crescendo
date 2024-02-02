@@ -17,7 +17,6 @@ import frc.robot.Constants;
 public class ShooterSubsystem extends SubsystemBase {
   private CANSparkFlex m_motor = new CANSparkFlex(Constants.ShooterConstants.k_shooterMotor, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_motor.getEncoder();
-  private ShooterSensors m_sensors;
 
   private final double k_p = .00025; // .0004
   private final double k_i = .00052;// .002
@@ -27,8 +26,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private double m_velocity = 0;
   /** Creates a new FrontSubsystem. */
-  public ShooterSubsystem(ShooterSensors shooterSensors) {
-    m_sensors = shooterSensors;
+  public ShooterSubsystem() {
     setBrakeMode(true);
     m_PID.setIZone(k_iZone);
   }
@@ -59,10 +57,19 @@ public class ShooterSubsystem extends SubsystemBase {
     double currentVelocity = getVelocityRPM();
     double F = m_velocity / 5350.0;
     double finalPower;
+
+    Constants.m_isShooting = m_velocity != 0;
     
     double power = m_PID.calculate(currentVelocity, m_velocity);
-    if (m_velocity == 0) {
-      finalPower = 0;
+
+    // If not shooting, make sure gamepiece is stowed, else shoot
+    if (!Constants.m_isShooting) {
+      if (!Constants.m_isGamePieceStowed) {
+        // Move the motor in direction depending on which way to stow
+        finalPower = Constants.m_shootIntakeSide ? -Constants.ShooterConstants.k_adjustGamePieceRPM : Constants.ShooterConstants.k_adjustGamePieceRPM;
+      } else {
+        finalPower = 0;
+      }
     } else {
       finalPower = F + power;
     }

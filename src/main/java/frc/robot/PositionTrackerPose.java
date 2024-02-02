@@ -41,7 +41,7 @@ public class PositionTrackerPose {
 			m_driveSubsystem.getSwerve(),
 			m_driveSubsystem.getGyroRotation2d(),
 			m_driveSubsystem.getModulePosition(),
-			ParadoxField.pose2dFromParadox(0, 0, 90)
+			new Pose2d(0, 0, Rotation2d.fromDegrees(0))
 		);
 
 		// m_posServer = new PositionServer();
@@ -54,11 +54,10 @@ public class PositionTrackerPose {
 
 	public void setXYAngle(double x, double y, double angleInDegrees) {
 		Logger.log("PositionTracker", 1, String.format("x=%f, y=%f, angle=%f", x, y, angleInDegrees));
-		m_driveSubsystem.getGyro().setYaw(angleInDegrees);
 		m_poseEstimator.resetPosition(
-			ParadoxField.rotation2dFromParadoxAngle(angleInDegrees), 
+			Rotation2d.fromDegrees(angleInDegrees), 
 			m_driveSubsystem.getModulePosition(), 
-			ParadoxField.pose2dFromParadox(x, y, angleInDegrees)
+			new Pose2d(x, y, Rotation2d.fromDegrees(angleInDegrees))
 		);
 	}
 

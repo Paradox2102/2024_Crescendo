@@ -17,6 +17,7 @@ import frc.robot.Constants;
 public class ShooterSubsystem extends SubsystemBase {
   private CANSparkFlex m_motor = new CANSparkFlex(Constants.ShooterConstants.k_shooterMotor, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_motor.getEncoder();
+  private ShooterSensors m_sensors;
 
   private final double k_p = .00025; // .0004
   private final double k_i = .00052;// .002
@@ -26,7 +27,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private double m_velocity = 0;
   /** Creates a new FrontSubsystem. */
-  public ShooterSubsystem() {
+  public ShooterSubsystem(ShooterSensors shooterSensors) {
+    m_sensors = shooterSensors;
     setBrakeMode(true);
     m_PID.setIZone(k_iZone);
   }

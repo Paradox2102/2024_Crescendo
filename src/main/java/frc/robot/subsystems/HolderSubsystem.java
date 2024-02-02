@@ -23,10 +23,12 @@ public class HolderSubsystem extends SubsystemBase {
   private final double k_d = 0;
   private final double k_iZone = 100;
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
+  private ShooterSensors m_sensors;
 
   private double m_velocity = 0;
   /** Creates a new FrontSubsystem. */
-  public HolderSubsystem() {
+  public HolderSubsystem(ShooterSensors shooterSensors) {
+    m_sensors = shooterSensors;
     m_PID.setIZone(k_iZone);
   }
 

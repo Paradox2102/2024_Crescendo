@@ -28,11 +28,6 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
 
-  public static class FieldLocations {
-    public static final Translation2d k_redSpeaker = new Translation2d(-0.0381, 5.547868);
-    public static final Translation2d k_blueSpeaker = new Translation2d(-0.0381, 2.760843602);
-  }
-
   public static class DriveConstants {
     public static final int k_FRTurningMotor = 4;
     public static final int k_FLTurningMotor = 2;

@@ -17,6 +17,7 @@ import frc.robot.Constants;
 public class ElevatorSubsystem extends SubsystemBase {
   private CANSparkFlex m_elevatorMotor = new CANSparkFlex(Constants.ElevatorConstants.k_elevatorMotor, MotorType.kBrushless);
   private RelativeEncoder m_elevatorEncoder;
+  private double m_elevatorPoint;
 
   private double m_power;
 
@@ -33,8 +34,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_power = power;
   }
 
-  public void setPosition() {
-
+  public void setPosition(double position) {
+    m_elevatorPoint = position;
   }
 
   @Override

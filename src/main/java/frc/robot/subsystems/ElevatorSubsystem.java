@@ -46,7 +46,6 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void periodic() {
     //power
     SmartDashboard.putNumber("Elevator Power", m_power);
-
     //show how the elevator is positioned
     SmartDashboard.putNumber("Elevator Raw Position", getRawElevatorPosition());
     SmartDashboard.putNumber("Elevator Cooked Position", getCookedElevatorPosition());

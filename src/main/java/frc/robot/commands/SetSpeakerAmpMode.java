@@ -10,9 +10,9 @@ import frc.robot.Constants;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TogglerSpeakerAmpMode extends InstantCommand {
+public class SetSpeakerAmpMode extends InstantCommand {
   boolean m_speakerMode;
-  public TogglerSpeakerAmpMode(boolean speakerMode) {
+  public SetSpeakerAmpMode(boolean speakerMode) {
     m_speakerMode = speakerMode;
     // Use addRequirements() here to declare subsystem dependencies.
   }

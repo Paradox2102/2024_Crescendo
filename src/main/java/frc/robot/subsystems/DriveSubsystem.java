@@ -23,6 +23,8 @@ import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.apriltagsCamera.ApriltagLocation;
+import frc.apriltagsCamera.ApriltagLocations;
 import frc.apriltagsCamera.ApriltagsCamera;
 import frc.visionCamera.Camera;
 import frc.visionCamera.Camera.CameraFrame;
@@ -139,6 +141,29 @@ public class DriveSubsystem extends SubsystemBase {
 
   public double getCenterLine() {
     return m_visionCamera.getCurrentFrame().getCenterLine();
+  }
+
+  // Red Speaker is Apriltag 4, blue is 7
+  public ApriltagLocation getSpeakerLocationMeters() {
+    DriverStation.Alliance alliance = DriverStation.getAlliance().get();
+    return ApriltagLocations.findTag(alliance == DriverStation.Alliance.Red ? 4 : 7);
+  }
+
+  public double getTranslationalDistanceFromSpeakerMeters() {
+    ApriltagLocation speaker = getSpeakerLocationMeters();
+    Pose2d robot = m_tracker.getPose2d();
+    double xDist = robot.getX() - speaker.m_xMeters;
+    double yDist = robot.getY() - speaker.m_yMeters;
+    return Math.sqrt((xDist * xDist) + (yDist * yDist));
+  }
+
+  public double getRotationalDistanceFromSpeakerDegrees() {
+    ApriltagLocation speaker = getSpeakerLocationMeters();
+    Pose2d robot = m_tracker.getPose2d();
+    double heading = robot.getRotation().getDegrees();
+    double xDist = robot.getX() - speaker.m_xMeters;
+    double yDist = robot.getY() - speaker.m_yMeters;
+    return heading - Math.toDegrees(Math.atan((xDist / yDist)));
   }
 
   public SwerveModulePosition[] getModulePosition() {

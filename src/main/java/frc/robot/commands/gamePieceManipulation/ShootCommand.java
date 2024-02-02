@@ -12,6 +12,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShootCommand extends Command {
   ShooterSubsystem m_shooterSubsystem;
   HolderSubsystem m_holderSubsystem;
+
   /** Creates a new ShootCommand. */
   public ShootCommand(ShooterSubsystem shooterSubsystem, HolderSubsystem holderSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -28,33 +29,30 @@ public class ShootCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //if the game piece is acquired, 
-    //rev the shooter at different speeds depending on what side you are shooting from and where you are aiming, 
-    //and feed the game piece in once the shooter reaches the target velocity
+    // if the game piece is acquired,
+    // rev the shooter at different speeds depending on what side you are shooting
+    // from and where you are aiming,
+    // and feed the game piece in once the shooter reaches the target velocity
     if (Constants.m_isGamePieceStowed) {
-      if(Constants.m_speaker) {
-        if(Constants.m_shootIntakeSide){
-          m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerVelocityRPM);
-          if(m_shooterSubsystem.isReady()){
+      if (Constants.m_speaker) {
+        if (Constants.m_shootIntakeSide) {
+          // shooting intake side to speaker
+          m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerShootVelocityRPM);
+          if (m_shooterSubsystem.isReady()) {
             m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerFeedVelocityRPM);
           }
         } else {
-          m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerVelocityRPM);
-          if(m_holderSubsystem.isReady()){
+          // shooting holder side to speaker
+          m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
+          if (m_holderSubsystem.isReady()) {
             m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerFeedVelocityRPM);
           }
         }
       } else {
-        if(Constants.m_shootIntakeSide){
-          m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_ampVelocityRPM);
-          if(m_shooterSubsystem.isReady()){
-            m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_ampFeedVelocityRPM);
-          }
-        } else {
-          m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_ampVelocityRPM);
-          if(m_holderSubsystem.isReady()){
-            m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_ampFeedVelocityRPM);
-          }
+        // shooting intake side to amp
+        m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_ampShootVelocityRPM);
+        if (m_shooterSubsystem.isReady()) {
+          m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_ampFeedVelocityRPM);
         }
       }
     }

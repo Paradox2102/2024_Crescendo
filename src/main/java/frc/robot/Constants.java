@@ -119,7 +119,7 @@ public final class Constants {
     public static final double k_resetPositionDegrees = 0;
   }
 
-  // Negative velocities means shooting, positive is intake
+  // Positive is intake. negative is shoot intake side
   public static class ShooterConstants {
     public static final int k_shooterMotor = 11;
     public static final double k_intakeVelocityRPM = 2000;
@@ -135,7 +135,7 @@ public final class Constants {
     public static final int k_backSensor = 0;
   }
 
-  // Positive velocities means shooting, negative is intake
+  // Positive is intake. negative is shoot intake side
   public static class HolderConstants {
     public static final int k_holdingMotor = 10;
 

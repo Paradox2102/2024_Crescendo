@@ -12,6 +12,12 @@
     "data": {
       "commands": [
         {
+          "type": "parallel",
+          "data": {
+            "commands": []
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "6 piece start"
@@ -27,6 +33,12 @@
           "type": "path",
           "data": {
             "pathName": "6 piece end"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": []
           }
         }
       ]

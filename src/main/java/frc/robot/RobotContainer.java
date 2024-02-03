@@ -65,7 +65,7 @@ public class RobotContainer {
     configureBindings();
     m_driveSubsystem.setTracker(m_tracker);
     NamedCommands.registerCommand("shoot", new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, true));
-    NamedCommands.registerCommand("intake", new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, false));
+    NamedCommands.registerCommand("intake", new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
     NamedCommands.registerCommand("rev shooter", new RevCommand(m_shooterSubsystem, m_holderSubsystem));
 
     m_apriltagCamera.setCameraInfo(0, 0, 0);

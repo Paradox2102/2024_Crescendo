@@ -51,11 +51,33 @@
       "rotateFast": true
     }
   ],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "shoot 1st",
+      "minWaypointRelativePos": 0.85,
+      "maxWaypointRelativePos": 1.15,
+      "constraints": {
+        "maxVelocity": 1.5,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0
+      }
+    }
+  ],
   "eventMarkers": [
     {
       "name": "shoot 1st piece",
-      "waypointRelativePos": 0.65,
+      "waypointRelativePos": 0.85,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
+    },
+    {
+      "name": "intake 2nd",
+      "waypointRelativePos": 1.8,
       "command": {
         "type": "parallel",
         "data": {

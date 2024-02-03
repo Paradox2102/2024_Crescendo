@@ -128,7 +128,7 @@ public final class Constants {
     public static final double k_speakerFeedVelocityRPM = 3500;
     public static final double k_deadzone = 25;
 
-    public static final double k_adjustGamePiecePower = -.25;
+    public static final double k_adjustGamePiecePower = -.15;
 
     public static final int k_frontSensor = 0;
     public static final int k_backSensor = 1;
@@ -143,7 +143,7 @@ public final class Constants {
     public static final double k_ampFeedVelocityRPM = -1000;
 
     public static final double k_deadzone = 25;
-    public static final double k_adjustGamePiecePower = -.25;
+    public static final double k_adjustGamePiecePower = -.15;
   }
 
   public static class ElevatorConstants {

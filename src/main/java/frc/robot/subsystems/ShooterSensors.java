@@ -16,7 +16,8 @@ public class ShooterSensors extends SubsystemBase {
   private double k_minDistanceFront = 520;
   private double k_minDistanceBack = 300;
 
-  private int m_counter = 0;
+  private int m_frontCounter = 0;
+  private int m_backCounter = 0;
 
   /** Creates a new ShooterSensors. */
   public ShooterSensors() {}
@@ -37,32 +38,51 @@ public class ShooterSensors extends SubsystemBase {
     return getBackDistance() > k_minDistanceBack;
   }
 
+  public boolean getFrontSensorWithTime() {
+    return getFrontSensor() && m_frontCounter > 3;
+  }
+
+  public boolean getBackSensorWithTime() {
+    return getBackSensor() && m_backCounter > 3;
+  }
+
   public boolean hasGamePiece() {
-    return getFrontSensor() || getBackSensor();
+    return getFrontSensorWithTime() || getBackSensorWithTime();
   }
 
   public boolean isGamePieceStowed() {
     // If we are shooting intake side, check back sensors and not front sensors, if not, the opposite.
-    return Constants.m_shootIntakeSide ? (getBackSensor() && !getFrontSensor()) : (getFrontSensor() && !getBackSensor());
+    return Constants.m_shootIntakeSide ? (getBackSensorWithTime() && !getFrontSensorWithTime()) : (getFrontSensorWithTime() && !getBackSensorWithTime());
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    Constants.m_hasGamePiece = hasGamePiece() && m_counter > 3;
+    Constants.m_hasGamePiece = hasGamePiece();
     Constants.m_isGamePieceStowed = isGamePieceStowed();
 
-    if (hasGamePiece()) {
-      m_counter += 1;
+    if (getFrontSensor()) {
+      if (m_frontCounter < 5) {
+        m_frontCounter += 1;
+      }
     } else {
-      m_counter = 0;
+      m_frontCounter = 0;
+    }
+
+    if (getBackSensor()) {
+      if (m_backCounter < 5) {
+        m_backCounter += 1;
+      }
+    } else {
+      m_backCounter = 0;
     }
 
     SmartDashboard.putNumber("Front Sensor", getFrontDistance());
     SmartDashboard.putNumber("Back Sensor", getBackDistance());
     SmartDashboard.putBoolean("Has Game Piece", Constants.m_hasGamePiece);
-    SmartDashboard.putBoolean("Boolean Back", getBackSensor());
-    SmartDashboard.putBoolean("Boolean Front", getFrontSensor());
+    SmartDashboard.putBoolean("Boolean Back", getBackSensorWithTime());
+    SmartDashboard.putBoolean("Boolean Front", getFrontSensorWithTime());
     SmartDashboard.putBoolean("Game Piece Stowed", Constants.m_isGamePieceStowed);
+    SmartDashboard.putBoolean("Shoot Intake Side", Constants.m_shootIntakeSide);
   }
 }

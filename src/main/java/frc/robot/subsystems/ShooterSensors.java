@@ -13,7 +13,11 @@ public class ShooterSensors extends SubsystemBase {
   AnalogInput m_frontSensor = new AnalogInput(Constants.ShooterConstants.k_frontSensor);
   AnalogInput m_backSensor = new AnalogInput(Constants.ShooterConstants.k_backSensor);
 
-  private double k_minDistance = 0;
+  private double k_minDistanceFront = 520;
+  private double k_minDistanceBack = 300;
+
+  private int m_counter = 0;
+
   /** Creates a new ShooterSensors. */
   public ShooterSensors() {}
 
@@ -26,11 +30,11 @@ public class ShooterSensors extends SubsystemBase {
   }
 
   public boolean getFrontSensor() {
-    return getFrontDistance() > k_minDistance;
+    return getFrontDistance() > k_minDistanceFront;
   }
 
   public boolean getBackSensor() {
-    return getBackDistance() > k_minDistance;
+    return getBackDistance() > k_minDistanceBack;
   }
 
   public boolean hasGamePiece() {
@@ -45,10 +49,20 @@ public class ShooterSensors extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    Constants.m_hasGamePiece = hasGamePiece();
+    Constants.m_hasGamePiece = hasGamePiece() && m_counter > 3;
     Constants.m_isGamePieceStowed = isGamePieceStowed();
+
+    if (hasGamePiece()) {
+      m_counter += 1;
+    } else {
+      m_counter = 0;
+    }
 
     SmartDashboard.putNumber("Front Sensor", getFrontDistance());
     SmartDashboard.putNumber("Back Sensor", getBackDistance());
+    SmartDashboard.putBoolean("Has Game Piece", Constants.m_hasGamePiece);
+    SmartDashboard.putBoolean("Boolean Back", getBackSensor());
+    SmartDashboard.putBoolean("Boolean Front", getFrontSensor());
+    SmartDashboard.putBoolean("Game Piece Stowed", Constants.m_isGamePieceStowed);
   }
 }

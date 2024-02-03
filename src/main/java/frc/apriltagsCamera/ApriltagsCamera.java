@@ -347,9 +347,9 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 					}
 
 					// Add vision measurment using the updateAngle
-					poseEstimator.addVisionMeasurement(
-							new Pose2d(calculatedPos.getX(), calculatedPos.getY(), Rotation2d.fromDegrees(updateAngle)),
-							time, visionSD);
+					// poseEstimator.addVisionMeasurement(
+					// 		new Pose2d(calculatedPos.getX(), calculatedPos.getY(), Rotation2d.fromDegrees(updateAngle)),
+					// 		time, visionSD);
 
 					if (queue != null) {
 						// Put the uncorrected camera angle into the queue

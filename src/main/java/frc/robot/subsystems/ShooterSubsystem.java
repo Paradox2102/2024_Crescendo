@@ -39,7 +39,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public boolean isReady() {
-    return Math.abs(m_finalPower) < Constants.ShooterConstants.k_deadzone;
+    return Math.abs(m_velocity - getVelocityRPM()) < Constants.ShooterConstants.k_deadzone;
   }
 
   public void setVelocityRPM(double velocity) {

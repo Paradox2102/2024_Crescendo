@@ -34,7 +34,7 @@ public class HolderSubsystem extends SubsystemBase {
   }
 
   public boolean isReady() {
-    return Math.abs(m_finalPower) < Constants.HolderConstants.k_deadzone;
+    return Math.abs(m_velocity - getVelocityRPM()) < Constants.HolderConstants.k_deadzone;
   }
 
   public void setPower(double power) {

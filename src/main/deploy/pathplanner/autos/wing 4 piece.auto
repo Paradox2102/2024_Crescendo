@@ -5,7 +5,7 @@
       "x": 1.2,
       "y": 5.4
     },
-    "rotation": 0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -62,7 +62,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
               {
@@ -93,7 +93,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
               {

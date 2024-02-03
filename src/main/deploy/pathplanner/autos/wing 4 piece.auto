@@ -5,7 +5,7 @@
       "x": 1.2,
       "y": 5.4
     },
-    "rotation": 0.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -34,7 +34,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.25
+                        "waitTime": 1.0
                       }
                     },
                     {
@@ -62,7 +62,7 @@
           }
         },
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -93,7 +93,7 @@
           }
         },
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
               {

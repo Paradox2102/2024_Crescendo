@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.246531927743191,
-        "y": 7.760807540617457
+        "x": 6.878652161862727,
+        "y": 7.110045901003483
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.419102044854923,
-        "y": 5.859604688330517
+        "x": 5.299941312133336,
+        "y": 6.431784943341967
       },
       "prevControl": {
-        "x": 4.350853737336929,
-        "y": 5.762107106161956
+        "x": 5.182647097554492,
+        "y": 6.411643512555701
       },
       "nextControl": {
-        "x": 5.486786243683449,
-        "y": 7.384867829514103
+        "x": 6.45766260193489,
+        "y": 6.630585568863446
       },
       "isLocked": false,
       "linkedName": null
@@ -46,7 +46,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.15,
+      "waypointRelativePos": 1.05,
       "rotationDegrees": 5.457324103249661,
       "rotateFast": true
     }
@@ -54,8 +54,8 @@
   "constraintZones": [
     {
       "name": "shoot 1st",
-      "minWaypointRelativePos": 0.85,
-      "maxWaypointRelativePos": 1.15,
+      "minWaypointRelativePos": 0.7,
+      "maxWaypointRelativePos": 1.2,
       "constraints": {
         "maxVelocity": 1.5,
         "maxAcceleration": 3.0,

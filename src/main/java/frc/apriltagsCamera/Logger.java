@@ -52,7 +52,7 @@ public class Logger
 {
 	private static Object 		m_lock = new Object();
 	private final static String m_traceName = "trace";
-	private final static String m_logDir	= "/home/lvuser/logs/";
+	private final static String m_logDir	= "/home/lvuser/plogs/";
 	private static PrintWriter	m_file		= null;
 	private static int			m_level		= -999;			// By default, use logging level based on the type
 	private static long			m_startTime	= System.currentTimeMillis();

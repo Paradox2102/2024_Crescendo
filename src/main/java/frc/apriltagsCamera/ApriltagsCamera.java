@@ -212,7 +212,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 			// Logger.log("ApriltagsCamera", 1, String.format("translatePos: dx=%f,dy=%f",
 			// dx, dy));
 
-			return new Pose2d(xPos - dx / 12, yPos + dy / 12, Rotation2d.fromRadians(angleInRadians));
+			return new Pose2d(xPos - dx / ApriltagLocations.k_inPerM, yPos + dy / ApriltagLocations.k_inPerM, Rotation2d.fromRadians(angleInRadians));
 		}
 
 		/*
@@ -876,9 +876,10 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 			if (m_log && ((nProcessed == 0) && (nFrames > 0))) {
 				// If logging is enabled log only the estimated pose
 				Pose2d estPos = poseEstimator.getEstimatedPosition();
+				// Logger.log("ApriltagsCameraLog", 1, ",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust");							
 
 				Logger.log("ApriltagsCameraLog", 1,
-						String.format(",,,,,%f,,%f,,%f,", estPos.getRotation().getDegrees(), estPos.getX(),
+						String.format(",,,,,,%f,,%f,,%f,,", estPos.getRotation().getDegrees(), estPos.getX(),
 								estPos.getY()));
 			}
 		}

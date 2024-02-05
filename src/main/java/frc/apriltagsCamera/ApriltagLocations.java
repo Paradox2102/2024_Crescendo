@@ -6,10 +6,10 @@ package frc.apriltagsCamera;
 
 /** All distances are in meters and all angles in degrees */
 public class ApriltagLocations {
-    private static double y0 = 323.0 / 2;
+    private static double y0 = 0; //323.0 / 2;
     public static double k_inPerM = 39.3701; // number of inches in a meter
     public static ApriltagLocation m_tags[] = {
-            // new ApriltagLocation(7, 0, 0, 0),
+            // new ApriltagLocation(7, 0, (323.0/2) / k_inPerM, 0 - 180),
             new ApriltagLocation(1, 593.68 / k_inPerM, (9.68 - y0) / k_inPerM, 120 - 180),
             new ApriltagLocation(2, 637.21 / k_inPerM, (34.79 - y0) / k_inPerM, 120 - 180),
             new ApriltagLocation(3, 652.73 / k_inPerM, (196.17 - y0) / k_inPerM, 180 - 180),

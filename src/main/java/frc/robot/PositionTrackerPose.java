@@ -5,6 +5,7 @@ import java.util.Optional;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.apriltagsCamera.ApriltagLocation;
@@ -94,22 +95,44 @@ public class PositionTrackerPose {
 		SmartDashboard.putNumber("Robot Angle", pos.getRotation().getDegrees());
 		m_posServer.setPosition(pos.getX(), pos.getY(), pos.getRotation().getDegrees());
 
-		PositionServer.Target target = m_posServer.getTarget();
+		// PositionServer.Target target = m_posServer.getTarget();
 
-		if (target != null) {
-			// Logger.log("PositionTracker", 1, String.format("x=%f,y=%f,h=%f", target.m_x,
-			// target.m_y, target.m_h));
-			SmartDashboard.putNumber("TargetX", target.m_x);
-			SmartDashboard.putNumber("TargetY", target.m_y);
-			SmartDashboard.putNumber("TargetH", target.m_h);
-		}
+		// if (target != null) {
+		// 	// Logger.log("PositionTracker", 1, String.format("x=%f,y=%f,h=%f", target.m_x,
+		// 	// target.m_y, target.m_h));
+		// 	SmartDashboard.putNumber("TargetX", target.m_x);
+		// 	SmartDashboard.putNumber("TargetY", target.m_y);
+		// 	SmartDashboard.putNumber("TargetH", target.m_h);
+		// }
 	}
 
+	// private void logUpdate()
+	// {
+	// 	Rotation2d rotation = m_driveSubsystem.getGyroRotation2d();
+	// 	SwerveModulePosition[] modules = m_driveSubsystem.getModulePosition();
+
+	// 	Logger.log("PositionTrackerPose", 1, String.format("rot=%f,m0=%f,m1=%f,m2=%f,m3=%f,a0=%f,a1=%f,a2=%f,a3=%f", 
+	// 				rotation.getDegrees(),
+	// 				modules[0].distanceMeters,
+	// 				modules[1].distanceMeters,
+	// 				modules[2].distanceMeters,
+	// 				modules[3].distanceMeters,
+	// 				modules[0].angle.getDegrees(),
+	// 				modules[1].angle.getDegrees(),
+	// 				modules[2].angle.getDegrees(),
+	// 				modules[3].angle.getDegrees()));
+
+	// }
+
 	public void update(ApriltagsCamera camera) {
+		// logUpdate();
 		m_poseEstimator.updateWithTime(
 				ApriltagsCamera.getTime(),
 				m_driveSubsystem.getGyroRotation2d(),
 				m_driveSubsystem.getModulePosition());
+		// Pose2d pose = m_poseEstimator.getEstimatedPosition();
+		// Logger.log("PositionTrackerPose", 1, String.format("x=%f,y=%f,a=%f", 
+		// 								pose.getX(), pose.getY(), pose.getRotation().getDegrees()));
 		// if (!DriverStation.isAutonomous()) {
 		camera.processRegions(m_poseEstimator);
 		// }
@@ -124,14 +147,14 @@ public class PositionTrackerPose {
 		SmartDashboard.putNumber("Robot Angle", pos.getRotation().getDegrees());
 		m_posServer.setPosition(pos.getX(), pos.getY(), pos.getRotation().getDegrees());
 
-		PositionServer.Target target = m_posServer.getTarget();
+		// PositionServer.Target target = m_posServer.getTarget();
 
-		if (target != null) {
-			// Logger.log("PositionTracker", 1, String.format("x=%f,y=%f,h=%f", target.m_x,
-			// target.m_y, target.m_h));
-			SmartDashboard.putNumber("TargetX", target.m_x);
-			SmartDashboard.putNumber("TargetY", target.m_y);
-			SmartDashboard.putNumber("TargetH", target.m_h);
-		}
+		// if (target != null) {
+		// 	// Logger.log("PositionTracker", 1, String.format("x=%f,y=%f,h=%f", target.m_x,
+		// 	// target.m_y, target.m_h));
+		// 	SmartDashboard.putNumber("TargetX", target.m_x);
+		// 	SmartDashboard.putNumber("TargetY", target.m_y);
+		// 	SmartDashboard.putNumber("TargetH", target.m_h);
+		// }
 	}
 }

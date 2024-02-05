@@ -45,7 +45,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   ApriltagsCamera m_apriltagCamera = new ApriltagsCamera();
-  PositionServer m_posServer = new PositionServer();
+  PositionServer m_posServer = new PositionServer(m_apriltagCamera);
 
   private final ShooterSensors m_shooterSensors = new ShooterSensors();
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera);

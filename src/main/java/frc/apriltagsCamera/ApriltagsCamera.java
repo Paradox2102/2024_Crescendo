@@ -347,9 +347,11 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 					}
 
 					// Add vision measurment using the updateAngle
-					// poseEstimator.addVisionMeasurement(
-					// 		new Pose2d(calculatedPos.getX(), calculatedPos.getY(), Rotation2d.fromDegrees(updateAngle)),
-					// 		time, visionSD);
+					if (!m_camerasDisabled) {
+						poseEstimator.addVisionMeasurement(
+								new Pose2d(calculatedPos.getX(), calculatedPos.getY(), Rotation2d.fromDegrees(updateAngle)),
+								time, visionSD);
+					}
 
 					if (queue != null) {
 						// Put the uncorrected camera angle into the queue
@@ -496,13 +498,14 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	private boolean m_connected = false;
 	private Timer m_watchdogTimer = new Timer();
 	private long m_lastMessage;
+	private boolean m_camerasDisabled = false;
 	private static final int k_timeout = 5000;
 	// private double m_angleOffsetInDegrees = 0;
 	boolean m_angleOffsetInitialized = false;
 	// private final double m_xOffsetInches;
 	// private final double m_yOffsetInches;
 	// private final double m_cameraAngleDegrees;
-	private int m_invalidCount;
+	// private int m_invalidCount;
 
 	private static long k_timeOffset = 0;
 
@@ -545,6 +548,12 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 	public void setCameraInfo(double xOffsetInches, double yOffsetInches, double angleOffsetInDegrees) {
 		m_cameras.add(new ApriltagsCameraInfo(xOffsetInches, yOffsetInches, angleOffsetInDegrees));
+	}
+
+	public void disableCameras(boolean disable)
+	{
+		Logger.log("ApriltagsCamera", 1, String.format("DisableCameras = %b", disable));
+		m_camerasDisabled = disable;
 	}
 
 	/**

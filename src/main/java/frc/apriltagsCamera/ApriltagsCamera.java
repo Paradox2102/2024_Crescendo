@@ -59,12 +59,15 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 	public static final Vector<N3> k_odometrySD = VecBuilder.fill(0.1, 0.1, 0.1); // Default odometry standard
 																					// deviations
-	public static final Vector<N3> k_visionSD = VecBuilder.fill(0.1, 0.1, 0.1); // Default vision standerd devations
+	// public static final Vector<N3> k_visionSD = VecBuilder.fill(0.1, 0.1, 0.1); // Default vision standerd devations
+	public static final Vector<N3> k_visionSD = VecBuilder.fill(0.05, 0.05, 0.05); // Default vision standerd devations
 
 	private static final double k_minSDAdjustDistance = 0.5; // Minimum distance for which we apply the standard
 																// deviation adjustment
 	private static final double k_maxSDAdjustDistance = 4.0; // Maximum distance for which we apply the stander
 																// deviation adjustment
+	private static final double k_maxAngleDistance = 5.0; // If this distance is greater than this value, do not update
+															// the estimated angle
 	private static final double k_SDAdjustSlope = 8.0; // Slop of adjustment between min and max distances
 	private static final double k_maxDistance = 12.0; // Max distance beyond which the camera is completely unreliable
 	private static final double k_maxAngleError = 2; // Max acceptable angle error in degrees
@@ -109,7 +112,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	private class ApriltagPosition {
 		double m_time;
 		Pose2d m_estPos;
-		Pose2d m_camPos;
+		// Pose2d m_camPos;
 	}
 
 	private class ApriltagsQueue {
@@ -123,10 +126,10 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 			}
 		}
 
-		void add(Pose2d estPos, Pose2d camPos, double time) {
+		void add(Pose2d estPos, /* Pose2d camPos, */ double time) {
 			m_queue[m_position].m_time = time;
 			m_queue[m_position].m_estPos = estPos;
-			m_queue[m_position].m_camPos = camPos;
+			// m_queue[m_position].m_camPos = camPos;
 
 			m_position = (m_position + 1) % k_queueSize;
 		}
@@ -150,9 +153,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	// between samples
 	static final int k_maxCameras = 2;
 	static final int k_maxTags = 16;
-	ApriltagsQueue m_queue[][] = new ApriltagsQueue[k_maxCameras][k_maxTags];
+	ApriltagsQueue m_queue = new ApriltagsQueue(); // [][] = new ApriltagsQueue[k_maxCameras][k_maxTags];
 	boolean m_dashboard = true;
-	static int k_maxAngleDistance = 500; // Max distance for which the angle calculation is valid
 
 	/**
 	 * @brief The ApriltagsCameraRegion specifies a single detected region
@@ -212,7 +214,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 			// Logger.log("ApriltagsCamera", 1, String.format("translatePos: dx=%f,dy=%f",
 			// dx, dy));
 
-			return new Pose2d(xPos - dx / ApriltagLocations.k_inPerM, yPos + dy / ApriltagLocations.k_inPerM, Rotation2d.fromRadians(angleInRadians));
+			return new Pose2d(xPos - dx / ApriltagLocations.k_inPerM, yPos + dy / ApriltagLocations.k_inPerM,
+					Rotation2d.fromRadians(angleInRadians));
 		}
 
 		/*
@@ -227,19 +230,22 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 			double time = convertTime(captureTime);
 			ApriltagLocation tag = ApriltagLocations.findTag(m_tag);
-			ApriltagsQueue queue = null;
+			// ApriltagsQueue queue = null;
 			ApriltagPosition lastPos = null;
 			Pose2d estPos = poseEstimator.getEstimatedPosition();
 			double cameraAngle; // Actual angle returned from the camera;
 			double calculateAngle; // Angle used to calculate the x & y positions
 			double updateAngle; // Angle used to update the position estimator
 
-			if ((cameraNo >= 0) && (cameraNo < k_maxCameras) && (m_tag >= 0) && (m_tag < k_maxTags)) {
-				queue = m_queue[cameraNo][m_tag];
-				lastPos = queue.findPosition(time);
-			} else {
-				Logger.log("ApriltagsCamera", 3, String.format("Invalid camera %d or tag %d", cameraNo, m_tag));
-			}
+			// if ((cameraNo >= 0) && (cameraNo < k_maxCameras) && (m_tag >= 0) && (m_tag <
+			// k_maxTags)) {
+			// queue = m_queue[cameraNo][m_tag];
+			// lastPos = queue.findPosition(time);
+			// } else {
+			// Logger.log("ApriltagsCamera", 3, String.format("Invalid camera %d or tag %d",
+			// cameraNo, m_tag));
+			// }
+			lastPos = m_queue.findPosition(time);
 
 			if (tag != null) {
 				double adjust = 1.0;
@@ -274,11 +280,17 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 					lastAngle = poseEstimator.getEstimatedPosition().getRotation().getDegrees();
 				}
 
-				if (Math.abs(normalizeAngle(lastAngle - cameraAngle)) > k_maxAngleError) {
+				if ((d > k_maxAngleDistance) || (Math.abs(normalizeAngle(lastAngle - cameraAngle)) > k_maxAngleError)) {
 					// If max error is exceeded, increase the standard deviation adjustment and use
 					// the estimated angle for calculations
 					adjust *= 2;
 					calculateAngle = lastAngle;
+
+					if (d > k_maxAngleDistance) {
+						// If the robot is too far away, do not use the last angle to update the
+						// estimator
+						updateAngle = lastAngle;
+					}
 				}
 
 				if (adjust != 1.0) {
@@ -338,28 +350,28 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 							Logger.log("ApriltagsCamera", 3, "Max log time reached");
 						} else {
 							Logger.log("ApriltagsCameraLog", 1,
-									String.format(",%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f", m_tag,
-											lastAngle, cameraAngle, calculateAngle, updateAngle, estPos.getRotation().getDegrees(),
+									String.format(",%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d", m_tag,
+											lastAngle, cameraAngle, calculateAngle, updateAngle,
+											estPos.getRotation().getDegrees(),
 											calculatedPos.getX(), estPos.getX(),
 											calculatedPos.getY(), estPos.getY(),
-											adjust));
+											adjust,
+											frameNo));
 						}
 					}
 
-					// Add vision measurment using the updateAngle
 					if (!m_camerasDisabled) {
+						// Add vision measurment using the updateAngle
 						poseEstimator.addVisionMeasurement(
-								new Pose2d(calculatedPos.getX(), calculatedPos.getY(), Rotation2d.fromDegrees(updateAngle)),
+								new Pose2d(calculatedPos.getX(), calculatedPos.getY(),
+										Rotation2d.fromDegrees(updateAngle)),
 								time, visionSD);
 					}
 
-					if (queue != null) {
-						// Put the uncorrected camera angle into the queue
-						queue.add(estPos,
-								new Pose2d(calculatedPos.getX(), calculatedPos.getY(),
-										Rotation2d.fromDegrees(cameraAngle)),
-								time);
-					}
+					// if (queue != null) {
+					// Put the uncorrected camera angle into the queue
+					m_queue.add(estPos, time);
+					// }
 
 					if (m_dashboard) {
 						// SmartDashboard.putString(String.format("c%d-%d est", cameraNo, m_tag),
@@ -522,11 +534,11 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	}
 
 	public ApriltagsCamera() {
-		for (int c = 0; c < k_maxCameras; c++) {
-			for (int t = 0; t < k_maxTags; t++) {
-				m_queue[c][t] = new ApriltagsQueue();
-			}
-		}
+		// for (int c = 0; c < k_maxCameras; c++) {
+		// for (int t = 0; t < k_maxTags; t++) {
+		// m_queue[c][t] = new ApriltagsQueue();
+		// }
+		// }
 
 		m_watchdogTimer.scheduleAtFixedRate(new TimerTask() {
 
@@ -550,8 +562,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		m_cameras.add(new ApriltagsCameraInfo(xOffsetInches, yOffsetInches, angleOffsetInDegrees));
 	}
 
-	public void disableCameras(boolean disable)
-	{
+	public void disableCameras(boolean disable) {
 		Logger.log("ApriltagsCamera", 1, String.format("DisableCameras = %b", disable));
 		m_camerasDisabled = disable;
 	}
@@ -885,10 +896,13 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 			if (m_log && ((nProcessed == 0) && (nFrames > 0))) {
 				// If logging is enabled log only the estimated pose
 				Pose2d estPos = poseEstimator.getEstimatedPosition();
-				// Logger.log("ApriltagsCameraLog", 1, ",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust");							
+
+				m_queue.add(estPos, getTime());
+				// Logger.log("ApriltagsCameraLog", 1, ",tag,last yaw,cam yaw,calc yaw,update
+				// yaw, est yaw,x,est x,y,est y,adjust");
 
 				Logger.log("ApriltagsCameraLog", 1,
-						String.format(",,,,,,%f,,%f,,%f,,", estPos.getRotation().getDegrees(), estPos.getX(),
+						String.format(",,,,,,%f,,%f,,%f,,,", estPos.getRotation().getDegrees(), estPos.getX(),
 								estPos.getY()));
 			}
 		}
@@ -915,7 +929,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				m_logTimer.start();
 
 				Logger.setLogFile("ApriltagsCameraLog", "camera", true, false);
-				Logger.log("ApriltagsCameraLog", 1, ",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust");							
+				Logger.log("ApriltagsCameraLog", 1,
+						",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust");
 			} else {
 				Logger.closeLogFile("ApriltagsCameraLog");
 			}

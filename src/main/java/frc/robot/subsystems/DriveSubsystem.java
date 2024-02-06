@@ -11,6 +11,7 @@ import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -64,6 +65,8 @@ public class DriveSubsystem extends SubsystemBase {
   // Game Piece Tracking Camera
   Camera m_visionCamera;
 
+  private PIDController m_orientPID = new PIDController(Constants.DriveConstants.k_rotateP, Constants.DriveConstants.k_rotateI, Constants.DriveConstants.k_rotateD);
+
   // Slew rate filter variables for controlling lateral acceleration
   private double m_currentRotation = 0.0;
   private double m_currentTranslationDir = 0.0;
@@ -87,6 +90,8 @@ public class DriveSubsystem extends SubsystemBase {
     m_gyro.reset();
     SmartDashboard.putData("Field", m_field);
     m_visionCamera = new Camera();
+
+    m_orientPID.enableContinuousInput(0, 360);
 
     m_apriltagCamera = apriltagCamera;
 
@@ -163,7 +168,7 @@ public class DriveSubsystem extends SubsystemBase {
     double heading = robot.getRotation().getDegrees();
     double xDist = robot.getX() - speaker.m_xMeters;
     double yDist = robot.getY() - speaker.m_yMeters;
-    return heading - Math.toDegrees(Math.atan((xDist / yDist)));
+    return Math.toDegrees(Math.atan((xDist / yDist))) - heading;
   }
 
   public SwerveModulePosition[] getModulePosition() {
@@ -173,6 +178,11 @@ public class DriveSubsystem extends SubsystemBase {
       m_backLeft.getPosition(),
       m_backRight.getPosition()
     };
+  }
+
+  public double orientPID(double setpoint) {
+    double rot = m_orientPID.calculate(getHeadingInDegrees(), setpoint);
+    return rot + (Constants.DriveConstants.k_rotateF * Math.signum(rot));
   }
 
   @Override
@@ -188,6 +198,7 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Pigeon2", m_gyro.getYaw().getValueAsDouble());
     SmartDashboard.putNumber("Gyro Rotation2D", getGyroRotation2d().getDegrees());
     SmartDashboard.putNumber("Tracker Rotation2D", m_tracker.getPose2d().getRotation().getDegrees());
+    SmartDashboard.putNumber("Speaker Distance", getTranslationalDistanceFromSpeakerMeters());
 
     m_tracker.update(m_apriltagCamera);
     // m_field.setRobotPose(m_tracker.getPose2dFRC().getTranslation().getX(), m_tracker.getPose2dFRC().getTranslation().getY(), m_tracker.getPose2dFRC().getRotation());

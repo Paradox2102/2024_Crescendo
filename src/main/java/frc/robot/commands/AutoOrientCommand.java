@@ -9,6 +9,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class AutoOrientCommand extends Command {
@@ -19,11 +20,8 @@ public class AutoOrientCommand extends Command {
   double m_angle;
   double k_deadzone = 2.5;
 
-  private double k_f = .15;
-  private double k_p = .013;
-  private double k_i = 0;
-  private double k_d = 0;
-  PIDController m_pid = new PIDController(k_p, k_i, k_d);
+  private double k_f = Constants.DriveConstants.k_rotateF;
+  PIDController m_pid = new PIDController(Constants.DriveConstants.k_rotateP, Constants.DriveConstants.k_rotateI, Constants.DriveConstants.k_rotateD);
 
   public AutoOrientCommand(DriveSubsystem driveSubsystem, double angle, DoubleSupplier y, DoubleSupplier x) {
     m_subsystem = driveSubsystem;
@@ -44,9 +42,10 @@ public class AutoOrientCommand extends Command {
   public void execute() {
     double x = m_x.getAsDouble();
     double y = m_y.getAsDouble();
-    double heading = m_subsystem.getHeadingInDegrees();
-    double rot = m_pid.calculate(heading, m_angle);
-    rot += (k_f * Math.signum(rot));
+    // double heading = m_subsystem.getHeadingInDegrees();
+    // double rot = m_pid.calculate(heading, m_angle);
+    // rot += (k_f * Math.signum(rot));
+    double rot = m_subsystem.orientPID(m_angle);
     m_subsystem.drive(-y, x, rot, true, true);
   }
 

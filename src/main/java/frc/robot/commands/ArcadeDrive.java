@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
@@ -19,12 +20,14 @@ public class ArcadeDrive extends Command {
   private DoubleSupplier m_getX;
   private DoubleSupplier m_getY;
   private DoubleSupplier m_getRot;
+  private BooleanSupplier m_faceSpeaker;
 
-  public ArcadeDrive(DriveSubsystem driveSubsystem, DoubleSupplier getX, DoubleSupplier getY, DoubleSupplier getRot) {
+  public ArcadeDrive(DriveSubsystem driveSubsystem, DoubleSupplier getX, DoubleSupplier getY, DoubleSupplier getRot, BooleanSupplier faceSpeaker) {
     m_subsystem = driveSubsystem;
     m_getX = getX;
     m_getY = getY;
     m_getRot = getRot;
+    m_faceSpeaker = faceSpeaker;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }
@@ -38,13 +41,16 @@ public class ArcadeDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double x = m_getX.getAsDouble();
-    double y = m_getY.getAsDouble();
-    double rot = m_getRot.getAsDouble();
+    double x = -MathUtil.applyDeadband(m_getX.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
+    double y = -MathUtil.applyDeadband(m_getY.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
+    double rot = -MathUtil.applyDeadband(m_getRot.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
+    if (m_faceSpeaker.getAsBoolean() && rot == 0) {
+      rot = m_subsystem.orientPID(m_subsystem.getRotationalDistanceFromSpeakerDegrees());
+    }
     m_subsystem.drive(
-      -MathUtil.applyDeadband(-y, Constants.DriveConstants.k_driveDeadband), 
-      -MathUtil.applyDeadband(-x, Constants.DriveConstants.k_driveDeadband), 
-      -MathUtil.applyDeadband(rot, Constants.DriveConstants.k_driveDeadband), 
+      y, 
+      x, 
+      rot, 
       true, 
       true
     );

@@ -168,7 +168,7 @@ public class DriveSubsystem extends SubsystemBase {
     double heading = robot.getRotation().getDegrees();
     double xDist = robot.getX() - speaker.m_xMeters;
     double yDist = robot.getY() - speaker.m_yMeters;
-    return Math.toDegrees(Math.atan((xDist / yDist))) - heading;
+    return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan((xDist / -yDist))) - heading);
   }
 
   public SwerveModulePosition[] getModulePosition() {
@@ -181,8 +181,9 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public double orientPID(double setpoint) {
-    double rot = m_orientPID.calculate(getHeadingInDegrees(), setpoint);
-    return rot + (Constants.DriveConstants.k_rotateF * Math.signum(rot));
+    double rot = -m_orientPID.calculate(getHeadingInDegrees(), setpoint);
+    rot += (Constants.DriveConstants.k_rotateF * Math.signum(rot));
+    return Math.abs(rot) < .1 ? 0 : rot;
   }
 
   @Override
@@ -198,7 +199,7 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Pigeon2", m_gyro.getYaw().getValueAsDouble());
     SmartDashboard.putNumber("Gyro Rotation2D", getGyroRotation2d().getDegrees());
     SmartDashboard.putNumber("Tracker Rotation2D", m_tracker.getPose2d().getRotation().getDegrees());
-    SmartDashboard.putNumber("Speaker Distance", getTranslationalDistanceFromSpeakerMeters());
+    SmartDashboard.putNumber("Speaker Distance Rotation", getRotationalDistanceFromSpeakerDegrees());
 
     m_tracker.update(m_apriltagCamera);
     // m_field.setRobotPose(m_tracker.getPose2dFRC().getTranslation().getX(), m_tracker.getPose2dFRC().getTranslation().getY(), m_tracker.getPose2dFRC().getRotation());

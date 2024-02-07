@@ -77,12 +77,12 @@ public class ShooterSensors extends SubsystemBase {
       m_backCounter = 0;
     }
 
-    // SmartDashboard.putNumber("Front Sensor", getFrontDistance());
-    // SmartDashboard.putNumber("Back Sensor", getBackDistance());
-    // SmartDashboard.putBoolean("Has Game Piece", Constants.m_hasGamePiece);
-    // SmartDashboard.putBoolean("Boolean Back", getBackSensorWithTime());
-    // SmartDashboard.putBoolean("Boolean Front", getFrontSensorWithTime());
-    // SmartDashboard.putBoolean("Game Piece Stowed", Constants.m_isGamePieceStowed);
-    // SmartDashboard.putBoolean("Shoot Intake Side", Constants.m_shootIntakeSide);
+    SmartDashboard.putNumber("Front Sensor", getFrontDistance());
+    SmartDashboard.putNumber("Back Sensor", getBackDistance());
+    SmartDashboard.putBoolean("Has Game Piece", Constants.m_hasGamePiece);
+    SmartDashboard.putBoolean("Boolean Back", getBackSensorWithTime());
+    SmartDashboard.putBoolean("Boolean Front", getFrontSensorWithTime());
+    SmartDashboard.putBoolean("Game Piece Stowed", Constants.m_isGamePieceStowed);
+    SmartDashboard.putBoolean("Shoot Intake Side", Constants.m_shootIntakeSide);
   }
 }

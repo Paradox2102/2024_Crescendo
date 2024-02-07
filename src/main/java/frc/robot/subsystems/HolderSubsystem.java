@@ -20,10 +20,10 @@ public class HolderSubsystem extends SubsystemBase {
 
   private double m_finalPower = 0;
 
-  private final double k_p = 0.00008;
-  private final double k_i = 0.0026;
+  private final double k_p = 0.00004;
+  private final double k_i = 0.0015;
   private final double k_d = 0;
-  private final double k_iZone = 100;
+  private final double k_iZone = 50;
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
   private double m_velocity = 0;
   /** Creates a new FrontSubsystem. */
@@ -62,25 +62,29 @@ public class HolderSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     double currentVelocity = getVelocityRPM();
     
-    double F = m_velocity / 5300; //5350
+    double F = m_velocity / 5350;
+
+    SmartDashboard.putNumber("Holder FTerm", F);
 
     double power = m_PID.calculate(currentVelocity, m_velocity);
 
+    SmartDashboard.putNumber("holder power without fterm", power);
 
     // If not shooting, make sure gamepiece is stowed, else shoot
-    if (!Constants.m_runningShooterAndHolder) {
-      if (!Constants.m_isGamePieceStowed && Constants.m_hasGamePiece) {
-        // Move the motor in direction depending on which way to stow
-        m_finalPower = Constants.m_shootIntakeSide ? -Constants.HolderConstants.k_adjustGamePiecePower : Constants.HolderConstants.k_adjustGamePiecePower;
-      } else {
-        m_finalPower = 0;
-      }
-    } else {
+    // if (!Constants.m_runningShooterAndHolder) {
+    //   if (!Constants.m_isGamePieceStowed && Constants.m_hasGamePiece) {
+    //     // Move the motor in direction depending on which way to stow
+    //     m_finalPower = Constants.m_shootIntakeSide ? -Constants.HolderConstants.k_adjustGamePiecePower : Constants.HolderConstants.k_adjustGamePiecePower;
+    //   } else {
+    //     m_finalPower = 0;
+    //   }
+    // } else {
       m_finalPower = F + power;
-    }
+    // }
     setPower(m_finalPower);
     
     SmartDashboard.putNumber("Holder Front Velo", currentVelocity);
     SmartDashboard.putNumber("Holder Target Front Velocity", m_velocity);
+    SmartDashboard.putNumber("Final Target Power", m_finalPower);
   }
 }

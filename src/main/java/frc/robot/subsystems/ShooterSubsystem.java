@@ -79,7 +79,7 @@ public class ShooterSubsystem extends SubsystemBase {
     } else {
       m_finalPower = F + power;
     }
-    setPower(m_finalPower);
+    //setPower(m_finalPower);
     
     SmartDashboard.putNumber("Shooter Front Velo", -currentVelocity);
     SmartDashboard.putNumber("Shooter Target Front Velocity", -m_velocity);

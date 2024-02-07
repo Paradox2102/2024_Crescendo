@@ -24,6 +24,7 @@ ShooterSubsystem m_shooterSubsystem;
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    Constants.m_runningShooterAndHolder = true;
     if (Constants.m_shootIntakeSide) {
       m_holderSubsystem.setVelocityRPM(Constants.m_speaker ? Constants.HolderConstants.k_speakerFeedVelocityRPM : Constants.HolderConstants.k_ampFeedVelocityRPM);
     } else {
@@ -40,6 +41,7 @@ ShooterSubsystem m_shooterSubsystem;
   public void end(boolean interrupted) {
     m_shooterSubsystem.stop();
     m_holderSubsystem.stop();
+    Constants.m_runningShooterAndHolder = false;
   }
 
   // Returns true when the command should end.

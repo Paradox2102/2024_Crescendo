@@ -350,13 +350,12 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 							Logger.log("ApriltagsCamera", 3, "Max log time reached");
 						} else {
 							Logger.log("ApriltagsCameraLog", 1,
-									String.format(",%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d", m_tag,
+									String.format(",%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d.%f", m_tag,
 											lastAngle, cameraAngle, calculateAngle, updateAngle,
 											estPos.getRotation().getDegrees(),
 											calculatedPos.getX(), estPos.getX(),
 											calculatedPos.getY(), estPos.getY(),
-											adjust,
-											frameNo));
+											adjust,	frameNo, d));
 						}
 					}
 
@@ -930,7 +929,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 				Logger.setLogFile("ApriltagsCameraLog", "camera", true, false);
 				Logger.log("ApriltagsCameraLog", 1,
-						",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust");
+						",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust,frame,dist");
 			} else {
 				Logger.closeLogFile("ApriltagsCameraLog");
 			}

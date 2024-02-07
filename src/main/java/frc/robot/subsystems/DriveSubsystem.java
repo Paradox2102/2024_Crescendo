@@ -168,7 +168,7 @@ public class DriveSubsystem extends SubsystemBase {
     double heading = robot.getRotation().getDegrees();
     double xDist = robot.getX() - speaker.m_xMeters;
     double yDist = robot.getY() - speaker.m_yMeters;
-    return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan((xDist / yDist))) - heading);
+    return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan((xDist / -yDist))) - heading);
   }
 
   public SwerveModulePosition[] getModulePosition() {

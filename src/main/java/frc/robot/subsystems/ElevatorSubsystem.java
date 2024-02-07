@@ -51,12 +51,12 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    //setPosition perodics
-    
-    //ToggleElevatorPosition(start high-low)normal command start 20 inches (constants- max instant -20, min extent -0); Set pibit
-    //manual command - phonix elevator
+    //setPosition
+    setPosition(m_elevatorPoint);
+    SmartDashboard.putNumber("Distance from Elevator Point", m_elevatorPoint - getCookedElevatorPosition());
     //power
     SmartDashboard.putNumber("Elevator Power", m_power);
+    m_elevatorMotor.set(m_power);
     //show displays on the SmartDasboard --> where elevator is positioned
     SmartDashboard.putNumber("Elevator Raw Position", getRawElevatorPosition());
     SmartDashboard.putNumber("Elevator Cooked Position", getCookedElevatorPosition());

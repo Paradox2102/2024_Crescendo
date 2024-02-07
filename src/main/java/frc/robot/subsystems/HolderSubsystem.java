@@ -71,16 +71,16 @@ public class HolderSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("holder power without fterm", power);
 
     // If not shooting, make sure gamepiece is stowed, else shoot
-    // if (!Constants.m_runningShooterAndHolder) {
-    //   if (!Constants.m_isGamePieceStowed && Constants.m_hasGamePiece) {
-    //     // Move the motor in direction depending on which way to stow
-    //     m_finalPower = Constants.m_shootIntakeSide ? -Constants.HolderConstants.k_adjustGamePiecePower : Constants.HolderConstants.k_adjustGamePiecePower;
-    //   } else {
-    //     m_finalPower = 0;
-    //   }
-    // } else {
+    if (!Constants.m_runningShooterAndHolder) {
+      if (!Constants.m_isGamePieceStowed && Constants.m_hasGamePiece) {
+        // Move the motor in direction depending on which way to stow
+        m_finalPower = Constants.m_shootIntakeSide ? -Constants.HolderConstants.k_adjustGamePiecePower : Constants.HolderConstants.k_adjustGamePiecePower;
+      } else {
+        m_finalPower = 0;
+      }
+    } else {
       m_finalPower = F + power;
-    // }
+    }
     setPower(m_finalPower);
     
     SmartDashboard.putNumber("Holder Front Velo", currentVelocity);

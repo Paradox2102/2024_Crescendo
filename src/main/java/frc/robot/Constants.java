@@ -108,10 +108,11 @@ public final class Constants {
         new SwerveModuleState(0, new Rotation2d(Math.PI / 4))
     };
 
-    public static final double k_rotateF = .15;
+    public static final double k_rotateF = .1;
     public static final double k_rotateP = .013;
     public static final double k_rotateI = 0;
     public static final double k_rotateD = 0;
+    public static final double k_rotateDeadzone = .2;
   }
 
   public static class PivotConstants {

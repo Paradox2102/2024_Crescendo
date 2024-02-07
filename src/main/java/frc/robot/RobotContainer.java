@@ -97,12 +97,13 @@ public class RobotContainer {
     new Trigger(() -> getPositionServerButtonState(3)).onTrue(new SetApriltagsDashboard(m_apriltagCamera, true));
     new Trigger(() -> getPositionServerButtonState(4)).onTrue(new SetApriltagsDashboard(m_apriltagCamera, false));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    Trigger m_faceSpeaker = new Trigger(m_driverController.rightBumper());
     m_driveSubsystem.setDefaultCommand(new ArcadeDrive(
       m_driveSubsystem, 
       () -> m_driverController.getLeftX(), 
       () -> m_driverController.getLeftY(),
       () -> m_driverController.getRightX(),
-      () -> false
+      new ToggleTrigger(m_faceSpeaker)
     ));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,

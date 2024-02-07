@@ -350,7 +350,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 							Logger.log("ApriltagsCamera", 3, "Max log time reached");
 						} else {
 							Logger.log("ApriltagsCameraLog", 1,
-									String.format(",%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d.%f", m_tag,
+									String.format(",%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%f", m_tag,
 											lastAngle, cameraAngle, calculateAngle, updateAngle,
 											estPos.getRotation().getDegrees(),
 											calculatedPos.getX(), estPos.getX(),

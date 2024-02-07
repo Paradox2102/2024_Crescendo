@@ -26,10 +26,10 @@ public class D2Intake extends Command {
   public void initialize() {
     if (m_intake) {
       m_shooterSubsystem.setVelocityRPM(2000);
-      m_holderSubsystem.setVelocityRPM(-500);
+      m_holderSubsystem.setVelocityRPM(500);
     } else {
       m_shooterSubsystem.setVelocityRPM(-2000);
-      m_holderSubsystem.setVelocityRPM(500);
+      m_holderSubsystem.setVelocityRPM(-500);
     }
   }
 

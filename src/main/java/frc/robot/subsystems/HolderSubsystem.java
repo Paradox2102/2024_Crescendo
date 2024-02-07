@@ -20,8 +20,8 @@ public class HolderSubsystem extends SubsystemBase {
 
   private double m_finalPower = 0;
 
-  private final double k_p = .00008;
-  private final double k_i = .0026;
+  private final double k_p = 0.00008;
+  private final double k_i = 0.0026;
   private final double k_d = 0;
   private final double k_iZone = 100;
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
@@ -62,7 +62,7 @@ public class HolderSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     double currentVelocity = getVelocityRPM();
     
-    double F = m_velocity / 5350.0;
+    double F = m_velocity / 5300; //5350
 
     double power = m_PID.calculate(currentVelocity, m_velocity);
 

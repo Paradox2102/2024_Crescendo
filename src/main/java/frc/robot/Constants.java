@@ -112,7 +112,7 @@ public final class Constants {
     public static final double k_rotateP = .013;
     public static final double k_rotateI = 0;
     public static final double k_rotateD = 0;
-    public static final double k_rotateDeadzone = .2;
+    public static final double k_rotateDeadzone = .15;
   }
 
   public static class PivotConstants {

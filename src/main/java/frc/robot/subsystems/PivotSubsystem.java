@@ -22,6 +22,7 @@ public class PivotSubsystem extends SubsystemBase {
 
   private final double k_outwardFF = -0.015;
   private final double k_inwardFF = 0.015;
+  private final double k_f = .015;
   private static final double k_p = 0.015;
   private static final double k_i = 0.035;
   private static final double k_d = 0;
@@ -62,14 +63,8 @@ public class PivotSubsystem extends SubsystemBase {
   }
 
   public double getAngleInDegrees() {
-    return ParadoxField.normalizeAngle(m_pivotEncoder.getAbsolutePosition()*  Constants.PivotConstants.k_pivotTicksToDegrees - Constants.PivotConstants.k_pivotZeroAngle);
+    return ParadoxField.normalizeAngle(m_pivotEncoder.getAbsolutePosition() *  Constants.PivotConstants.k_pivotTicksToDegrees - Constants.PivotConstants.k_pivotZeroAngle);
   }
-
-  // private double setFterm(double angle) {
-  //   m_targetAngleInDegrees = angle;
-  //   double fTerm = (-k_f * Math.sin(Math.toRadians(m_targetAngleInDegrees)));
-  //   return fTerm;
-  // }
 
   @Override
   public void periodic() {
@@ -79,13 +74,14 @@ public class PivotSubsystem extends SubsystemBase {
     double FF;
     double pid;
     double angle = getAngleInDegrees();
-    if (angle < 25) {
-      FF = k_inwardFF;
-    } else if (angle > 45) {
-      FF = k_outwardFF;
-    } else {
-      FF = 0;
-    }
+    // if (angle < 25) {
+    //   FF = k_inwardFF;
+    // } else if (angle > 45) {
+    //   FF = k_outwardFF;
+    // } else {
+    //   FF = 0;
+    // } 
+    FF = k_f * Math.sin(angle - 35);
     if(Math.abs(getAngleInDegrees() - m_setPoint) > k_deadzone){
       pid = m_PID.calculate(angle, m_setPoint);
     } else {

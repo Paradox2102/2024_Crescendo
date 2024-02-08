@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.75,
-        "y": 6.6
+        "x": 1.2309311079429772,
+        "y": 6.395841390257602
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9329136995566167,
-        "y": 5.908353479414798
+        "x": 2.0596605563757437,
+        "y": 6.629835587462148
       },
       "isLocked": false,
       "linkedName": null
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": -139.18,
+      "rotationDegrees": -161.02959219151367,
       "rotateFast": false
     }
   ],
@@ -69,9 +69,22 @@
       "name": "intake first piece",
       "waypointRelativePos": 0.4,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "intake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "rev shooter"
+              }
+            }
+          ]
         }
       }
     },
@@ -81,7 +94,14 @@
       "command": {
         "type": "parallel",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "shoot"
+              }
+            }
+          ]
         }
       }
     },
@@ -91,7 +111,14 @@
       "command": {
         "type": "parallel",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "intake"
+              }
+            }
+          ]
         }
       }
     }
@@ -110,7 +137,7 @@
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": -120.0,
+    "rotation": 180.0,
     "velocity": 0.0
   },
   "useDefaultConstraints": false

@@ -74,7 +74,12 @@ public class DriveSubsystem extends SubsystemBase {
 
   private SlewRateLimiter m_magLimiter = new SlewRateLimiter(Constants.DriveConstants.k_magnitudeSlewRate);
   private SlewRateLimiter m_rotLimiter = new SlewRateLimiter(Constants.DriveConstants.k_rotationalSlewRate);
-  private double m_prevTime = WPIUtilJNI.now() * 1e-6;
+  private double m_prevTime = 0;
+  private double m_prevX = 0;
+  private double m_prevY = 0;
+  private double m_xRateOfChange = 0;
+  private double m_yRateOfChange = 0;
+  private double m_lookAheadTime = 1;
 
   private final SwerveDriveKinematics m_swerve = new SwerveDriveKinematics(
         new Translation2d(.33655, .33655),
@@ -162,12 +167,20 @@ public class DriveSubsystem extends SubsystemBase {
     return Math.sqrt((xDist * xDist) + (yDist * yDist));
   }
 
+  private double getPredictedX(){
+    return m_tracker.getPose2d().getX() + m_xRateOfChange * m_lookAheadTime;
+  }
+
+  private double getPredictedY(){
+    return m_tracker.getPose2d().getY() + m_yRateOfChange * m_lookAheadTime;
+  }
+
   public double getRotationalDistanceFromSpeakerDegrees() {
     ApriltagLocation speaker = getSpeakerLocationMeters();
     Pose2d robot = m_tracker.getPose2d();
     double heading = robot.getRotation().getDegrees();
-    double xDist = robot.getX() - speaker.m_xMeters;
-    double yDist = robot.getY() - speaker.m_yMeters;
+    double xDist = getPredictedX() - speaker.m_xMeters;
+    double yDist = getPredictedY() - speaker.m_yMeters;
     return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan((yDist / xDist)))); // +heading
   }
 
@@ -188,6 +201,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    //predict future pose based on change in pose
+    m_xRateOfChange = (m_tracker.getPose2d().getX() - m_prevX)/(WPIUtilJNI.now() * 1e-6 - m_prevTime);
+    m_yRateOfChange = (m_tracker.getPose2d().getY() - m_prevY)/(WPIUtilJNI.now() * 1e-6 - m_prevTime);
     // Update the odometry in the periodic block
     SmartDashboard.putNumber("Turn FR", (m_frontRight.getAngleRadians()));///Math.PI);
     SmartDashboard.putNumber("Turn FL", m_frontLeft.getAngleRadians());// - (Math.PI / 2)) / Math.PI);
@@ -202,6 +218,10 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Speaker Distance Rotation", getRotationalDistanceFromSpeakerDegrees());
 
     m_tracker.update(m_apriltagCamera);
+
+    m_prevTime = WPIUtilJNI.now() * 1e-6;
+    m_prevX = m_tracker.getPose2d().getX();
+    m_prevY = m_tracker.getPose2d().getY();
     // m_field.setRobotPose(m_tracker.getPose2dFRC().getTranslation().getX(), m_tracker.getPose2dFRC().getTranslation().getY(), m_tracker.getPose2dFRC().getRotation());
   }
 

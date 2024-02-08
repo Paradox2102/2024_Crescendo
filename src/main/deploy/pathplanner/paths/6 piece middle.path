@@ -71,17 +71,48 @@
       "command": {
         "type": "parallel",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "rev shooter"
+              }
+            }
+          ]
         }
       }
     },
     {
       "name": "intake 2nd",
-      "waypointRelativePos": 1.8,
+      "waypointRelativePos": 1.7,
       "command": {
         "type": "parallel",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "intake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "start rev",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "rev shooter"
+              }
+            }
+          ]
         }
       }
     }

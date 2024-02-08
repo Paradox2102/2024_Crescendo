@@ -21,6 +21,7 @@ import frc.robot.commands.gamePieceManipulation.RevCommand;
 import frc.robot.commands.gamePieceManipulation.ShootCommand;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.commands.test.IncrementPivotCommand;
+import frc.robot.commands.test.SetPivotOffRobotLocation;
 import frc.robot.commands.test.TestShooter;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HolderSubsystem;
@@ -50,7 +51,7 @@ public class RobotContainer {
 
   private final ShooterSensors m_shooterSensors = new ShooterSensors();
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera);
-  private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
+  private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem(m_driveSubsystem);
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final HolderSubsystem m_holderSubsystem = new HolderSubsystem();
 
@@ -110,7 +111,8 @@ public class RobotContainer {
     // cancelling on release.
     // m_driverController.leftTrigger().whileTrue(new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, true));
     m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
-    m_driverController.leftBumper().toggleOnTrue(new SetPivotAngleCommand(m_pivotSubsystem, 20.9));
+    // m_driverController.leftBumper().toggleOnTrue(new SetPivotAngleCommand(m_pivotSubsystem, 20.9));
+    m_driverController.leftBumper().onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem));
     // m_driverController.rightTrigger().whileTrue(new AutoPickUpGamePiece(m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, () -> m_driverController.getLeftY(), () -> m_driverController.getLeftX(), () -> m_driverController.getRightX()));
     m_driverController.rightTrigger().whileTrue(new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
     

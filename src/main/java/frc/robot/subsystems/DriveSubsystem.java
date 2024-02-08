@@ -120,7 +120,7 @@ public class DriveSubsystem extends SubsystemBase {
       },
       this);
 
-    PathPlannerLogging.setLogActivePathCallback((poses) -> m_field.getObject("path").setPoses(poses));
+    // PathPlannerLogging.setLogActivePathCallback((poses) -> m_field.getObject("path").setPoses(poses));
   }
 
   // For debugging purposes (drive robot forward at full speed)
@@ -202,8 +202,8 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     //predict future pose based on change in pose
-    m_xRateOfChange = (m_tracker.getPose2d().getX() - m_prevX)/(WPIUtilJNI.now() * 1e-6 - m_prevTime);
-    m_yRateOfChange = (m_tracker.getPose2d().getY() - m_prevY)/(WPIUtilJNI.now() * 1e-6 - m_prevTime);
+    // m_xRateOfChange = (m_tracker.getPose2d().getX() - m_prevX)/(WPIUtilJNI.now() * 1e-6 - m_prevTime);
+    // m_yRateOfChange = (m_tracker.getPose2d().getY() - m_prevY)/(WPIUtilJNI.now() * 1e-6 - m_prevTime);
     // Update the odometry in the periodic block
     SmartDashboard.putNumber("Turn FR", (m_frontRight.getAngleRadians()));///Math.PI);
     SmartDashboard.putNumber("Turn FL", m_frontLeft.getAngleRadians());// - (Math.PI / 2)) / Math.PI);
@@ -215,13 +215,13 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Pigeon2", m_gyro.getYaw().getValueAsDouble());
     SmartDashboard.putNumber("Gyro Rotation2D", getGyroRotation2d().getDegrees());
     SmartDashboard.putNumber("Tracker Rotation2D", m_tracker.getPose2d().getRotation().getDegrees());
-    SmartDashboard.putNumber("Speaker Distance Rotation", getRotationalDistanceFromSpeakerDegrees());
+    SmartDashboard.putNumber("Speaker Distance Translation", getTranslationalDistanceFromSpeakerMeters());
 
     m_tracker.update(m_apriltagCamera);
 
-    m_prevTime = WPIUtilJNI.now() * 1e-6;
-    m_prevX = m_tracker.getPose2d().getX();
-    m_prevY = m_tracker.getPose2d().getY();
+    // m_prevTime = WPIUtilJNI.now() * 1e-6;
+    // m_prevX = m_tracker.getPose2d().getX();
+    // m_prevY = m_tracker.getPose2d().getY();
     // m_field.setRobotPose(m_tracker.getPose2dFRC().getTranslation().getX(), m_tracker.getPose2dFRC().getTranslation().getY(), m_tracker.getPose2dFRC().getRotation());
   }
 

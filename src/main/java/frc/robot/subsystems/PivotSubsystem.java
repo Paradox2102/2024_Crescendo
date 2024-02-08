@@ -23,12 +23,12 @@ public class PivotSubsystem extends SubsystemBase {
   private final double k_outwardFF = -0.015;
   private final double k_inwardFF = 0.015;
   private final double k_f = .015;
-  private static final double k_p = 0.015;
-  private static final double k_i = 0.035;
+  private static final double k_p = 0.017;
+  private static final double k_i = 0.03;
   private static final double k_d = 0;
-  private static final double k_iZone = 6;
+  private static final double k_iZone = 10;
   private static final double k_holdPower = 0;
-  private static final double k_deadzone = .5;
+  private static final double k_deadzone = 0;
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
   private boolean m_PIDOn = false;
   private double m_setPoint = 0;
@@ -36,8 +36,11 @@ public class PivotSubsystem extends SubsystemBase {
   private CANSparkFlex m_pivotMotor = new CANSparkFlex(Constants.PivotConstants.k_pivotMotor, MotorType.kBrushless);
   DutyCycleEncoder m_pivotEncoder = new DutyCycleEncoder(0);
 
+  private DriveSubsystem m_driveSubsystem;
+
   /** Creates a new PivotSubsystem. */
-  public PivotSubsystem() {
+  public PivotSubsystem(DriveSubsystem driveSubsystem) {
+    m_driveSubsystem = driveSubsystem;
     m_pivotMotor.restoreFactoryDefaults();
     setBrakeMode(true);
     m_pivotEncoder.setPositionOffset(-0.8);
@@ -58,6 +61,12 @@ public class PivotSubsystem extends SubsystemBase {
     m_setPoint = angle;
   }
 
+  public void setPositionFromRobotPos() {
+    double distance = m_driveSubsystem.getTranslationalDistanceFromSpeakerMeters();
+    double pos = 13 * Math.sqrt(distance - 2);
+    setPositionDegrees(pos);
+  }
+
   private double getRawAngle() {
     return m_pivotEncoder.getAbsolutePosition();
   }
@@ -74,24 +83,18 @@ public class PivotSubsystem extends SubsystemBase {
     double FF;
     double pid;
     double angle = getAngleInDegrees();
-    // if (angle < 25) {
-    //   FF = k_inwardFF;
-    // } else if (angle > 45) {
-    //   FF = k_outwardFF;
-    // } else {
-    //   FF = 0;
-    // } 
-    FF = k_f * Math.sin(angle - 35);
+
+    FF = k_f * Math.sin(angle - 25);
     if(Math.abs(getAngleInDegrees() - m_setPoint) > k_deadzone){
       pid = m_PID.calculate(angle, m_setPoint);
     } else {
       pid = 0;
     }
     m_power = FF + pid;
-    SmartDashboard.putNumber("Power", m_power);
+    // SmartDashboard.putNumber("Power", m_power);
     SmartDashboard.putNumber("Calculated Error", Math.abs(getAngleInDegrees() - m_setPoint));
     SmartDashboard.putNumber("Set Point", m_setPoint);
-    SmartDashboard.putNumber("Pivot PID", pid);
+    // SmartDashboard.putNumber("Pivot PID", pid);
     m_pivotMotor.set(m_power);
   }
 }

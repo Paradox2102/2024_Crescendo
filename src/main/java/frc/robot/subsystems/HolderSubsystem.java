@@ -83,8 +83,8 @@ public class HolderSubsystem extends SubsystemBase {
     }
     setPower(m_finalPower);
     
-    SmartDashboard.putNumber("Holder Front Velo", currentVelocity);
-    SmartDashboard.putNumber("Holder Target Front Velocity", m_velocity);
-    SmartDashboard.putNumber("Final Target Power", m_finalPower);
+    // SmartDashboard.putNumber("Holder Front Velo", currentVelocity);
+    // SmartDashboard.putNumber("Holder Target Front Velocity", m_velocity);
+    // SmartDashboard.putNumber("Final Target Power", m_finalPower);
   }
 }

@@ -13,7 +13,7 @@ public class ShooterSensors extends SubsystemBase {
   AnalogInput m_frontSensor = new AnalogInput(Constants.ShooterConstants.k_frontSensor);
   AnalogInput m_backSensor = new AnalogInput(Constants.ShooterConstants.k_backSensor);
 
-  private double k_minDistanceFront = 700;
+  private double k_minDistanceFront = 300;
   private double k_minDistanceBack = 300;
 
   private int m_frontCounter = 0;

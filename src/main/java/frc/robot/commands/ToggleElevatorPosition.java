@@ -19,8 +19,9 @@ public class ToggleElevatorPosition extends Command {
     private double m_position;
 
   /** Creates a new ToggleElevatorPosition. */
-  public ToggleElevatorPosition(ElevatorSubsystem subsystem) {
+  public ToggleElevatorPosition(ElevatorSubsystem subsystem, double position) {
     m_subsystem = subsystem;
+    m_position = position;
     
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
@@ -38,7 +39,9 @@ public class ToggleElevatorPosition extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_subsystem.setPosition(0);
+  }
 
   // Returns true when the command should end.
   @Override

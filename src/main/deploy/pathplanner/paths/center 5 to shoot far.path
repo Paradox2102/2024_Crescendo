@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.726943637093382,
-        "y": 2.5902105748231854
+        "x": 3.6,
+        "y": 2.95
       },
       "prevControl": {
-        "x": 5.3144953887044,
-        "y": 1.305553805935426
+        "x": 5.187551751611018,
+        "y": 1.6653432311122407
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "source side shoot far"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -42.27368900609367,
+    "rotation": -35.95999999999998,
     "rotateFast": true
   },
   "reversed": false,

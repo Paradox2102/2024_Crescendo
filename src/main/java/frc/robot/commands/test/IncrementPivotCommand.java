@@ -22,6 +22,7 @@ public class IncrementPivotCommand extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setPositionDegrees(m_subsystem.getAngleInDegrees() + (m_forward ? 2 : -2));
+    m_subsystem.setPositionDegrees(m_subsystem.getAngleInDegrees() + (m_forward ? 0.5 : -0.5
+    ));
   }
 }

@@ -4,6 +4,7 @@
 
 package frc.robot.commands.gamePieceManipulation;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.HolderSubsystem;
@@ -12,6 +13,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShootCommand extends Command {
   ShooterSubsystem m_shooterSubsystem;
   HolderSubsystem m_holderSubsystem;
+  private Timer m_dwellTimer = new Timer();
 
   /** Creates a new ShootCommand. */
   public ShootCommand(ShooterSubsystem shooterSubsystem, HolderSubsystem holderSubsystem) {
@@ -19,6 +21,8 @@ public class ShootCommand extends Command {
     m_shooterSubsystem = shooterSubsystem;
     m_holderSubsystem = holderSubsystem;
     addRequirements(m_shooterSubsystem, m_holderSubsystem);
+    m_dwellTimer.reset();
+    m_dwellTimer.start();
   }
 
   // Called when the command is initially scheduled.
@@ -57,6 +61,9 @@ public class ShootCommand extends Command {
         }
       }
     }
+    if (Constants.m_hasGamePiece) {
+      m_dwellTimer.reset();
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -70,6 +77,6 @@ public class ShootCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !Constants.m_hasGamePiece;
+    return m_dwellTimer.get() > 0.5;
   }
 }

@@ -22,6 +22,7 @@ import frc.robot.commands.gamePieceManipulation.ShootCommand;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.commands.test.IncrementPivotCommand;
 import frc.robot.commands.test.SetPivotOffRobotLocation;
+import frc.robot.commands.test.TestPivot;
 import frc.robot.commands.test.TestShooter;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HolderSubsystem;
@@ -132,6 +133,7 @@ public class RobotContainer {
     m_joystick.button(2).whileTrue(new D2Intake(m_shooterSubsystem, m_holderSubsystem, true));
     m_joystick.button(6).onTrue(new IncrementPivotCommand(m_pivotSubsystem, true));
     m_joystick.button(4).onTrue(new IncrementPivotCommand(m_pivotSubsystem, false));
+    m_joystick.button(5).onTrue(new TestPivot(m_pivotSubsystem, -24));
     m_joystick.button(7).onTrue(new ToggleShootSideCommand(shootIntake.getAsBoolean()));
   }
 

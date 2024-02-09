@@ -33,6 +33,42 @@ public class PivotSubsystem extends SubsystemBase {
   private boolean m_PIDOn = false;
   private double m_setPoint = 0;
 
+  private double[] m_distances = {
+    2,
+    2.25,
+    2.5,
+    2.75,
+    3,
+    3.25,
+    3.5,
+    3.75,
+    4,
+    4.25,
+    4.5,
+    4.75,
+    5,
+    5.5,
+    5.75
+  };
+
+  private double[] m_angles = {
+    0, // 2
+    7, // 2.25
+    10.5, // 2.5
+    14, // 2.75
+    17, // 3
+    18.2, // 3.25
+    19.9, // 3.5
+    21, // 3.75
+    23.1, // 4
+    23.4, // 4.25
+    23.9, // 4.5
+    24.3, // 4.75
+    25, // 5
+    25.3, // 5.5
+    26.5 // 5.75
+  };
+
   private CANSparkFlex m_pivotMotor = new CANSparkFlex(Constants.PivotConstants.k_pivotMotor, MotorType.kBrushless);
   DutyCycleEncoder m_pivotEncoder = new DutyCycleEncoder(0);
 
@@ -61,10 +97,19 @@ public class PivotSubsystem extends SubsystemBase {
     m_setPoint = angle;
   }
 
-  public void setPositionFromRobotPos() {
+  public double getPivotAngleFromRobotPos() {
     double distance = m_driveSubsystem.getTranslationalDistanceFromSpeakerMeters();
-    double pos = 13 * Math.sqrt(distance - 2);
-    setPositionDegrees(pos);
+    if (distance < 2 || distance > 5.75) {
+      return 0;
+    }
+    for (int i = 0; i < m_distances.length; i++) {
+      if (distance > m_distances[i] && distance < m_distances[i+1]) {
+        double roc = (m_angles[i+1] - m_angles[i]) / (m_distances[i+1] - m_distances[i]);
+        double dist = distance - m_distances[i];
+        return m_angles[i] + dist * roc; 
+      }
+    }
+    return 0;
   }
 
   private double getRawAngle() {

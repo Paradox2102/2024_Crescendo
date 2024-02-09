@@ -216,6 +216,8 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Gyro Rotation2D", getGyroRotation2d().getDegrees());
     SmartDashboard.putNumber("Tracker Rotation2D", m_tracker.getPose2d().getRotation().getDegrees());
     SmartDashboard.putNumber("Speaker Distance Translation", getTranslationalDistanceFromSpeakerMeters());
+    SmartDashboard.putNumber("Speaker X", getSpeakerLocationMeters().m_xMeters);
+    SmartDashboard.putNumber("Speaker Y", getSpeakerLocationMeters().m_yMeters);
 
     m_tracker.update(m_apriltagCamera);
 

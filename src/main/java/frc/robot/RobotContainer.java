@@ -10,6 +10,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutoPickUpGamePiece;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetPivotAngleCommand;
+import frc.robot.commands.SetSpeakerAmpMode;
 import frc.robot.commands.ToggleShootSideCommand;
 import frc.robot.commands.apriltags.SetApriltagsDashboard;
 import frc.robot.commands.apriltags.SetApriltagsLogging;
@@ -75,19 +76,20 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-    autoChooser = AutoBuilder.buildAutoChooser();
     m_driveSubsystem.setTracker(m_tracker);
     NamedCommands.registerCommand("shoot", new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
     NamedCommands.registerCommand("intake", new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
     NamedCommands.registerCommand("rev shooter", new RevCommand(m_shooterSubsystem, m_holderSubsystem));
     NamedCommands.registerCommand("aim", new SetPivotOffRobotLocation(m_pivotSubsystem));
     NamedCommands.registerCommand("switch sides", new ToggleShootSideCommand(false));
+    NamedCommands.registerCommand("set speaker", new SetSpeakerAmpMode(true));
+    NamedCommands.registerCommand("feedthrough", getAutonomousCommand());
 
     m_apriltagCamera.setCameraInfo(7.5, 8.5, 180);
     m_apriltagCamera.connect("10.21.2.11", 5800);
 
     m_posServer.start();
-
+    autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto To Run",autoChooser);
   }
 
@@ -159,6 +161,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return autoChooser.getSelected();
+    //return autoChooser.getSelected();
+    return AutoBuilder.buildAuto("wing 4 piece");
   }
 }

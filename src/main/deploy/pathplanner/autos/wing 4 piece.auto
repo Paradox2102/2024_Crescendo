@@ -14,11 +14,17 @@
         {
           "type": "named",
           "data": {
+            "name": "set speaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "shoot"
           }
         },
         {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -50,22 +56,15 @@
           }
         },
         {
-          "type": "race",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "wing 3 turnaround"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "rev shooter"
-                }
-              }
-            ]
+            "pathName": "wing 3 turnaround"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "feedthrough"
           }
         },
         {
@@ -81,7 +80,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -100,22 +99,15 @@
           }
         },
         {
-          "type": "race",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "wing 2 turnaround"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "rev shooter"
-                }
-              }
-            ]
+            "pathName": "wing 2 turnaround"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "feedthrough"
           }
         },
         {
@@ -131,7 +123,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -150,22 +142,15 @@
           }
         },
         {
-          "type": "race",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "wing 1 turnaround"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "rev shooter"
-                }
-              }
-            ]
+            "pathName": "wing 1 turnaround"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "feedthrough"
           }
         },
         {

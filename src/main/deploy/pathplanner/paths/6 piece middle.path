@@ -75,7 +75,7 @@
             {
               "type": "named",
               "data": {
-                "name": "rev shooter"
+                "name": "shoot"
               }
             }
           ]

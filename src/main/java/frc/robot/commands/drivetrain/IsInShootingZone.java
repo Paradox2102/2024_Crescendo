@@ -33,6 +33,6 @@ public class IsInShootingZone extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_subsystem.getTranslationalDistanceFromSpeakerMeters() < Constants.k_idealShootingDistanceMeters;
+    return m_subsystem.getTranslationalDistanceFromSpeakerMeters() < Constants.k_idealShootingDistanceMeters && m_subsystem.getRotationalDistanceFromSpeakerDegrees() < Constants.DriveConstants.k_rotateDeadzone;
   }
 }

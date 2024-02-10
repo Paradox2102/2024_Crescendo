@@ -31,9 +31,12 @@ import frc.robot.subsystems.ShooterSensors;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.triggers.ToggleTrigger;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -65,10 +68,13 @@ public class RobotContainer {
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
+  private final SendableChooser<Command> autoChooser;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+    autoChooser = AutoBuilder.buildAutoChooser();
     m_driveSubsystem.setTracker(m_tracker);
     NamedCommands.registerCommand("shoot", new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
     NamedCommands.registerCommand("intake", new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
@@ -78,6 +84,8 @@ public class RobotContainer {
     m_apriltagCamera.connect("10.21.2.11", 5800);
 
     m_posServer.start();
+
+    SmartDashboard.putData("Auto To Run",autoChooser);
   }
 
   private boolean getPositionServerButtonState(int button) {
@@ -148,6 +156,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return new PathPlannerAuto("wing 4 piece");
+    return autoChooser.getSelected();
   }
 }

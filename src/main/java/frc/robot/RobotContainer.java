@@ -87,12 +87,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("switch sides", new ToggleShootSideCommand(false));
     NamedCommands.registerCommand("set speaker", new SetSpeakerAmpMode(true));
     NamedCommands.registerCommand("feedthrough", getAutonomousCommand());
+    autoChooser = AutoBuilder.buildAutoChooser();
 
     m_apriltagCamera.setCameraInfo(7.5, 8.5, 180);
     m_apriltagCamera.connect("10.21.2.11", 5800);
 
     m_posServer.start();
-    autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto To Run",autoChooser);
   }
 
@@ -166,7 +166,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    //return autoChooser.getSelected();
-    return AutoBuilder.buildAuto("wing 4 piece");
+    return autoChooser.getSelected();
   }
 }

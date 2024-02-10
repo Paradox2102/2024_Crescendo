@@ -17,6 +17,7 @@ import frc.robot.commands.apriltags.SetApriltagsLogging;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.AutoOrientCommand;
 import frc.robot.commands.gamePieceManipulation.AimAndShoot;
+import frc.robot.commands.gamePieceManipulation.CheckIntakeStowed;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
 import frc.robot.commands.gamePieceManipulation.RevCommand;
@@ -87,7 +88,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("aim", new SetPivotOffRobotLocation(m_pivotSubsystem));
     NamedCommands.registerCommand("switch sides", new ToggleShootSideCommand(false));
     NamedCommands.registerCommand("set speaker", new SetSpeakerAmpMode(true));
-    NamedCommands.registerCommand("feedthrough", getAutonomousCommand());
+    NamedCommands.registerCommand("feedthrough", new CheckIntakeStowed());
     autoChooser = AutoBuilder.buildAutoChooser();
 
     m_apriltagCamera.setCameraInfo(13.375, 6, 180);

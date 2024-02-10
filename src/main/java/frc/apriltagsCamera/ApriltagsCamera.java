@@ -266,11 +266,11 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				Vector<N3> visionSD = VecBuilder.fill(k_visionSD.get(0, 0), k_visionSD.get(1, 0), k_visionSD.get(2, 0));
 
 				if (d >= k_minSDAdjustDistance) {
-					if (d > k_maxSDAdjustDistance) {
-						adjust = 1.0 + k_SDAdjustSlope * (k_maxSDAdjustDistance - k_minSDAdjustDistance);
-					} else {
+					// if (d > k_maxSDAdjustDistance) {
+					// 	adjust = 1.0 + k_SDAdjustSlope * (k_maxSDAdjustDistance - k_minSDAdjustDistance);
+					// } else {
 						adjust = 1.0 + k_SDAdjustSlope * (d - k_minSDAdjustDistance);
-					}
+					// }
 				}
 
 				double lastAngle;

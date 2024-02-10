@@ -143,7 +143,7 @@ public final class Constants {
   // Positive is intake. negative is shoot intake side
   public static class HolderConstants {
     public static final int k_holdingMotor = 10;
-    public static final double k_intakeVelocityRPM = 500;
+    public static final double k_intakeVelocityRPM = 1000;
     public static final double k_speakerShootVelocityRPM = 2000;
     public static final double k_speakerFeedVelocityRPM = -9000;
     public static final double k_ampFeedVelocityRPM = -1000;
@@ -164,4 +164,6 @@ public final class Constants {
   public static boolean m_hasGamePiece = false;
   public static boolean m_isGamePieceStowed = false;
   public static boolean m_runningShooterAndHolder = false;
+  public static boolean m_arcadeDrive = true;
+  public static boolean m_faceSpeaker = false;
 }

@@ -24,7 +24,7 @@ public class PivotSubsystem extends SubsystemBase {
   private final double k_inwardFF = 0.015;
   private final double k_f = .015;
   private static final double k_p = 0.017;
-  private static final double k_i = 0.03;
+  private static final double k_i = 0.02;
   private static final double k_d = 0;
   private static final double k_iZone = 10;
   private static final double k_holdPower = 0;
@@ -61,12 +61,12 @@ public class PivotSubsystem extends SubsystemBase {
     19.9, // 3.5
     21, // 3.75
     23.1, // 4
-    23.4, // 4.25
+    23.35, // 4.25
     23.9, // 4.5
     24.3, // 4.75
-    25, // 5
-    25.3, // 5.5
-    26.5 // 5.75
+    25.3, // 5
+    25.32, // 5.5
+    26.3 // 5.75
   };
 
   private CANSparkFlex m_pivotMotor = new CANSparkFlex(Constants.PivotConstants.k_pivotMotor, MotorType.kBrushless);

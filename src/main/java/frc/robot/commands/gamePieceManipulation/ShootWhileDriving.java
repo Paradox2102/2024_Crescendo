@@ -4,34 +4,29 @@
 
 package frc.robot.commands.gamePieceManipulation;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
+import frc.robot.commands.drivetrain.IsInShootingZone;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.HolderSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShootWhileDriving extends Command {
-  DriveSubsystem m_driveSubsystem;
-  double m_ySpeed = 0;
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+public class ShootWhileDriving extends SequentialCommandGroup {
   /** Creates a new ShootWhileDriving. */
-  public ShootWhileDriving(DriveSubsystem driveSubsystem) {
-    m_driveSubsystem = driveSubsystem;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_driveSubsystem);
-  }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {}
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
+  public ShootWhileDriving(DriveSubsystem driveSubsystem, ShooterSubsystem shooterSubsystem, HolderSubsystem holderSubsystem) {
+    // Add your commands in the addCommands() call, e.g.
+    // addCommands(new FooCommand(), new BarCommand());
+    addCommands(
+      new InstantCommand(() -> {Constants.m_faceSpeaker = true;}),
+      new ParallelDeadlineGroup(
+        new IsInShootingZone(driveSubsystem), 
+        new RevCommand(shooterSubsystem, holderSubsystem)
+      )
+    );
   }
 }

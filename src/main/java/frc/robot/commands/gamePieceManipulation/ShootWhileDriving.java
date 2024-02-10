@@ -34,7 +34,7 @@ public class ShootWhileDriving extends SequentialCommandGroup {
             new IsInShootingZone(driveSubsystem), 
             new RevCommand(shooterSubsystem, holderSubsystem)
           ),
-          new ShootCommand(shooterSubsystem, holderSubsystem),
+          new FeedCommand(shooterSubsystem, holderSubsystem),
           new InstantCommand(() -> {Constants.m_faceSpeaker = false;})
         ),
         new DefaultPivotCommand(pivotSubsystem, true)

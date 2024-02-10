@@ -41,7 +41,7 @@ public class RevCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     m_shooterSubsystem.stop();
-    m_shooterSubsystem.stop();
+    m_holderSubsystem.stop();
     Constants.m_runningShooterAndHolder = false;
   }
 

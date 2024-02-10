@@ -9,8 +9,9 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.SetPivotAngleCommand;
 import frc.robot.commands.drivetrain.FaceSpeaker;
+import frc.robot.commands.drivetrain.ToggleArcadeDrive;
 import frc.robot.commands.pivot.ResetPivot;
-import frc.robot.commands.test.SetPivotOffRobotLocation;
+import frc.robot.commands.pivot.SetPivotOffRobotLocation;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HolderSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
@@ -25,6 +26,7 @@ public class AimAndShoot extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new ToggleArcadeDrive(false),
       new ParallelDeadlineGroup(
         new ParallelCommandGroup(
           new SetPivotOffRobotLocation(pivotSubsystem),
@@ -33,6 +35,7 @@ public class AimAndShoot extends SequentialCommandGroup {
         new RevCommand(shooterSubsystem, holderSubsystem)
       ),
       new ShootCommand(shooterSubsystem, holderSubsystem),
+      new ToggleArcadeDrive(true),
       new ResetPivot(pivotSubsystem)
     );
   }

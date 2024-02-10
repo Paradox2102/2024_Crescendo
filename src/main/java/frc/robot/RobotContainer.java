@@ -16,13 +16,15 @@ import frc.robot.commands.apriltags.SetApriltagsDashboard;
 import frc.robot.commands.apriltags.SetApriltagsLogging;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.AutoOrientCommand;
+import frc.robot.commands.gamePieceManipulation.AimAndShoot;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
 import frc.robot.commands.gamePieceManipulation.RevCommand;
 import frc.robot.commands.gamePieceManipulation.ShootCommand;
+import frc.robot.commands.pivot.DefaultPivotCommand;
+import frc.robot.commands.pivot.SetPivotOffRobotLocation;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.commands.test.IncrementPivotCommand;
-import frc.robot.commands.test.SetPivotOffRobotLocation;
 import frc.robot.commands.test.TestPivot;
 import frc.robot.commands.test.TestShooter;
 import frc.robot.subsystems.DriveSubsystem;
@@ -40,6 +42,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -112,19 +115,21 @@ public class RobotContainer {
     new Trigger(() -> getPositionServerButtonState(3)).onTrue(new SetApriltagsDashboard(m_apriltagCamera, true));
     new Trigger(() -> getPositionServerButtonState(4)).onTrue(new SetApriltagsDashboard(m_apriltagCamera, false));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    Trigger m_faceSpeaker = new Trigger(m_driverController.rightBumper());
     m_driveSubsystem.setDefaultCommand(new ArcadeDrive(
       m_driveSubsystem, 
       () -> m_driverController.getLeftX(), 
       () -> m_driverController.getLeftY(),
-      () -> m_driverController.getRightX(),
-      new ToggleTrigger(m_faceSpeaker)
+      () -> m_driverController.getRightX()
     ));
 
+    m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem));
+
+
+    m_driverController.rightBumper().onTrue(new InstantCommand(() -> {Constants.m_faceSpeaker = !Constants.m_faceSpeaker;}));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    // m_driverController.leftTrigger().whileTrue(new TestShooter(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, true));
     m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
+    m_driverController.leftTrigger().toggleOnTrue(new AimAndShoot(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, m_driveSubsystem));
     // m_driverController.leftBumper().toggleOnTrue(new SetPivotAngleCommand(m_pivotSubsystem, 20.9));
     m_driverController.leftBumper().onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem));
     // m_driverController.rightTrigger().whileTrue(new AutoPickUpGamePiece(m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, () -> m_driverController.getLeftY(), () -> m_driverController.getLeftX(), () -> m_driverController.getRightX()));

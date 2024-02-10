@@ -43,7 +43,7 @@ public class ArcadeDrive extends Command {
       double y = -MathUtil.applyDeadband(m_getY.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
       double rot = -MathUtil.applyDeadband(m_getRot.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
       if (Constants.m_faceSpeaker && rot == 0) {
-        rot = m_subsystem.orientPID(m_subsystem.getRotationalDistanceFromSpeakerDegrees());
+        rot = m_subsystem.orientPID(m_subsystem.getFutureRotationalDistanceFromSpeakerDegrees());
       }
       m_subsystem.drive(
         y, 

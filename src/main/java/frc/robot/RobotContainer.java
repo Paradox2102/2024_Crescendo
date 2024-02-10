@@ -21,6 +21,7 @@ import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
 import frc.robot.commands.gamePieceManipulation.RevCommand;
 import frc.robot.commands.gamePieceManipulation.ShootCommand;
+import frc.robot.commands.gamePieceManipulation.ShootWhileDriving;
 import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.SetPivotOffRobotLocation;
 import frc.robot.commands.test.D2Intake;
@@ -88,7 +89,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("set speaker", new SetSpeakerAmpMode(true));
     NamedCommands.registerCommand("feedthrough", getAutonomousCommand());
 
-    m_apriltagCamera.setCameraInfo(7.5, 8.5, 180);
+    m_apriltagCamera.setCameraInfo(13.375, 6, 180);
+    m_apriltagCamera.setCameraInfo(10.125, 9.5, 0);
     m_apriltagCamera.connect("10.21.2.11", 5800);
 
     m_posServer.start();
@@ -153,6 +155,7 @@ public class RobotContainer {
     m_joystick.button(4).onTrue(new IncrementPivotCommand(m_pivotSubsystem, false));
     m_joystick.button(5).onTrue(new TestPivot(m_pivotSubsystem, -24));
     m_joystick.button(7).onTrue(new ToggleShootSideCommand(shootIntake.getAsBoolean()));
+    m_joystick.button(11).toggleOnTrue(new ShootWhileDriving(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
   }
 
   public double getThrottle() {

@@ -8,7 +8,6 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
-import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -75,11 +74,9 @@ public class DriveSubsystem extends SubsystemBase {
   private SlewRateLimiter m_magLimiter = new SlewRateLimiter(Constants.DriveConstants.k_magnitudeSlewRate);
   private SlewRateLimiter m_rotLimiter = new SlewRateLimiter(Constants.DriveConstants.k_rotationalSlewRate);
   private double m_prevTime = 0;
-  private double m_prevX = 0;
-  private double m_prevY = 0;
-  private double m_xRateOfChange = 0;
-  private double m_yRateOfChange = 0;
-  private double m_lookAheadTime = 1;
+
+  private Pose2d m_futurePos = new Pose2d();
+  private Pose2d m_previousPos = new Pose2d();
 
   private final SwerveDriveKinematics m_swerve = new SwerveDriveKinematics(
         new Translation2d(.33655, .33655),
@@ -167,21 +164,26 @@ public class DriveSubsystem extends SubsystemBase {
     return Math.sqrt((xDist * xDist) + (yDist * yDist));
   }
 
-  private double getPredictedX(){
-    return m_tracker.getPose2d().getX() + m_xRateOfChange * m_lookAheadTime;
-  }
-
-  private double getPredictedY(){
-    return m_tracker.getPose2d().getY() + m_yRateOfChange * m_lookAheadTime;
+  public double getFutureTranslationDistanceFromSpeakerMeters() {
+    ApriltagLocation speaker = getSpeakerLocationMeters();
+    double xDist = m_futurePos.getX() - speaker.m_xMeters;
+    double yDist = m_futurePos.getY() - speaker.m_yMeters;
+    return Math.sqrt((xDist * xDist) + (yDist * yDist));
   }
 
   public double getRotationalDistanceFromSpeakerDegrees() {
     ApriltagLocation speaker = getSpeakerLocationMeters();
     Pose2d robot = m_tracker.getPose2d();
-    double heading = robot.getRotation().getDegrees();
-    double xDist = getPredictedX() - speaker.m_xMeters;
-    double yDist = getPredictedY() - speaker.m_yMeters;
-    return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan((yDist / xDist)))); // +heading
+    double xDist = robot.getX() - speaker.m_xMeters;
+    double yDist = robot.getY() - speaker.m_yMeters;
+    return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan((yDist / xDist))));
+  }
+
+  public double getFutureRotationalDistanceFromSpeakerDegrees() {
+    ApriltagLocation speaker = getSpeakerLocationMeters();
+    double xDist = m_futurePos.getX() - speaker.m_xMeters;
+    double yDist = m_futurePos.getY() - speaker.m_yMeters;
+    return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan((yDist / xDist))));
   }
 
   public SwerveModulePosition[] getModulePosition() {
@@ -199,11 +201,12 @@ public class DriveSubsystem extends SubsystemBase {
     return Math.abs(rot) < Constants.DriveConstants.k_rotateDeadzone ? 0 : rot;
   }
 
+  public Pose2d getEstimatedFuturePos() {
+    return m_futurePos;
+  }
+
   @Override
   public void periodic() {
-    //predict future pose based on change in pose
-    // m_xRateOfChange = (m_tracker.getPose2d().getX() - m_prevX)/(WPIUtilJNI.now() * 1e-6 - m_prevTime);
-    // m_yRateOfChange = (m_tracker.getPose2d().getY() - m_prevY)/(WPIUtilJNI.now() * 1e-6 - m_prevTime);
     // Update the odometry in the periodic block
     SmartDashboard.putNumber("Turn FR", (m_frontRight.getAngleRadians()));///Math.PI);
     SmartDashboard.putNumber("Turn FL", m_frontLeft.getAngleRadians());// - (Math.PI / 2)) / Math.PI);
@@ -221,9 +224,30 @@ public class DriveSubsystem extends SubsystemBase {
 
     m_tracker.update(m_apriltagCamera);
 
-    // m_prevTime = WPIUtilJNI.now() * 1e-6;
-    // m_prevX = m_tracker.getPose2d().getX();
-    // m_prevY = m_tracker.getPose2d().getY();
+
+    // Estimate future position of robot *****************************************
+    Pose2d currentPos = m_tracker.getPose2d();
+    double previousY = m_previousPos.getY();
+    double previousX = m_previousPos.getX();
+    double previousAngle = m_previousPos.getRotation().getDegrees();
+
+    double currentY = currentPos.getY();
+    double currentX = currentPos.getX();
+    double currentAngle = currentPos.getRotation().getDegrees();
+    
+    double yVelocity = (previousY - currentY) / (1.0 / 50);
+    double xVelocity = (previousX - currentX) / (1.0 / 50);
+    double angularVelocity = (previousAngle - currentAngle) / (1.0 / 50);
+
+    double futureY = currentY + yVelocity * Constants.DriveConstants.k_lookAheadTime;
+    double futureX = currentX + xVelocity * Constants.DriveConstants.k_lookAheadTime;
+    double futureAngle = currentAngle + angularVelocity * Constants.DriveConstants.k_lookAheadTime;
+
+    m_futurePos = new Pose2d(futureX, futureY, Rotation2d.fromDegrees(futureAngle));
+    m_previousPos = new Pose2d(currentX, currentY, Rotation2d.fromDegrees(currentAngle));
+    // *********************************************************
+
+  
     // m_field.setRobotPose(m_tracker.getPose2dFRC().getTranslation().getX(), m_tracker.getPose2dFRC().getTranslation().getY(), m_tracker.getPose2dFRC().getRotation());
   }
 

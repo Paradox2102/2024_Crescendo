@@ -6,9 +6,12 @@ package frc.robot.commands.gamePieceManipulation;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.commands.SetPivotAngleCommand;
 import frc.robot.commands.drivetrain.IsInShootingZone;
+import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.ResetPivot;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HolderSubsystem;
@@ -25,12 +28,17 @@ public class ShootWhileDriving extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new InstantCommand(() -> {Constants.m_faceSpeaker = true;}),
-      new ParallelDeadlineGroup(
-        new IsInShootingZone(driveSubsystem), 
-        new RevCommand(shooterSubsystem, holderSubsystem)
+      new ParallelRaceGroup(
+        new SequentialCommandGroup(
+          new ParallelDeadlineGroup(
+            new IsInShootingZone(driveSubsystem), 
+            new RevCommand(shooterSubsystem, holderSubsystem)
+          ),
+          new ShootCommand(shooterSubsystem, holderSubsystem),
+          new InstantCommand(() -> {Constants.m_faceSpeaker = false;})
+        ),
+        new DefaultPivotCommand(pivotSubsystem)
       ),
-      new ShootCommand(shooterSubsystem, holderSubsystem),
-      new InstantCommand(() -> {Constants.m_faceSpeaker = false;}),
       new ResetPivot(pivotSubsystem)
     );
   }

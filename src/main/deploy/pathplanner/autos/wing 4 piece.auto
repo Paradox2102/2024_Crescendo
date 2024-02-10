@@ -50,9 +50,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "wing 3 turnaround"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "wing 3 turnaround"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "rev shooter"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aim"
           }
         },
         {
@@ -81,9 +100,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "wing 2 turnaround"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "wing 2 turnaround"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "rev shooter"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aim"
           }
         },
         {
@@ -112,9 +150,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "wing 1 turnaround"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "wing 1 turnaround"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "rev shooter"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aim"
           }
         },
         {

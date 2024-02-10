@@ -31,6 +31,7 @@ import frc.robot.subsystems.ShooterSensors;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.triggers.ToggleTrigger;
 
+import com.fasterxml.jackson.core.sym.Name;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -79,6 +80,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("shoot", new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
     NamedCommands.registerCommand("intake", new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
     NamedCommands.registerCommand("rev shooter", new RevCommand(m_shooterSubsystem, m_holderSubsystem));
+    NamedCommands.registerCommand("aim", new SetPivotOffRobotLocation(m_pivotSubsystem));
+    NamedCommands.registerCommand("switch sides", new ToggleShootSideCommand(false));
 
     m_apriltagCamera.setCameraInfo(7.5, 8.5, 180);
     m_apriltagCamera.connect("10.21.2.11", 5800);

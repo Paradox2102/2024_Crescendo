@@ -124,7 +124,7 @@ public class RobotContainer {
       () -> m_driverController.getRightX()
     ));
 
-    m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem));
+    m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, false));
 
 
     m_driverController.rightBumper().onTrue(new InstantCommand(() -> {Constants.m_faceSpeaker = !Constants.m_faceSpeaker;}));

@@ -97,8 +97,8 @@ public class PivotSubsystem extends SubsystemBase {
     m_setPoint = angle;
   }
 
-  public double getPivotAngleFromRobotPos() {
-    double distance = m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters();
+  public double getPivotAngleFromRobotPos(boolean predictFuture) {
+    double distance = predictFuture ? m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters() : m_driveSubsystem.getTranslationalDistanceFromSpeakerMeters();
     if (distance < 2 || distance > 5.75) {
       return 0;
     }

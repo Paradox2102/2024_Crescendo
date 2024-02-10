@@ -20,6 +20,6 @@ public class SetPivotOffRobotLocation extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromRobotPos());
+    m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromRobotPos(false));
   }
 }

@@ -36,6 +36,6 @@ public class FaceSpeaker extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_subsystem.orientPID(m_subsystem.getRotationalDistanceFromSpeakerDegrees())) < Constants.DriveConstants.k_rotateDeadzone;
+    return Math.abs(m_subsystem.orientPID(m_subsystem.getRotationalDistanceFromSpeakerDegrees())) < Constants.DriveConstants.k_rotateDeadzone || !Constants.m_speaker;
   }
 }

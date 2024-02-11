@@ -34,6 +34,7 @@ public class PivotSubsystem extends SubsystemBase {
   private double m_setPoint = 0;
 
   private double[] m_distances = {
+    0,
     2,
     2.25,
     2.5,
@@ -52,7 +53,8 @@ public class PivotSubsystem extends SubsystemBase {
   };
 
   private double[] m_angles = {
-    0, // 2
+    0,
+    3, // 2
     7, // 2.25
     10.5, // 2.5
     14, // 2.75
@@ -99,7 +101,7 @@ public class PivotSubsystem extends SubsystemBase {
 
   public double getPivotAngleFromRobotPos(boolean predictFuture) {
     double distance = predictFuture ? m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters() : m_driveSubsystem.getTranslationalDistanceFromSpeakerMeters();
-    if (distance < 2 || distance > 5.75) {
+    if (distance > 5.75) {
       return 0;
     }
     for (int i = 0; i < m_distances.length; i++) {

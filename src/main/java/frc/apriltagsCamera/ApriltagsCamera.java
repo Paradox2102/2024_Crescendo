@@ -60,7 +60,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	public static final Vector<N3> k_odometrySD = VecBuilder.fill(0.1, 0.1, 0.1); // Default odometry standard
 																					// deviations
 	// public static final Vector<N3> k_visionSD = VecBuilder.fill(0.1, 0.1, 0.1); // Default vision standerd devations
-	public static final Vector<N3> k_visionSD = VecBuilder.fill(0.05, 0.05, 0.05); // Default vision standerd devations
+//	public static final Vector<N3> k_visionSD = VecBuilder.fill(0.05, 0.05, 0.05); // Default vision standerd devations
+	public static final Vector<N3> k_visionSD = VecBuilder.fill(0.5, 0.5, 1.0); // Default vision standerd devations
 
 	private static final double k_minSDAdjustDistance = 0.5; // Minimum distance for which we apply the standard
 																// deviation adjustment
@@ -227,6 +228,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				SwerveDrivePoseEstimator poseEstimator,
 				long captureTime,
 				int frameNo) {
+
+			// if (cameraNo == 1) return;
 
 			double time = convertTime(captureTime);
 			ApriltagLocation tag = ApriltagLocations.findTag(m_tag);

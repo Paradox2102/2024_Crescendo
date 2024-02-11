@@ -27,6 +27,7 @@ import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.SetPivotOffRobotLocation;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.commands.test.IncrementPivotCommand;
+import frc.robot.commands.test.SlowTurn;
 import frc.robot.commands.test.TestPivot;
 import frc.robot.commands.test.TestShooter;
 import frc.robot.subsystems.DriveSubsystem;
@@ -157,6 +158,8 @@ public class RobotContainer {
     m_joystick.button(5).onTrue(new TestPivot(m_pivotSubsystem, -24));
     m_joystick.button(7).onTrue(new ToggleShootSideCommand(shootIntake.getAsBoolean()));
     m_joystick.button(11).toggleOnTrue(new ShootWhileDriving(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
+
+    m_joystick.button(12).whileTrue(new SlowTurn(m_driveSubsystem, m_apriltagCamera));
   }
 
   public double getThrottle() {

@@ -26,7 +26,8 @@ public class ApriltagLocations {
             new ApriltagLocation(13, 434 / k_inPerM, (161.62 - y0) / k_inPerM, 180 - 180),   // Our field
             // new ApriltagLocation(14, 209.48 / k_inPerM, (161.62 - y0) / k_inPerM, 0 - 180),     // Official
             new ApriltagLocation(14, 203 / k_inPerM, (161.62 - y0) / k_inPerM, 0 - 180),        // Our Field
-            new ApriltagLocation(15, 182.73 / k_inPerM, (177.10 - y0) / k_inPerM, 120 - 180),
+            // new ApriltagLocation(15, 182.73 / k_inPerM, (177.10 - y0) / k_inPerM, 120 - 180),   // Official
+            new ApriltagLocation(15, 182.73 / k_inPerM, (177.10 - y0) / k_inPerM, 120 - 180),   // Our Field
             new ApriltagLocation(16, 182.73 / k_inPerM, (146.19 - y0) / k_inPerM, 240 - 180),
     };
     public static boolean m_blue = false;

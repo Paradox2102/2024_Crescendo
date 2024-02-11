@@ -123,7 +123,7 @@ public final class Constants {
     public static final double k_pivotTicksToDegrees = 360;
 
     // Positions
-    public static final double k_intakePositionDegrees = 110;
+    public static final double k_intakePositionDegrees = 114;
     public static final double k_resetPositionDegrees = 0;
   }
 

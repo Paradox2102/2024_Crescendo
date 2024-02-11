@@ -50,22 +50,9 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "center 1 to shoot"
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": []
-                }
-              }
-            ]
+            "pathName": "center 1 to shoot"
           }
         },
         {
@@ -100,22 +87,9 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "center 2 to shoot"
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": []
-                }
-              }
-            ]
+            "pathName": "center 2 to shoot"
           }
         },
         {

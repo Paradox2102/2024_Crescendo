@@ -54,7 +54,7 @@ public class PivotSubsystem extends SubsystemBase {
 
   private double[] m_angles = {
     0,
-    3, // 2
+    5, // 2
     7, // 2.25
     10.5, // 2.5
     14, // 2.75
@@ -64,7 +64,7 @@ public class PivotSubsystem extends SubsystemBase {
     21, // 3.75
     23.1, // 4
     23.35, // 4.25
-    23.9, // 4.5
+    24, // 4.5
     24.3, // 4.75
     25.3, // 5
     25.32, // 5.5

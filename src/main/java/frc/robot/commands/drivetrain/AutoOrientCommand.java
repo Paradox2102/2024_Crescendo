@@ -46,7 +46,7 @@ public class AutoOrientCommand extends Command {
     // double rot = m_pid.calculate(heading, m_angle);
     // rot += (k_f * Math.signum(rot));
     double rot = m_subsystem.orientPID(m_angle);
-    m_subsystem.drive(-y, x, rot, true, true);
+    m_subsystem.drive(y, -x, rot, true, true);
   }
 
   // Called once the command ends or is interrupted.

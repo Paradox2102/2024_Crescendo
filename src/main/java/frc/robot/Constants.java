@@ -123,7 +123,7 @@ public final class Constants {
     public static final double k_pivotTicksToDegrees = 360;
 
     // Positions
-    public static final double k_intakePositionDegrees = 118.8;
+    public static final double k_intakePositionDegrees = 110;
     public static final double k_resetPositionDegrees = 0;
   }
 
@@ -132,7 +132,8 @@ public final class Constants {
     public static final int k_shooterMotor = 11;
     public static final double k_intakeVelocityRPM = 2000;
     public static final double k_speakerShootVelocityRPM = -5750;
-    public static final double k_ampShootVelocityRPM = -2000;
+    public static final double k_ampShootVelocityRPM = -1500
+    ;
     public static final double k_speakerFeedVelocityRPM = 3500;
     public static final double k_deadzone = 25;
 
@@ -148,7 +149,7 @@ public final class Constants {
     public static final double k_intakeVelocityRPM = 1000;
     public static final double k_speakerShootVelocityRPM = 2000;
     public static final double k_speakerFeedVelocityRPM = -9000;
-    public static final double k_ampFeedVelocityRPM = -1000;
+    public static final double k_ampFeedVelocityRPM = -500;
 
     public static final double k_deadzone = 25;
     public static final double k_adjustGamePiecePower = -.15;

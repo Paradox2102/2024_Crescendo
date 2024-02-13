@@ -57,32 +57,32 @@ public class ShooterSensors extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    Constants.m_hasGamePiece = hasGamePiece();
-    Constants.m_isGamePieceStowed = isGamePieceStowed();
+    // // This method will be called once per scheduler run
+    // Constants.m_hasGamePiece = hasGamePiece();
+    // Constants.m_isGamePieceStowed = isGamePieceStowed();
 
-    if (getFrontSensor()) {
-      if (m_frontCounter < 5) {
-        m_frontCounter += 1;
-      }
-    } else {
-      m_frontCounter = 0;
-    }
+    // if (getFrontSensor()) {
+    //   if (m_frontCounter < 5) {
+    //     m_frontCounter += 1;
+    //   }
+    // } else {
+    //   m_frontCounter = 0;
+    // }
 
-    if (getBackSensor()) {
-      if (m_backCounter < 5) {
-        m_backCounter += 1;
-      }
-    } else {
-      m_backCounter = 0;
-    }
+    // if (getBackSensor()) {
+    //   if (m_backCounter < 5) {
+    //     m_backCounter += 1;
+    //   }
+    // } else {
+    //   m_backCounter = 0;
+    // }
 
-    SmartDashboard.putNumber("Front Sensor", getFrontDistance());
-    SmartDashboard.putNumber("Back Sensor", getBackDistance());
-    SmartDashboard.putBoolean("Has Game Piece", Constants.m_hasGamePiece);
-    SmartDashboard.putBoolean("Boolean Back", getBackSensorWithTime());
-    SmartDashboard.putBoolean("Boolean Front", getFrontSensorWithTime());
-    SmartDashboard.putBoolean("Game Piece Stowed", Constants.m_isGamePieceStowed);
-    SmartDashboard.putBoolean("Shoot Intake Side", Constants.m_shootIntakeSide);
+    // SmartDashboard.putNumber("Front Sensor", getFrontDistance());
+    // SmartDashboard.putNumber("Back Sensor", getBackDistance());
+    // SmartDashboard.putBoolean("Has Game Piece", Constants.m_hasGamePiece);
+    // SmartDashboard.putBoolean("Boolean Back", getBackSensorWithTime());
+    // SmartDashboard.putBoolean("Boolean Front", getFrontSensorWithTime());
+    // SmartDashboard.putBoolean("Game Piece Stowed", Constants.m_isGamePieceStowed);
+    // SmartDashboard.putBoolean("Shoot Intake Side", Constants.m_shootIntakeSide);
   }
 }

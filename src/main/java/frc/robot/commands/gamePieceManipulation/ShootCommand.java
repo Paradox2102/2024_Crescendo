@@ -38,13 +38,14 @@ public class ShootCommand extends Command {
     // rev the shooter at different speeds depending on what side you are shooting
     // from and where you are aiming,
     // and feed the game piece in once the shooter reaches the target velocity
-    if (Constants.m_isGamePieceStowed) {
+    // if (Constants.m_isGamePieceStowed) {
       if (Constants.m_speaker) {
         if (Constants.m_shootIntakeSide) {
           // shooting intake side to speaker
           m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerShootVelocityRPM);
+          System.out.println("bye");
           if (m_shooterSubsystem.isReady()) {
-            System.out.println("WHOOPEEE");
+            System.out.println("hi");
             m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerFeedVelocityRPM);
           }
         } else {
@@ -61,7 +62,7 @@ public class ShootCommand extends Command {
           m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_ampFeedVelocityRPM);
         }
       }
-    }
+    // }
     if (Constants.m_hasGamePiece) {
       m_dwellTimer.reset();
     }

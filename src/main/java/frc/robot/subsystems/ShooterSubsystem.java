@@ -40,7 +40,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public boolean isReady() {
-    return true;//Math.abs(getVelocityRPM()) >= Math.abs(m_velocity) - Constants.ShooterConstants.k_deadzone;
+    return Math.abs(getVelocityRPM()) >= Math.abs(m_velocity);
   }
 
   public void setVelocityRPM(double velocity) {
@@ -70,17 +70,20 @@ public class ShooterSubsystem extends SubsystemBase {
     double power = m_PID.calculate(currentVelocity, m_velocity);
 
     // If not shooting, make sure gamepiece is stowed, else shoot
-    if (!Constants.m_runningShooterAndHolder) {
-      if (!Constants.m_isGamePieceStowed && Constants.m_hasGamePiece) {
-        // Move the motor in direction depending on which way to stow
-        m_finalPower = Constants.m_shootIntakeSide ? -Constants.ShooterConstants.k_adjustGamePiecePower : Constants.ShooterConstants.k_adjustGamePiecePower;
-      } else {
-        m_finalPower = 0;
-      }
-    } else {
-      m_finalPower = F + power;
-    }
+    // if (!Constants.m_runningShooterAndHolder) {
+    //   if (!Constants.m_isGamePieceStowed && Constants.m_hasGamePiece) {
+    //     // Move the motor in direction depending on which way to stow
+    //     m_finalPower = Constants.m_shootIntakeSide ? -Constants.ShooterConstants.k_adjustGamePiecePower : Constants.ShooterConstants.k_adjustGamePiecePower;
+    //   } else {
+    //     m_finalPower = 0;
+    //   }
+    // } else {
+    //   m_finalPower = F + power;
+    // }
+    m_finalPower = F + power;
     setPower(m_finalPower);
+
+    System.out.println(m_velocity);
     
     SmartDashboard.putNumber("Shooter Front Velo", -currentVelocity);
     SmartDashboard.putNumber("Shooter Target Front Velocity", -m_velocity);

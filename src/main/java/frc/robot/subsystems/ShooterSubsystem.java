@@ -21,7 +21,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private final double k_p = .00005; //.00025
   private final double k_i = .001; //.00052
   private final double k_d = 0;
-  private final double k_iZone = 200;
+  private final double k_iZone = 300;
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
 
   private double m_finalPower = 0;
@@ -32,6 +32,7 @@ public class ShooterSubsystem extends SubsystemBase {
     setBrakeMode(true);
     m_PID.setIZone(k_iZone);
     m_motor.setInverted(false);
+    m_motor.setSmartCurrentLimit(1000);
   }
 
   public void setPower(double power) {
@@ -39,7 +40,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public boolean isReady() {
-    return Math.abs(m_velocity - getVelocityRPM()) < Constants.ShooterConstants.k_deadzone;
+    return true;//Math.abs(getVelocityRPM()) >= Math.abs(m_velocity) - Constants.ShooterConstants.k_deadzone;
   }
 
   public void setVelocityRPM(double velocity) {

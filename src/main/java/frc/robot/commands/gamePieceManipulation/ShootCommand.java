@@ -44,6 +44,7 @@ public class ShootCommand extends Command {
           // shooting intake side to speaker
           m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerShootVelocityRPM);
           if (m_shooterSubsystem.isReady()) {
+            System.out.println("WHOOPEEE");
             m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerFeedVelocityRPM);
           }
         } else {
@@ -72,6 +73,7 @@ public class ShootCommand extends Command {
     m_shooterSubsystem.stop();
     m_holderSubsystem.stop();
     Constants.m_runningShooterAndHolder = false;
+    Constants.m_hasGamePiece = false;
   }
 
   // Returns true when the command should end.

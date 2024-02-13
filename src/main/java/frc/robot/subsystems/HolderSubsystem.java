@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -26,11 +27,15 @@ public class HolderSubsystem extends SubsystemBase {
   private final double k_iZone = 50;
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
   private double m_velocity = 0;
+  private Timer m_timer = new Timer();
   /** Creates a new FrontSubsystem. */
   public HolderSubsystem() {
     m_PID.setIZone(k_iZone);
     setBrakeMode(true);
     m_motor.setInverted(true);
+    m_motor.setSmartCurrentLimit(1000);
+    m_timer.reset();
+    m_timer.start();
   }
 
   public boolean isReady() {
@@ -47,6 +52,7 @@ public class HolderSubsystem extends SubsystemBase {
 
   public void setVelocityRPM(double velocity) {
     m_velocity = velocity;
+    System.out.println("YAHOOO");
   }
 
   public double getVelocityRPM() {
@@ -70,21 +76,31 @@ public class HolderSubsystem extends SubsystemBase {
 
     SmartDashboard.putNumber("holder power without fterm", power);
 
-    // If not shooting, make sure gamepiece is stowed, else shoot
-    if (!Constants.m_runningShooterAndHolder) {
-      if (!Constants.m_isGamePieceStowed && Constants.m_hasGamePiece) {
-        // Move the motor in direction depending on which way to stow
-        m_finalPower = Constants.m_shootIntakeSide ? -Constants.HolderConstants.k_adjustGamePiecePower : Constants.HolderConstants.k_adjustGamePiecePower;
-      } else {
-        m_finalPower = 0;
+    if(m_velocity != 0 && Math.abs(getVelocityRPM()) <= 3){
+      if(m_timer.get() > 0.5){
+        Constants.m_hasGamePiece = true;
       }
     } else {
-      m_finalPower = F + power;
+      m_timer.reset();
     }
+    Constants.m_isGamePieceStowed = Constants.m_hasGamePiece;
+
+    // If not shooting, make sure gamepiece is stowed, else shoot
+    // if (!Constants.m_runningShooterAndHolder) {
+    //   if (!Constants.m_isGamePieceStowed && Constants.m_hasGamePiece) {
+    //     // Move the motor in direction depending on which way to stow
+    //     m_finalPower = Constants.m_shootIntakeSide ? -Constants.HolderConstants.k_adjustGamePiecePower : Constants.HolderConstants.k_adjustGamePiecePower;
+    //   } else {
+    //     m_finalPower = 0;
+    //   }
+    // } else {
+    // m_finalPower = F + power;
+    // }
     setPower(m_finalPower);
     
-    // SmartDashboard.putNumber("Holder Front Velo", currentVelocity);
-    // SmartDashboard.putNumber("Holder Target Front Velocity", m_velocity);
+    SmartDashboard.putBoolean("has game piece", Constants.m_hasGamePiece);
+    SmartDashboard.putNumber("Holder Front Velo", currentVelocity);
+    SmartDashboard.putNumber("Holder Target Front Velocity", m_velocity);
     // SmartDashboard.putNumber("Final Target Power", m_finalPower);
   }
 }

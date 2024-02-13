@@ -8,6 +8,7 @@ import frc.apriltagsCamera.PositionServer;
 import frc.apriltagsCamera.ApriltagsCamera;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutoPickUpGamePiece;
+import frc.robot.commands.DisableEverything;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetPivotAngleCommand;
 import frc.robot.commands.SetSpeakerAmpMode;
@@ -157,8 +158,9 @@ public class RobotContainer {
     m_joystick.button(4).onTrue(new IncrementPivotCommand(m_pivotSubsystem, false));
     m_joystick.button(5).onTrue(new TestPivot(m_pivotSubsystem, -24));
     m_joystick.button(7).onTrue(new ToggleShootSideCommand(shootIntake.getAsBoolean()));
-    m_joystick.button(11).toggleOnTrue(new ShootWhileDriving(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
+    // m_joystick.button(11).toggleOnTrue(new ShootWhileDriving(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
 
+    m_joystick.button(11).onTrue(new DisableEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     m_joystick.button(12).whileTrue(new SlowTurn(m_driveSubsystem, m_apriltagCamera));
   }
 

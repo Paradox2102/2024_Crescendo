@@ -94,7 +94,7 @@ public final class Constants {
     // Driving Constants
     public static final double k_maxSpeedMetersPerSecond = 4.8;
     public static final double k_maxDriveAcceleration = 3;
-    public static final double k_maxAngularSpeed = Math.PI; // radians per second
+    public static final double k_maxAngularSpeed = Math.PI * 2; // radians per second
     public static final double k_maxAngularAcceleration = Math.PI;
 
     public static final double k_directionSlewRate = 3; // radians per second
@@ -131,9 +131,9 @@ public final class Constants {
   public static class ShooterConstants {
     public static final int k_shooterMotor = 11;
     public static final double k_intakeVelocityRPM = 2000;
-    public static final double k_speakerShootVelocityRPM = -4000; // -5750
-    public static final double k_ampShootVelocityRPM = -1500
-    ;
+    public static final double k_speakerShootVelocityRPM = -5750; // -5750
+    public static final double k_ampShootVelocityRPM = -2000; // -1500
+    
     public static final double k_speakerFeedVelocityRPM = 3500;
     public static final double k_deadzone = 25;
 
@@ -146,10 +146,10 @@ public final class Constants {
   // Positive is intake. negative is shoot intake side
   public static class HolderConstants {
     public static final int k_holdingMotor = 10;
-    public static final double k_intakeVelocityRPM = 1000;
-    public static final double k_speakerShootVelocityRPM = 2000;
+    public static final double k_intakeVelocityRPM = 500; // 1000
+    public static final double k_speakerShootVelocityRPM = 2000; 
     public static final double k_speakerFeedVelocityRPM = -9000;
-    public static final double k_ampFeedVelocityRPM = -500;
+    public static final double k_ampFeedVelocityRPM = -9000; // -500
 
     public static final double k_deadzone = 25;
     public static final double k_adjustGamePiecePower = -.15;

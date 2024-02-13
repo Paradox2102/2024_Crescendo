@@ -61,7 +61,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 																					// deviations
 	// public static final Vector<N3> k_visionSD = VecBuilder.fill(0.1, 0.1, 0.1); // Default vision standerd devations
 //	public static final Vector<N3> k_visionSD = VecBuilder.fill(0.05, 0.05, 0.05); // Default vision standerd devations
-	public static final Vector<N3> k_visionSD = VecBuilder.fill(0.5, 0.5, 1.0); // Default vision standerd devations
+	public static final Vector<N3> k_visionSD = VecBuilder.fill(0.1, 0.1, 1.0); // Default vision standerd devations
 
 	private static final double k_minSDAdjustDistance = 0.5; // Minimum distance for which we apply the standard
 																// deviation adjustment
@@ -295,6 +295,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 						updateAngle = lastAngle;
 					}
 				}
+				calculateAngle = lastAngle;		// For now always use estimated angle for calculations
 
 				if (adjust != 1.0) {
 					// Only need to adjust the angle parameter

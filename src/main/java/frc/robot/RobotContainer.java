@@ -76,7 +76,6 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
-
   private final SendableChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -84,13 +83,13 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     m_driveSubsystem.setTracker(m_tracker);
-    NamedCommands.registerCommand("shoot", new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
-    NamedCommands.registerCommand("intake", new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
-    NamedCommands.registerCommand("rev shooter", new RevCommand(m_shooterSubsystem, m_holderSubsystem));
-    NamedCommands.registerCommand("aim", new SetPivotOffRobotLocation(m_pivotSubsystem));
-    NamedCommands.registerCommand("switch sides", new ToggleShootSideCommand(false));
-    NamedCommands.registerCommand("set speaker", new SetSpeakerAmpMode(true));
-    NamedCommands.registerCommand("feedthrough", new CheckIntakeStowed());
+    // NamedCommands.registerCommand("shoot", new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
+    // NamedCommands.registerCommand("intake", new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
+    // NamedCommands.registerCommand("rev shooter", new RevCommand(m_shooterSubsystem, m_holderSubsystem));
+    // NamedCommands.registerCommand("aim", new SetPivotOffRobotLocation(m_pivotSubsystem));
+    // NamedCommands.registerCommand("switch sides", new ToggleShootSideCommand(false));
+    // NamedCommands.registerCommand("set speaker", new SetSpeakerAmpMode(true));
+    // NamedCommands.registerCommand("feedthrough", new CheckIntakeStowed());
     autoChooser = AutoBuilder.buildAutoChooser();
 
     m_apriltagCamera.setCameraInfo(8.375, 12, 180); // y = 6

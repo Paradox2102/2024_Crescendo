@@ -6,7 +6,9 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 public class ManualElevatorCommand extends Command {
@@ -31,9 +33,16 @@ public class ManualElevatorCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-
-    
+    double y = MathUtil.applyDeadband(m_getY.getAsDouble(), Constants.ElevatorConstants.k_driveDeadband);
+    //ITS A WORK IN PROGRESS OKAY
+    if (y <= Constants.ElevatorConstants.k_maxDistance) {
+      m_subsystem.setPower(y);
+    } else if (y >= Constants.ElevatorConstants.k_maxDistance) {
+      m_subsystem.setPower(y);
+    } else {
+      m_subsystem.setPower(0);
+    }
+    // m_subsystem.setPosition(y);
   }
 
   // Called once the command ends or is interrupted.

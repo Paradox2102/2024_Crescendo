@@ -12,11 +12,15 @@ import frc.robot.subsystems.ElevatorSubsystem;
 public class ManualElevatorCommand extends Command {
   private ElevatorSubsystem m_subsystem;
   private DoubleSupplier m_getY;
+  private final double k_minDistance = 0; //default
+  private final double k_maxDistance = 0; //default
+
   /** Creates a new ManualElevator. */
   public ManualElevatorCommand(ElevatorSubsystem subsystem, DoubleSupplier getY) {
     m_subsystem = subsystem;
     m_getY = getY;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_subsystem);
   }
 
   // Called when the command is initially scheduled.

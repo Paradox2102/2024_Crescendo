@@ -176,7 +176,7 @@ public class DriveSubsystem extends SubsystemBase {
     Pose2d robot = m_tracker.getPose2d();
     double xDist = robot.getX() - speaker.m_xMeters;
     double yDist = robot.getY() - speaker.m_yMeters;
-    return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan((yDist / xDist))));
+    return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan2(yDist, xDist)));
   }
 
   public double getFutureRotationalDistanceFromSpeakerDegrees() {

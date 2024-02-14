@@ -14,6 +14,7 @@ public class ShootCommand extends Command {
   ShooterSubsystem m_shooterSubsystem;
   HolderSubsystem m_holderSubsystem;
   private Timer m_dwellTimer = new Timer();
+  private boolean m_feeding = false;
 
   /** Creates a new ShootCommand. */
   public ShootCommand(ShooterSubsystem shooterSubsystem, HolderSubsystem holderSubsystem) {
@@ -21,14 +22,14 @@ public class ShootCommand extends Command {
     m_shooterSubsystem = shooterSubsystem;
     m_holderSubsystem = holderSubsystem;
     addRequirements(m_shooterSubsystem, m_holderSubsystem);
-    m_dwellTimer.reset();
-    m_dwellTimer.start();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     Constants.m_runningShooterAndHolder = true;
+    m_dwellTimer.start();
+    m_dwellTimer.reset();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -47,12 +48,14 @@ public class ShootCommand extends Command {
           if (m_shooterSubsystem.isReady()) {
             System.out.println("hi");
             m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerFeedVelocityRPM);
+            m_feeding = true;
           }
         } else {
           // shooting holder side to speaker
           m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
           if (m_holderSubsystem.isReady()) {
             m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerFeedVelocityRPM);
+            m_feeding = true;
           }
         }
       } else {
@@ -60,10 +63,11 @@ public class ShootCommand extends Command {
         m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_ampShootVelocityRPM);
         if (m_shooterSubsystem.isReady()) {
           m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_ampFeedVelocityRPM);
+          m_feeding = true;
         }
       }
     // }
-    if (Constants.m_hasGamePiece) {
+    if (!m_feeding) {
       m_dwellTimer.reset();
     }
   }
@@ -75,11 +79,12 @@ public class ShootCommand extends Command {
     m_holderSubsystem.stop();
     Constants.m_runningShooterAndHolder = false;
     Constants.m_hasGamePiece = false;
+    m_dwellTimer.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_dwellTimer.get() > 0.5;
+    return m_dwellTimer.get() > 1;
   }
 }

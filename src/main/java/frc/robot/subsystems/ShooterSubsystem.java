@@ -45,6 +45,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void setVelocityRPM(double velocity) {
     m_velocity = velocity;
+    System.out.println("set shoot rpm");
+
   }
 
   public double getVelocityRPM() {
@@ -82,8 +84,6 @@ public class ShooterSubsystem extends SubsystemBase {
     // }
     m_finalPower = F + power;
     setPower(m_finalPower);
-
-    System.out.println(m_velocity);
     
     SmartDashboard.putNumber("Shooter Front Velo", -currentVelocity);
     SmartDashboard.putNumber("Shooter Target Front Velocity", -m_velocity);

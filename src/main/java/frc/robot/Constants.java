@@ -158,6 +158,11 @@ public final class Constants {
   public static class ElevatorConstants {
     public static final int k_elevatorMotor = 0;
     public static final double k_ticksToInches = 0;
+
+//manual command
+    public static final double k_driveDeadband = 0;
+    public static final double k_minDistance = 0;
+    public static final double k_maxDistance = 0;
   }
 
   public static final double k_idealShootingDistanceMeters = 3;

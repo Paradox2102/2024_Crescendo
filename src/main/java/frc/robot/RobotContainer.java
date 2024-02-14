@@ -23,7 +23,6 @@ import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
 import frc.robot.commands.gamePieceManipulation.RevCommand;
 import frc.robot.commands.gamePieceManipulation.ShootCommand;
-import frc.robot.commands.gamePieceManipulation.ShootWhileDriving;
 import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.SetPivotOffRobotLocation;
 import frc.robot.commands.test.D2Intake;
@@ -126,7 +125,7 @@ public class RobotContainer {
       () -> m_driverController.getRightX()
     ));
 
-    //m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, false));
+    m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, false));
 
 
     m_driverController.rightBumper().onTrue(new InstantCommand(() -> {Constants.m_faceSpeaker = !Constants.m_faceSpeaker;}));

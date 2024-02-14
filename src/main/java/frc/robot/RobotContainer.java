@@ -23,7 +23,6 @@ import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
 import frc.robot.commands.gamePieceManipulation.RevCommand;
 import frc.robot.commands.gamePieceManipulation.ShootCommand;
-import frc.robot.commands.gamePieceManipulation.ShootWhileDriving;
 import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.SetPivotOffRobotLocation;
 import frc.robot.commands.test.D2Intake;
@@ -83,13 +82,13 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     m_driveSubsystem.setTracker(m_tracker);
-    NamedCommands.registerCommand("shoot", new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
-    NamedCommands.registerCommand("intake", new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
-    NamedCommands.registerCommand("rev shooter", new RevCommand(m_shooterSubsystem, m_holderSubsystem));
-    NamedCommands.registerCommand("aim", new SetPivotOffRobotLocation(m_pivotSubsystem));
-    NamedCommands.registerCommand("switch sides", new ToggleShootSideCommand(false));
-    NamedCommands.registerCommand("set speaker", new SetSpeakerAmpMode(true));
-    NamedCommands.registerCommand("feedthrough", new CheckIntakeStowed());
+    // NamedCommands.registerCommand("shoot", new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
+    // NamedCommands.registerCommand("intake", new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
+    // NamedCommands.registerCommand("rev shooter", new RevCommand(m_shooterSubsystem, m_holderSubsystem));
+    // NamedCommands.registerCommand("aim", new SetPivotOffRobotLocation(m_pivotSubsystem));
+    // NamedCommands.registerCommand("switch sides", new ToggleShootSideCommand(false));
+    // NamedCommands.registerCommand("set speaker", new SetSpeakerAmpMode(true));
+    // NamedCommands.registerCommand("feedthrough", new CheckIntakeStowed());
     autoChooser = AutoBuilder.buildAutoChooser();
 
     m_apriltagCamera.setCameraInfo(8.375, 12, 180); // y = 6
@@ -126,7 +125,7 @@ public class RobotContainer {
       () -> m_driverController.getRightX()
     ));
 
-    //m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, false));
+    m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, false));
 
 
     m_driverController.rightBumper().onTrue(new InstantCommand(() -> {Constants.m_faceSpeaker = !Constants.m_faceSpeaker;}));

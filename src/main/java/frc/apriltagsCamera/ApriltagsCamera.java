@@ -295,7 +295,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 						updateAngle = lastAngle;
 					}
 				}
-				calculateAngle = lastAngle;		// For now always use estimated angle for calculations
+				// calculateAngle = lastAngle;		// For now always use estimated angle for calculations
 
 				if (adjust != 1.0) {
 					// Only need to adjust the angle parameter

@@ -49,8 +49,8 @@ public final class Constants {
 
     public static final int k_drivingMotorPinionTeeth = 14;
 
-    public static final double k_driveWidth = Units.inchesToMeters(26.5);
-    public static final double k_driveLength = Units.inchesToMeters(26.5);
+    public static final double k_driveWidth = Units.inchesToMeters(23.5);
+    public static final double k_driveLength = Units.inchesToMeters(23.5);
     public static final double k_wheelDiameterMeters = .0762;
     public static final double k_drivingMotorReduction = (45.0 * 22) / (k_drivingMotorPinionTeeth * 15);
 

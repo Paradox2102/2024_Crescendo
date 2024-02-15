@@ -24,6 +24,7 @@ public class RevCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("revCommand initialize");
     Constants.m_runningShooterAndHolder = true;
     if (Constants.m_shootIntakeSide) {
       m_shooterSubsystem.setVelocityRPM(Constants.m_speaker ? Constants.ShooterConstants.k_speakerShootVelocityRPM : Constants.ShooterConstants.k_ampShootVelocityRPM);
@@ -43,6 +44,7 @@ public class RevCommand extends Command {
     m_shooterSubsystem.stop();
     m_holderSubsystem.stop();
     Constants.m_runningShooterAndHolder = false;
+    System.out.println("rev command end");
   }
 
   // Returns true when the command should end.

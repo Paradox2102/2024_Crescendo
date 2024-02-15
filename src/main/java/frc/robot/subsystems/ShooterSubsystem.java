@@ -67,7 +67,7 @@ public class ShooterSubsystem extends SubsystemBase {
     double currentVelocity = getVelocityRPM();
     double F = m_velocity / 5450.0; //5350
 
-    Constants.m_runningShooterAndHolder = m_velocity != 0;
+    //Constants.m_runningShooterAndHolder = m_velocity != 0;
     
     double power = m_PID.calculate(currentVelocity, m_velocity);
 
@@ -89,5 +89,6 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shooter Target Front Velocity", -m_velocity);
     SmartDashboard.putNumber("Shooter Power", m_finalPower);
     SmartDashboard.putBoolean("Shoot Speaker", Constants.m_speaker);
+    SmartDashboard.putBoolean("is running shooter", Constants.m_runningShooterAndHolder);
   }
 }

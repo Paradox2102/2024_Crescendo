@@ -35,19 +35,20 @@ public class ManualElevatorCommand extends Command {
   public void execute() {
     double y = MathUtil.applyDeadband(m_getY.getAsDouble(), Constants.ElevatorConstants.k_driveDeadband);
     //ITS A WORK IN PROGRESS OKAY
-    if (y <= Constants.ElevatorConstants.k_maxDistance) {
-      m_subsystem.setPower(y);
-    } else if (y >= Constants.ElevatorConstants.k_maxDistance) {
-      m_subsystem.setPower(y);
+    if (y < Constants.ElevatorConstants.k_minDistance) {
+      m_subsystem.setPower(0);
+    } else if (y > Constants.ElevatorConstants.k_maxDistance) {
+      m_subsystem.setPower(0);
     } else {
       m_subsystem.setPower(0);
     }
-    // m_subsystem.setPosition(y);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_subsystem.setPower(0);
+  }
 
   // Returns true when the command should end.
   @Override

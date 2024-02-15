@@ -93,7 +93,7 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putData("Field", m_field);
     m_visionCamera = new Camera();
 
-    m_orientPID.enableContinuousInput(0, 360);
+    m_orientPID.enableContinuousInput(-180, 180);
 
     m_apriltagCamera = apriltagCamera;
 
@@ -196,8 +196,9 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public double orientPID(double setpoint) {
-    double rot = m_orientPID.calculate(getHeadingInDegrees(), setpoint);
-    rot += (Constants.DriveConstants.k_rotateF * Math.signum(rot));
+    double heading = getHeadingInDegrees();
+    double rot = m_orientPID.calculate(heading, setpoint);
+    rot += (Constants.DriveConstants.k_rotateF * Math.signum(heading - setpoint));
     return Math.abs(rot) < Constants.DriveConstants.k_rotateDeadzone ? 0 : rot;
   }
 

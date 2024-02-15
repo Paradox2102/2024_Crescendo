@@ -36,8 +36,8 @@
         "y": 4.1
       },
       "prevControl": {
-        "x": 4.059467939029342,
-        "y": 4.1
+        "x": 3.795117518976132,
+        "y": 5.30386846996972
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1.6,
-      "rotationDegrees": 180.0,
+      "rotationDegrees": -130.87981469653786,
       "rotateFast": false
     }
   ],
@@ -61,7 +61,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0,
+    "rotation": 165.6398376581401,
     "rotateFast": false
   },
   "reversed": false,

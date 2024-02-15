@@ -50,22 +50,9 @@
           }
         },
         {
-          "type": "race",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "center 3 to shoot"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "rev shooter"
-                }
-              }
-            ]
+            "pathName": "center 3 to shoot"
           }
         },
         {

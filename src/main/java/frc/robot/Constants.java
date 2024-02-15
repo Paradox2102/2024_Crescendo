@@ -108,13 +108,14 @@ public final class Constants {
         new SwerveModuleState(0, new Rotation2d(Math.PI / 4))
     };
 
-    public static final double k_rotateF = .3;
-    public static final double k_rotateP = .0001;
+    public static final double k_rotateF = .2;
+    public static final double k_rotateP = .016;
     public static final double k_rotateI = 0;
     public static final double k_rotateD = 0;
-    public static final double k_rotateDeadzone = .05;
+    public static final double k_rotateIZone = 30;
+    public static final double k_rotateDeadzone = .1;
 
-    public static final double k_lookAheadTime = 1;
+    public static final double k_lookAheadTime = 50;
   }
 
   public static class PivotConstants {
@@ -131,7 +132,7 @@ public final class Constants {
   public static class ShooterConstants {
     public static final int k_shooterMotor = 11;
     public static final double k_intakeVelocityRPM = 3000;
-    public static final double k_speakerShootVelocityRPM = -5750; // -5750
+    public static final double k_speakerShootVelocityRPM = -5000; // -5750
     public static final double k_ampShootVelocityRPM = -2000; // -1500
     
     public static final double k_speakerFeedVelocityRPM = 3500;

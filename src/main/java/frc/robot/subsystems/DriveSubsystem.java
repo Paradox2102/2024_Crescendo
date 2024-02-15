@@ -94,6 +94,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_visionCamera = new Camera();
 
     m_orientPID.enableContinuousInput(-180, 180);
+    m_orientPID.setIZone(Constants.DriveConstants.k_rotateIZone);
 
     m_apriltagCamera = apriltagCamera;
 
@@ -198,7 +199,7 @@ public class DriveSubsystem extends SubsystemBase {
   public double orientPID(double setpoint) {
     double heading = getHeadingInDegrees();
     double rot = m_orientPID.calculate(heading, setpoint);
-    rot += (Constants.DriveConstants.k_rotateF * Math.signum(heading - setpoint));
+    rot += (Constants.DriveConstants.k_rotateF * Math.signum(setpoint - heading));
     return Math.abs(rot) < Constants.DriveConstants.k_rotateDeadzone ? 0 : rot;
   }
 

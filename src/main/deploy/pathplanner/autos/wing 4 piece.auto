@@ -1,12 +1,6 @@
 {
   "version": 1.0,
-  "startingPose": {
-    "position": {
-      "x": 1.3,
-      "y": 5.5
-    },
-    "rotation": 0.0
-  },
+  "startingPose": null,
   "command": {
     "type": "sequential",
     "data": {
@@ -40,7 +34,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.5
+                        "waitTime": 1.0
                       }
                     },
                     {
@@ -59,12 +53,6 @@
           "type": "path",
           "data": {
             "pathName": "wing 3 turnaround"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "feedthrough"
           }
         },
         {
@@ -107,12 +95,6 @@
         {
           "type": "named",
           "data": {
-            "name": "feedthrough"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "aim"
           }
         },
@@ -145,12 +127,6 @@
           "type": "path",
           "data": {
             "pathName": "wing 1 turnaround"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "feedthrough"
           }
         },
         {

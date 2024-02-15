@@ -14,8 +14,6 @@ import frc.robot.subsystems.ElevatorSubsystem;
 public class ManualElevatorCommand extends Command {
   private ElevatorSubsystem m_subsystem;
   private DoubleSupplier m_getY;
-  private final double k_minDistance = 0; //default
-  private final double k_maxDistance = 0; //default
 
   /** Creates a new ManualElevator. */
   public ManualElevatorCommand(ElevatorSubsystem subsystem, DoubleSupplier getY) {
@@ -34,11 +32,15 @@ public class ManualElevatorCommand extends Command {
   @Override
   public void execute() {
     double y = MathUtil.applyDeadband(m_getY.getAsDouble(), Constants.ElevatorConstants.k_driveDeadband);
-    //ITS A WORK IN PROGRESS OKAY
-    if (y < Constants.ElevatorConstants.k_minDistance) {
+
+    double position = m_subsystem.getCookedElevatorPosition();
+
+    if (y > Constants.ElevatorConstants.k_minDistance ) {
       m_subsystem.setPower(0);
-    } else if (y > Constants.ElevatorConstants.k_maxDistance) {
+      position += 5;
+    } else if (y < Constants.ElevatorConstants.k_maxDistance) {
       m_subsystem.setPower(0);
+      position += 5;
     } else {
       m_subsystem.setPower(0);
     }

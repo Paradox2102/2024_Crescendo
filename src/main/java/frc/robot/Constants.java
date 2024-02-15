@@ -162,7 +162,7 @@ public final class Constants {
 //manual command
     public static final double k_driveDeadband = 0;
     public static final double k_minDistance = 0;
-    public static final double k_maxDistance = 0;
+    public static final double k_maxDistance = 46;
   }
 
   public static final double k_idealShootingDistanceMeters = 3;

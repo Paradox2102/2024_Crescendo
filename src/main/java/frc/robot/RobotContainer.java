@@ -92,6 +92,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("feedthrough", new CheckIntakeStowed());
     autoChooser = AutoBuilder.buildAutoChooser();
 
+    m_apriltagCamera.setCameraInfo(8.375, 12, 180, ApriltagsCameraType.GS_6mm); // y = 6
     m_apriltagCamera.setCameraInfo(5.125, 15.5, 0, ApriltagsCameraType.GS_6mm); // y = 9.5
     m_apriltagCamera.connect("10.21.2.11", 5800);
 

@@ -59,19 +59,64 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 	public static final Vector<N3> k_odometrySD = VecBuilder.fill(0.1, 0.1, 0.1); // Default odometry standard
 																					// deviations
-	// public static final Vector<N3> k_visionSD = VecBuilder.fill(0.1, 0.1, 0.1); // Default vision standerd devations
-//	public static final Vector<N3> k_visionSD = VecBuilder.fill(0.05, 0.05, 0.05); // Default vision standerd devations
-	public static final Vector<N3> k_visionSD = VecBuilder.fill(0.1, 0.1, 1.0); // Default vision standerd devations
+	// public static final Vector<N3> k_visionSD = VecBuilder.fill(0.1, 0.1, 0.1);
+	// // Default vision standerd devations
+	// public static final Vector<N3> k_visionSD = VecBuilder.fill(0.05, 0.05,
+	// 0.05); // Default vision standerd devations
+	public static final Vector<N3> k_visionSD6mm = VecBuilder.fill(0.1, 0.1, 0.5); // Default vision standerd devations
 
-	private static final double k_minSDAdjustDistance = 0.5; // Minimum distance for which we apply the standard
-																// deviation adjustment
-	private static final double k_maxSDAdjustDistance = 4.0; // Maximum distance for which we apply the stander
-																// deviation adjustment
-	private static final double k_maxAngleDistance = 5.0; // If this distance is greater than this value, do not update
-															// the estimated angle
-	private static final double k_SDAdjustSlope = 8.0; // Slop of adjustment between min and max distances
-	private static final double k_maxDistance = 12.0; // Max distance beyond which the camera is completely unreliable
-	private static final double k_maxAngleError = 2; // Max acceptable angle error in degrees
+	// private static final double k_minSDAdjustDistance = 0.5; // Minimum distance
+	// for which we apply the standard
+	// // deviation adjustment
+	// private static final double k_maxSDAdjustDistance = 4.0; // Maximum distance
+	// for which we apply the stander
+	// // deviation adjustment
+	// private static final double k_maxAngleDistance = 5.0; // If this distance is
+	// greater than this value, do not update
+	// // the estimated angle
+	// private static final double k_SDAdjustSlope = 8.0; // Slop of adjustment
+	// between min and max distances
+	// private static final double k_maxDistance = 12.0; // Max distance beyond
+	// which the camera is completely unreliable
+	// private static final double k_maxAngleError = 2; // Max acceptable angle
+	// error in degrees
+
+	public enum ApriltagsCameraType {
+		GS_6mm, // Global shutter camera with 6mm lens
+		GS_4mm, // Global shutter camera with 4mm lens
+	}
+
+	private class ApriltagsCameraConfig {
+		private final double m_minSDAdjustDistance; // Minimum distance for which we apply the standard
+													// deviation adjustment
+		private final double m_maxSDAdjustDistance; // Maximum distance for which we apply the stander
+													// deviation adjustment
+		private final double m_maxAngleDistance; // If this distance is greater than this value, do not update
+													// the estimated angle
+		private final double m_SDAdjustSlope; // Slop of adjustment between min and max distances
+		private final double m_angleSDAdjust;	// Scale factor for adjusting SD based on difference between yaw and est yaw
+		private final double m_maxDistance; // Max distance beyond which the camera is completely unreliable
+		private final double m_maxAngleError; // Max acceptable angle error in degrees
+		private final Vector<N3> m_visionSD;
+		private boolean m_start = true;
+
+		ApriltagsCameraConfig(double minSDAdjustDist, double maxSDAdjustDist, double SDAdjustSlope, double maxAngleDist,
+				double maxDist, double maxAngleError, double angleSDAdjust, Vector<N3> visionSD) {
+			m_minSDAdjustDistance = minSDAdjustDist;
+			m_maxSDAdjustDistance = maxSDAdjustDist;
+			m_SDAdjustSlope = SDAdjustSlope;
+			m_maxAngleDistance = maxAngleDist;
+			m_maxDistance = maxDist;
+			m_maxAngleError = maxAngleError;
+			m_angleSDAdjust = angleSDAdjust;
+			m_visionSD = visionSD;
+		}
+	}
+
+	ApriltagsCameraConfig m_config[] = {
+			new ApriltagsCameraConfig(0.5, 4.0, 8.0, 5.0, 12.0, 2, 0.1, k_visionSD6mm),
+			new ApriltagsCameraConfig(0.5, 4.0, 8.0, 5.0, 12.0, 2, 0.11, k_visionSD6mm)
+	};
 
 	/**
 	 * @brief The ApriltagsCameraStats class collects the current camera performance
@@ -99,14 +144,17 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		final double m_xOffsetInches;
 		final double m_yOffsetInches;
 		final double m_cameraAngleDegrees;
+		final ApriltagsCameraType m_type;
 		int m_frameCount = 0;
 		int m_missingCount = 0;
 		int m_lastFrame = -1;
 
-		ApriltagsCameraInfo(double xOffsetInches, double yOffsetInches, double cameraAngleDegrees) {
+		ApriltagsCameraInfo(double xOffsetInches, double yOffsetInches, double cameraAngleDegrees,
+				ApriltagsCameraType type) {
 			m_xOffsetInches = xOffsetInches;
 			m_yOffsetInches = yOffsetInches;
 			m_cameraAngleDegrees = cameraAngleDegrees;
+			m_type = type;
 		}
 	}
 
@@ -229,25 +277,21 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				long captureTime,
 				int frameNo) {
 
-			// if (cameraNo == 1) return;
+			if (m_info.m_type.ordinal() > m_config.length) {
+				Logger.log("ApriltagsCamera", 3, "Invalid camera type: " + m_info.m_type);
+				return;
+			}
+
+			ApriltagsCameraConfig config = m_config[m_info.m_type.ordinal()];
 
 			double time = convertTime(captureTime);
 			ApriltagLocation tag = ApriltagLocations.findTag(m_tag);
-			// ApriltagsQueue queue = null;
 			ApriltagPosition lastPos = null;
 			Pose2d estPos = poseEstimator.getEstimatedPosition();
 			double cameraAngle; // Actual angle returned from the camera;
 			double calculateAngle; // Angle used to calculate the x & y positions
 			double updateAngle; // Angle used to update the position estimator
 
-			// if ((cameraNo >= 0) && (cameraNo < k_maxCameras) && (m_tag >= 0) && (m_tag <
-			// k_maxTags)) {
-			// queue = m_queue[cameraNo][m_tag];
-			// lastPos = queue.findPosition(time);
-			// } else {
-			// Logger.log("ApriltagsCamera", 3, String.format("Invalid camera %d or tag %d",
-			// cameraNo, m_tag));
-			// }
 			lastPos = m_queue.findPosition(time);
 
 			if (tag != null) {
@@ -261,18 +305,20 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 				double d = Math.sqrt(cx * cx + cz * cz);
 
-				if (d > k_maxDistance) {
+				if (d > config.m_maxDistance) {
 					return;
 				}
 
 				// Compute standard deviation parameters to be used based on the distance
-				Vector<N3> visionSD = VecBuilder.fill(k_visionSD.get(0, 0), k_visionSD.get(1, 0), k_visionSD.get(2, 0));
+				Vector<N3> visionSD = VecBuilder.fill(config.m_visionSD.get(0, 0), config.m_visionSD.get(1, 0),
+						config.m_visionSD.get(2, 0));
 
-				if (d >= k_minSDAdjustDistance) {
+				if (d >= config.m_minSDAdjustDistance) {
 					// if (d > k_maxSDAdjustDistance) {
-					// 	adjust = 1.0 + k_SDAdjustSlope * (k_maxSDAdjustDistance - k_minSDAdjustDistance);
+					// adjust = 1.0 + k_SDAdjustSlope * (k_maxSDAdjustDistance -
+					// k_minSDAdjustDistance);
 					// } else {
-						adjust = 1.0 + k_SDAdjustSlope * (d - k_minSDAdjustDistance);
+					adjust = 1.0 + config.m_SDAdjustSlope * (d - config.m_minSDAdjustDistance);
 					// }
 				}
 
@@ -283,26 +329,38 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 					lastAngle = poseEstimator.getEstimatedPosition().getRotation().getDegrees();
 				}
 
-				if ((d > k_maxAngleDistance) || (Math.abs(normalizeAngle(lastAngle - cameraAngle)) > k_maxAngleError)) {
+				double deltaAngle = Math.abs(normalizeAngle(lastAngle - cameraAngle));
+
+				adjust *= (1.0 + Math.abs(normalizeAngle(lastAngle - cameraAngle)) * config.m_angleSDAdjust);
+
+				if ((d > config.m_maxAngleDistance)) {
+						// || (Math.abs(normalizeAngle(lastAngle - cameraAngle)) > config.m_maxAngleError)) {
 					// If max error is exceeded, increase the standard deviation adjustment and use
 					// the estimated angle for calculations
-					adjust *= 2;
-					calculateAngle = lastAngle;
+					// adjust *= 2;
+					// calculateAngle = lastAngle;
 
-					if (d > k_maxAngleDistance) {
+					// if (d > config.m_maxAngleDistance) {
 						// If the robot is too far away, do not use the last angle to update the
 						// estimator
 						updateAngle = lastAngle;
-					}
+					// }
 				}
-				// calculateAngle = lastAngle;		// For now always use estimated angle for calculations
+				calculateAngle = lastAngle; // For now always use estimated angle for
+				// calculations
 
-				if (adjust != 1.0) {
+				if (config.m_start) {
+					if (deltaAngle < 5.0) {
+						config.m_start = false;
+					}
+					adjust = 1.0;
+				}
+				else if (adjust != 1.0) {
 					// Only need to adjust the angle parameter
 					visionSD.set(2, 0, visionSD.get(2, 0) * adjust);
 				}
 
-				if (d > k_maxSDAdjustDistance) {
+				if (d > config.m_maxSDAdjustDistance) {
 					// For distances greater that the max distance, use the estimated angle for
 					// calculations
 					calculateAngle = lastAngle;
@@ -359,7 +417,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 											estPos.getRotation().getDegrees(),
 											calculatedPos.getX(), estPos.getX(),
 											calculatedPos.getY(), estPos.getY(),
-											adjust,	frameNo, d));
+											adjust, frameNo, d));
 						}
 					}
 
@@ -561,8 +619,9 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		}, 200, 200);
 	}
 
-	public void setCameraInfo(double xOffsetInches, double yOffsetInches, double angleOffsetInDegrees) {
-		m_cameras.add(new ApriltagsCameraInfo(xOffsetInches, yOffsetInches, angleOffsetInDegrees));
+	public void setCameraInfo(double xOffsetInches, double yOffsetInches, double angleOffsetInDegrees,
+			ApriltagsCameraType type) {
+		m_cameras.add(new ApriltagsCameraInfo(xOffsetInches, yOffsetInches, angleOffsetInDegrees, type));
 	}
 
 	public void disableCameras(boolean disable) {

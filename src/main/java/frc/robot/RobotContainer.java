@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.apriltagsCamera.PositionServer;
 import frc.apriltagsCamera.ApriltagsCamera;
+import frc.apriltagsCamera.ApriltagsCamera.ApriltagsCameraType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutoPickUpGamePiece;
 import frc.robot.commands.DisableEverything;
@@ -91,8 +92,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("feedthrough", new CheckIntakeStowed());
     autoChooser = AutoBuilder.buildAutoChooser();
 
-    m_apriltagCamera.setCameraInfo(8.375, 12, 180); // y = 6
-    m_apriltagCamera.setCameraInfo(5.125, 15.5, 0); // y = 9.5
+    m_apriltagCamera.setCameraInfo(5.125, 15.5, 0, ApriltagsCameraType.GS_6mm); // y = 9.5
     m_apriltagCamera.connect("10.21.2.11", 5800);
 
     m_posServer.start();

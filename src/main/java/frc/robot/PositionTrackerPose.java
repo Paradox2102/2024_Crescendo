@@ -62,6 +62,7 @@ public class PositionTrackerPose {
 				Rotation2d.fromDegrees(angleInDegrees),
 				m_driveSubsystem.getModulePosition(),
 				new Pose2d(x, y, Rotation2d.fromDegrees(angleInDegrees)));
+		System.out.println(getPose2d());
 	}
 
 	public static class PositionContainer {

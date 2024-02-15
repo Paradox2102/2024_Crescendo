@@ -79,10 +79,10 @@ public class DriveSubsystem extends SubsystemBase {
   private Pose2d m_previousPos = new Pose2d();
 
   private final SwerveDriveKinematics m_swerve = new SwerveDriveKinematics(
-        new Translation2d(.33655, .33655),
-        new Translation2d(.33655, -.33655),
-        new Translation2d(-.33655, .33655),
-        new Translation2d(-.33655, -.33655));
+        new Translation2d(.298, .298),
+        new Translation2d(.298, -.298),
+        new Translation2d(-.298, .298),
+        new Translation2d(-.298, -.298));
 
     PositionTrackerPose m_tracker;
     ApriltagsCamera m_apriltagCamera;;

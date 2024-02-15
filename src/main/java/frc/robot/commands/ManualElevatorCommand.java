@@ -35,12 +35,10 @@ public class ManualElevatorCommand extends Command {
 
     double position = m_subsystem.getCookedElevatorPosition();
 
-    if (y > Constants.ElevatorConstants.k_minDistance ) {
-      m_subsystem.setPower(0);
-      position += 5;
+    if (y > Constants.ElevatorConstants.k_minDistance) {
+      m_subsystem.setPosition(position);
     } else if (y < Constants.ElevatorConstants.k_maxDistance) {
-      m_subsystem.setPower(0);
-      position += 5;
+      m_subsystem.setPosition(position);
     } else {
       m_subsystem.setPower(0);
     }

@@ -46,7 +46,7 @@ public class PositionTrackerPose {
 				m_driveSubsystem.getGyroRotation2d(),
 				m_driveSubsystem.getModulePosition(),
 				new Pose2d(0, 0, Rotation2d.fromDegrees(0)), ApriltagsCamera.k_odometrySD,
-				ApriltagsCamera.k_visionSD);
+				ApriltagsCamera.k_visionSD6mm);
 
 		// m_posServer = new PositionServer();
 		// m_posServer.start();

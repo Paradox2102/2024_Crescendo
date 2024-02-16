@@ -50,21 +50,9 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "wing 3 turnaround"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "aim"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shoot"
+            "name": "aim + shoot"
           }
         },
         {
@@ -87,21 +75,9 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "wing 2 turnaround"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "aim"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shoot"
+            "name": "aim + shoot"
           }
         },
         {
@@ -124,21 +100,9 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "wing 1 turnaround"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "aim"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shoot"
+            "name": "aim + shoot"
           }
         }
       ]

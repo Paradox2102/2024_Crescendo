@@ -66,7 +66,6 @@ public class ShootCommand extends Command {
           m_feeding = true;
         }
       }
-    // }
     if (!m_feeding) {
       m_dwellTimer.reset();
     }

@@ -90,6 +90,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("switch sides", new ToggleShootSideCommand(false));
     NamedCommands.registerCommand("set speaker", new SetSpeakerAmpMode(true));
     NamedCommands.registerCommand("feedthrough", new CheckIntakeStowed());
+    NamedCommands.registerCommand("aim + shoot", new AimAndShoot(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, m_driveSubsystem));
     autoChooser = AutoBuilder.buildAutoChooser();
 
     m_apriltagCamera.setCameraInfo(8.375, 12, 180, ApriltagsCameraType.GS_6mm); // y = 6
@@ -133,7 +134,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     //m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
-    m_driverController.leftTrigger().toggleOnTrue(new AimAndShoot(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, m_driveSubsystem));
+    m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
     // m_driverController.leftBumper().toggleOnTrue(new SetPivotAngleCommand(m_pivotSubsystem, 20.9));
     m_driverController.leftBumper().onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem));
     // m_driverController.rightTrigger().whileTrue(new AutoPickUpGamePiece(m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, () -> m_driverController.getLeftY(), () -> m_driverController.getLeftX(), () -> m_driverController.getRightX()));

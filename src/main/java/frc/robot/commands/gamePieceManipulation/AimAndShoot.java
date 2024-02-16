@@ -28,18 +28,18 @@ public class AimAndShoot extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      // new ToggleArcadeDrive(false),
-      // new ParallelDeadlineGroup(
-      //   new ParallelCommandGroup(
-      //     new SetPivotOffRobotLocation(pivotSubsystem),
-      //     new FaceSpeaker(driveSubsystem)
-      //   ),
-      //   new RevCommand(shooterSubsystem, holderSubsystem)
-      // ),
-      // new ShootCommand(shooterSubsystem, holderSubsystem),
-      new ToggleArcadeDrive(true),
-      new TestShooter(shooterSubsystem, holderSubsystem, pivotSubsystem, true),
-      new ResetPivot(pivotSubsystem)
+      //new ToggleArcadeDrive(false),
+      new ParallelDeadlineGroup(
+        new ParallelCommandGroup(
+          new SetPivotOffRobotLocation(pivotSubsystem),
+          new FaceSpeaker(driveSubsystem)
+        ),
+        new RevCommand(shooterSubsystem, holderSubsystem)
+      ),
+      new ShootCommand(shooterSubsystem, holderSubsystem)
+      //new ToggleArcadeDrive(true),
+      // new TestShooter(shooterSubsystem, holderSubsystem, pivotSubsystem, true),
+      // new ResetPivot(pivotSubsystem)
     );
   }
 }

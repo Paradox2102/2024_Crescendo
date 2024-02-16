@@ -28,7 +28,7 @@ public class AutoOrientCommand extends Command {
     m_y = y;
     m_x = x;
     m_angle = angle;
-    m_pid.enableContinuousInput(0, 360);
+    m_pid.enableContinuousInput(-180, 180);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }

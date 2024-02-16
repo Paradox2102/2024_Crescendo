@@ -223,6 +223,7 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Speaker Distance Translation", getTranslationalDistanceFromSpeakerMeters());
     SmartDashboard.putNumber("Speaker X", getSpeakerLocationMeters().m_xMeters);
     SmartDashboard.putNumber("Speaker Y", getSpeakerLocationMeters().m_yMeters);
+    SmartDashboard.putBoolean("Face Speaker", Constants.m_faceSpeaker);
 
     m_tracker.update(m_apriltagCamera);
 

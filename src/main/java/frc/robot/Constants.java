@@ -109,11 +109,11 @@ public final class Constants {
     };
 
     public static final double k_rotateF = .2;
-    public static final double k_rotateP = .016;
-    public static final double k_rotateI = 0;
+    public static final double k_rotateP = .005;
+    public static final double k_rotateI = .015;
     public static final double k_rotateD = 0;
-    public static final double k_rotateIZone = 30;
-    public static final double k_rotateDeadzone = .1;
+    public static final double k_rotateIZone = 70;
+    public static final double k_rotateDeadzone = 0;
 
     public static final double k_lookAheadTime = 50;
   }

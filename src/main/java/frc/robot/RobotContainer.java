@@ -21,6 +21,7 @@ import frc.robot.commands.drivetrain.AutoOrientCommand;
 import frc.robot.commands.drivetrain.ToggleArcadeDrive;
 import frc.robot.commands.gamePieceManipulation.AimAndShoot;
 import frc.robot.commands.gamePieceManipulation.CheckIntakeStowed;
+import frc.robot.commands.gamePieceManipulation.DefaultShooterCommand;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
 import frc.robot.commands.gamePieceManipulation.RevCommand;
@@ -128,6 +129,7 @@ public class RobotContainer {
     ));
 
     m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, false));
+    m_shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(m_shooterSubsystem));
 
 
     m_driverController.rightBumper().onTrue(new InstantCommand(() -> {Constants.States.m_faceSpeaker = !Constants.States.m_faceSpeaker;}));

@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -26,28 +27,30 @@ public class ShooterSensors extends SubsystemBase {
     return m_backSensor.get();
   }
 
-  public boolean getFrontSensorWithTime() {
-    return getFrontSensor() && m_frontCounter > 3;
-  }
+  // public boolean getFrontSensorWithTime() {
+  //   return getFrontSensor() && m_frontCounter > 3;
+  // }
 
-  public boolean getBackSensorWithTime() {
-    return getBackSensor() && m_backCounter > 3;
-  }
+  // public boolean getBackSensorWithTime() {
+  //   return getBackSensor() && m_backCounter > 3;
+  // }
 
   public boolean hasGamePiece() {
-    return getFrontSensorWithTime() || getBackSensorWithTime();
+    // return getFrontSensorWithTime() || getBackSensorWithTime();
+    return getFrontSensor() || getBackSensor();
   }
 
   public boolean isGamePieceStowed() {
     // If we are shooting intake side, check back sensors and not front sensors, if not, the opposite.
-    return Constants.States.m_shootIntakeSide ? (getBackSensorWithTime() && !getFrontSensorWithTime()) : (getFrontSensorWithTime() && !getBackSensorWithTime());
+    // return Constants.States.m_shootIntakeSide ? (getBackSensorWithTime() && !getFrontSensorWithTime()) : (getFrontSensorWithTime() && !getBackSensorWithTime());
+    return Constants.States.m_shootIntakeSide ? (getBackSensor() && !getFrontSensor()) : (getFrontSensor() && !getBackSensor());
   }
 
   @Override
   public void periodic() {
     // // This method will be called once per scheduler run
-    // Constants.m_hasGamePiece = hasGamePiece();
-    // Constants.m_isGamePieceStowed = isGamePieceStowed();
+    Constants.States.m_hasGamePiece = hasGamePiece();
+    Constants.States.m_isGamePieceStowed = isGamePieceStowed();
 
     // if (getFrontSensor()) {
     //   if (m_frontCounter < 5) {
@@ -65,12 +68,8 @@ public class ShooterSensors extends SubsystemBase {
     //   m_backCounter = 0;
     // }
 
-    // SmartDashboard.putNumber("Front Sensor", getFrontDistance());
-    // SmartDashboard.putNumber("Back Sensor", getBackDistance());
-    // SmartDashboard.putBoolean("Has Game Piece", Constants.m_hasGamePiece);
-    // SmartDashboard.putBoolean("Boolean Back", getBackSensorWithTime());
-    // SmartDashboard.putBoolean("Boolean Front", getFrontSensorWithTime());
-    // SmartDashboard.putBoolean("Game Piece Stowed", Constants.m_isGamePieceStowed);
-    // SmartDashboard.putBoolean("Shoot Intake Side", Constants.m_shootIntakeSide);
+    SmartDashboard.putBoolean("Has Game Piece", Constants.States.m_hasGamePiece);
+    SmartDashboard.putBoolean("Game Piece Stowed", Constants.States.m_isGamePieceStowed);
+    SmartDashboard.putBoolean("Shoot Intake Side", Constants.States.m_shootIntakeSide);
   }
 }

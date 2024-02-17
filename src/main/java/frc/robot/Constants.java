@@ -113,7 +113,7 @@ public final class Constants {
     public static final double k_rotateI = .015;
     public static final double k_rotateD = 0;
     public static final double k_rotateIZone = 70;
-    public static final double k_rotateDeadzone = 0;
+    public static final double k_rotateDeadzone = 2;
 
     public static final double k_lookAheadTimeSeconds = 1;
   }
@@ -141,7 +141,7 @@ public final class Constants {
 
     public static final double k_adjustGamePiecePower = -.15;
 
-    public static final int k_frontSensor = 3;
+    public static final int k_frontSensor = 2;
     public static final int k_backSensor = 1;
   }
 

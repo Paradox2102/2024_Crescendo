@@ -12,6 +12,7 @@ public class DefaultShooterCommand extends Command {
   /** Creates a new DefaultShooterCommand. */
   ShooterSubsystem m_subsystem;
   public DefaultShooterCommand(ShooterSubsystem shooterSubsystem) {
+    m_subsystem = shooterSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }

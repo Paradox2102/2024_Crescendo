@@ -25,7 +25,7 @@ public class FaceSpeaker extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.drive(0, 0, MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getRotationalDistanceFromSpeakerDegrees()), 0.3), true, true);
+    m_subsystem.drive(0, 0, MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getRotationalDistanceFromSpeakerDegrees()), 0), true, true);
   }
 
   // Called once the command ends or is interrupted.
@@ -37,6 +37,6 @@ public class FaceSpeaker extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_subsystem.orientPID(m_subsystem.getRotationalDistanceFromSpeakerDegrees())) < Constants.DriveConstants.k_rotateDeadzone || !Constants.States.m_speakerMode;
+    return Math.abs(m_subsystem.getRotationalDistanceFromSpeakerDegrees()) < Constants.DriveConstants.k_rotateDeadzone || !Constants.States.m_speakerMode;
   }
 }

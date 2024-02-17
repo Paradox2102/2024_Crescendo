@@ -20,11 +20,11 @@ public class ShooterSensors extends SubsystemBase {
   public ShooterSensors() {}
 
   public boolean getFrontSensor() {
-    return m_frontSensor.get();
+    return !m_frontSensor.get();
   }
 
   public boolean getBackSensor() {
-    return m_backSensor.get();
+    return !m_backSensor.get();
   }
 
   // public boolean getFrontSensorWithTime() {
@@ -71,5 +71,7 @@ public class ShooterSensors extends SubsystemBase {
     SmartDashboard.putBoolean("Has Game Piece", Constants.States.m_hasGamePiece);
     SmartDashboard.putBoolean("Game Piece Stowed", Constants.States.m_isGamePieceStowed);
     SmartDashboard.putBoolean("Shoot Intake Side", Constants.States.m_shootIntakeSide);
+    SmartDashboard.putBoolean("Back Sensor", getBackSensor());
+    SmartDashboard.putBoolean("Front Sensor", getFrontSensor());
   }
 }

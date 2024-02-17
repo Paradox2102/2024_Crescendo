@@ -25,9 +25,9 @@ public class AimAndShoot extends SequentialCommandGroup {
     addCommands(
       //new ToggleArcadeDrive(false),
       new ParallelDeadlineGroup(
-        new ParallelCommandGroup(
-          new SetPivotOffRobotLocation(pivotSubsystem),
-          new FaceSpeaker(driveSubsystem)
+        new ParallelDeadlineGroup(
+          new FaceSpeaker(driveSubsystem),
+          new SetPivotOffRobotLocation(pivotSubsystem)
         ),
         new RevCommand(shooterSubsystem, holderSubsystem)
       ),

@@ -38,21 +38,19 @@ public class ArcadeDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Constants.States.m_arcadeDrive) {
-      double x = -MathUtil.applyDeadband(m_getX.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
-      double y = -MathUtil.applyDeadband(m_getY.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
-      double rot = -MathUtil.applyDeadband(m_getRot.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
-      if (Constants.States.m_faceSpeaker && rot == 0) {
-        rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getFutureRotationalDistanceFromSpeakerDegrees()), 0.2);
-      }
-      m_subsystem.drive(
-        y, 
-        x, 
-        rot, 
-        true, 
-        true
-      );
+    double x = -MathUtil.applyDeadband(m_getX.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
+    double y = -MathUtil.applyDeadband(m_getY.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
+    double rot = -MathUtil.applyDeadband(m_getRot.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
+    if (Constants.States.m_faceSpeaker && rot == 0) {
+      rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getFutureRotationalDistanceFromSpeakerDegrees()), 0.2);
     }
+    m_subsystem.drive(
+      y, 
+      x, 
+      rot, 
+      true, 
+      true
+    );
 
     
     // m_swerve.setModuleStates(m_defaultState);

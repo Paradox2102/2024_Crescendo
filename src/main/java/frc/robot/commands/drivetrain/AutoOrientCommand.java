@@ -20,7 +20,6 @@ public class AutoOrientCommand extends Command {
   double m_angle;
   double k_deadzone = 2.5;
 
-  private double k_f = Constants.DriveConstants.k_rotateF;
   PIDController m_pid = new PIDController(Constants.DriveConstants.k_rotateP, Constants.DriveConstants.k_rotateI, Constants.DriveConstants.k_rotateD);
 
   public AutoOrientCommand(DriveSubsystem driveSubsystem, double angle, DoubleSupplier y, DoubleSupplier x) {

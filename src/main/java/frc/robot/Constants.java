@@ -175,7 +175,6 @@ public final class Constants {
     public static boolean m_hasGamePiece = false;
     public static boolean m_isGamePieceStowed = false;
     public static boolean m_runningShooterAndHolder = false;
-    public static boolean m_arcadeDrive = true;
     public static boolean m_faceSpeaker = false;
   }
 }

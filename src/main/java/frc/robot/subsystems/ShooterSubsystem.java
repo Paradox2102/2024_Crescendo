@@ -88,7 +88,7 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shooter Front Velo", -currentVelocity);
     SmartDashboard.putNumber("Shooter Target Front Velocity", -m_velocity);
     SmartDashboard.putNumber("Shooter Power", m_finalPower);
-    SmartDashboard.putBoolean("Shoot Speaker", Constants.States.m_speaker);
+    SmartDashboard.putBoolean("Shoot Speaker", Constants.States.m_speakerMode);
     SmartDashboard.putBoolean("is running shooter", Constants.States.m_runningShooterAndHolder);
   }
 }

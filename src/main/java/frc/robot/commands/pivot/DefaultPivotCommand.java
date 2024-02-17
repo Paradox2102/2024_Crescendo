@@ -26,9 +26,9 @@ public class DefaultPivotCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Constants.States.m_speaker && Constants.States.m_faceSpeaker) {
+    if (Constants.States.m_speakerMode && Constants.States.m_faceSpeaker) {
       m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromRobotPos(m_predictFuture));
-    } else if (!Constants.States.m_speaker) {
+    } else if (!Constants.States.m_speakerMode) {
       m_subsystem.setPositionDegrees(Constants.PivotConstants.k_ampPositionDegrees);
     } else {
       m_subsystem.setPositionDegrees(0);

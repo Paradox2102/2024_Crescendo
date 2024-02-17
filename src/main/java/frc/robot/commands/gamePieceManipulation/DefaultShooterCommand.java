@@ -23,7 +23,7 @@ public class DefaultShooterCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Constants.States.m_isGamePieceStowed && Constants.States.m_faceSpeaker && Constants.States.m_speaker) {
+    if (Constants.States.m_isGamePieceStowed && Constants.States.m_faceSpeaker && Constants.States.m_speakerMode) {
       m_subsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerShootVelocityRPM);
     } else {
       m_subsystem.setVelocityRPM(0);

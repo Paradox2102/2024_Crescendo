@@ -23,6 +23,6 @@ public class DisableEverything extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Constants.States.m_speaker = false;
+    Constants.States.m_speakerMode = false;
   }
 }

@@ -40,7 +40,7 @@ public class ShootCommand extends Command {
     // from and where you are aiming,
     // and feed the game piece in once the shooter reaches the target velocity
     // if (Constants.m_isGamePieceStowed) {
-      if (Constants.States.m_speaker) {
+      if (Constants.States.m_speakerMode) {
         if (Constants.States.m_shootIntakeSide) {
           // shooting intake side to speaker
           m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerShootVelocityRPM);

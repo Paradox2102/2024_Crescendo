@@ -170,7 +170,7 @@ public final class Constants {
   public static final double k_idealShootingDistanceMeters = 3;
 
   public static class States {
-    public static boolean m_speaker = true;
+    public static boolean m_speakerMode = true;
     public static boolean m_shootIntakeSide = true;
     public static boolean m_hasGamePiece = false;
     public static boolean m_isGamePieceStowed = false;

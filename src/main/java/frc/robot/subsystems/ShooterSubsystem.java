@@ -31,7 +31,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public ShooterSubsystem() {
     setBrakeMode(true);
     m_PID.setIZone(k_iZone);
-    m_motor.setInverted(false);
+    m_motor.setInverted(true);
     m_motor.setSmartCurrentLimit(1000);
   }
 

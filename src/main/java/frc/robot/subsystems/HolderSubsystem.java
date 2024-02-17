@@ -32,7 +32,7 @@ public class HolderSubsystem extends SubsystemBase {
   public HolderSubsystem() {
     m_PID.setIZone(k_iZone);
     setBrakeMode(true);
-    m_motor.setInverted(true);
+    m_motor.setInverted(false);
     m_motor.setSmartCurrentLimit(1000);
     m_timer.reset();
     m_timer.start();

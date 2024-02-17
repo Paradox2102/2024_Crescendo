@@ -18,6 +18,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   private RelativeEncoder m_elevatorEncoder;
   private double m_elevatorPoint;
 
+  //pid stuff
   private static final double k_p = 0;
   private static final double k_i = 0;
   private static final double k_d = 0;

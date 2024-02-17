@@ -31,10 +31,13 @@ public class ManualElevatorCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //round y to 0 if its within the 0 range
     double y = MathUtil.applyDeadband(m_getY.getAsDouble(), Constants.ElevatorConstants.k_driveDeadband);
 
+    //gets cooked position
     double position = m_subsystem.getCookedElevatorPosition();
 
+    //
     if (y > Constants.ElevatorConstants.k_minDistance) {
       m_subsystem.setPosition(position);
     } else if (y < Constants.ElevatorConstants.k_maxDistance) {

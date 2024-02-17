@@ -33,6 +33,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   /** Creates a new ElevatorSubsystem. */
   public ElevatorSubsystem() {
     m_elevatorEncoder = m_elevatorMotor.getEncoder();
+    
   }
 
   public double getRawElevatorPosition() {

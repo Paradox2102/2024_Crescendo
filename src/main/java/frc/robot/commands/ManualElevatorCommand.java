@@ -25,8 +25,7 @@ public class ManualElevatorCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -37,13 +36,17 @@ public class ManualElevatorCommand extends Command {
     //gets cooked position
     double position = m_subsystem.getCookedElevatorPosition();
 
-    //
-    if (y > Constants.ElevatorConstants.k_minDistance) {
-      m_subsystem.setPosition(position);
-    } else if (y < Constants.ElevatorConstants.k_maxDistance) {
-      m_subsystem.setPosition(position);
-    } else {
+//power = 0.2 --> back
+//power = -0.2 --> forward
+//joystick forward is negative
+
+    //setting the limit
+    if (y <= Constants.ElevatorConstants.k_minDistance && m_getY.getAsDouble() > 0) {
       m_subsystem.setPower(0);
+    } else if (y >= Constants.ElevatorConstants.k_maxDistance && m_getY.getAsDouble() < 0) {
+      m_subsystem.setPower(0);
+    } else {
+      m_subsystem.setPosition(position);
     }
   }
 

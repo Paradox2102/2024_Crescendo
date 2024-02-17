@@ -20,6 +20,6 @@ public class ToggleShootSideCommand extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Constants.m_shootIntakeSide = m_front;
+    Constants.States.m_shootIntakeSide = m_front;
   }
 }

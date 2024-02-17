@@ -77,12 +77,12 @@ public class HolderSubsystem extends SubsystemBase {
 
     if(m_velocity != 0 && Math.abs(getVelocityRPM()) <= 20){
       if(m_timer.get() > 0.1){
-        Constants.m_hasGamePiece = true;
+        Constants.States.m_hasGamePiece = true;
       }
     } else {
       m_timer.reset();
     }
-    Constants.m_isGamePieceStowed = Constants.m_hasGamePiece;
+    Constants.States.m_isGamePieceStowed = Constants.States.m_hasGamePiece;
 
     // If not shooting, make sure gamepiece is stowed, else shoot
     // if (!Constants.m_runningShooterAndHolder) {
@@ -98,7 +98,7 @@ public class HolderSubsystem extends SubsystemBase {
     m_finalPower = F + power;
     setPower(m_finalPower);
     
-    SmartDashboard.putBoolean("has game piece", Constants.m_hasGamePiece);
+    SmartDashboard.putBoolean("has game piece", Constants.States.m_hasGamePiece);
     SmartDashboard.putNumber("Holder Front Velo", currentVelocity);
     SmartDashboard.putNumber("Holder Target Front Velocity", m_velocity);
     // SmartDashboard.putNumber("Final Target Power", m_finalPower);

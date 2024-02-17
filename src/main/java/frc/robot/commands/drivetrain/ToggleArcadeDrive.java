@@ -20,6 +20,6 @@ public class ToggleArcadeDrive extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Constants.m_arcadeDrive = m_arcadeDrive;
+    Constants.States.m_arcadeDrive = m_arcadeDrive;
   }
 }

@@ -130,7 +130,7 @@ public class RobotContainer {
     m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, false));
 
 
-    m_driverController.rightBumper().onTrue(new InstantCommand(() -> {Constants.m_faceSpeaker = !Constants.m_faceSpeaker;}));
+    m_driverController.rightBumper().onTrue(new InstantCommand(() -> {Constants.States.m_faceSpeaker = !Constants.States.m_faceSpeaker;}));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     //m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));

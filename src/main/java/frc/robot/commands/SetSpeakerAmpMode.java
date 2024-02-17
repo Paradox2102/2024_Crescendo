@@ -20,6 +20,6 @@ public class SetSpeakerAmpMode extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Constants.m_speaker = m_speakerMode;
+    Constants.States.m_speaker = m_speakerMode;
   }
 }

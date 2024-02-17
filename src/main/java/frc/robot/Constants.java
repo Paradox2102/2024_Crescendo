@@ -126,6 +126,7 @@ public final class Constants {
     // Positions
     public static final double k_intakePositionDegrees = 114;
     public static final double k_resetPositionDegrees = 0;
+    public static final double k_ampPositionDegrees = 0;
   }
 
   // Positive is intake. negative is shoot intake side
@@ -168,11 +169,13 @@ public final class Constants {
 
   public static final double k_idealShootingDistanceMeters = 3;
 
-  public static boolean m_speaker = true;
-  public static boolean m_shootIntakeSide = true;
-  public static boolean m_hasGamePiece = false;
-  public static boolean m_isGamePieceStowed = false;
-  public static boolean m_runningShooterAndHolder = false;
-  public static boolean m_arcadeDrive = true;
-  public static boolean m_faceSpeaker = false;
+  public static class States {
+    public static boolean m_speaker = true;
+    public static boolean m_shootIntakeSide = true;
+    public static boolean m_hasGamePiece = false;
+    public static boolean m_isGamePieceStowed = false;
+    public static boolean m_runningShooterAndHolder = false;
+    public static boolean m_arcadeDrive = true;
+    public static boolean m_faceSpeaker = false;
+  }
 }

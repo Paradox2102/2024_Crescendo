@@ -4,17 +4,13 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ShooterSensors extends SubsystemBase {
-  AnalogInput m_frontSensor = new AnalogInput(Constants.ShooterConstants.k_frontSensor);
-  AnalogInput m_backSensor = new AnalogInput(Constants.ShooterConstants.k_backSensor);
-
-  private double k_minDistanceFront = 99999670; // 670
-  private double k_minDistanceBack = 99999450; // 450
+  DigitalInput m_frontSensor = new DigitalInput(Constants.ShooterConstants.k_frontSensor);
+  DigitalInput m_backSensor = new DigitalInput(Constants.ShooterConstants.k_backSensor);
 
   private int m_frontCounter = 0;
   private int m_backCounter = 0;
@@ -22,20 +18,12 @@ public class ShooterSensors extends SubsystemBase {
   /** Creates a new ShooterSensors. */
   public ShooterSensors() {}
 
-  public int getFrontDistance() {
-    return m_frontSensor.getValue();
-  }
-
-  public int getBackDistance() {
-    return m_backSensor.getValue();
-  }
-
   public boolean getFrontSensor() {
-    return getFrontDistance() > k_minDistanceFront;
+    return m_frontSensor.get();
   }
 
   public boolean getBackSensor() {
-    return getBackDistance() > k_minDistanceBack;
+    return m_backSensor.get();
   }
 
   public boolean getFrontSensorWithTime() {
@@ -52,7 +40,7 @@ public class ShooterSensors extends SubsystemBase {
 
   public boolean isGamePieceStowed() {
     // If we are shooting intake side, check back sensors and not front sensors, if not, the opposite.
-    return Constants.m_shootIntakeSide ? (getBackSensorWithTime() && !getFrontSensorWithTime()) : (getFrontSensorWithTime() && !getBackSensorWithTime());
+    return Constants.States.m_shootIntakeSide ? (getBackSensorWithTime() && !getFrontSensorWithTime()) : (getFrontSensorWithTime() && !getBackSensorWithTime());
   }
 
   @Override

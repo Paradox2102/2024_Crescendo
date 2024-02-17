@@ -27,7 +27,7 @@ public class ShootCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Constants.m_runningShooterAndHolder = true;
+    Constants.States.m_runningShooterAndHolder = true;
     m_dwellTimer.start();
     m_dwellTimer.reset();
   }
@@ -40,13 +40,11 @@ public class ShootCommand extends Command {
     // from and where you are aiming,
     // and feed the game piece in once the shooter reaches the target velocity
     // if (Constants.m_isGamePieceStowed) {
-      if (Constants.m_speaker) {
-        if (Constants.m_shootIntakeSide) {
+      if (Constants.States.m_speaker) {
+        if (Constants.States.m_shootIntakeSide) {
           // shooting intake side to speaker
           m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerShootVelocityRPM);
-          System.out.println("bye");
           if (m_shooterSubsystem.isReady()) {
-            System.out.println("hi");
             m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerFeedVelocityRPM);
             m_feeding = true;
           }
@@ -76,8 +74,8 @@ public class ShootCommand extends Command {
   public void end(boolean interrupted) {
     m_shooterSubsystem.stop();
     m_holderSubsystem.stop();
-    Constants.m_runningShooterAndHolder = false;
-    Constants.m_hasGamePiece = false;
+    Constants.States.m_runningShooterAndHolder = false;
+    Constants.States.m_hasGamePiece = false;
     m_dwellTimer.stop();
   }
 

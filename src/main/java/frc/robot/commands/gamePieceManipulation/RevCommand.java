@@ -25,9 +25,9 @@ public class RevCommand extends Command {
   @Override
   public void initialize() {
     System.out.println("revCommand initialize");
-    Constants.m_runningShooterAndHolder = true;
-    if (Constants.m_shootIntakeSide) {
-      m_shooterSubsystem.setVelocityRPM(Constants.m_speaker ? Constants.ShooterConstants.k_speakerShootVelocityRPM : Constants.ShooterConstants.k_ampShootVelocityRPM);
+    Constants.States.m_runningShooterAndHolder = true;
+    if (Constants.States.m_shootIntakeSide) {
+      m_shooterSubsystem.setVelocityRPM(Constants.States.m_speaker ? Constants.ShooterConstants.k_speakerShootVelocityRPM : Constants.ShooterConstants.k_ampShootVelocityRPM);
     } else {
       m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
     }
@@ -43,7 +43,7 @@ public class RevCommand extends Command {
   public void end(boolean interrupted) {
     m_shooterSubsystem.stop();
     m_holderSubsystem.stop();
-    Constants.m_runningShooterAndHolder = false;
+    Constants.States.m_runningShooterAndHolder = false;
     System.out.println("rev command end");
   }
 

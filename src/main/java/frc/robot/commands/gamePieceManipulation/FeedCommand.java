@@ -29,10 +29,10 @@ public class FeedCommand extends Command {
   public void initialize() {
     m_dwellTimer.reset();
     m_dwellTimer.start();
-    Constants.m_runningShooterAndHolder = true;
-    if (Constants.m_shootIntakeSide) {
-      m_shooterSubsystem.setVelocityRPM(Constants.m_speaker ? Constants.ShooterConstants.k_speakerShootVelocityRPM : Constants.ShooterConstants.k_ampShootVelocityRPM);
-      m_holderSubsystem.setVelocityRPM(Constants.m_speaker ? Constants.HolderConstants.k_speakerFeedVelocityRPM : Constants.HolderConstants.k_ampFeedVelocityRPM);
+    Constants.States.m_runningShooterAndHolder = true;
+    if (Constants.States.m_shootIntakeSide) {
+      m_shooterSubsystem.setVelocityRPM(Constants.States.m_speaker ? Constants.ShooterConstants.k_speakerShootVelocityRPM : Constants.ShooterConstants.k_ampShootVelocityRPM);
+      m_holderSubsystem.setVelocityRPM(Constants.States.m_speaker ? Constants.HolderConstants.k_speakerFeedVelocityRPM : Constants.HolderConstants.k_ampFeedVelocityRPM);
     } else {
       m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerFeedVelocityRPM);
       m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
@@ -42,7 +42,7 @@ public class FeedCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Constants.m_hasGamePiece) {
+    if (Constants.States.m_hasGamePiece) {
       m_dwellTimer.reset();
     }
   }
@@ -52,7 +52,7 @@ public class FeedCommand extends Command {
   public void end(boolean interrupted) {
     m_shooterSubsystem.stop();
     m_holderSubsystem.stop();
-    Constants.m_runningShooterAndHolder = false;
+    Constants.States.m_runningShooterAndHolder = false;
   }
 
   // Returns true when the command should end.

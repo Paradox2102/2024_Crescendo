@@ -232,16 +232,16 @@ public class DriveSubsystem extends SubsystemBase {
 
     double currentY = currentPos.getY();
     double currentX = currentPos.getX();
-    double currentAngle = currentPos.getRotation().getDegrees();
+    Rotation2d currentAngle = currentPos.getRotation();
     
-    ChassisSpeeds chassisSpeed = ChassisSpeeds.fromRobotRelativeSpeeds(m_swerve.toChassisSpeeds(getModuleStates()), m_tracker.getPose2d().getRotation());
+    ChassisSpeeds chassisSpeed = ChassisSpeeds.fromRobotRelativeSpeeds(m_swerve.toChassisSpeeds(getModuleStates()), currentAngle);
     double yVelocity = chassisSpeed.vyMetersPerSecond;
     double xVelocity = chassisSpeed.vxMetersPerSecond;
     double angularVelocity = chassisSpeed.omegaRadiansPerSecond;
 
     double futureY = currentY + yVelocity * Constants.DriveConstants.k_lookAheadTimeSeconds;
     double futureX = currentX + xVelocity * Constants.DriveConstants.k_lookAheadTimeSeconds;
-    double futureAngle = currentAngle + angularVelocity * Constants.DriveConstants.k_lookAheadTimeSeconds;
+    double futureAngle = currentAngle.getDegrees() + angularVelocity * Constants.DriveConstants.k_lookAheadTimeSeconds;
 
     m_futurePos = new Pose2d(futureX, futureY, Rotation2d.fromDegrees(futureAngle));
     // *********************************************************

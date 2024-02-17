@@ -76,7 +76,6 @@ public class DriveSubsystem extends SubsystemBase {
   private double m_prevTime = 0;
 
   private Pose2d m_futurePos = new Pose2d();
-  private Pose2d m_previousPos = new Pose2d();
 
   private final SwerveDriveKinematics m_swerve = new SwerveDriveKinematics(
         new Translation2d(.298, .298),
@@ -230,24 +229,21 @@ public class DriveSubsystem extends SubsystemBase {
 
     // Estimate future position of robot *****************************************
     Pose2d currentPos = m_tracker.getPose2d();
-    double previousY = m_previousPos.getY();
-    double previousX = m_previousPos.getX();
-    double previousAngle = m_previousPos.getRotation().getDegrees();
 
     double currentY = currentPos.getY();
     double currentX = currentPos.getX();
     double currentAngle = currentPos.getRotation().getDegrees();
     
-    double yVelocity = (previousY - currentY) / (1.0 / 50);
-    double xVelocity = (previousX - currentX) / (1.0 / 50);
-    double angularVelocity = (previousAngle - currentAngle) / (1.0 / 50);
+    ChassisSpeeds chassisSpeed = ChassisSpeeds.fromRobotRelativeSpeeds(m_swerve.toChassisSpeeds(getModuleStates()), m_tracker.getPose2d().getRotation());
+    double yVelocity = chassisSpeed.vyMetersPerSecond;
+    double xVelocity = chassisSpeed.vxMetersPerSecond;
+    double angularVelocity = chassisSpeed.omegaRadiansPerSecond;
 
-    double futureY = currentY + yVelocity * Constants.DriveConstants.k_lookAheadTime;
-    double futureX = currentX + xVelocity * Constants.DriveConstants.k_lookAheadTime;
-    double futureAngle = currentAngle + angularVelocity * Constants.DriveConstants.k_lookAheadTime;
+    double futureY = currentY + yVelocity * Constants.DriveConstants.k_lookAheadTimeSeconds;
+    double futureX = currentX + xVelocity * Constants.DriveConstants.k_lookAheadTimeSeconds;
+    double futureAngle = currentAngle + angularVelocity * Constants.DriveConstants.k_lookAheadTimeSeconds;
 
     m_futurePos = new Pose2d(futureX, futureY, Rotation2d.fromDegrees(futureAngle));
-    m_previousPos = new Pose2d(currentX, currentY, Rotation2d.fromDegrees(currentAngle));
     // *********************************************************
 
   

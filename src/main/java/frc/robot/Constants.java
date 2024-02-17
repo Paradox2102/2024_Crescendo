@@ -115,7 +115,7 @@ public final class Constants {
     public static final double k_rotateIZone = 70;
     public static final double k_rotateDeadzone = 0;
 
-    public static final double k_lookAheadTime = 50;
+    public static final double k_lookAheadTimeSeconds = 1;
   }
 
   public static class PivotConstants {

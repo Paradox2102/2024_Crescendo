@@ -12,7 +12,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.apriltagsCamera.Logger;
 import frc.robot.Constants;
 import frc.robot.ParadoxField;
 
@@ -20,17 +19,13 @@ public class PivotSubsystem extends SubsystemBase {
   private double m_power;
   // private double m_targetAngleInDegrees = 0;
 
-  private final double k_outwardFF = -0.015;
-  private final double k_inwardFF = 0.015;
   private final double k_f = .015;
   private static final double k_p = 0.017;
   private static final double k_i = 0.02;
   private static final double k_d = 0;
   private static final double k_iZone = 10;
-  private static final double k_holdPower = 0;
   private static final double k_deadzone = 0;
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
-  private boolean m_PIDOn = false;
   private double m_setPoint = 0;
 
   private double[] m_distances = {
@@ -90,12 +85,10 @@ public class PivotSubsystem extends SubsystemBase {
   }
 
   public void setPower(double power) {
-    m_PIDOn = false;
     m_power = power;
   }
 
   public void setPositionDegrees(double angle) {
-    m_PIDOn = true;
     m_setPoint = angle;
   }
 

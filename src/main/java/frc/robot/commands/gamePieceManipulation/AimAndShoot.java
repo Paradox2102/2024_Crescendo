@@ -32,9 +32,6 @@ public class AimAndShoot extends SequentialCommandGroup {
         new RevCommand(shooterSubsystem, holderSubsystem)
       ),
       new ShootCommand(shooterSubsystem, holderSubsystem)
-      //new ToggleArcadeDrive(true),
-      // new TestShooter(shooterSubsystem, holderSubsystem, pivotSubsystem, true),
-      // new ResetPivot(pivotSubsystem)
     );
   }
 }

@@ -74,7 +74,9 @@ public class ShooterSubsystem extends SubsystemBase {
     if (!Constants.States.m_runningShooterAndHolder) {
       if (!Constants.States.m_isGamePieceStowed && Constants.States.m_hasGamePiece) {
         // Move the motor in direction depending on which way to stow
-        power = Constants.States.m_shootIntakeSide ? -Constants.ShooterConstants.k_adjustGamePiecePower : Constants.ShooterConstants.k_adjustGamePiecePower;
+        m_velocity = Constants.States.m_shootIntakeSide ? -Constants.ShooterConstants.k_adjustGamePiecePower : Constants.ShooterConstants.k_adjustGamePiecePower;
+        F = m_velocity / 5450.0;
+        m_finalPower = F + m_PID.calculate(currentVelocity, m_velocity);
       } else {
         m_finalPower = 0;
       }

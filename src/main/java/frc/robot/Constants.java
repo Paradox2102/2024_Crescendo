@@ -226,8 +226,8 @@ public final class Constants {
       PivotConstants.k_pivotZeroAngle = 0;
 
       // Drive
-      DriveConstants.k_FLOffset = 1.67 - (Math.PI / 2);
-      DriveConstants.k_FROffset = 2.21;
+      DriveConstants.k_FLOffset = 1.69 - (Math.PI / 2);
+      DriveConstants.k_FROffset = .67;
       DriveConstants.k_BLOffset = 2.25 + (Math.PI);
       DriveConstants.k_BROffset = 5.12 + (Math.PI / 2);
     }

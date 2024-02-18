@@ -28,43 +28,9 @@ public class PivotSubsystem extends SubsystemBase {
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
   private double m_setPoint = 0;
 
-  private double[] m_distances = {
-    0,
-    2,
-    2.25,
-    2.5,
-    2.75,
-    3,
-    3.25,
-    3.5,
-    3.75,
-    4,
-    4.25,
-    4.5,
-    4.75,
-    5,
-    5.5,
-    5.75
-  };
+  private double[] k_distancse = Constants.PivotConstants.k_distances;
 
-  private double[] m_angles = {
-    0,
-    4, // 2
-    6, // 2.25
-    10.5, // 2.5
-    14, // 2.75
-    17, // 3
-    18.2, // 3.25
-    19.9, // 3.5
-    20.8, // 3.75
-    23.1, // 4
-    23.35, // 4.25
-    24, // 4.5
-    24.3, // 4.75
-    25.3, // 5
-    25.32, // 5.5
-    26.3 // 5.75
-  };
+  private double[] k_angles = Constants.PivotConstants.k_angles;
 
   private CANSparkFlex m_pivotMotor = new CANSparkFlex(Constants.PivotConstants.k_pivotMotor, MotorType.kBrushless);
   DutyCycleEncoder m_pivotEncoder = new DutyCycleEncoder(0);
@@ -97,11 +63,11 @@ public class PivotSubsystem extends SubsystemBase {
     if (distance > 5.75) {
       return 0;
     }
-    for (int i = 0; i < m_distances.length; i++) {
-      if (distance > m_distances[i] && distance < m_distances[i+1]) {
-        double roc = (m_angles[i+1] - m_angles[i]) / (m_distances[i+1] - m_distances[i]);
-        double dist = distance - m_distances[i];
-        return m_angles[i] + dist * roc; 
+    for (int i = 0; i < k_distancse.length; i++) {
+      if (distance > k_distancse[i] && distance < k_distancse[i+1]) {
+        double roc = (k_angles[i+1] - k_angles[i]) / (k_distancse[i+1] - k_distancse[i]);
+        double dist = distance - k_distancse[i];
+        return k_angles[i] + dist * roc; 
       }
     }
     return 0;

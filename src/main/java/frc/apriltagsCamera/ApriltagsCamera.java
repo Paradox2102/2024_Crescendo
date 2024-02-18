@@ -357,6 +357,9 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				}
 				else if (adjust != 1.0) {
 					// Only need to adjust the angle parameter
+					double adjustPos = 1.0 + ((adjust - 1.0) / 2);
+					visionSD.set(0, 0, visionSD.get(0, 0) * adjustPos);
+					visionSD.set(1, 0, visionSD.get(1, 0) * adjustPos);
 					visionSD.set(2, 0, visionSD.get(2, 0) * adjust);
 				}
 

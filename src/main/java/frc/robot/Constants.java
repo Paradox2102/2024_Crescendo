@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.io.File;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
@@ -120,7 +122,7 @@ public final class Constants {
 
   public static class PivotConstants {
     public static final int k_pivotMotor = 9;
-    public static final double k_pivotZeroAngle = 106;
+    public static double k_pivotZeroAngle = 106;
     public static final double k_pivotTicksToDegrees = 360;
 
     // Positions
@@ -176,5 +178,12 @@ public final class Constants {
     public static boolean m_isGamePieceStowed = false;
     public static boolean m_runningShooterAndHolder = false;
     public static boolean m_faceSpeaker = false;
+  }
+
+  public Constants() {
+    File f = new File("home/lvuser/practice");
+    if (!f.exists()) {
+      PivotConstants.k_pivotZeroAngle = 0;
+    }
   }
 }

@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.io.File;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
@@ -42,10 +44,10 @@ public final class Constants {
 
     public static final double k_driveRadius = .475953574;
 
-    public static final double k_FLOffset = 1.67 - (Math.PI / 2);
-    public static final double k_FROffset = 2.21;
-    public static final double k_BLOffset = 2.25 + (Math.PI);
-    public static final double k_BROffset = 5.12 + (Math.PI / 2);
+    public static double k_FLOffset = 1.67 - (Math.PI / 2);
+    public static double k_FROffset = 2.21;
+    public static double k_BLOffset = 2.25 + (Math.PI);
+    public static double k_BROffset = 5.12 + (Math.PI / 2);
 
     public static final int k_drivingMotorPinionTeeth = 14;
 
@@ -120,13 +122,51 @@ public final class Constants {
 
   public static class PivotConstants {
     public static final int k_pivotMotor = 9;
-    public static final double k_pivotZeroAngle = 106;
+    public static double k_pivotZeroAngle = 106;
     public static final double k_pivotTicksToDegrees = 360;
 
     // Positions
     public static final double k_intakePositionDegrees = 114;
     public static final double k_resetPositionDegrees = 0;
     public static final double k_ampPositionDegrees = 0;
+
+    public static double[] k_distances = {
+      0,
+      2,
+      2.25,
+      2.5,
+      2.75,
+      3,
+      3.25,
+      3.5,
+      3.75,
+      4,
+      4.25,
+      4.5,
+      4.75,
+      5,
+      5.5,
+      5.75
+    };
+
+    public static double[] k_angles = {
+      0,
+      4, // 2
+      6, // 2.25
+      10.5, // 2.5
+      14, // 2.75
+      17, // 3
+      18.2, // 3.25
+      19.9, // 3.5
+      20.8, // 3.75
+      23.1, // 4
+      23.35, // 4.25
+      24, // 4.5
+      24.3, // 4.75
+      25.3, // 5
+      25.32, // 5.5
+      26.3 // 5.75
+    };
   }
 
   // Positive is intake. negative is shoot intake side
@@ -176,5 +216,20 @@ public final class Constants {
     public static boolean m_isGamePieceStowed = false;
     public static boolean m_runningShooterAndHolder = false;
     public static boolean m_faceSpeaker = false;
+  }
+
+  public Constants() {
+    File f = new File("home/lvuser/practice");
+    if (!f.exists()) {
+
+      // Pivot
+      PivotConstants.k_pivotZeroAngle = 0;
+
+      // Drive
+      DriveConstants.k_FLOffset = 1.67 - (Math.PI / 2);
+      DriveConstants.k_FROffset = 2.21;
+      DriveConstants.k_BLOffset = 2.25 + (Math.PI);
+      DriveConstants.k_BROffset = 5.12 + (Math.PI / 2);
+    }
   }
 }

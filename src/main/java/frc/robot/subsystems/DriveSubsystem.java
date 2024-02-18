@@ -198,8 +198,8 @@ public class DriveSubsystem extends SubsystemBase {
   public double orientPID(double setpoint) {
     double heading = getHeadingInDegrees();
     double rot = m_orientPID.calculate(heading, setpoint);
-    rot += (Constants.DriveConstants.k_rotateF * Math.signum(setpoint - heading));
-    return Math.abs(rot) < Constants.DriveConstants.k_rotateDeadzone ? 0 : rot;
+    rot += (Constants.DriveConstants.k_rotateF * Math.signum(rot));
+    return Math.abs(heading) < Constants.DriveConstants.k_rotateDeadzone ? 0 : rot;
   }
 
   public Pose2d getEstimatedFuturePos() {

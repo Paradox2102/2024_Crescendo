@@ -109,13 +109,13 @@ public final class Constants {
     };
 
     public static final double k_rotateF = .2;
-    public static final double k_rotateP = .005;
+    public static final double k_rotateP = .01;
     public static final double k_rotateI = .015;
-    public static final double k_rotateD = 0;
+    public static final double k_rotateD = .001;
     public static final double k_rotateIZone = 70;
     public static final double k_rotateDeadzone = 2;
 
-    public static final double k_lookAheadTimeSeconds = 1;
+    public static final double k_lookAheadTimeSeconds = .25;
   }
 
   public static class PivotConstants {
@@ -139,7 +139,7 @@ public final class Constants {
     public static final double k_speakerFeedVelocityRPM = 3500;
     public static final double k_deadzone = 25;
 
-    public static final double k_adjustGamePiecePower = -.15;
+    public static final double k_adjustGamePiecePower = -500;
 
     public static final int k_frontSensor = 2;
     public static final int k_backSensor = 1;
@@ -154,7 +154,7 @@ public final class Constants {
     public static final double k_ampFeedVelocityRPM = -9000; // -500
 
     public static final double k_deadzone = 25;
-    public static final double k_adjustGamePiecePower = -.15;
+    public static final double k_adjustGamePiecePower = -500;
   }
 
   public static class ElevatorConstants {

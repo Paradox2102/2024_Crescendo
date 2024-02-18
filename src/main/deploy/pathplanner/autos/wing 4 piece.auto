@@ -8,12 +8,6 @@
         {
           "type": "named",
           "data": {
-            "name": "set speaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "shoot"
           }
         },
@@ -50,9 +44,34 @@
           }
         },
         {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "wing 3 turnaround"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "rev shooter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "set pivot robot loc"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "aim + shoot"
+            "name": "shoot"
           }
         },
         {
@@ -75,9 +94,34 @@
           }
         },
         {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "wing 2 turnaround"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "rev shooter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "set pivot robot loc"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "aim + shoot"
+            "name": "shoot"
           }
         },
         {
@@ -100,9 +144,34 @@
           }
         },
         {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "wing 1 turnaround"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "rev shooter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "set pivot robot loc"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "aim + shoot"
+            "name": "shoot"
           }
         }
       ]

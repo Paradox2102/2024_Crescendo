@@ -16,6 +16,7 @@ import frc.robot.commands.apriltags.SetApriltagsDashboard;
 import frc.robot.commands.apriltags.SetApriltagsLogging;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.AutoOrientCommand;
+import frc.robot.commands.drivetrain.FaceSpeaker;
 import frc.robot.commands.gamePieceManipulation.AimAndShoot;
 import frc.robot.commands.gamePieceManipulation.CheckIntakeStowed;
 import frc.robot.commands.gamePieceManipulation.DefaultShooterCommand;
@@ -86,6 +87,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("switch sides", new ToggleShootSideCommand(false));
     NamedCommands.registerCommand("set speaker", new SetSpeakerAmpMode(true));
     NamedCommands.registerCommand("feedthrough", new CheckIntakeStowed());
+    NamedCommands.registerCommand("face speaker", new FaceSpeaker(m_driveSubsystem));
+    NamedCommands.registerCommand("set pivot robot loc", new SetPivotOffRobotLocation(m_pivotSubsystem));
     NamedCommands.registerCommand("aim + shoot", new AimAndShoot(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, m_driveSubsystem));
     autoChooser = AutoBuilder.buildAutoChooser();
 
@@ -123,7 +126,7 @@ public class RobotContainer {
       () -> m_driverController.getRightX()
     ));
 
-    m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, false));
+    // m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, false));
     m_shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(m_shooterSubsystem));
 
 

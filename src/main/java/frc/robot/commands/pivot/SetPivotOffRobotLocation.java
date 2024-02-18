@@ -23,6 +23,7 @@ public class SetPivotOffRobotLocation extends InstantCommand {
   public void initialize() {
     if (Constants.States.m_speakerMode) {
       m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromRobotPos(false));
+      System.out.println(m_subsystem.getPivotAngleFromRobotPos(false));
     }
   }
 }

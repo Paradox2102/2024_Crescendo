@@ -12,6 +12,7 @@ import frc.robot.subsystems.DriveSubsystem;
 public class FaceSpeaker extends Command {
   /** Creates a new FaceSpeaker. */
   DriveSubsystem m_subsystem;
+  double m_rot = 0;
   public FaceSpeaker(DriveSubsystem driveSubsystem) {
     m_subsystem = driveSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -25,7 +26,9 @@ public class FaceSpeaker extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.drive(0, 0, MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getRotationalDistanceFromSpeakerDegrees()), 0), true, true);
+    m_rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getRotationalDistanceFromSpeakerDegrees()), 0);
+    m_subsystem.drive(0, 0, m_rot, true, true);
+    System.out.println(m_rot);
   }
 
   // Called once the command ends or is interrupted.
@@ -37,6 +40,6 @@ public class FaceSpeaker extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_subsystem.getRotationalDistanceFromSpeakerDegrees()) < Constants.DriveConstants.k_rotateDeadzone || !Constants.States.m_speakerMode;
+    return m_rot == 0 || !Constants.States.m_speakerMode;
   }
 }

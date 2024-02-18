@@ -88,7 +88,7 @@ public class HolderSubsystem extends SubsystemBase {
     if (!Constants.States.m_runningShooterAndHolder) {
       if (!Constants.States.m_isGamePieceStowed && Constants.States.m_hasGamePiece) {
         // Move the motor in direction depending on which way to stow
-        m_finalPower = Constants.States.m_shootIntakeSide ? -Constants.HolderConstants.k_adjustGamePiecePower : Constants.HolderConstants.k_adjustGamePiecePower;
+        power = Constants.States.m_shootIntakeSide ? -Constants.HolderConstants.k_adjustGamePiecePower : Constants.HolderConstants.k_adjustGamePiecePower;
       } else {
         m_finalPower = 0;
       }

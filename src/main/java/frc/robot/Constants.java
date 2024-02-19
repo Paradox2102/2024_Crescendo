@@ -122,7 +122,7 @@ public final class Constants {
 
   public static class PivotConstants {
     public static final int k_pivotMotor = 9;
-    public static double k_pivotZeroAngle = 106;
+    public static double k_pivotZeroAngle = 100;
     public static final double k_pivotTicksToDegrees = 360;
 
     // Positions
@@ -153,8 +153,8 @@ public final class Constants {
     public static double[] k_angles = {
       -9.5, // 1.3
       -9.5, //1.6
-      3, // 2
-      4, // 2.25
+      5, // 2
+      7, // 2.25
       10.2, // 2.5
       12.3, // 2.75
       17, // 3

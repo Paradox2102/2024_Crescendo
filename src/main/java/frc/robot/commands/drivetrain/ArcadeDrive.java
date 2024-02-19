@@ -8,6 +8,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.apriltagsCamera.Logger;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
@@ -19,12 +20,14 @@ public class ArcadeDrive extends Command {
   private DoubleSupplier m_getX;
   private DoubleSupplier m_getY;
   private DoubleSupplier m_getRot;
+  private Trigger m_slowMode;
 
-  public ArcadeDrive(DriveSubsystem driveSubsystem, DoubleSupplier getX, DoubleSupplier getY, DoubleSupplier getRot) {
+  public ArcadeDrive(DriveSubsystem driveSubsystem, DoubleSupplier getX, DoubleSupplier getY, DoubleSupplier getRot, Trigger slowMode) {
     m_subsystem = driveSubsystem;
     m_getX = getX;
     m_getY = getY;
     m_getRot = getRot;
+    m_slowMode = slowMode;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }
@@ -41,8 +44,12 @@ public class ArcadeDrive extends Command {
     double x = -MathUtil.applyDeadband(m_getX.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
     double y = -MathUtil.applyDeadband(m_getY.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
     double rot = -MathUtil.applyDeadband(m_getRot.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
-    if (Constants.States.m_faceSpeaker && rot == 0) {
+    if (m_subsystem.shouldAim()) {
       rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getFutureRotationalDistanceFromSpeakerDegrees()), 0.2);
+    }
+    if (m_slowMode.getAsBoolean()) {
+      x *= .3;
+      y *= .3;
     }
     m_subsystem.drive(
       y, 

@@ -29,6 +29,7 @@ public class IntakeCommand extends Command {
     m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
     m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
     m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
+    Constants.States.m_intaking = true;
     Constants.States.m_runningShooterAndHolder = true;
   }
 
@@ -43,6 +44,7 @@ public class IntakeCommand extends Command {
     m_shooterSubsystem.stop();
     m_pivotSubsystem.setPositionDegrees(0);
     Constants.States.m_runningShooterAndHolder = false;
+    Constants.States.m_intaking = false;
   }
 
   // Returns true when the command should end.

@@ -6,15 +6,18 @@ package frc.robot.commands.pivot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 
 public class DefaultPivotCommand extends Command {
   /** Creates a new DefaultPivotCommand. */
   PivotSubsystem m_subsystem;
   boolean m_predictFuture;
-  public DefaultPivotCommand(PivotSubsystem pivotSubsystem, boolean predictFuture) {
+  DriveSubsystem m_driveSubsystem;
+  public DefaultPivotCommand(PivotSubsystem pivotSubsystem, DriveSubsystem driveSubsystem, boolean predictFuture) {
     m_predictFuture = predictFuture;
     m_subsystem = pivotSubsystem;
+    m_driveSubsystem = driveSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }
@@ -26,7 +29,7 @@ public class DefaultPivotCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Constants.States.m_speakerMode && Constants.States.m_faceSpeaker) {
+    if (m_driveSubsystem.shouldAim()) {
       m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromRobotPos(m_predictFuture));
     } else if (!Constants.States.m_speakerMode) {
       m_subsystem.setPositionDegrees(Constants.PivotConstants.k_ampPositionDegrees);

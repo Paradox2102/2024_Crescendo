@@ -186,6 +186,14 @@ public class DriveSubsystem extends SubsystemBase {
     return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan((yDist / xDist))));
   }
 
+  public boolean isInAimingZone() {
+    return getTranslationalDistanceFromSpeakerMeters() < 7.75;
+  }
+
+  public boolean shouldAim() {
+    return (Constants.States.m_speakerMode && isInAimingZone() && Constants.States.m_hasGamePiece) || (Constants.States.m_runningShooterAndHolder && !Constants.States.m_hasGamePiece && !Constants.States.m_intaking);
+  }
+
   public SwerveModulePosition[] getModulePosition() {
     return new SwerveModulePosition[] {
       m_frontLeft.getPosition(),

@@ -117,7 +117,7 @@ public final class Constants {
     public static final double k_rotateIZone = 70;
     public static final double k_rotateDeadzone = 2;
 
-    public static final double k_lookAheadTimeSeconds = .35;
+    public static final double k_lookAheadTimeSeconds = .2;
   }
 
   public static class PivotConstants {
@@ -126,12 +126,13 @@ public final class Constants {
     public static final double k_pivotTicksToDegrees = 360;
 
     // Positions
-    public static final double k_intakePositionDegrees = 114;
+    public static final double k_intakePositionDegrees = 105;
     public static final double k_resetPositionDegrees = 0;
-    public static final double k_ampPositionDegrees = 0;
+    public static final double k_ampPositionDegrees = -5;
 
     public static double[] k_distances = {
-      0,
+      1.3,
+      1.6,
       2,
       2.25,
       2.5,
@@ -150,15 +151,16 @@ public final class Constants {
     };
 
     public static double[] k_angles = {
-      0,
-      4, // 2
-      6, // 2.25
-      10.5, // 2.5
-      14, // 2.75
+      -9.5, // 1.3
+      -9.5, //1.6
+      3, // 2
+      4, // 2.25
+      10.2, // 2.5
+      12.3, // 2.75
       17, // 3
-      18.2, // 3.25
-      19.9, // 3.5
-      20.8, // 3.75
+      17.8, // 3.25
+      18.9, // 3.5
+      20.9, // 3.75
       23.1, // 4
       23.35, // 4.25
       24, // 4.5
@@ -218,6 +220,7 @@ public final class Constants {
     public static boolean m_isGamePieceStowed = false;
     public static boolean m_runningShooterAndHolder = false;
     public static boolean m_faceSpeaker = false;
+    public static boolean m_intaking = false;
   }
 
   public Constants() {

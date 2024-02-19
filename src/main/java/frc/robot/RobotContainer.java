@@ -11,6 +11,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DisableEverything;
 import frc.robot.commands.ManualElevatorCommand;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.SetPivotAngleCommand;
 import frc.robot.commands.SetSpeakerAmpMode;
 import frc.robot.commands.ToggleShootSideCommand;
 import frc.robot.commands.apriltags.SetApriltagsDashboard;
@@ -37,6 +38,7 @@ import frc.robot.subsystems.HolderSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSensors;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.triggers.HoldTrigger;
 import frc.triggers.ToggleTrigger;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -124,24 +126,23 @@ public class RobotContainer {
     new Trigger(() -> getPositionServerButtonState(3)).onTrue(new SetApriltagsDashboard(m_apriltagCamera, true));
     new Trigger(() -> getPositionServerButtonState(4)).onTrue(new SetApriltagsDashboard(m_apriltagCamera, false));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    HoldTrigger m_slowMode = new HoldTrigger(m_driverController.rightBumper());
     m_driveSubsystem.setDefaultCommand(new ArcadeDrive(
       m_driveSubsystem, 
       () -> m_driverController.getLeftX(), 
       () -> m_driverController.getLeftY(),
-      () -> m_driverController.getRightX()
+      () -> m_driverController.getRightX(),
+      new Trigger(m_slowMode)
     ));
 
-    m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, true));
-    // m_shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(m_shooterSubsystem));
+    m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
 
-
-    m_driverController.rightBumper().onTrue(new InstantCommand(() -> {Constants.States.m_faceSpeaker = !Constants.States.m_faceSpeaker;}));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
     m_driverController.leftTrigger().onTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
-    m_driverController.leftBumper().onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem));
     m_driverController.rightTrigger().whileTrue(new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
+    m_driverController.leftBumper().whileTrue(new SetPivotAngleCommand(m_pivotSubsystem, Constants.PivotConstants.k_intakePositionDegrees));
     
     m_driverController.y().onTrue(new AutoOrientCommand(m_driveSubsystem, 180, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));
     m_driverController.a().onTrue(new AutoOrientCommand(m_driveSubsystem, 0, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));

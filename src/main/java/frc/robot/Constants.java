@@ -209,6 +209,9 @@ public final class Constants {
     public static final double k_maxDistance = 24;
 
     public static final double k_zeroPoint = -1.814;
+//PID (kinda) tuning
+    // public static final double k_P = 0.002;
+    public static final double k_f = 0.9;
   }
 
   public static final double k_idealShootingDistanceMeters = 3;

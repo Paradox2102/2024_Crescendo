@@ -43,7 +43,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public double getCookedElevatorPosition() {
-    return m_elevatorEncoder.getPosition() * Constants.ElevatorConstants.k_ticksToInches + Constants.ElevatorConstants.k_zeroPoint;
+    return m_elevatorEncoder.getPosition() * Constants.ElevatorConstants.k_ticksToInches;// + Constants.ElevatorConstants.k_zeroPoint;
   }
 
   public void setPower(double power) {

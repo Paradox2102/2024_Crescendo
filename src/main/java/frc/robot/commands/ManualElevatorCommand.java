@@ -39,21 +39,21 @@ public class ManualElevatorCommand extends Command {
     //gets cooked position
     double position = m_subsystem.getCookedElevatorPosition();
 
-    //setting the limit
-    // if (position <= Constants.ElevatorConstants.k_minDistance && m_getY.getAsDouble() > 0) {
-    //   m_subsystem.setPower(0);
-    // } else if (position >= Constants.ElevatorConstants.k_maxDistance && m_getY.getAsDouble() < 0) {
-    //   m_subsystem.setPower(0);
-    // } else if (m_getY.getAsDouble() == 0) {
-    //   m_subsystem.setPower(0);;
-    // } else {
-    //   m_subsystem.setPower(m_getY.getAsDouble() > 0 ? .4 : -.4);
-    // }
-    if (m_getY.getAsDouble() > 0) {
-      m_subsystem.setPower(.9);
-    } else if (m_getY.getAsDouble() < 0){
-      m_subsystem.setPower(-0.9);
+    // setting the limit
+    if (position <= Constants.ElevatorConstants.k_minDistance && m_getY.getAsDouble() > 0) {
+      m_subsystem.setPower(0);
+    } else if (position >= Constants.ElevatorConstants.k_maxDistance && m_getY.getAsDouble() < 0) {
+      m_subsystem.setPower(0);
+    } else if (m_getY.getAsDouble() == 0) {
+      m_subsystem.setPower(0);;
+    } else {
+      m_subsystem.setPower(m_getY.getAsDouble() > 0 ? .4 : -.4);
     }
+    // if (m_getY.getAsDouble() > 0) {
+    //   m_subsystem.setPower(.9);
+    // } else if (m_getY.getAsDouble() < 0){
+    //   m_subsystem.setPower(-0.9);
+    // }
   }
 
   // Called once the command ends or is interrupted.

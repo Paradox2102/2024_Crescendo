@@ -5,6 +5,7 @@
 package frc.robot.commands.test;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.HolderSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -24,22 +25,20 @@ public class D2Intake extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (m_intake) {
-      m_shooterSubsystem.setVelocityRPM(2000);
-      m_holderSubsystem.setVelocityRPM(500);
-    } else {
-      m_shooterSubsystem.setVelocityRPM(-2000);
-      m_holderSubsystem.setVelocityRPM(-500);
-    }
+    Constants.States.m_runningShooterAndHolder = true;
+    m_shooterSubsystem.setVelocityRPM(2000);
+    m_holderSubsystem.setVelocityRPM(500);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    Constants.States.m_runningShooterAndHolder = false;
     m_shooterSubsystem.stop();
     m_holderSubsystem.stop();
   }

@@ -126,7 +126,7 @@ public final class Constants {
     public static final double k_pivotTicksToDegrees = 360;
 
     // Positions
-    public static final double k_intakePositionDegrees = 105;
+    public static final double k_intakePositionDegrees = 112;
     public static final double k_resetPositionDegrees = 0;
     public static final double k_ampPositionDegrees = -5;
 
@@ -206,9 +206,12 @@ public final class Constants {
 //manual command
     public static final double k_driveDeadband = 0;
     public static final double k_minDistance = 0;
-    public static final double k_maxDistance = 21;
+    public static final double k_maxDistance = 24;
 
     public static final double k_zeroPoint = -1.814;
+//PID (kinda) tuning
+    // public static final double k_P = 0.002;
+    public static final double k_f = 0.9;
   }
 
   public static final double k_idealShootingDistanceMeters = 3;
@@ -231,10 +234,10 @@ public final class Constants {
       PivotConstants.k_pivotZeroAngle = 0;
 
       // Drive
-      DriveConstants.k_FLOffset = 1.69 - (Math.PI / 2);
-      DriveConstants.k_FROffset = .67;
-      DriveConstants.k_BLOffset = 2.25 + (Math.PI);
-      DriveConstants.k_BROffset = 5.12 + (Math.PI / 2);
+      DriveConstants.k_FLOffset = 1.81 - (Math.PI / 2);
+      DriveConstants.k_FROffset = .04;
+      DriveConstants.k_BLOffset = 4.19 + (Math.PI);
+      DriveConstants.k_BROffset = 2.02 + (Math.PI / 2);
     }
   }
 }

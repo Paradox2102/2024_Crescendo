@@ -131,18 +131,16 @@ public class RobotContainer {
       () -> m_driverController.getRightX()
     ));
 
-    m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, false));
+    m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, true));
     // m_shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(m_shooterSubsystem));
 
 
     m_driverController.rightBumper().onTrue(new InstantCommand(() -> {Constants.States.m_faceSpeaker = !Constants.States.m_faceSpeaker;}));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
-    // m_driverController.leftTrigger().toggleOnTrue(new AimAndShoot(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, m_driveSubsystem));
-    // m_driverController.leftBumper().toggleOnTrue(new SetPivotAngleCommand(m_pivotSubsystem, 20.9));
+    // m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
+    m_driverController.leftTrigger().onTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
     m_driverController.leftBumper().onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem));
-    // m_driverController.rightTrigger().whileTrue(new AutoPickUpGamePiece(m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, () -> m_driverController.getLeftY(), () -> m_driverController.getLeftX(), () -> m_driverController.getRightX()));
     m_driverController.rightTrigger().whileTrue(new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
     
     m_driverController.y().onTrue(new AutoOrientCommand(m_driveSubsystem, 180, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));

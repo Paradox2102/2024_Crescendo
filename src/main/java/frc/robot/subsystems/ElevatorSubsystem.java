@@ -23,9 +23,6 @@ public class ElevatorSubsystem extends SubsystemBase {
   private static final double k_p = 0;
   private static final double k_i = 0;
   private static final double k_d = 0;
-  private static final double k_f = 0;
-  private static final double k_iZone = 0;
-  private static final double k_deadzone = 0;
   private PIDController m_PID = new PIDController(k_p, k_i, k_d);
 
 
@@ -62,7 +59,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Distance from Elevator Point", m_elevatorPoint - getCookedElevatorPosition());
     //power
     SmartDashboard.putNumber("Elevator Power", m_power);
-    m_power = k_f * Math.signum(pid) + pid;
+    m_power = Constants.ElevatorConstants.k_f * Math.signum(pid) + pid;
     // m_elevatorMotor.set(m_power);
     //show displays on the SmartDasboard --> where elevator is positioned
     SmartDashboard.putNumber("Elevator Raw Position", getRawElevatorPosition());

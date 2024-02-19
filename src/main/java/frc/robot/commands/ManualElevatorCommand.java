@@ -8,6 +8,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.apriltagsCamera.Logger;
 import frc.robot.Constants;
 import frc.robot.subsystems.ElevatorSubsystem;
 
@@ -25,7 +26,9 @@ public class ManualElevatorCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    Logger.log("ManualElevatorCommand", 0, "initialize");
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -36,17 +39,20 @@ public class ManualElevatorCommand extends Command {
     //gets cooked position
     double position = m_subsystem.getCookedElevatorPosition();
 
-//power = 0.2 --> back
-//power = -0.2 --> forward
-//joystick forward is negative
-
     //setting the limit
-    if (y <= Constants.ElevatorConstants.k_minDistance && m_getY.getAsDouble() > 0) {
-      m_subsystem.setPower(0);
-    } else if (y >= Constants.ElevatorConstants.k_maxDistance && m_getY.getAsDouble() < 0) {
-      m_subsystem.setPower(0);
-    } else {
-      m_subsystem.setPosition(position);
+    // if (position <= Constants.ElevatorConstants.k_minDistance && m_getY.getAsDouble() > 0) {
+    //   m_subsystem.setPower(0);
+    // } else if (position >= Constants.ElevatorConstants.k_maxDistance && m_getY.getAsDouble() < 0) {
+    //   m_subsystem.setPower(0);
+    // } else if (m_getY.getAsDouble() == 0) {
+    //   m_subsystem.setPower(0);;
+    // } else {
+    //   m_subsystem.setPower(m_getY.getAsDouble() > 0 ? .4 : -.4);
+    // }
+    if (m_getY.getAsDouble() > 0) {
+      m_subsystem.setPower(.9);
+    } else if (m_getY.getAsDouble() < 0){
+      m_subsystem.setPower(-0.9);
     }
   }
 

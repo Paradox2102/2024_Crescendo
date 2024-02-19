@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -33,6 +34,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   /** Creates a new ElevatorSubsystem. */
   public ElevatorSubsystem() {
     m_elevatorEncoder = m_elevatorMotor.getEncoder();
+    m_elevatorMotor.setIdleMode(IdleMode.kBrake);
     
   }
 
@@ -41,11 +43,12 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public double getCookedElevatorPosition() {
-    return m_elevatorEncoder.getPosition() * Constants.ElevatorConstants.k_ticksToInches;
+    return m_elevatorEncoder.getPosition() * Constants.ElevatorConstants.k_ticksToInches + Constants.ElevatorConstants.k_zeroPoint;
   }
 
   public void setPower(double power) {
-    m_power = power;
+    // m_power = power;
+    m_elevatorMotor.set(power);
   }
 
   public void setPosition(double position) {
@@ -60,7 +63,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     //power
     SmartDashboard.putNumber("Elevator Power", m_power);
     m_power = k_f * Math.signum(pid) + pid;
-    m_elevatorMotor.set(m_power );
+    // m_elevatorMotor.set(m_power);
     //show displays on the SmartDasboard --> where elevator is positioned
     SmartDashboard.putNumber("Elevator Raw Position", getRawElevatorPosition());
     SmartDashboard.putNumber("Elevator Cooked Position", getCookedElevatorPosition());

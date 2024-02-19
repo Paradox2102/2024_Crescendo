@@ -101,6 +101,6 @@ public class PivotSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Calculated Error", Math.abs(getAngleInDegrees() - m_setPoint));
     SmartDashboard.putNumber("Set Point", m_setPoint);
     // SmartDashboard.putNumber("Pivot PID", pid);
-    // m_pivotMotor.set(m_power);
+    m_pivotMotor.set(m_power);
   }
 }

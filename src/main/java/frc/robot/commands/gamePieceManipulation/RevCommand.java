@@ -26,17 +26,17 @@ public class RevCommand extends Command {
   public void initialize() {
     System.out.println("revCommand initialize");
     Constants.States.m_runningShooterAndHolder = true;
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
     if (Constants.States.m_shootIntakeSide) {
       m_shooterSubsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM : Constants.ShooterConstants.k_ampShootVelocityRPM);
+      m_holderSubsystem.setVelocityRPM(0);
     } else {
       m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
     }
   }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

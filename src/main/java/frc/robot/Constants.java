@@ -131,43 +131,34 @@ public final class Constants {
     public static final double k_ampPositionDegrees = -5;
 
     public static double[] k_distances = {
-      1.3,
       1.6,
-      2,
-      2.25,
-      2.5,
-      2.75,
+      2.3,
+      2.7,
       3,
-      3.25,
+      3.3,
       3.5,
-      3.75,
+      3.8,
       4,
-      4.25,
       4.5,
-      4.75,
       5,
       5.5,
-      5.75
+      6.1
     };
 
     public static double[] k_angles = {
-      -9.5, // 1.3
-      -9.5, //1.6
-      5, // 2
-      7, // 2.25
-      10.2, // 2.5
-      12.3, // 2.75
-      17, // 3
-      17.8, // 3.25
-      18.9, // 3.5
-      20.9, // 3.75
-      23.1, // 4
-      23.35, // 4.25
-      24, // 4.5
-      24.3, // 4.75
-      25.3, // 5
-      25.32, // 5.5
-      26.3 // 5.75
+      0, // 1.6
+      15, // 2
+      16.3, // 2.3
+      16.7, // 2.7
+      22.7, // 3
+      24.5, // 3.3
+      25.6, // 3.5
+      26.8, // 3.8
+      26.8, // 4
+      26.8, // 4.5
+      27.1, // 5
+      26.2, // 5.5
+      28.2 // 6.1
     };
   }
 
@@ -190,7 +181,7 @@ public final class Constants {
   // Positive is intake. negative is shoot intake side
   public static class HolderConstants {
     public static final int k_holdingMotor = 10;
-    public static final double k_intakeVelocityRPM = 2000;
+    public static final double k_intakeVelocityRPM = 1000;
     public static final double k_speakerShootVelocityRPM = 2000; 
     public static final double k_speakerFeedVelocityRPM = -9000;
     public static final double k_ampFeedVelocityRPM = -9000; // -500

@@ -219,7 +219,7 @@ public final class Constants {
 
   public Constants() {
     File f = new File("home/lvuser/practice");
-    if (!f.exists()) {
+    if (true) {
 
       // Pivot
       PivotConstants.k_pivotZeroAngle = 0;

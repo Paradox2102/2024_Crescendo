@@ -275,7 +275,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				int cameraNo,
 				SwerveDrivePoseEstimator poseEstimator,
 				long captureTime,
-				int frameNo) {
+				int frameNo,
+				double curTime) {
 
 			if (m_info.m_type.ordinal() > m_config.length) {
 				Logger.log("ApriltagsCamera", 3, "Invalid camera type: " + m_info.m_type);
@@ -415,12 +416,12 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 							Logger.log("ApriltagsCamera", 3, "Max log time reached");
 						} else {
 							Logger.log("ApriltagsCameraLog", 1,
-									String.format(",%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%f", m_tag,
+									String.format(",%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%f,%f,%f", m_tag,
 											lastAngle, cameraAngle, calculateAngle, updateAngle,
 											estPos.getRotation().getDegrees(),
 											calculatedPos.getX(), estPos.getX(),
 											calculatedPos.getY(), estPos.getY(),
-											adjust, frameNo, d));
+											adjust, frameNo, d, curTime, time));
 						}
 					}
 
@@ -935,6 +936,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 			int cameraNo = 0;
 			int nProcessed = 0;
 			int nFrames = 0;
+			double curTime = getTime();
 			for (ApriltagsCameraInfo info : m_cameras) {
 				ApriltagsCameraRegions regions = info.m_regions;
 
@@ -949,7 +951,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 					for (ApriltagsCameraRegion region : regions.m_regions) {
 						// Logger.log("ApriltagsCamera", 1, "Calling updatePosition");
-						region.updatePosition(cameraNo, poseEstimator, regions.m_captureTime, regions.m_frameNo);
+						region.updatePosition(cameraNo, poseEstimator, regions.m_captureTime, regions.m_frameNo, curTime);
 						nProcessed++;
 					}
 					nFrames++;
@@ -962,13 +964,13 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				// If logging is enabled log only the estimated pose
 				Pose2d estPos = poseEstimator.getEstimatedPosition();
 
-				m_queue.add(estPos, getTime());
+				m_queue.add(estPos, curTime);
 				// Logger.log("ApriltagsCameraLog", 1, ",tag,last yaw,cam yaw,calc yaw,update
 				// yaw, est yaw,x,est x,y,est y,adjust");
 
 				Logger.log("ApriltagsCameraLog", 1,
-						String.format(",,,,,,%f,,%f,,%f,,,", estPos.getRotation().getDegrees(), estPos.getX(),
-								estPos.getY()));
+						String.format(",,,,,,%f,,%f,,%f,,,%f,", estPos.getRotation().getDegrees(), estPos.getX(),
+								estPos.getY(), curTime));
 			}
 		}
 	}

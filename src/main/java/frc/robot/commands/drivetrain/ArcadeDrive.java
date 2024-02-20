@@ -21,13 +21,15 @@ public class ArcadeDrive extends Command {
   private DoubleSupplier m_getY;
   private DoubleSupplier m_getRot;
   private Trigger m_slowMode;
+  private Trigger m_slowMode1;
 
-  public ArcadeDrive(DriveSubsystem driveSubsystem, DoubleSupplier getX, DoubleSupplier getY, DoubleSupplier getRot, Trigger slowMode) {
+  public ArcadeDrive(DriveSubsystem driveSubsystem, DoubleSupplier getX, DoubleSupplier getY, DoubleSupplier getRot, Trigger slowMode, Trigger slowMode1) {
     m_subsystem = driveSubsystem;
     m_getX = getX;
     m_getY = getY;
     m_getRot = getRot;
     m_slowMode = slowMode;
+    m_slowMode1 = slowMode1;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }
@@ -47,7 +49,7 @@ public class ArcadeDrive extends Command {
     if (m_subsystem.shouldAim() && rot == 0) {
       rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getFutureRotationalDistanceFromSpeakerDegrees()), 0.2);
     }
-    if (m_slowMode.getAsBoolean()) {
+    if (m_slowMode.getAsBoolean() || m_slowMode1.getAsBoolean()) {
       x *= .3;
       y *= .3;
     }

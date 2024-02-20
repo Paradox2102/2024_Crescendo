@@ -44,10 +44,10 @@ public final class Constants {
 
     public static final double k_driveRadius = .475953574;
 
-    public static double k_FLOffset = 1.81 - (Math.PI / 2); // 1.67
-    public static double k_FROffset = .04; // 2.21
-    public static double k_BLOffset = 4.19 + (Math.PI); //2.25
-    public static double k_BROffset = 2.03 + (Math.PI / 2); // 5.12
+    public static double k_FLOffset = 1.67 - (Math.PI / 2); // 1.81
+    public static double k_FROffset = 2.21; // .04
+    public static double k_BLOffset = 2.25 + (Math.PI); // 4.19
+    public static double k_BROffset = 5.12 + (Math.PI / 2); // 2.03
 
     public static final int k_drivingMotorPinionTeeth = 14;
 
@@ -219,7 +219,7 @@ public final class Constants {
 
   public Constants() {
     File f = new File("home/lvuser/practice");
-    if (true) {
+    if (false) {
 
       // Pivot
       PivotConstants.k_pivotZeroAngle = 0;

@@ -31,8 +31,14 @@ public final class Constants {
       SmartDashboard.putString("Robot Name", "Bb");
 
       // Pivot
-      PivotConstants.k_pivotZeroAngle = -81;
+      PivotConstants.k_pivotZeroAngle = -80;
       PivotConstants.k_isInverted = true;
+      PivotConstants.k_intakePositionDegrees = 100; // 130
+      PivotConstants.k_f = .015;
+      PivotConstants.k_p = .25;
+      PivotConstants.k_i = 0;
+      PivotConstants. k_d = .001;
+      PivotConstants.k_iZone = 10;
 
       // Drive
       DriveConstants.k_FLOffset = 1.81 - (Math.PI / 2);
@@ -156,15 +162,22 @@ public final class Constants {
   }
 
   public static class PivotConstants {
+
+    public static double k_f = .015;
+    public static double k_p = 0.017;
+    public static double k_i = 0.02;
+    public static double k_d = 0;
+    public static double k_iZone = 10;
+
     public static boolean k_isInverted = false;
     public static final int k_pivotMotor = 9;
     public static double k_pivotZeroAngle = 100;
     public static final double k_pivotTicksToDegrees = 360;
 
     // Positions
-    public static final double k_intakePositionDegrees = 112;
+    public static double k_intakePositionDegrees = 112;
     public static final double k_resetPositionDegrees = 0;
-    public static final double k_ampPositionDegrees = -5;
+    public static double k_ampPositionDegrees = -5;
 
     public static double[] k_distances = {
       1.6,

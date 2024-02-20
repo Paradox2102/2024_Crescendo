@@ -19,13 +19,8 @@ public class PivotSubsystem extends SubsystemBase {
   private double m_power;
   // private double m_targetAngleInDegrees = 0;
 
-  private final double k_f = .015;
-  private static final double k_p = 0.017;
-  private static final double k_i = 0.02;
-  private static final double k_d = 0;
-  private static final double k_iZone = 10;
   private static final double k_deadzone = 0;
-  private PIDController m_PID = new PIDController(k_p, k_i, k_d);
+  private PIDController m_PID;
   private double m_setPoint = 0;
 
   private double[] k_distancse = Constants.PivotConstants.k_distances;
@@ -39,11 +34,12 @@ public class PivotSubsystem extends SubsystemBase {
 
   /** Creates a new PivotSubsystem. */
   public PivotSubsystem(DriveSubsystem driveSubsystem) {
+    m_PID = new PIDController(Constants.PivotConstants.k_p, Constants.PivotConstants.k_i, Constants.PivotConstants.k_d);
     m_driveSubsystem = driveSubsystem;
     m_pivotMotor.restoreFactoryDefaults();
     setBrakeMode(true);
     m_pivotEncoder.setPositionOffset(-0.8);
-    m_PID.setIZone(k_iZone);
+    m_PID.setIZone(Constants.PivotConstants.k_iZone);
     m_pivotMotor.setInverted(Constants.PivotConstants.k_isInverted);
   }
 
@@ -91,7 +87,7 @@ public class PivotSubsystem extends SubsystemBase {
     double pid;
     double angle = getAngleInDegrees();
 
-    FF = k_f * Math.sin(angle - 25);
+    FF = Constants.PivotConstants.k_f * Math.sin(angle - 25);
     if(Math.abs(getAngleInDegrees() - m_setPoint) > k_deadzone){
       pid = m_PID.calculate(angle, m_setPoint);
     } else {

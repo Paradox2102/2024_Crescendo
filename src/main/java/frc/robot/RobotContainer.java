@@ -21,7 +21,6 @@ import frc.robot.commands.drivetrain.AutoOrientCommand;
 import frc.robot.commands.drivetrain.FaceSpeaker;
 import frc.robot.commands.gamePieceManipulation.AimAndShoot;
 import frc.robot.commands.gamePieceManipulation.CheckIntakeStowed;
-import frc.robot.commands.gamePieceManipulation.DefaultShooterCommand;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
 import frc.robot.commands.gamePieceManipulation.RevCommand;
@@ -47,7 +46,6 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -62,8 +60,9 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   ApriltagsCamera m_apriltagCamera = new ApriltagsCamera();
   PositionServer m_posServer = new PositionServer(m_apriltagCamera);
+  Constants m_constants = new Constants();
 
-  private final ShooterSensors m_shooterSensors = new ShooterSensors();
+  final ShooterSensors m_shooterSensors = new ShooterSensors();
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera);
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem(m_driveSubsystem);
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();

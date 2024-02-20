@@ -44,6 +44,7 @@ public class PivotSubsystem extends SubsystemBase {
     setBrakeMode(true);
     m_pivotEncoder.setPositionOffset(-0.8);
     m_PID.setIZone(k_iZone);
+    m_pivotMotor.setInverted(Constants.PivotConstants.k_isInverted);
   }
 
   public void setBrakeMode(boolean brake) {
@@ -101,6 +102,6 @@ public class PivotSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Calculated Error", Math.abs(getAngleInDegrees() - m_setPoint));
     SmartDashboard.putNumber("Set Point", m_setPoint);
     // SmartDashboard.putNumber("Pivot PID", pid);
-    m_pivotMotor.set(m_power);
+    // m_pivotMotor.set(m_power);
   }
 }

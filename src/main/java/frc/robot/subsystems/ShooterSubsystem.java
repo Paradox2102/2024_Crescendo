@@ -18,19 +18,16 @@ public class ShooterSubsystem extends SubsystemBase {
   private CANSparkFlex m_motor = new CANSparkFlex(Constants.ShooterConstants.k_shooterMotor, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_motor.getEncoder();
 
-  private final double k_p = .00005; //.00025
-  private final double k_i = .001; //.00052
-  private final double k_d = 0;
-  private final double k_iZone = 300;
-  private PIDController m_PID = new PIDController(k_p, k_i, k_d);
+  private PIDController m_PID;
 
   private double m_finalPower = 0;
 
   private double m_velocity = 0;
   /** Creates a new FrontSubsystem. */
   public ShooterSubsystem() {
+    m_PID = new PIDController(Constants.ShooterConstants.k_p, Constants.ShooterConstants.k_i, Constants.ShooterConstants.k_d);
     setBrakeMode(true);
-    m_PID.setIZone(k_iZone);
+    m_PID.setIZone(Constants.ShooterConstants.k_iZone);
     m_motor.setInverted(true);
     m_motor.setSmartCurrentLimit(1000);
   }
@@ -75,7 +72,7 @@ public class ShooterSubsystem extends SubsystemBase {
       if (!Constants.States.m_isGamePieceStowed && Constants.States.m_hasGamePiece) {
         // Move the motor in direction depending on which way to stow
         m_velocity = Constants.States.m_shootIntakeSide ? -Constants.ShooterConstants.k_adjustGamePiecePower : Constants.ShooterConstants.k_adjustGamePiecePower;
-        F = m_velocity / 5450.0;
+        F = m_velocity * Constants.ShooterConstants.k_f;
         m_finalPower = F + m_PID.calculate(currentVelocity, m_velocity);
       } else {
         m_finalPower = 0;

@@ -21,7 +21,7 @@ public class PivotSubsystem extends SubsystemBase {
 
   private static final double k_deadzone = 0;
   private PIDController m_PID;
-  private double m_setPoint = 0;
+  private double m_setPoint = Constants.PivotConstants.k_resetPositionDegrees;
 
   private double[] k_distancse = Constants.PivotConstants.k_distances;
 
@@ -94,10 +94,9 @@ public class PivotSubsystem extends SubsystemBase {
       pid = 0;
     }
     m_power = FF + pid;
-    // SmartDashboard.putNumber("Power", m_power);
+    SmartDashboard.putNumber("Pivot Power", m_power);
     SmartDashboard.putNumber("Calculated Error", Math.abs(getAngleInDegrees() - m_setPoint));
     SmartDashboard.putNumber("Set Point", m_setPoint);
-    // SmartDashboard.putNumber("Pivot PID", pid);
     m_pivotMotor.set(m_power);
   }
 }

@@ -33,12 +33,13 @@ public final class Constants {
       // Pivot
       PivotConstants.k_pivotZeroAngle = -80;
       PivotConstants.k_isInverted = true;
-      PivotConstants.k_intakePositionDegrees = 100; // 130
+      PivotConstants.k_intakePositionDegrees = 75; // 130
       PivotConstants.k_f = .015;
-      PivotConstants.k_p = .25;
+      PivotConstants.k_p = .018;
       PivotConstants.k_i = 0;
-      PivotConstants. k_d = .001;
+      PivotConstants. k_d = 0;
       PivotConstants.k_iZone = 10;
+      PivotConstants.k_resetPositionDegrees = 4;
 
       // Drive
       DriveConstants.k_FLOffset = 1.81 - (Math.PI / 2);
@@ -176,7 +177,7 @@ public final class Constants {
 
     // Positions
     public static double k_intakePositionDegrees = 112;
-    public static final double k_resetPositionDegrees = 0;
+    public static double k_resetPositionDegrees = 4;
     public static double k_ampPositionDegrees = -5;
 
     public static double[] k_distances = {

@@ -34,7 +34,7 @@ public class DefaultPivotCommand extends Command {
     } else if (!Constants.States.m_speakerMode) {
       m_subsystem.setPositionDegrees(Constants.PivotConstants.k_ampPositionDegrees);
     } else {
-      m_subsystem.setPositionDegrees(0);
+      m_subsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
     }
   }
 

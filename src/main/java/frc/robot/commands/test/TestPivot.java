@@ -23,6 +23,6 @@ public class TestPivot extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setPositionDegrees(-m_angle);
+    m_subsystem.setPositionDegrees(m_angle);
   }
 }

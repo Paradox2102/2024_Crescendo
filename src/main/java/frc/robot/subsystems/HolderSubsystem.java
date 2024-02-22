@@ -21,16 +21,13 @@ public class HolderSubsystem extends SubsystemBase {
 
   private double m_finalPower = 0;
 
-  private final double k_p = 0.00004;
-  private final double k_i = 0.0015;
-  private final double k_d = 0;
-  private final double k_iZone = 50;
-  private PIDController m_PID = new PIDController(k_p, k_i, k_d);
+  private PIDController m_PID;
   private double m_velocity = 0;
   private Timer m_timer = new Timer();
   /** Creates a new FrontSubsystem. */
   public HolderSubsystem() {
-    m_PID.setIZone(k_iZone);
+    m_PID = new PIDController(Constants.HolderConstants.k_p, Constants.HolderConstants.k_i, Constants.HolderConstants.k_d);
+    m_PID.setIZone(Constants.HolderConstants.k_iZone);
     setBrakeMode(true);
     m_motor.setInverted(false);
     m_motor.setSmartCurrentLimit(1000);
@@ -80,7 +77,7 @@ public class HolderSubsystem extends SubsystemBase {
       if (!Constants.States.m_isGamePieceStowed && Constants.States.m_hasGamePiece) {
         // Move the motor in direction depending on which way to stow
         m_velocity = Constants.States.m_shootIntakeSide ? -Constants.HolderConstants.k_adjustGamePiecePower : Constants.HolderConstants.k_adjustGamePiecePower;
-        F = m_velocity / 5350.0;
+        F = m_velocity * Constants.HolderConstants.k_f;
         m_finalPower = F + m_PID.calculate(currentVelocity, m_velocity);
       } else {
         m_finalPower = 0;

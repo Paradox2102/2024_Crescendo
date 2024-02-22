@@ -9,6 +9,7 @@ import java.io.File;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -23,6 +24,46 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  public Constants() {
+    File f = new File("home/lvuser/practice");
+    SmartDashboard.putString("Robot Name", "A#");
+    if (!f.exists()) {
+      SmartDashboard.putString("Robot Name", "Bb");
+
+      // Pivot
+      PivotConstants.k_pivotZeroAngle = -80;
+      PivotConstants.k_isInverted = true;
+      PivotConstants.k_intakePositionDegrees = 100; // 130
+      PivotConstants.k_f = .015;
+      PivotConstants.k_p = .25;
+      PivotConstants.k_i = 0;
+      PivotConstants. k_d = .001;
+      PivotConstants.k_iZone = 10;
+
+      // Drive
+      DriveConstants.k_FLOffset = 1.81 - (Math.PI / 2);
+      DriveConstants.k_FROffset = .04;
+      DriveConstants.k_BLOffset = 4.19 + (Math.PI);
+      DriveConstants.k_BROffset = 2.02 + (Math.PI / 2);
+
+      // Shooter
+      ShooterConstants.k_f = 1.0 / 5450;
+      ShooterConstants.k_p = .00005;
+      ShooterConstants.k_i = .0005;
+      ShooterConstants.k_d = 0;
+      ShooterConstants.k_iZone = 300;
+
+      // Holder 
+      HolderConstants.k_f = 1.0 / 5000;
+      HolderConstants.k_p = .000002;
+      HolderConstants.k_i = .0005;
+      HolderConstants.k_d = 0 ;
+      HolderConstants.k_iZone = 600;
+
+    } else {
+      SmartDashboard.putString("Robot Name", "A#");
+    }
+  }
   public static boolean m_allianceRed = true;
 
   public static class OperatorConstants {
@@ -121,14 +162,22 @@ public final class Constants {
   }
 
   public static class PivotConstants {
+
+    public static double k_f = .015;
+    public static double k_p = 0.017;
+    public static double k_i = 0.02;
+    public static double k_d = 0;
+    public static double k_iZone = 10;
+
+    public static boolean k_isInverted = false;
     public static final int k_pivotMotor = 9;
     public static double k_pivotZeroAngle = 100;
     public static final double k_pivotTicksToDegrees = 360;
 
     // Positions
-    public static final double k_intakePositionDegrees = 112;
+    public static double k_intakePositionDegrees = 112;
     public static final double k_resetPositionDegrees = 0;
-    public static final double k_ampPositionDegrees = -5;
+    public static double k_ampPositionDegrees = -5;
 
     public static double[] k_distances = {
       1.6,
@@ -176,18 +225,30 @@ public final class Constants {
 
     public static final int k_frontSensor = 2;
     public static final int k_backSensor = 1;
+
+    public static double k_f = 1.0 / 5450;
+    public static double k_p = .00005; //.00025
+    public static double k_i = .001; //.00052
+    public static double k_d = 0;
+    public static double k_iZone = 300;
   }
 
   // Positive is intake. negative is shoot intake side
   public static class HolderConstants {
     public static final int k_holdingMotor = 10;
     public static final double k_intakeVelocityRPM = 1000;
-    public static final double k_speakerShootVelocityRPM = 2000; 
+    public static final double k_speakerShootVelocityRPM = 5000; 
     public static final double k_speakerFeedVelocityRPM = -9000;
     public static final double k_ampFeedVelocityRPM = -9000; // -500
 
     public static final double k_deadzone = 25;
     public static final double k_adjustGamePiecePower = -500;
+
+    public static double k_f = 1.0 / 5350;
+    public static double k_p = 0.00004;
+    public static double k_i = 0.0015;
+    public static double k_d = 0;
+    public static double k_iZone = 50;
   }
 
   public static class ElevatorConstants {
@@ -215,20 +276,5 @@ public final class Constants {
     public static boolean m_runningShooterAndHolder = false;
     public static boolean m_faceSpeaker = false;
     public static boolean m_intaking = false;
-  }
-
-  public Constants() {
-    File f = new File("home/lvuser/practice");
-    if (false) {
-
-      // Pivot
-      PivotConstants.k_pivotZeroAngle = 0;
-
-      // Drive
-      DriveConstants.k_FLOffset = 1.81 - (Math.PI / 2);
-      DriveConstants.k_FROffset = .04;
-      DriveConstants.k_BLOffset = 4.19 + (Math.PI);
-      DriveConstants.k_BROffset = 2.02 + (Math.PI / 2);
-    }
   }
 }

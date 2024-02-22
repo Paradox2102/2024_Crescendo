@@ -13,6 +13,7 @@ import frc.robot.commands.ManualElevatorCommand;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetPivotAngleCommand;
 import frc.robot.commands.SetSpeakerAmpMode;
+import frc.robot.commands.ToggleElevatorPosition;
 import frc.robot.commands.ToggleShootSideCommand;
 import frc.robot.commands.apriltags.SetApriltagsDashboard;
 import frc.robot.commands.apriltags.SetApriltagsLogging;
@@ -164,9 +165,11 @@ public class RobotContainer {
     m_joystick.button(7).onTrue(new ToggleShootSideCommand(shootIntake.getAsBoolean()));
     m_joystick.button(8).toggleOnTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
     m_joystick.button(9).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));
+    m_joystick.button(10).onTrue(new ToggleElevatorPosition(m_elevatorSubsystem, 0));
+    m_joystick.button(11).onTrue(new ToggleElevatorPosition(m_elevatorSubsystem, 23.5));
     // m_joystick.button(11).toggleOnTrue(new ShootWhileDriving(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
 
-    m_joystick.button(11).onTrue(new DisableEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
+    // m_joystick.button(11).onTrue(new DisableEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     m_joystick.button(12).whileTrue(new SlowTurn(m_driveSubsystem, m_apriltagCamera));
   }
 

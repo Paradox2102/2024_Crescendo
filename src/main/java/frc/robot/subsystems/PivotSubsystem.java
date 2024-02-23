@@ -23,7 +23,7 @@ public class PivotSubsystem extends SubsystemBase {
   private PIDController m_PID;
   private double m_setPoint = Constants.PivotConstants.k_resetPositionDegrees;
 
-  private double[] k_distancse = Constants.PivotConstants.k_distances;
+  private double[] k_distancse = Constants.PivotConstants.k_distancesIntakeSide;
 
   private double[] k_angles = Constants.PivotConstants.k_angles;
 

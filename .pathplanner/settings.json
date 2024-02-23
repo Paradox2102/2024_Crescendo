@@ -3,6 +3,7 @@
   "robotLength": 0.83,
   "holonomicMode": true,
   "pathFolders": [
+    "shoot grab shoot",
     "mobility",
     "move to shoot",
     "shoot to piece",

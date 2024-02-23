@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2202882421032024,
-        "y": 4.679090070648336
+        "x": 1.25,
+        "y": 4.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8051745009342444,
-        "y": 3.83309387483915
+        "x": 3.016724608512831,
+        "y": 2.3291006378450425
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.949416269202909,
-        "y": 2.4206899695850677
+        "x": 8.030035398493188,
+        "y": 2.141101483220779
       },
       "prevControl": {
-        "x": 2.449438943397423,
-        "y": 2.415928280767872
+        "x": 6.087697131977894,
+        "y": 0.4901139566827921
       },
       "nextControl": {
-        "x": 4.177302485659102,
-        "y": 2.4323841240275086
+        "x": 8.238923348075705,
+        "y": 2.3186562403659163
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.25,
-        "y": 4.1
+        "x": 3.14205737826234,
+        "y": 2.997542076509089
       },
       "prevControl": {
-        "x": 3.795117518976132,
-        "y": 5.30386846996972
+        "x": 5.084715309379729,
+        "y": 0.3133319243737721
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,8 +46,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.6,
-      "rotationDegrees": -130.87981469653786,
+      "waypointRelativePos": 1,
+      "rotationDegrees": -135.8069294551024,
       "rotateFast": false
     }
   ],
@@ -61,14 +61,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 165.6398376581401,
-    "rotateFast": false
+    "rotation": -45.40634623330902,
+    "rotateFast": true
   },
   "reversed": false,
-  "folder": "start to piece",
+  "folder": "shoot grab shoot",
   "previewStartingState": {
-    "rotation": -60.0,
+    "rotation": -64.82209975809366,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

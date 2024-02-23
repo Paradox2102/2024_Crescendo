@@ -97,6 +97,8 @@ public class PivotSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Pivot Power", m_power);
     SmartDashboard.putNumber("Calculated Error", Math.abs(getAngleInDegrees() - m_setPoint));
     SmartDashboard.putNumber("Set Point", m_setPoint);
-    m_pivotMotor.set(m_power);
+    if (Constants.States.m_enableSuperstructure) {
+      m_pivotMotor.set(m_power);
+    }
   }
 }

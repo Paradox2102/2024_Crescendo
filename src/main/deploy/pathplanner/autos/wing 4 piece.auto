@@ -8,12 +8,6 @@
         {
           "type": "named",
           "data": {
-            "name": "reset everything"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "set speaker"
           }
         },
@@ -21,6 +15,12 @@
           "type": "named",
           "data": {
             "name": "switch to shoot back"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "enable super structure"
           }
         },
         {

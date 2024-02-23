@@ -85,7 +85,9 @@ public class HolderSubsystem extends SubsystemBase {
     } else {
       m_finalPower = F + power;
     }
-    setPower(m_finalPower);
+    if (Constants.States.m_enableSuperstructure) {
+      setPower(m_finalPower);
+    }
     
     SmartDashboard.putBoolean("has game piece", Constants.States.m_hasGamePiece);
     SmartDashboard.putNumber("Holder Front Velo", currentVelocity);

@@ -13,9 +13,6 @@ public class ShooterSensors extends SubsystemBase {
   DigitalInput m_frontSensor = new DigitalInput(Constants.ShooterConstants.k_frontSensor);
   DigitalInput m_backSensor = new DigitalInput(Constants.ShooterConstants.k_backSensor);
 
-  private int m_frontCounter = 0;
-  private int m_backCounter = 0;
-
   /** Creates a new ShooterSensors. */
   public ShooterSensors() {}
 

@@ -11,23 +11,22 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DisableEverything;
 import frc.robot.commands.ManualElevatorCommand;
 import frc.robot.commands.ResetGyro;
-import frc.robot.commands.SetPivotAngleCommand;
 import frc.robot.commands.SetSpeakerAmpMode;
 import frc.robot.commands.ToggleElevatorPosition;
 import frc.robot.commands.ToggleShootSideCommand;
 import frc.robot.commands.apriltags.SetApriltagsDashboard;
 import frc.robot.commands.apriltags.SetApriltagsLogging;
+import frc.robot.commands.autos.BackFeedCommand;
+import frc.robot.commands.autos.EnableSuperStructure;
+import frc.robot.commands.autos.IntakeAndGoToBackShooter;
+import frc.robot.commands.autos.RevBackShooter;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.AutoOrientCommand;
 import frc.robot.commands.drivetrain.FaceSpeaker;
-import frc.robot.commands.gamePieceManipulation.AimAndShoot;
-import frc.robot.commands.gamePieceManipulation.BackFeedCommand;
 import frc.robot.commands.gamePieceManipulation.CheckIntakeStowed;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
-import frc.robot.commands.gamePieceManipulation.IntakeAndGoToBackShooter;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
 import frc.robot.commands.gamePieceManipulation.ResetSubsystemsCommand;
-import frc.robot.commands.gamePieceManipulation.RevBackShooter;
 import frc.robot.commands.gamePieceManipulation.RevCommand;
 import frc.robot.commands.gamePieceManipulation.ShootCommand;
 import frc.robot.commands.pivot.DefaultPivotCommand;
@@ -104,9 +103,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("back feed", new BackFeedCommand(m_shooterSubsystem));
     NamedCommands.registerCommand("face speaker", new FaceSpeaker(m_driveSubsystem));
     NamedCommands.registerCommand("set pivot robot loc", new SetPivotOffRobotLocation(m_pivotSubsystem));
-    NamedCommands.registerCommand("aim + shoot", new AimAndShoot(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, m_driveSubsystem));
     NamedCommands.registerCommand("stop everything", new DisableEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     NamedCommands.registerCommand("reset everything", new ResetSubsystemsCommand(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem));
+    NamedCommands.registerCommand("enable super structure", new EnableSuperStructure());
     autoChooser = AutoBuilder.buildAutoChooser();
 
     // m_apriltagCamera.setCameraInfo(8.375, 12, 180, ApriltagsCameraType.GS_6mm); // y = 6

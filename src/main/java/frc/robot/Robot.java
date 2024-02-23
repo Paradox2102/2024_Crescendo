@@ -82,6 +82,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    Constants.States.m_shootIntakeSide = true;
   }
 
   /** This function is called periodically during operator control. */

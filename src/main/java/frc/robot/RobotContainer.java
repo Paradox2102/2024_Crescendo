@@ -97,7 +97,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("rev back", new RevBackShooter(m_holderSubsystem));
     NamedCommands.registerCommand("aim", new SetPivotOffRobotLocation(m_pivotSubsystem));
     NamedCommands.registerCommand("set shoot pos", new SetPivotPos(m_pivotSubsystem, 90));
-    NamedCommands.registerCommand("switch sides", new ToggleShootSideCommand(false));
+    NamedCommands.registerCommand("switch to shoot back", new ToggleShootSideCommand(false));
+    NamedCommands.registerCommand("switch to shoot front", new ToggleShootSideCommand(true));
     NamedCommands.registerCommand("set speaker", new SetSpeakerAmpMode(true));
     NamedCommands.registerCommand("feedthrough", new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
     NamedCommands.registerCommand("back feed", new BackFeedCommand(m_shooterSubsystem));

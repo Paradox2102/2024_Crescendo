@@ -23,9 +23,9 @@ public class PivotSubsystem extends SubsystemBase {
   private PIDController m_PID;
   private double m_setPoint = Constants.PivotConstants.k_resetPositionDegrees;
 
-  private double[] k_distancse = Constants.PivotConstants.k_distancesIntakeSide;
+  private double[] k_distancse = Constants.PivotConstants.k_distancesFront;
 
-  private double[] k_angles = Constants.PivotConstants.k_angles;
+  private double[] k_angles = Constants.PivotConstants.k_anglesFront;
 
   private CANSparkFlex m_pivotMotor = new CANSparkFlex(Constants.PivotConstants.k_pivotMotor, MotorType.kBrushless);
   DutyCycleEncoder m_pivotEncoder = new DutyCycleEncoder(0);

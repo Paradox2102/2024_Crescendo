@@ -61,6 +61,12 @@ public final class Constants {
       HolderConstants.k_d = 0 ;
       HolderConstants.k_iZone = 600;
 
+      // Interpolation Table
+      PivotConstants.k_distancesFront = new double[] {};
+      PivotConstants.k_anglesFront = new double[] {};
+      PivotConstants.k_distancesBack = new double[] {};
+      PivotConstants.k_anglesBack = new double[] {};
+
     } else {
       SmartDashboard.putString("Robot Name", "A#");
     }
@@ -180,7 +186,7 @@ public final class Constants {
     public static double k_resetPositionDegrees = 4;
     public static double k_ampPositionDegrees = -5;
 
-    public static double[] k_distancesIntakeSide = {
+    public static double[] k_distancesFront = {
       1.6,
       2.3,
       2.7,
@@ -195,7 +201,7 @@ public final class Constants {
       6.1
     };
 
-    public static double[] k_angles = {
+    public static double[] k_anglesFront = {
       0, // 1.6
       15, // 2
       16.3, // 2.3
@@ -210,6 +216,10 @@ public final class Constants {
       26.2, // 5.5
       28.2 // 6.1
     };
+
+    public static double[] k_distancesBack = {};
+
+    public static double[] k_anglesBack = {};
   }
 
   // Positive is intake. negative is shoot intake side

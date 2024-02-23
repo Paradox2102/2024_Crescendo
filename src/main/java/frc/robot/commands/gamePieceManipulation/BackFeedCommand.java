@@ -4,48 +4,50 @@
 
 package frc.robot.commands.gamePieceManipulation;
 
-import java.lang.constant.Constable;
-
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class IntakeAndGoToBackShooter extends Command {
-  /** Creates a new IntakeAndGoToBackShooter. */
+public class BackFeedCommand extends Command {
   ShooterSubsystem m_shooterSubsystem;
-  PivotSubsystem m_pivotSubsystem;
-  double m_endPos;
-  public IntakeAndGoToBackShooter(ShooterSubsystem shooterSubsystem, PivotSubsystem pivotSubsystem, double endPos) {
+  Timer m_dwellTimer = new Timer();
+
+  /** Creates a new RevCommand. */
+  public BackFeedCommand(ShooterSubsystem shooterSubsystem) {
     m_shooterSubsystem = shooterSubsystem;
-    m_pivotSubsystem = pivotSubsystem;
-    m_endPos = endPos;
+    m_dwellTimer.reset();
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooterSubsystem, m_pivotSubsystem);
+    addRequirements(m_shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_dwellTimer.reset();
+    m_dwellTimer.start();
     Constants.States.m_runningShooterAndHolder = true;
-    m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
-    m_shooterSubsystem.setVelocityRPM(1000);
+    m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerFeedVelocityRPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    if (Constants.States.m_hasGamePiece) {
+      m_dwellTimer.reset();
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_shooterSubsystem.stop();
-    m_pivotSubsystem.setPositionDegrees(m_endPos);
+    Constants.States.m_runningShooterAndHolder = false;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Constants.States.m_hasGamePiece;
+    return m_dwellTimer.get() > .5;
   }
 }

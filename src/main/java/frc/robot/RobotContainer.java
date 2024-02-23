@@ -17,6 +17,7 @@ import frc.robot.commands.ToggleShootSideCommand;
 import frc.robot.commands.apriltags.SetApriltagsDashboard;
 import frc.robot.commands.apriltags.SetApriltagsLogging;
 import frc.robot.commands.autos.BackFeedCommand;
+import frc.robot.commands.autos.CountBulldoze;
 import frc.robot.commands.autos.EnableSuperStructure;
 import frc.robot.commands.autos.IntakeAndGoToBackShooter;
 import frc.robot.commands.autos.RevBackShooter;
@@ -45,6 +46,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.triggers.HoldTrigger;
 import frc.triggers.ToggleTrigger;
 
+import com.fasterxml.jackson.core.sym.Name;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -106,6 +108,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("stop everything", new DisableEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     NamedCommands.registerCommand("reset everything", new ResetSubsystemsCommand(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem));
     NamedCommands.registerCommand("enable super structure", new EnableSuperStructure());
+    NamedCommands.registerCommand("bulldoze counter", new CountBulldoze(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     autoChooser = AutoBuilder.buildAutoChooser();
 
     // m_apriltagCamera.setCameraInfo(8.375, 12, 180, ApriltagsCameraType.GS_6mm); // y = 6

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.25,
-      "y": 4.2
+      "x": 1.3142878194153342,
+      "y": 4.094203811817293
     },
-    "rotation": -54.56005054104435
+    "rotation": -61.11341823308932
   },
   "command": {
     "type": "sequential",
@@ -61,7 +61,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "speaker to center 4 to shoot far"
+                  "pathName": "speaker to bulldoze to shoot far"
                 }
               },
               {
@@ -71,41 +71,9 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "intake"
+                        "name": "bulldoze counter"
                       }
                     },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "rev shooter"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "feedthrough"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "shoot far to center 5 to shoot far"
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
                     {
                       "type": "named",
                       "data": {

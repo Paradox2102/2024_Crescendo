@@ -47,7 +47,7 @@ public class ManualElevatorCommand extends Command {
     } else if (m_getY.getAsDouble() == 0) {
       m_subsystem.setPower(0);;
     } else {
-      m_subsystem.setPower(m_getY.getAsDouble() > 0 ? .4 : -.4);
+      m_subsystem.setPower(m_getY.getAsDouble() > 0 ? 1 : -1);
     }
     // if (m_getY.getAsDouble() > 0) {
     //   m_subsystem.setPower(.9);

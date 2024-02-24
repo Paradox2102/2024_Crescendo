@@ -60,6 +60,7 @@ public final class Constants {
       HolderConstants.k_i = .0005;
       HolderConstants.k_d = 0 ;
       HolderConstants.k_iZone = 600;
+      HolderConstants.k_intakeVelocityRPM = 500;
 
       // Interpolation Table
       PivotConstants.k_distancesFront = new double[] {};
@@ -225,7 +226,7 @@ public final class Constants {
   // Positive is intake. negative is shoot intake side
   public static class ShooterConstants {
     public static final int k_shooterMotor = 11;
-    public static final double k_intakeVelocityRPM = 3000;
+    public static double k_intakeVelocityRPM = 3000;
     public static final double k_speakerShootVelocityRPM = -5000; // -5750
     public static final double k_ampShootVelocityRPM = -2000; // -1500
     
@@ -247,9 +248,9 @@ public final class Constants {
   // Positive is intake. negative is shoot intake side
   public static class HolderConstants {
     public static final int k_holdingMotor = 10;
-    public static final double k_intakeVelocityRPM = 1000;
+    public static double k_intakeVelocityRPM = 1000;
     public static final double k_speakerShootVelocityRPM = 5000; 
-    public static final double k_speakerFeedVelocityRPM = -9000;
+    public static final double k_speakerFeedVelocityRPM = -100000000;
     public static final double k_ampFeedVelocityRPM = -9000; // -500
 
     public static final double k_deadzone = 25;
@@ -287,7 +288,7 @@ public final class Constants {
     public static boolean m_runningShooterAndHolder = false;
     public static boolean m_faceSpeaker = false;
     public static boolean m_intaking = false;
-    public static boolean m_enableSuperstructure = false;
+    public static boolean m_enableSuperstructure = true;
     public static boolean m_autoRotateAim = true;
   }
 }

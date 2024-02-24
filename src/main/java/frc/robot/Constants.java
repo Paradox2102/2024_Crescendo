@@ -30,6 +30,12 @@ public final class Constants {
     if (!f.exists()) {
       SmartDashboard.putString("Robot Name", "Bb");
 
+      // Camera
+      DriveConstants.k_cameraFrontX = 6;
+      DriveConstants.k_cameraFrontY = 9.5;
+      DriveConstants.k_cameraBackX = 8.5;
+      DriveConstants.k_cameraBackY = 11.5;
+
       // Pivot
       PivotConstants.k_pivotZeroAngle = -80;
       PivotConstants.k_isInverted = true;
@@ -56,7 +62,7 @@ public final class Constants {
 
       // Holder 
       HolderConstants.k_f = 1.0 / 5000;
-      HolderConstants.k_p = .000002;
+      HolderConstants.k_p = .00002;
       HolderConstants.k_i = .0005;
       HolderConstants.k_d = 0 ;
       HolderConstants.k_iZone = 600;
@@ -167,6 +173,11 @@ public final class Constants {
     public static final double k_rotateDeadzone = 2;
 
     public static final double k_lookAheadTimeSeconds = .2;
+
+    public static double k_cameraFrontX = 8.375;
+    public static double k_cameraFrontY = 9.5;
+    public static double k_cameraBackX = 11.5;
+    public static double k_cameraBackY = 6;
   }
 
   public static class PivotConstants {
@@ -250,7 +261,7 @@ public final class Constants {
     public static final int k_holdingMotor = 10;
     public static double k_intakeVelocityRPM = 1000;
     public static final double k_speakerShootVelocityRPM = 5000; 
-    public static final double k_speakerFeedVelocityRPM = -100000000;
+    public static final double k_speakerFeedVelocityRPM = -5000;
     public static final double k_ampFeedVelocityRPM = -9000; // -500
 
     public static final double k_deadzone = 25;
@@ -282,7 +293,7 @@ public final class Constants {
 
   public static class States {
     public static boolean m_speakerMode = true;
-    public static boolean m_shootIntakeSide = true;
+    public static boolean m_shootIntakeSide = false;
     public static boolean m_hasGamePiece = false;
     public static boolean m_isGamePieceStowed = false;
     public static boolean m_runningShooterAndHolder = false;

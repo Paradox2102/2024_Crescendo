@@ -33,6 +33,7 @@ import frc.robot.commands.gamePieceManipulation.ShootCommand;
 import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.SetPivotOffRobotLocation;
 import frc.robot.commands.pivot.SetPivotPos;
+import frc.robot.commands.pivot.ToggleBrakeMode;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.commands.test.IncrementPivotCommand;
 import frc.robot.commands.test.SlowTurn;
@@ -112,9 +113,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("bulldoze counter", new CountBulldoze(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     autoChooser = AutoBuilder.buildAutoChooser();
 
-    // m_apriltagCamera.setCameraInfo(8.375, 12, 180, ApriltagsCameraType.GS_6mm); // y = 6
-    // m_apriltagCamera.setCameraInfo(5.125, 15.5, 0, ApriltagsCameraType.GS_6mm); // y = 9.5
+    // Front
     m_apriltagCamera.setCameraInfo(8.375, 9.5, 180, ApriltagsCameraType.GS_6mm); // y = 6
+    // Back
     m_apriltagCamera.setCameraInfo(11.50, 6.0, 0, ApriltagsCameraType.GS_6mm); // y = 9.5
     m_apriltagCamera.connect("10.21.2.11", 5800);
 
@@ -152,7 +153,7 @@ public class RobotContainer {
       new Trigger(m_slowMode1)
     ));
 
-    m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
+    // m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
@@ -171,12 +172,14 @@ public class RobotContainer {
     m_driverController.povLeft().onTrue(new ResetGyro(m_driveSubsystem, -90));
 
     ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
+    ToggleTrigger brake = new ToggleTrigger(m_joystick.button(3));
 
     m_joystick.button(1).toggleOnTrue(new RevCommand(m_shooterSubsystem, m_holderSubsystem));
     m_joystick.button(2).whileTrue(new D2Intake(m_shooterSubsystem, m_holderSubsystem, true));
+    m_joystick.button(3).onTrue(new ToggleBrakeMode(m_pivotSubsystem, new Trigger(brake)));
     m_joystick.button(6).onTrue(new IncrementPivotCommand(m_pivotSubsystem, true));
     m_joystick.button(4).onTrue(new IncrementPivotCommand(m_pivotSubsystem, false));
-    m_joystick.button(5).onTrue(new TestPivot(m_pivotSubsystem, 40));
+    m_joystick.button(5).onTrue(new TestPivot(m_pivotSubsystem, 100));
     m_joystick.button(7).onTrue(new ToggleShootSideCommand(shootIntake.getAsBoolean()));
     m_joystick.button(8).toggleOnTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
     m_joystick.button(9).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));

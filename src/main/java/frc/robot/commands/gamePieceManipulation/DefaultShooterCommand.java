@@ -9,12 +9,12 @@ import frc.robot.Constants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class DefaultShooterCommand extends Command {
-  /** Creates a new DefaultShooterCommand. */
-  ShooterSubsystem m_subsystem;
+  /** Creates a new DefaultStowGamePiece. */
+  ShooterSubsystem m_shooterSubsystem;
   public DefaultShooterCommand(ShooterSubsystem shooterSubsystem) {
-    m_subsystem = shooterSubsystem;
+    m_shooterSubsystem = shooterSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_subsystem);
+    addRequirements(m_shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -24,10 +24,10 @@ public class DefaultShooterCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Constants.States.m_isGamePieceStowed && Constants.States.m_faceSpeaker && Constants.States.m_speakerMode) {
-      m_subsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerShootVelocityRPM);
+    if (Constants.States.m_hasGamePiece && !Constants.States.m_isGamePieceStowed) {
+      m_shooterSubsystem.setPower(Constants.States.m_shootIntakeSide ? Constants.ShooterConstants.k_adjustGamePiecePower : -Constants.ShooterConstants.k_adjustGamePiecePower);
     } else {
-      m_subsystem.setVelocityRPM(0);
+      m_shooterSubsystem.stop();
     }
   }
 

@@ -5,6 +5,7 @@
 package frc.robot.commands.gamePieceManipulation;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.HolderSubsystem;
@@ -45,14 +46,14 @@ public class ShootCommand extends Command {
           // shooting intake side to speaker
           m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerShootVelocityRPM);
           if (m_shooterSubsystem.isReady()) {
-            m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerFeedVelocityRPM);
+            m_holderSubsystem.setPower(Constants.HolderConstants.k_speakerFeedPower);
             m_feeding = true;
           }
         } else {
           // shooting holder side to speaker
           m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
           if (m_holderSubsystem.isReady()) {
-            m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerFeedVelocityRPM);
+            m_shooterSubsystem.setPower(Constants.ShooterConstants.k_speakerFeedPower);
             m_feeding = true;
           }
         }
@@ -60,7 +61,7 @@ public class ShootCommand extends Command {
         // shooting intake side to amp
         m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_ampShootVelocityRPM);
         if (m_shooterSubsystem.isReady()) {
-          m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_ampFeedVelocityRPM);
+          m_holderSubsystem.setPower(Constants.HolderConstants.k_ampFeedPower);
           m_feeding = true;
         }
       }
@@ -77,6 +78,7 @@ public class ShootCommand extends Command {
     Constants.States.m_runningShooterAndHolder = false;
     Constants.States.m_hasGamePiece = false;
     m_dwellTimer.stop();
+    m_feeding = false;
   }
 
   // Returns true when the command should end.

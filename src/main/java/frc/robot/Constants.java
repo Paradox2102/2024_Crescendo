@@ -29,6 +29,7 @@ public final class Constants {
     SmartDashboard.putString("Robot Name", "A#");
     if (!f.exists()) {
       SmartDashboard.putString("Robot Name", "Bb");
+      States.m_isCompetition = true;
 
       // Camera
       DriveConstants.k_cameraFrontX = 6;
@@ -54,18 +55,18 @@ public final class Constants {
       DriveConstants.k_BROffset = 2.02 + (Math.PI / 2);
 
       // Shooter
-      ShooterConstants.k_f = 1.0 / 5450;
-      ShooterConstants.k_p = .00005;
-      ShooterConstants.k_i = .0005;
+      ShooterConstants.k_f = 0.99 / ShooterConstants.k_maxVelocityRPM;
+      ShooterConstants.k_p = 0.00005;
+      ShooterConstants.k_i = 0.0000001;
       ShooterConstants.k_d = 0;
-      ShooterConstants.k_iZone = 300;
+      ShooterConstants.k_iZone = 200;
 
       // Holder 
-      HolderConstants.k_f = 1.0 / 5000;
-      HolderConstants.k_p = .00002;
-      HolderConstants.k_i = .0005;
-      HolderConstants.k_d = 0 ;
-      HolderConstants.k_iZone = 600;
+      HolderConstants.k_f = 0.99 /  ShooterConstants.k_maxVelocityRPM;
+      HolderConstants.k_p = .00005;
+      HolderConstants.k_i = .0000001;
+      HolderConstants.k_d = 0;
+      HolderConstants.k_iZone = 200;
       HolderConstants.k_intakeVelocityRPM = 500;
 
       // Interpolation Table
@@ -76,6 +77,7 @@ public final class Constants {
 
     } else {
       SmartDashboard.putString("Robot Name", "A#");
+      States.m_isCompetition = false;
     }
   }
   public static boolean m_allianceRed = true;
@@ -194,7 +196,7 @@ public final class Constants {
     public static final double k_pivotTicksToDegrees = 360;
 
     // Positions
-    public static double k_intakePositionDegrees = 110;
+    public static double k_intakePositionDegrees = 112;
     public static double k_resetPositionDegrees = 4;
     public static double k_ampPositionDegrees = -5;
 
@@ -240,20 +242,21 @@ public final class Constants {
     public static double k_intakeVelocityRPM = 3000;
     public static final double k_speakerShootVelocityRPM = -5000; // -5750
     public static final double k_ampShootVelocityRPM = -2000; // -1500
+    public static final double k_maxVelocityRPM = 6000;
     
-    public static final double k_speakerFeedVelocityRPM = 9000;
+    public static final double k_speakerFeedPower = 0.25;
     public static final double k_deadzone = 25;
 
-    public static final double k_adjustGamePiecePower = -1000;
+    public static final double k_adjustGamePiecePower = -.2;
 
     public static final int k_frontSensor = 2;
     public static final int k_backSensor = 1;
 
-    public static double k_f = 1.0 / 5450;
-    public static double k_p = .00005; //.00025
-    public static double k_i = .001; //.00052
+    public static double k_f = 1.1 / k_maxVelocityRPM;
+    public static double k_p = 0; //.00025
+    public static double k_i = 0; //.00052
     public static double k_d = 0;
-    public static double k_iZone = 300;
+    public static double k_iZone = 0;
   }
 
   // Positive is intake. negative is shoot intake side
@@ -261,11 +264,11 @@ public final class Constants {
     public static final int k_holdingMotor = 10;
     public static double k_intakeVelocityRPM = 1000;
     public static final double k_speakerShootVelocityRPM = 5000; 
-    public static final double k_speakerFeedVelocityRPM = -500;
-    public static final double k_ampFeedVelocityRPM = -9000; // -500
+    public static final double k_speakerFeedPower = -0.25;
+    public static final double k_ampFeedPower = -0.25; // -500
 
     public static final double k_deadzone = 25;
-    public static final double k_adjustGamePiecePower = -500;
+    public static final double k_adjustGamePiecePower = -.2;
 
     public static double k_f = 1.0 / 5350;
     public static double k_p = 0.00004;
@@ -281,7 +284,7 @@ public final class Constants {
 //manual command
     public static final double k_driveDeadband = 0;
     public static final double k_minDistance = 0;
-    public static final double k_maxDistance = 24;
+    public static final double k_maxDistance = 17;
 
     public static final double k_zeroPoint = -1.814;
 //PID (kinda) tuning
@@ -292,6 +295,7 @@ public final class Constants {
   public static final double k_idealShootingDistanceMeters = 3;
 
   public static class States {
+    public static boolean m_isCompetition = false;
     public static boolean m_speakerMode = true;
     public static boolean m_shootIntakeSide = false;
     public static boolean m_hasGamePiece = false;

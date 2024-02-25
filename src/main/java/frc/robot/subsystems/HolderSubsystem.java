@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -16,23 +18,34 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class HolderSubsystem extends SubsystemBase {
-  private CANSparkFlex m_motor = new CANSparkFlex(Constants.HolderConstants.k_holdingMotor, MotorType.kBrushless);
-  private RelativeEncoder m_encoder = m_motor.getEncoder();
+  private CANSparkFlex m_motor;
+  private RelativeEncoder m_encoder;
+  private final SparkPIDController m_PID;
 
-  private double m_finalPower = 0;
-
-  private PIDController m_PID;
   private double m_velocity = 0;
-  private Timer m_timer = new Timer();
   /** Creates a new FrontSubsystem. */
-  public HolderSubsystem() {
-    m_PID = new PIDController(Constants.HolderConstants.k_p, Constants.HolderConstants.k_i, Constants.HolderConstants.k_d);
-    m_PID.setIZone(Constants.HolderConstants.k_iZone);
+  public HolderSubsystem(int id, boolean shooter) {
+    m_motor = new CANSparkFlex(id, MotorType.kBrushless);
+    m_encoder = m_motor.getEncoder();
+    m_PID = m_motor.getPIDController();
+    if (shooter) {
+      m_PID.setFF(Constants.ShooterConstants.k_f);
+      m_PID.setP(Constants.ShooterConstants.k_p);
+      m_PID.setI(Constants.ShooterConstants.k_i);
+      m_PID.setD(Constants.ShooterConstants.k_d);
+      m_PID.setIZone(Constants.ShooterConstants.k_iZone);
+      m_motor.setInverted(Constants.States.m_isCompetition);
+    } else {
+      m_PID.setFF(Constants.HolderConstants.k_f);
+      m_PID.setP(Constants.HolderConstants.k_p);
+      m_PID.setI(Constants.HolderConstants.k_i);
+      m_PID.setD(Constants.HolderConstants.k_d);
+      m_PID.setIZone(Constants.HolderConstants.k_iZone);
+      m_motor.setInverted(!Constants.States.m_isCompetition);
+    }
     setBrakeMode(true);
-    m_motor.setInverted(false);
     m_motor.setSmartCurrentLimit(1000);
-    m_timer.reset();
-    m_timer.start();
+    setName(shooter ? "ShooterSubsystem" : "HolderSubsystem");
   }
 
   public boolean isReady() {
@@ -40,7 +53,7 @@ public class HolderSubsystem extends SubsystemBase {
   }
 
   public void setPower(double power) {
-    m_motor.set(power);
+    m_PID.setReference(power, ControlType.kDutyCycle);
   }
 
   public void setBrakeMode(boolean brake) {
@@ -49,6 +62,7 @@ public class HolderSubsystem extends SubsystemBase {
 
   public void setVelocityRPM(double velocity) {
     m_velocity = velocity;
+    m_PID.setReference(velocity, ControlType.kVelocity);
   }
 
   public double getVelocityRPM() {
@@ -61,38 +75,7 @@ public class HolderSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    double currentVelocity = getVelocityRPM();
-    
-    double F = m_velocity / 5350;
-
-    SmartDashboard.putNumber("Holder FTerm", F);
-
-    double power = m_PID.calculate(currentVelocity, m_velocity);
-
-    SmartDashboard.putNumber("holder power without fterm", power);
-
-    // If not shooting, make sure gamepiece is stowed, else shoot
-    if (!Constants.States.m_runningShooterAndHolder) {
-      if (!Constants.States.m_isGamePieceStowed && Constants.States.m_hasGamePiece) {
-        // Move the motor in direction depending on which way to stow
-        m_velocity = Constants.States.m_shootIntakeSide ? -Constants.HolderConstants.k_adjustGamePiecePower : Constants.HolderConstants.k_adjustGamePiecePower;
-        F = m_velocity * Constants.HolderConstants.k_f;
-        m_finalPower = F + m_PID.calculate(currentVelocity, m_velocity);
-      } else {
-        m_finalPower = 0;
-      }
-    } else {
-      m_finalPower = F + power;
-    }
-    if (Constants.States.m_enableSuperstructure) {
-      setPower(m_finalPower);
-    }
-    
-    SmartDashboard.putBoolean("has game piece", Constants.States.m_hasGamePiece);
-    SmartDashboard.putNumber("Holder Front Velo", currentVelocity);
-    SmartDashboard.putNumber("Holder Target Front Velocity", m_velocity);
-    SmartDashboard.putNumber("Final Target Power", m_finalPower);
-    SmartDashboard.putNumber("Holder Current Draw", m_motor.getOutputCurrent());
+    SmartDashboard.putNumber(getName() + " Speed", getVelocityRPM());
+    SmartDashboard.putNumber(getName() + " Target Speed", m_velocity);
   }
 }

@@ -28,6 +28,7 @@ import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.AutoOrientCommand;
 import frc.robot.commands.drivetrain.FaceSpeaker;
 import frc.robot.commands.gamePieceManipulation.CheckIntakeStowed;
+import frc.robot.commands.gamePieceManipulation.DefaultStowGamePiece;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
 import frc.robot.commands.gamePieceManipulation.ResetSubsystemsCommand;
@@ -36,6 +37,7 @@ import frc.robot.commands.gamePieceManipulation.ShootCommand;
 import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.SetPivotOffRobotLocation;
 import frc.robot.commands.pivot.SetPivotPos;
+import frc.robot.commands.test.CalibrateShooter;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.commands.test.IncrementPivotCommand;
 import frc.robot.commands.test.SlowTurn;
@@ -77,10 +79,11 @@ public class RobotContainer {
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera);
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem(m_driveSubsystem);
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-  private final HolderSubsystem m_holderSubsystem = new HolderSubsystem();
+  private final HolderSubsystem m_holderSubsystem = new HolderSubsystem(Constants.HolderConstants.k_holdingMotor, false);
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
 
   private final CommandJoystick m_joystick = new CommandJoystick(1);
+  private final CommandJoystick m_testStick = new CommandJoystick(2);
   public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);
 
 
@@ -155,11 +158,12 @@ public class RobotContainer {
     ));
 
     m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
+    m_shooterSubsystem.setDefaultCommand(new DefaultStowGamePiece(m_shooterSubsystem, m_holderSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
-    m_driverController.leftTrigger().onTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
+    m_driverController.leftTrigger().onTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
     m_driverController.rightTrigger().whileTrue(new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
         
     m_driverController.y().onTrue(new AutoOrientCommand(m_driveSubsystem, 180, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));
@@ -187,6 +191,8 @@ public class RobotContainer {
 
     m_joystick.button(11).onTrue(new DisableEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     m_joystick.button(12).onTrue(new InstantCommand(() -> {Constants.States.m_autoRotateAim = !Constants.States.m_autoRotateAim;}));
+
+    m_testStick.button(1).whileTrue(new CalibrateShooter(m_shooterSubsystem));
   }
   public double getThrottle() {
     return m_joystick.getThrottle();

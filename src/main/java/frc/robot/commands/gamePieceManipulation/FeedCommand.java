@@ -32,9 +32,9 @@ public class FeedCommand extends Command {
     Constants.States.m_runningShooterAndHolder = true;
     if (Constants.States.m_shootIntakeSide) {
       m_shooterSubsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM : Constants.ShooterConstants.k_ampShootVelocityRPM);
-      m_holderSubsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.HolderConstants.k_speakerFeedVelocityRPM : Constants.HolderConstants.k_ampFeedVelocityRPM);
+      m_holderSubsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.HolderConstants.k_speakerFeedPower : Constants.HolderConstants.k_ampFeedPower);
     } else {
-      m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerFeedVelocityRPM);
+      m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerFeedPower);
       m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
     }
   }

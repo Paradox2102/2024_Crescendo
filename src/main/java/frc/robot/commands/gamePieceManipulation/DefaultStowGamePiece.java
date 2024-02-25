@@ -9,12 +9,11 @@ import frc.robot.Constants;
 import frc.robot.subsystems.HolderSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class RevCommand extends Command {
+public class DefaultStowGamePiece extends Command {
+  /** Creates a new DefaultStowGamePiece. */
   ShooterSubsystem m_shooterSubsystem;
   HolderSubsystem m_holderSubsystem;
-
-  /** Creates a new RevCommand. */
-  public RevCommand(ShooterSubsystem shooterSubsystem, HolderSubsystem holderSubsystem) {
+  public DefaultStowGamePiece(ShooterSubsystem shooterSubsystem, HolderSubsystem holderSubsystem) {
     m_shooterSubsystem = shooterSubsystem;
     m_holderSubsystem = holderSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -23,17 +22,7 @@ public class RevCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    System.out.println("revCommand initialize");
-    Constants.States.m_runningShooterAndHolder = true;
-    if (Constants.States.m_shootIntakeSide) {
-      m_shooterSubsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM : Constants.ShooterConstants.k_ampShootVelocityRPM);
-      m_holderSubsystem.setVelocityRPM(0);
-    } else {
-      m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerFeedPower);
-      m_shooterSubsystem.setVelocityRPM(0);
-    }
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -42,10 +31,14 @@ public class RevCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooterSubsystem.stop();
-    m_holderSubsystem.stop();
-    Constants.States.m_runningShooterAndHolder = false;
-    System.out.println("rev command end");
+    if (Constants.States.m_hasGamePiece && !Constants.States.m_isGamePieceStowed) {
+      m_shooterSubsystem.setPower(Constants.States.m_shootIntakeSide ? Constants.ShooterConstants.k_adjustGamePiecePower : -Constants.ShooterConstants.k_adjustGamePiecePower);
+      m_holderSubsystem.setPower(Constants.States.m_shootIntakeSide ? Constants.HolderConstants.k_adjustGamePiecePower : -Constants.HolderConstants.k_adjustGamePiecePower);
+      System.out.println("yay");
+    } else {
+      m_shooterSubsystem.stop();
+      m_holderSubsystem.stop();
+    }
   }
 
   // Returns true when the command should end.

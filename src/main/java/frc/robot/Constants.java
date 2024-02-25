@@ -102,7 +102,7 @@ public final class Constants {
     public static final double k_driveRadius = .475953574;
 
     public static double k_FLOffset = 4.8 - (Math.PI / 2); // 1.67
-    public static double k_FROffset = 3.28; // 2.21
+    public static double k_FROffset = 5.33; // 2.21
     public static double k_BLOffset = 0.16 + (Math.PI); // 2.25
     public static double k_BROffset = 4.87 + (Math.PI / 2); // 5.17
 

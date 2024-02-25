@@ -47,6 +47,8 @@ public final class Constants {
       PivotConstants. k_d = .0005;
       PivotConstants.k_iZone = 10;
       PivotConstants.k_resetPositionDegrees = 4;
+      PivotConstants.k_offset = 0;
+      PivotConstants.k_ampPositionDegrees = 12;
 
       // Drive
       DriveConstants.k_FLOffset = 1.81 - (Math.PI / 2);
@@ -70,10 +72,54 @@ public final class Constants {
       HolderConstants.k_intakeVelocityRPM = 500;
 
       // Interpolation Table
-      PivotConstants.k_distancesFront = new double[] {};
-      PivotConstants.k_anglesFront = new double[] {};
-      PivotConstants.k_distancesBack = new double[] {};
-      PivotConstants.k_anglesBack = new double[] {};
+      PivotConstants.k_distancesFront = new double[] {
+        1.43,
+        2,
+        2.55,
+        3.1,
+        3.5,
+        3.75,
+        4,
+        4.25,
+        4.5,
+        4.75,
+        5,
+        5.25,
+        5.5
+      };
+      PivotConstants.k_anglesFront = new double[] {
+        3.2, // 1.43,
+        1.83, // 2,
+        25.7, // 2.55,
+        28.9, // 3.1,
+        35.2, // 3.5,
+        38.5, // 3.75,
+        38.7, // 4,
+        38.8, // 4.25,
+        39, // 4.5,
+        39.1, // 4.75,
+        39.2, // 5,
+        39.4, // 5.25,
+        42.15 // 5.5
+      };
+      PivotConstants.k_distancesBack = new double[] {
+        1.5,
+        1.75,
+        2,
+        2.25,
+        2.5,
+        2.75,
+        3
+      };
+      PivotConstants.k_anglesBack = new double[] {
+        115, //1.5
+        110, //1.75
+        108, //2
+        105, //2.25
+        103, //2.5
+        101, //2.75
+        100 //3
+      };
 
     } else {
       SmartDashboard.putString("Robot Name", "A#");
@@ -194,6 +240,7 @@ public final class Constants {
     public static final int k_pivotMotor = 9;
     public static double k_pivotZeroAngle = 100;
     public static final double k_pivotTicksToDegrees = 360;
+    public static double k_offset = 0;
 
     // Positions
     public static double k_intakePositionDegrees = 112;
@@ -241,7 +288,7 @@ public final class Constants {
     public static final int k_shooterMotor = 11;
     public static double k_intakeVelocityRPM = 3000;
     public static final double k_speakerShootVelocityRPM = -5000; // -5750
-    public static final double k_ampShootVelocityRPM = -2000; // -1500
+    public static final double k_ampShootVelocityRPM = -1000; // -1500
     public static final double k_maxVelocityRPM = 6000;
     
     public static final double k_speakerFeedPower = 0.25;

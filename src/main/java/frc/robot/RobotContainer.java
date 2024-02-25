@@ -28,7 +28,8 @@ import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.AutoOrientCommand;
 import frc.robot.commands.drivetrain.FaceSpeaker;
 import frc.robot.commands.gamePieceManipulation.CheckIntakeStowed;
-import frc.robot.commands.gamePieceManipulation.DefaultStowGamePiece;
+import frc.robot.commands.gamePieceManipulation.DefaultHolderCommand;
+import frc.robot.commands.gamePieceManipulation.DefaultShooterCommand;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
 import frc.robot.commands.gamePieceManipulation.ResetSubsystemsCommand;
@@ -157,8 +158,9 @@ public class RobotContainer {
       new Trigger(m_slowMode1)
     ));
 
-    //m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
-    // m_shooterSubsystem.setDefaultCommand(new DefaultStowGamePiece(m_shooterSubsystem, m_holderSubsystem));
+    m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
+    m_shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(m_shooterSubsystem));
+    m_holderSubsystem.setDefaultCommand(new DefaultHolderCommand(m_holderSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
@@ -192,7 +194,7 @@ public class RobotContainer {
     m_joystick.button(11).onTrue(new DisableEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     m_joystick.button(12).onTrue(new InstantCommand(() -> {Constants.States.m_autoRotateAim = !Constants.States.m_autoRotateAim;}));
 
-    m_testStick.button(1).whileTrue(new CalibrateShooter(m_holderSubsystem));
+    m_testStick.button(1).whileTrue(new CalibrateShooter(m_shooterSubsystem));
   }
   public double getThrottle() {
     return m_joystick.getThrottle();

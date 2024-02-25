@@ -284,7 +284,7 @@ public final class Constants {
 //manual command
     public static final double k_driveDeadband = 0;
     public static final double k_minDistance = 0;
-    public static final double k_maxDistance = 24;
+    public static final double k_maxDistance = 17;
 
     public static final double k_zeroPoint = -1.814;
 //PID (kinda) tuning

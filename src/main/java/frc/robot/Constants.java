@@ -194,7 +194,7 @@ public final class Constants {
     public static final double k_pivotTicksToDegrees = 360;
 
     // Positions
-    public static double k_intakePositionDegrees = 112;
+    public static double k_intakePositionDegrees = 110;
     public static double k_resetPositionDegrees = 4;
     public static double k_ampPositionDegrees = -5;
 
@@ -299,7 +299,7 @@ public final class Constants {
     public static boolean m_runningShooterAndHolder = false;
     public static boolean m_faceSpeaker = false;
     public static boolean m_intaking = false;
-    public static boolean m_enableSuperstructure = true;
+    public static boolean m_enableSuperstructure = false;
     public static boolean m_autoRotateAim = true;
   }
 }

@@ -62,6 +62,7 @@ public class Robot extends TimedRobot {
     //m_robotContainer.m_apriltagCamera.disableCameras(true);
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     m_robotContainer.m_apriltagCamera.setLogging(true);
+    Constants.States.m_enableSuperstructure = false;
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();

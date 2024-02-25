@@ -6,24 +6,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "set speaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "switch to shoot back"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "enable super structure"
-          }
-        },
-        {
           "type": "deadline",
           "data": {
             "commands": [
@@ -34,13 +16,19 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "set shoot pos"
+                        "name": "aim back"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "start back"
                       }
                     },
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.0
+                        "waitTime": 0.5
                       }
                     },
                     {

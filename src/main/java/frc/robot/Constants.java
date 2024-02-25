@@ -261,7 +261,7 @@ public final class Constants {
     public static final int k_holdingMotor = 10;
     public static double k_intakeVelocityRPM = 1000;
     public static final double k_speakerShootVelocityRPM = 5000; 
-    public static final double k_speakerFeedVelocityRPM = -5000;
+    public static final double k_speakerFeedVelocityRPM = -500;
     public static final double k_ampFeedVelocityRPM = -9000; // -500
 
     public static final double k_deadzone = 25;

@@ -25,7 +25,7 @@ public class DefaultHolderCommand extends Command {
   @Override
   public void execute() {
     if (Constants.States.m_hasGamePiece && !Constants.States.m_isGamePieceStowed) {
-      m_holderSubsystem.setPower(Constants.States.m_shootIntakeSide ? Constants.HolderConstants.k_adjustGamePiecePower : -Constants.HolderConstants.k_adjustGamePiecePower);
+      m_holderSubsystem.setPower(Constants.States.m_shootIntakeSide ? -Constants.HolderConstants.k_adjustGamePiecePower : Constants.HolderConstants.k_adjustGamePiecePower);
     } else {
       m_holderSubsystem.stop();
     }

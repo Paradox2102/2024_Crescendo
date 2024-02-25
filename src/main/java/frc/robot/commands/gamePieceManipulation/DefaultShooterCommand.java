@@ -25,7 +25,7 @@ public class DefaultShooterCommand extends Command {
   @Override
   public void execute() {
     if (Constants.States.m_hasGamePiece && !Constants.States.m_isGamePieceStowed) {
-      m_shooterSubsystem.setPower(Constants.States.m_shootIntakeSide ? Constants.ShooterConstants.k_adjustGamePiecePower : -Constants.ShooterConstants.k_adjustGamePiecePower);
+      m_shooterSubsystem.setPower(Constants.States.m_shootIntakeSide ? -Constants.ShooterConstants.k_adjustGamePiecePower : Constants.ShooterConstants.k_adjustGamePiecePower);
     } else {
       m_shooterSubsystem.stop();
     }

@@ -31,6 +31,7 @@ public class DefaultPivotCommand extends Command {
   public void execute() {
     if (m_driveSubsystem.shouldAim()) {
       m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromRobotPos(m_predictFuture));
+      System.out.println("aiming pivot");
     } else if (!Constants.States.m_speakerMode) {
       m_subsystem.setPositionDegrees(Constants.PivotConstants.k_ampPositionDegrees);
     } else {

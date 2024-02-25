@@ -62,9 +62,9 @@ public final class Constants {
       ShooterConstants.k_iZone = 200;
 
       // Holder 
-      HolderConstants.k_f = 0.99 /  ShooterConstants.k_maxVelocityRPM;
-      HolderConstants.k_p = .00005;
-      HolderConstants.k_i = .0000001;
+      HolderConstants.k_f = 1.1 /  ShooterConstants.k_maxVelocityRPM;
+      HolderConstants.k_p = .001;
+      HolderConstants.k_i = 0; //.0000001;
       HolderConstants.k_d = 0;
       HolderConstants.k_iZone = 200;
       HolderConstants.k_intakeVelocityRPM = 500;
@@ -284,7 +284,7 @@ public final class Constants {
 //manual command
     public static final double k_driveDeadband = 0;
     public static final double k_minDistance = 0;
-    public static final double k_maxDistance = 24;
+    public static final double k_maxDistance = 17;
 
     public static final double k_zeroPoint = -1.814;
 //PID (kinda) tuning

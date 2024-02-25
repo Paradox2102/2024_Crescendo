@@ -89,5 +89,6 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shooter Power", m_finalPower);
     SmartDashboard.putBoolean("Shoot Speaker", Constants.States.m_speakerMode);
     SmartDashboard.putBoolean("is running shooter", Constants.States.m_runningShooterAndHolder);
+    SmartDashboard.putNumber("Current Draw Shooter", m_motor.getOutputCurrent());
   }
 }

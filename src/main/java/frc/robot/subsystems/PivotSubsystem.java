@@ -36,6 +36,7 @@ public class PivotSubsystem extends SubsystemBase {
   public PivotSubsystem(DriveSubsystem driveSubsystem) {
     m_PID = new PIDController(Constants.PivotConstants.k_p, Constants.PivotConstants.k_i, Constants.PivotConstants.k_d);
     m_driveSubsystem = driveSubsystem;
+    m_pivotMotor.setSmartCurrentLimit(38);
     m_pivotMotor.restoreFactoryDefaults();
     setBrakeMode(true);
     m_pivotEncoder.setPositionOffset(-0.8);

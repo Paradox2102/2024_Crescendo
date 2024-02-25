@@ -30,7 +30,7 @@ public class RevCommand extends Command {
       m_shooterSubsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM : Constants.ShooterConstants.k_ampShootVelocityRPM);
       m_holderSubsystem.setVelocityRPM(0);
     } else {
-      m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
+      m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerFeedVelocityRPM);
       m_shooterSubsystem.setVelocityRPM(0);
     }
   }

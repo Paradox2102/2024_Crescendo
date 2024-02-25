@@ -88,7 +88,7 @@ public class PivotSubsystem extends SubsystemBase {
     double pid;
     double angle = getAngleInDegrees();
 
-    FF = Constants.PivotConstants.k_f * Math.sin(angle - 25);
+    FF = Constants.PivotConstants.k_f * Math.sin(Math.toRadians(angle - 25));
     if(Math.abs(getAngleInDegrees() - m_setPoint) > k_deadzone){
       pid = m_PID.calculate(angle, m_setPoint);
     } else {

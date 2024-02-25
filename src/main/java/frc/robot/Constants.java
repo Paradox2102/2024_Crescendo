@@ -247,7 +247,7 @@ public final class Constants {
     public static final double k_speakerFeedPower = 0.25;
     public static final double k_deadzone = 25;
 
-    public static final double k_adjustGamePiecePower = -1000;
+    public static final double k_adjustGamePiecePower = -.2;
 
     public static final int k_frontSensor = 2;
     public static final int k_backSensor = 1;
@@ -268,7 +268,7 @@ public final class Constants {
     public static final double k_ampFeedPower = -0.25; // -500
 
     public static final double k_deadzone = 25;
-    public static final double k_adjustGamePiecePower = -500;
+    public static final double k_adjustGamePiecePower = -.2;
 
     public static double k_f = 1.0 / 5350;
     public static double k_p = 0.00004;

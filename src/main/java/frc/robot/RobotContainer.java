@@ -120,8 +120,10 @@ public class RobotContainer {
 
     // m_apriltagCamera.setCameraInfo(8.375, 12, 180, ApriltagsCameraType.GS_6mm); // y = 6
     // m_apriltagCamera.setCameraInfo(5.125, 15.5, 0, ApriltagsCameraType.GS_6mm); // y = 9.5
-    m_apriltagCamera.setCameraInfo(8.375, 9.5, 180, ApriltagsCameraType.GS_6mm); // y = 6
-    m_apriltagCamera.setCameraInfo(11.50, 6.0, 0, ApriltagsCameraType.GS_6mm); // y = 9.5
+    // Front
+    m_apriltagCamera.setCameraInfo(Constants.DriveConstants.k_cameraFrontX, Constants.DriveConstants.k_cameraFrontY, 180, ApriltagsCameraType.GS_6mm); // y = 6
+    // Back
+    m_apriltagCamera.setCameraInfo(Constants.DriveConstants.k_cameraBackX, Constants.DriveConstants.k_cameraBackY, 0, ApriltagsCameraType.GS_6mm); // y = 9.5
     m_apriltagCamera.connect("10.21.2.11", 5800);
 
     m_posServer.start();

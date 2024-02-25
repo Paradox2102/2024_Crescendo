@@ -46,6 +46,7 @@ public class HolderSubsystem extends SubsystemBase {
     setBrakeMode(true);
     m_motor.setSmartCurrentLimit(1000);
     setName(shooter ? "ShooterSubsystem" : "HolderSubsystem");
+    m_motor.setInverted(shooter);
   }
 
   public boolean isReady() {
@@ -70,7 +71,7 @@ public class HolderSubsystem extends SubsystemBase {
   }
 
   public void stop() {
-    setVelocityRPM(0);
+    setPower(0);
   }
 
   @Override

@@ -28,6 +28,7 @@ import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.AutoOrientCommand;
 import frc.robot.commands.drivetrain.FaceSpeaker;
 import frc.robot.commands.gamePieceManipulation.CheckIntakeStowed;
+import frc.robot.commands.gamePieceManipulation.DefaultStowGamePiece;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
 import frc.robot.commands.gamePieceManipulation.ResetSubsystemsCommand;

@@ -157,8 +157,8 @@ public class RobotContainer {
       new Trigger(m_slowMode1)
     ));
 
-    m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
-    m_shooterSubsystem.setDefaultCommand(new DefaultStowGamePiece(m_shooterSubsystem, m_holderSubsystem));
+    //m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
+    // m_shooterSubsystem.setDefaultCommand(new DefaultStowGamePiece(m_shooterSubsystem, m_holderSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
@@ -192,7 +192,7 @@ public class RobotContainer {
     m_joystick.button(11).onTrue(new DisableEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     m_joystick.button(12).onTrue(new InstantCommand(() -> {Constants.States.m_autoRotateAim = !Constants.States.m_autoRotateAim;}));
 
-    m_testStick.button(1).whileTrue(new CalibrateShooter(m_shooterSubsystem));
+    m_testStick.button(1).whileTrue(new CalibrateShooter(m_holderSubsystem));
   }
   public double getThrottle() {
     return m_joystick.getThrottle();

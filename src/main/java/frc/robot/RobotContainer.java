@@ -35,6 +35,7 @@ import frc.robot.commands.gamePieceManipulation.RevCommand;
 import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.SetPivotOffInputDistance;
 import frc.robot.commands.test.D2Intake;
+import frc.robot.led.LEDConfig;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.HolderSubsystem;
@@ -66,6 +67,7 @@ public class RobotContainer {
   ApriltagsCamera m_apriltagCamera = new ApriltagsCamera();
   PositionServer m_posServer = new PositionServer(m_apriltagCamera);
   Constants m_constants = new Constants();
+  LEDConfig m_ledConfig;
 
   final ShooterSensors m_shooterSensors = new ShooterSensors();
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera);
@@ -86,9 +88,11 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
+  public RobotContainer(Robot robot) {
     // Configure the trigger bindings
     configureBindings();
+    m_ledConfig = new LEDConfig(robot, m_apriltagCamera);
+
     m_driveSubsystem.setTracker(m_tracker);
     NamedCommands.registerCommand("intake", new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
     NamedCommands.registerCommand("intake back", new IntakeAndGoToBackShooter(m_shooterSubsystem, m_pivotSubsystem, 90));

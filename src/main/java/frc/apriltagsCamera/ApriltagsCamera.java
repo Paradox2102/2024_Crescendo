@@ -863,7 +863,21 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		}
 
 		return null;
+	}
 
+	/**
+	 * 
+	 * @return true if at least one apriltag is visible by either camera
+	 */
+	public boolean isTagVisible() {
+		for (ApriltagsCameraInfo camera : m_cameras)
+		{
+			if (camera.m_regions != null && camera.m_regions.getRegionCount() > 0) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private long getTimeMs() {

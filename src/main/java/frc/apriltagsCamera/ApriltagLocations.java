@@ -6,9 +6,7 @@ package frc.apriltagsCamera;
 
 /** All distances are in meters and all angles in degrees */
 public class ApriltagLocations {
-    private static double y0 = 0; //323.0 / 2;
     public static double k_inPerM = 39.3701; // number of inches in a meter
-    private static double k_yCenter = 161.62;
     public static ApriltagLocation m_tags[] = {
             // new ApriltagLocation(7, 0, (323.0/2) / k_inPerM, 0 - 180),
             // new ApriltagLocation(1, 593.68 / k_inPerM, (9.68) / k_inPerM, 120 - 180),        // Official

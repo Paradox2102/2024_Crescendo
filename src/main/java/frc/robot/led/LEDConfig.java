@@ -14,7 +14,7 @@ import frc.robot.led.subsystems.LEDSubsystem;
 public class LEDConfig {
     private final LEDSubsystem m_string1 = new LEDSubsystem(0, 45);
     private final LEDSubsystem m_string2 = new LEDSubsystem(45, 46, true);
-    private final LEDSubsystem m_string3 = new LEDSubsystem(46 + 46, 30);
+    private final LEDSubsystem m_string3 = new LEDSubsystem(45 + 46, 30);
     private final ApriltagsCamera m_camera;
     private final Robot m_robot;
 

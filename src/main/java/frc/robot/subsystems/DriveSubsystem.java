@@ -191,7 +191,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public boolean shouldAim() {
-    return (Constants.States.m_speakerMode && isInAimingZone() && Constants.States.m_hasGamePiece);
+    return (Constants.States.m_speakerMode && isInAimingZone() && Constants.States.m_hasGamePiece && Constants.States.m_autoRotateAim);
   }
 
   public SwerveModulePosition[] getModulePosition() {

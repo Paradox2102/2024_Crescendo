@@ -103,7 +103,7 @@ public final class Constants {
         42.15 // 5.5
       };
       PivotConstants.k_distancesBack = new double[] {
-        1.5,
+        1.4,
         1.75,
         2,
         2.25,

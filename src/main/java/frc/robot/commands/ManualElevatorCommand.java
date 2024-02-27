@@ -40,14 +40,14 @@ public class ManualElevatorCommand extends Command {
     double position = m_subsystem.getCookedElevatorPosition();
 
     // setting the limit
-    if (position >= Constants.ElevatorConstants.k_maxDistance && m_getY.getAsDouble() < 0) {
+    if (position >= Constants.ElevatorConstants.k_maxDistance && y < 0) {
       m_subsystem.setPower(0);
     // } else if (position <= Constants.ElevatorConstants.k_minDistance && m_getY.getAsDouble() > 0) {
     //   m_subsystem.setPower(0);
-    } else if (m_getY.getAsDouble() == 0) {
+    } else if (y == 0) {
       m_subsystem.setPower(0);;
     } else {
-      m_subsystem.setPower(m_getY.getAsDouble() > 0 ? 1 : -1);
+      m_subsystem.setPower(y > 0 ? 1 : -1);
     }
     // if (m_getY.getAsDouble() > 0) {
     //   m_subsystem.setPower(.9);

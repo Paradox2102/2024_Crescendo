@@ -12,6 +12,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "subwoofer aim"
+          }
+        },
+        {
           "type": "deadline",
           "data": {
             "commands": [

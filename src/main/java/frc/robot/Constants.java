@@ -47,7 +47,7 @@ public final class Constants {
       PivotConstants. k_d = .0005;
       PivotConstants.k_iZone = 10;
       PivotConstants.k_resetPositionDegrees = 4;
-      PivotConstants.k_offset = 0;
+      PivotConstants.k_offset = .3;
       PivotConstants.k_ampPositionDegrees = 12;
 
       // Drive

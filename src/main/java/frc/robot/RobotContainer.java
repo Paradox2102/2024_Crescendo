@@ -119,7 +119,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("enable super structure", new EnableSuperStructure());
     NamedCommands.registerCommand("bulldoze counter", new CountBulldoze(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     // Aim
-    NamedCommands.registerCommand("subwoofer aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1));
+    NamedCommands.registerCommand("subwoofer aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1.5));
     NamedCommands.registerCommand("four piece aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1.53));
     NamedCommands.registerCommand("source 3 start aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1.623));
     NamedCommands.registerCommand("source/amp 3 shots", new SetPivotOffInputDistance(m_pivotSubsystem, 3.77));

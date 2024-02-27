@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.ParadoxField;
+import frc.robot.Constants.PivotConstants;
 
 public class PivotSubsystem extends SubsystemBase {
   private double m_power;
@@ -61,14 +62,14 @@ public class PivotSubsystem extends SubsystemBase {
   public double getPivotAngleFromDistanceFromSpeaker(double distance) {
     double[] distances = Constants.States.m_shootIntakeSide ? k_frontDistances : k_backDistances;
     double[] angles = Constants.States.m_shootIntakeSide ? k_anglesFront : k_anglesBack;
-    if (distance > 6.1 || distance < 1.43){
+    if (distance > distances[distances.length - 1] || distance < distances[0]){
       return 0;
     }
     for (int i = 0; i < distances.length; i++) {
       if (distance > distances[i] && distance < distances[i+1]) {
         double roc = (angles[i+1] - angles[i]) / (distances[i+1] - distances[i]);
         double dist = distance -distances[i];
-        return angles[i] + dist * roc; 
+        return (angles[i] + dist * roc) + PivotConstants.k_offset; 
       }
     }
     return 0;

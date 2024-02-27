@@ -58,6 +58,22 @@ public class PivotSubsystem extends SubsystemBase {
     m_setPoint = angle;
   }
 
+  public double getPivotAngleFromDistanceFromSpeaker(double distance) {
+    double[] distances = Constants.States.m_shootIntakeSide ? k_frontDistances : k_backDistances;
+    double[] angles = Constants.States.m_shootIntakeSide ? k_anglesFront : k_anglesBack;
+    if (distance > 6.1 || distance < 1.43){
+      return 0;
+    }
+    for (int i = 0; i < distances.length; i++) {
+      if (distance > distances[i] && distance < distances[i+1]) {
+        double roc = (angles[i+1] - angles[i]) / (distances[i+1] - distances[i]);
+        double dist = distance -distances[i];
+        return angles[i] + dist * roc; 
+      }
+    }
+    return 0;
+  }
+
   public double getPivotAngleFromRobotPos(boolean predictFuture) {
     double[] distances = Constants.States.m_shootIntakeSide ? k_frontDistances : k_backDistances;
     double[] angles = Constants.States.m_shootIntakeSide ? k_anglesFront : k_anglesBack;

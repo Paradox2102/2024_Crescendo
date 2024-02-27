@@ -37,6 +37,7 @@ import frc.robot.commands.gamePieceManipulation.ResetSubsystemsCommand;
 import frc.robot.commands.gamePieceManipulation.RevCommand;
 import frc.robot.commands.gamePieceManipulation.ShootCommand;
 import frc.robot.commands.pivot.DefaultPivotCommand;
+import frc.robot.commands.pivot.SetPivotOffInputDistance;
 import frc.robot.commands.pivot.SetPivotOffRobotLocation;
 import frc.robot.commands.pivot.SetPivotPos;
 import frc.robot.commands.test.CalibrateShooter;
@@ -117,6 +118,11 @@ public class RobotContainer {
     NamedCommands.registerCommand("reset everything", new ResetSubsystemsCommand(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem));
     NamedCommands.registerCommand("enable super structure", new EnableSuperStructure());
     NamedCommands.registerCommand("bulldoze counter", new CountBulldoze(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
+    // Aim
+    NamedCommands.registerCommand("subwoofer aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1));
+    NamedCommands.registerCommand("four piece aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1.53));
+    NamedCommands.registerCommand("source 3 start aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1.623));
+    NamedCommands.registerCommand("source/amp 3 shots", new SetPivotOffInputDistance(m_pivotSubsystem, 3.77));
     autoChooser = AutoBuilder.buildAutoChooser();
 
     // m_apriltagCamera.setCameraInfo(8.375, 12, 180, ApriltagsCameraType.GS_6mm); // y = 6

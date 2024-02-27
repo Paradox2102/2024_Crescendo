@@ -1,6 +1,12 @@
 {
   "version": 1.0,
-  "startingPose": null,
+  "startingPose": {
+    "position": {
+      "x": 1.25,
+      "y": 4.2
+    },
+    "rotation": -54.56005054104435
+  },
   "command": {
     "type": "sequential",
     "data": {
@@ -8,7 +14,25 @@
         {
           "type": "named",
           "data": {
-            "name": "start front"
+            "name": "set speaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "switch to shoot front"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "enable super structure"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "source 3 start aim"
           }
         },
         {
@@ -59,7 +83,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "aim"
+                        "name": "source/amp 3 shots"
                       }
                     },
                     {
@@ -103,7 +127,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "aim"
+                        "name": "source/amp 3 shots"
                       }
                     },
                     {

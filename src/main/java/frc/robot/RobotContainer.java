@@ -122,7 +122,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("subwoofer aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1.5));
     NamedCommands.registerCommand("four piece aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1.53));
     NamedCommands.registerCommand("source 3 start aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1.623));
-    NamedCommands.registerCommand("source/amp 3 shots", new SetPivotOffInputDistance(m_pivotSubsystem, 3.77));
+    NamedCommands.registerCommand("source/amp 3 aim", new SetPivotOffInputDistance(m_pivotSubsystem, 3.77));
     autoChooser = AutoBuilder.buildAutoChooser();
 
     // m_apriltagCamera.setCameraInfo(8.375, 12, 180, ApriltagsCameraType.GS_6mm); // y = 6

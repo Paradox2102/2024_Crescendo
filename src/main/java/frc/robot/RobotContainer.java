@@ -202,7 +202,7 @@ public class RobotContainer {
     m_joystick.button(11).onTrue(new DisableEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     m_joystick.button(12).onTrue(new InstantCommand(() -> {Constants.States.m_autoRotateAim = !Constants.States.m_autoRotateAim;}));
 
-    m_testStick.button(1).whileTrue(new CalibrateShooter(m_shooterSubsystem));
+    //m_testStick.button(1).whileTrue(new CalibrateShooter(m_shooterSubsystem));
   }
   public double getThrottle() {
     return m_joystick.getThrottle();

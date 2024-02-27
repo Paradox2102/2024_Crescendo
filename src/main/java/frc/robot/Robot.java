@@ -83,7 +83,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    Constants.States.m_shootIntakeSide = true;
+    Constants.States.m_shootIntakeSide = true; // true
     Constants.States.m_enableSuperstructure = true;
   }
 

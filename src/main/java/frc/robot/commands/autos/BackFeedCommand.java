@@ -27,7 +27,7 @@ public class BackFeedCommand extends Command {
     m_dwellTimer.reset();
     m_dwellTimer.start();
     Constants.States.m_runningShooterAndHolder = true;
-    m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerFeedPower);
+    m_shooterSubsystem.setPower(Constants.ShooterConstants.k_speakerFeedPower);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

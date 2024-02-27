@@ -23,9 +23,11 @@ public class PivotSubsystem extends SubsystemBase {
   private PIDController m_PID;
   private double m_setPoint = Constants.PivotConstants.k_resetPositionDegrees;
 
-  private double[] k_distancse = Constants.PivotConstants.k_distancesFront;
+  private double[] k_frontDistances = Constants.PivotConstants.k_distancesFront;
+  private double[] k_backDistances = Constants.PivotConstants.k_distancesBack;
 
-  private double[] k_angles = Constants.PivotConstants.k_anglesFront;
+  private double[] k_anglesFront = Constants.PivotConstants.k_anglesFront;
+  private double[] k_anglesBack = Constants.PivotConstants.k_anglesBack;
 
   private CANSparkFlex m_pivotMotor = new CANSparkFlex(Constants.PivotConstants.k_pivotMotor, MotorType.kBrushless);
   DutyCycleEncoder m_pivotEncoder = new DutyCycleEncoder(0);
@@ -57,15 +59,17 @@ public class PivotSubsystem extends SubsystemBase {
   }
 
   public double getPivotAngleFromRobotPos(boolean predictFuture) {
+    double[] distances = Constants.States.m_shootIntakeSide ? k_frontDistances : k_backDistances;
+    double[] angles = Constants.States.m_shootIntakeSide ? k_anglesFront : k_anglesBack;
     double distance = predictFuture ? m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters() : m_driveSubsystem.getTranslationalDistanceFromSpeakerMeters();
-    if (distance > 6.1 || distance < 1.6){
+    if (distance > 6.1 || distance < 1.43){
       return 0;
     }
-    for (int i = 0; i < k_distancse.length; i++) {
-      if (distance > k_distancse[i] && distance < k_distancse[i+1]) {
-        double roc = (k_angles[i+1] - k_angles[i]) / (k_distancse[i+1] - k_distancse[i]);
-        double dist = distance - k_distancse[i];
-        return k_angles[i] + dist * roc; 
+    for (int i = 0; i < distances.length; i++) {
+      if (distance > distances[i] && distance < distances[i+1]) {
+        double roc = (angles[i+1] - angles[i]) / (distances[i+1] - distances[i]);
+        double dist = distance -distances[i];
+        return angles[i] + dist * roc; 
       }
     }
     return 0;

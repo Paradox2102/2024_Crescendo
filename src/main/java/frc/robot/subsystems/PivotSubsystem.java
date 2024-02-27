@@ -78,7 +78,7 @@ public class PivotSubsystem extends SubsystemBase {
     double[] distances = Constants.States.m_shootIntakeSide ? k_frontDistances : k_backDistances;
     double[] angles = Constants.States.m_shootIntakeSide ? k_anglesFront : k_anglesBack;
     double distance = predictFuture ? m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters() : m_driveSubsystem.getTranslationalDistanceFromSpeakerMeters();
-    if (distance > 6.1 || distance < 1.43){
+    if (distance > distances.length || distance < distances[0]){
       return 0;
     }
     for (int i = 0; i < distances.length; i++) {

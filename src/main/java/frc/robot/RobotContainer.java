@@ -105,8 +105,6 @@ public class RobotContainer {
     NamedCommands.registerCommand("intake back", new IntakeAndGoToBackShooter(m_shooterSubsystem, m_pivotSubsystem, 90));
     NamedCommands.registerCommand("rev shooter", new RevCommand(m_shooterSubsystem, m_holderSubsystem));
     NamedCommands.registerCommand("rev back", new RevBackShooter(m_holderSubsystem));
-    NamedCommands.registerCommand("aim", new SetPivotPos(m_pivotSubsystem, 25));
-    NamedCommands.registerCommand("aim back", new SetPivotPos(m_pivotSubsystem, 95));
     NamedCommands.registerCommand("switch to shoot back", new ToggleShootSideCommand(false));
     NamedCommands.registerCommand("switch to shoot front", new ToggleShootSideCommand(true));
     NamedCommands.registerCommand("start back", new StartBack());

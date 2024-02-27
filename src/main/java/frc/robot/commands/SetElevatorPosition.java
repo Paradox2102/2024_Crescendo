@@ -14,12 +14,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ElevatorSubsystem;
 
-public class ToggleElevatorPosition extends Command {
+public class SetElevatorPosition extends Command {
     ElevatorSubsystem m_subsystem;
     private double m_position;
 
   /** Creates a new ToggleElevatorPosition. */
-  public ToggleElevatorPosition(ElevatorSubsystem subsystem, double position) {
+  public SetElevatorPosition(ElevatorSubsystem subsystem, double position) {
     m_subsystem = subsystem;
     m_position = position;
     

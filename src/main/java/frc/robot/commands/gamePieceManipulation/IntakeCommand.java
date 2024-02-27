@@ -50,6 +50,6 @@ public class IntakeCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Constants.States.m_hasGamePiece;
+    return Constants.States.m_isGamePieceStowed;
   }
 }

@@ -10,7 +10,6 @@ import frc.robot.subsystems.PivotSubsystem;
 public class ManualPivotCommand extends Command {
   PivotSubsystem m_subsystem;
   double m_power;
-  double m_position;
   /** Creates a new manualPivot. */
   public ManualPivotCommand(PivotSubsystem subsystem, double power) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -26,8 +25,7 @@ public class ManualPivotCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_position += 1;
-    m_subsystem.setPositionDegrees(m_power);
+    m_subsystem.setPower(m_power);
   }
 
   // Called once the command ends or is interrupted.

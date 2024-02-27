@@ -57,7 +57,7 @@ public final class Constants {
       DriveConstants.k_BROffset = 2.02 + (Math.PI / 2);
 
       // Shooter
-      ShooterConstants.k_f = 0.99 / ShooterConstants.k_maxVelocityRPM;
+      ShooterConstants.k_f = 1.1 / ShooterConstants.k_maxVelocityRPM;
       ShooterConstants.k_p = 0.00005;
       ShooterConstants.k_i = 0.0000001;
       ShooterConstants.k_d = 0;
@@ -88,8 +88,8 @@ public final class Constants {
         5.5
       };
       PivotConstants.k_anglesFront = new double[] {
-        3.2, // 1.43,
-        1.83, // 2,
+        10, // 1.43,
+        18.3, // 2,
         25.7, // 2.55,
         28.9, // 3.1,
         35.2, // 3.5,

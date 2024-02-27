@@ -33,7 +33,7 @@ public class CalibrateShooter extends Command {
   @Override
   public void end(boolean interrupted) {
     m_holderSubsystem.stop();
-    System.out.println("paul said uwu");
+    System.out.println("CalibrateShooter end");
   }
 
   // Returns true when the command should end.

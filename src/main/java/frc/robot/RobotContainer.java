@@ -10,9 +10,10 @@ import frc.apriltagsCamera.ApriltagsCamera.ApriltagsCameraType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DisableEverything;
 import frc.robot.commands.ManualElevatorCommand;
+import frc.robot.commands.ManualPivotCommand;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetSpeakerAmpMode;
-import frc.robot.commands.ToggleElevatorPosition;
+import frc.robot.commands.SetElevatorPosition;
 import frc.robot.commands.ToggleShootSideCommand;
 import frc.robot.commands.apriltags.SetApriltagsDashboard;
 import frc.robot.commands.apriltags.SetApriltagsLogging;
@@ -184,15 +185,14 @@ public class RobotContainer {
 
     m_joystick.button(1).toggleOnTrue(new RevCommand(m_shooterSubsystem, m_holderSubsystem));
     m_joystick.button(2).whileTrue(new D2Intake(m_shooterSubsystem, m_holderSubsystem, true));
-    m_joystick.button(6).onTrue(new IncrementPivotCommand(m_pivotSubsystem, true));
-    m_joystick.button(4).onTrue(new IncrementPivotCommand(m_pivotSubsystem, false));
-    m_joystick.button(5).onTrue(new TestPivot(m_pivotSubsystem, 40));
+    m_joystick.button(6).onTrue(new ManualPivotCommand(m_pivotSubsystem, 0.25));
+    m_joystick.button(4).onTrue(new ManualPivotCommand(m_pivotSubsystem, -0.25));
+    m_joystick.button(5).onTrue(new SetElevatorPosition(m_elevatorSubsystem, Constants.ElevatorConstants.k_minDistance));
+    m_joystick.button(3).onTrue(new SetElevatorPosition(m_elevatorSubsystem, Constants.ElevatorConstants.k_maxDistance));
     m_joystick.button(7).onTrue(new ToggleShootSideCommand(shootIntake.getAsBoolean()));
     m_joystick.button(8).toggleOnTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
     m_joystick.button(9).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));
-    m_joystick.button(10).toggleOnTrue(new ToggleElevatorPosition(m_elevatorSubsystem, 23.5));
-
-
+    //m_joystick.button(10).toggleOnTrue(new SetElevatorPosition(m_elevatorSubsystem, 23.5));
     m_joystick.button(11).onTrue(new DisableEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     m_joystick.button(12).onTrue(new InstantCommand(() -> {Constants.States.m_autoRotateAim = !Constants.States.m_autoRotateAim;}));
 

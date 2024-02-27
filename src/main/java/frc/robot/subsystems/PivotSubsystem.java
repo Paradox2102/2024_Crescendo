@@ -82,8 +82,8 @@ public class PivotSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Raw Encoder Value", getRawAngle());
-    SmartDashboard.putNumber("Angle in Degrees", getAngleInDegrees());
+    SmartDashboard.putNumber("Pivot Raw Encoder Value", getRawAngle());
+    SmartDashboard.putNumber("Pivot Angle in Degrees", getAngleInDegrees());
     double FF;
     double pid;
     double angle = getAngleInDegrees();
@@ -96,8 +96,8 @@ public class PivotSubsystem extends SubsystemBase {
     }
     m_power = FF + pid;
     SmartDashboard.putNumber("Pivot Power", m_power);
-    SmartDashboard.putNumber("Calculated Error", Math.abs(getAngleInDegrees() - m_setPoint));
-    SmartDashboard.putNumber("Set Point", m_setPoint);
+    SmartDashboard.putNumber("Pivot Calculated Error", Math.abs(getAngleInDegrees() - m_setPoint));
+    SmartDashboard.putNumber("Pivot Set Point", m_setPoint);
     if (Constants.States.m_enableSuperstructure) {
       m_pivotMotor.set(m_power);
     }

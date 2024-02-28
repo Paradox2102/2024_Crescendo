@@ -25,16 +25,16 @@ public class LEDConfig {
             new ParadoxAnim(m_string2, 0.1), new ParadoxAnim(m_string3, 0.1));
     private ParallelCommandGroup m_rainbow = new ParallelCommandGroup(new RainbowAnim(m_string1),
             new RainbowAnim(m_string2), new RainbowAnim(m_string3));
-    private ParallelCommandGroup m_cameraFailure = new ParallelCommandGroup(new Blinker(m_string1, 0.5, Color.kRed),
-            new Blinker(m_string2, .5, Color.kRed), new Blinker(m_string3, 0.5, Color.kRed));
+    private ParallelCommandGroup m_cameraFailure = new ParallelCommandGroup(new Blinker(m_string1, 0.2, Color.kRed),
+            new Blinker(m_string2, 0.2, Color.kRed), new Blinker(m_string3, 0.2, Color.kRed));
     private ParallelCommandGroup m_speaker = new ParallelCommandGroup(new Blinker(m_string1, 0, Color.kPurple),
             new Blinker(m_string2, 0, Color.kPurple), new Blinker(m_string3, 0, Color.kPurple));
-    private ParallelCommandGroup m_speakerNote = new ParallelCommandGroup(new Blinker(m_string1, 0.5, Color.kPurple),
-            new Blinker(m_string2, 0.5, Color.kPurple), new Blinker(m_string3, 0.5, Color.kPurple));
+    private ParallelCommandGroup m_speakerNote = new ParallelCommandGroup(new Blinker(m_string1, 0.2, Color.kPurple),
+            new Blinker(m_string2, 0.2, Color.kPurple), new Blinker(m_string3, 0.2, Color.kPurple));
     private ParallelCommandGroup m_amp = new ParallelCommandGroup(new Blinker(m_string1, 0, Color.kGreen),
             new Blinker(m_string2, 0, Color.kGreen), new Blinker(m_string3, 0, Color.kGreen));
-    private ParallelCommandGroup m_ampNote = new ParallelCommandGroup(new Blinker(m_string1, 0.5, Color.kGreen),
-            new Blinker(m_string2, 0.5, Color.kGreen), new Blinker(m_string3, 0.5, Color.kGreen));
+    private ParallelCommandGroup m_ampNote = new ParallelCommandGroup(new Blinker(m_string1, 0.2, Color.kGreen),
+            new Blinker(m_string2, 0.2, Color.kGreen), new Blinker(m_string3, 0.2, Color.kGreen));
 
     public LEDConfig(Robot robot, ApriltagsCamera camera) {
         m_robot = robot;

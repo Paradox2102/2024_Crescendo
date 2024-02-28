@@ -30,9 +30,10 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   /** Creates a new ElevatorSubsystem. */
   public ElevatorSubsystem() {
+    m_elevatorMotor.restoreFactoryDefaults();
     m_elevatorEncoder = m_elevatorMotor.getEncoder();
     m_elevatorMotor.setIdleMode(IdleMode.kBrake);
-    
+    m_elevatorMotor.burnFlash();
   }
 
   public double getRawElevatorPosition() {

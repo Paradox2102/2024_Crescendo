@@ -73,7 +73,7 @@ public final class Constants {
 
       // Interpolation Table
       PivotConstants.k_distancesFront = new double[] {
-        1.43,
+        1.3,
         2,
         2.55,
         3.1,
@@ -88,14 +88,14 @@ public final class Constants {
         5.5
       };
       PivotConstants.k_anglesFront = new double[] {
-        10, // 1.43,
-        18.3, // 2,
-        25.7, // 2.55,
-        28.9, // 3.1,
-        35.2, // 3.5,
-        38.5, // 3.75,
-        38.7, // 4,
-        38.8, // 4.25,
+        10, // 1.3,
+        18.9, // 2,
+        27, // 2.55,
+        33, // 3.1,
+        34, // 3.5,
+        36.27, // 3.75,
+        38.32, // 4,
+        38.5, // 4.25,
         39, // 4.5,
         39.1, // 4.75,
         39.2, // 5,

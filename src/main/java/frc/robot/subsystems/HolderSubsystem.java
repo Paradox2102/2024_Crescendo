@@ -24,6 +24,7 @@ public class HolderSubsystem extends SubsystemBase {
   /** Creates a new FrontSubsystem. */
   public HolderSubsystem(int id, boolean shooter) {
     m_motor = new CANSparkFlex(id, MotorType.kBrushless);
+    m_motor.restoreFactoryDefaults();
     m_encoder = m_motor.getEncoder();
     m_PID = m_motor.getPIDController();
     if (shooter) {
@@ -45,6 +46,7 @@ public class HolderSubsystem extends SubsystemBase {
     m_motor.setSmartCurrentLimit(1000);
     setName(shooter ? "ShooterSubsystem" : "HolderSubsystem");
     m_motor.setInverted(shooter);
+    m_motor.burnFlash();
   }
 
   public boolean isReady() {

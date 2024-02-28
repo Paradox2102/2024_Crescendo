@@ -38,7 +38,7 @@ public class IntakeAndGoToBackShooter extends Command {
   @Override
   public void end(boolean interrupted) {
     m_shooterSubsystem.stop();
-    m_pivotSubsystem.setPositionDegrees(m_pivotSubsystem.getPivotAngleFromDistanceFromSpeaker(1.53));
+    m_pivotSubsystem.setPositionDegrees(m_pivotSubsystem.getPivotAngleFromDistanceFromSpeaker(1.8));
   }
 
   // Returns true when the command should end.

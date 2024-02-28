@@ -23,6 +23,7 @@ import frc.robot.commands.autos.IntakeAndGoToBackShooter;
 import frc.robot.commands.autos.RevBackShooter;
 import frc.robot.commands.autos.StartBack;
 import frc.robot.commands.autos.StartFront;
+import frc.robot.commands.autos.WaitForRev;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.AutoOrientCommand;
 import frc.robot.commands.drivetrain.FaceSpeaker;
@@ -32,6 +33,7 @@ import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
 import frc.robot.commands.gamePieceManipulation.ResetSubsystemsCommand;
 import frc.robot.commands.gamePieceManipulation.RevCommand;
+import frc.robot.commands.gamePieceManipulation.ShootCommand;
 import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.SetPivotOffInputDistance;
 import frc.robot.commands.test.D2Intake;
@@ -77,7 +79,7 @@ public class RobotContainer {
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
 
   private final CommandJoystick m_joystick = new CommandJoystick(1);
-  private final CommandJoystick m_testStick = new CommandJoystick(2);
+  //private final CommandJoystick m_testStick = new CommandJoystick(2);
   public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);
 
 
@@ -102,8 +104,10 @@ public class RobotContainer {
     NamedCommands.registerCommand("switch to shoot front", new ToggleShootSideCommand(true));
     NamedCommands.registerCommand("start back", new StartBack());
     NamedCommands.registerCommand("start front", new StartFront());
+    NamedCommands.registerCommand("shoot", new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
     NamedCommands.registerCommand("feedthrough", new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
     NamedCommands.registerCommand("back feed", new BackFeedCommand(m_shooterSubsystem));
+    NamedCommands.registerCommand("wait for rev", new WaitForRev(m_holderSubsystem, m_shooterSubsystem));
     NamedCommands.registerCommand("face speaker", new FaceSpeaker(m_driveSubsystem));
     NamedCommands.registerCommand("stop everything", new DisableEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     NamedCommands.registerCommand("reset everything", new ResetSubsystemsCommand(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem));
@@ -111,7 +115,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("bulldoze counter", new CountBulldoze(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     // Aim
     NamedCommands.registerCommand("subwoofer aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1.5));
-    NamedCommands.registerCommand("four piece aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1.53));
+    NamedCommands.registerCommand("four piece aim", new SetPivotOffInputDistance(m_pivotSubsystem, 2));
     NamedCommands.registerCommand("source 3 start aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1.623));
     NamedCommands.registerCommand("source/amp 3 aim", new SetPivotOffInputDistance(m_pivotSubsystem, 3.77));
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -165,7 +169,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
-    m_driverController.leftTrigger().onTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
+    m_driverController.leftTrigger().toggleOnTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
     m_driverController.rightTrigger().whileTrue(new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
         
     m_driverController.y().onTrue(new AutoOrientCommand(m_driveSubsystem, 180, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));
@@ -178,15 +182,15 @@ public class RobotContainer {
     m_driverController.povRight().onTrue(new ResetGyro(m_driveSubsystem, 90));
     m_driverController.povLeft().onTrue(new ResetGyro(m_driveSubsystem, -90));
 
-    ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
+    //ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
 
     m_joystick.button(1).toggleOnTrue(new RevCommand(m_shooterSubsystem, m_holderSubsystem));
     m_joystick.button(2).whileTrue(new D2Intake(m_shooterSubsystem, m_holderSubsystem, true));
-    m_joystick.button(6).onTrue(new ManualPivotCommand(m_pivotSubsystem, 0.25));
-    m_joystick.button(4).onTrue(new ManualPivotCommand(m_pivotSubsystem, -0.25));
+    m_joystick.button(6).toggleOnTrue(new ManualPivotCommand(m_pivotSubsystem, 0.25));
+    m_joystick.button(4).toggleOnTrue(new ManualPivotCommand(m_pivotSubsystem, -0.25));
     m_joystick.button(5).onTrue(new SetElevatorPosition(m_elevatorSubsystem, Constants.ElevatorConstants.k_minDistance));
     m_joystick.button(3).onTrue(new SetElevatorPosition(m_elevatorSubsystem, Constants.ElevatorConstants.k_maxDistance));
-    m_joystick.button(7).onTrue(new ToggleShootSideCommand(shootIntake.getAsBoolean()));
+    m_joystick.button(7).onTrue(new InstantCommand(() -> {Constants.States.m_shootIntakeSide = !Constants.States.m_shootIntakeSide;}));
     m_joystick.button(8).toggleOnTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
     m_joystick.button(9).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));
     //m_joystick.button(10).toggleOnTrue(new SetElevatorPosition(m_elevatorSubsystem, 23.5));

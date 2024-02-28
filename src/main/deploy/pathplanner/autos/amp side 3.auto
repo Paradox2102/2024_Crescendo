@@ -14,32 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "set shoot pos"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.0
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "rev shooter"
-                }
-              }
-            ]
+            "name": "subwoofer aim"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "feedthrough"
+            "name": "shoot"
           }
         },
         {

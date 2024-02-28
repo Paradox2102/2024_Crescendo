@@ -231,6 +231,8 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Speaker X", getSpeakerLocationMeters().m_xMeters);
     SmartDashboard.putNumber("Speaker Y", getSpeakerLocationMeters().m_yMeters);
     SmartDashboard.putBoolean("Face Speaker", Constants.States.m_faceSpeaker);
+    SmartDashboard.putBoolean("Shoot Front/Back", Constants.States.m_shootIntakeSide);
+    SmartDashboard.putBoolean("Aim On", Constants.States.m_autoRotateAim);
 
     m_tracker.update(m_apriltagCamera);
 

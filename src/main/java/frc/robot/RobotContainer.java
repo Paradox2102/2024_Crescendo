@@ -45,8 +45,6 @@ import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSensors;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.triggers.HoldTrigger;
-import frc.triggers.ToggleTrigger;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 

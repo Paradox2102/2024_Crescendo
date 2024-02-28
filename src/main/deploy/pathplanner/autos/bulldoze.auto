@@ -14,44 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "set speaker"
+            "name": "start front"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "switch to shoot front"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "enable super structure"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.0
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "rev shooter"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "feedthrough"
+            "name": "shoot"
           }
         },
         {
@@ -78,6 +47,12 @@
                       "type": "named",
                       "data": {
                         "name": "intake"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "source/amp 3 aim"
                       }
                     },
                     {

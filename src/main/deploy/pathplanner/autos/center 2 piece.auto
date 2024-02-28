@@ -18,28 +18,9 @@
           }
         },
         {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.0
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "rev shooter"
-                }
-              }
-            ]
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "feedthrough"
+            "name": "shoot"
           }
         },
         {
@@ -87,7 +68,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "aim"
+                  "name": "source/amp 3 aim"
                 }
               },
               {

@@ -81,16 +81,16 @@ public class PivotSubsystem extends SubsystemBase {
     double[] angles = Constants.States.m_shootIntakeSide ? k_anglesFront : k_anglesBack;
     double distance = predictFuture ? m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters() : m_driveSubsystem.getTranslationalDistanceFromSpeakerMeters();
     if (distance > distances[distances.length - 1] || distance < distances[0]){
-      return 0;
+      return Constants.PivotConstants.k_resetPositionDegrees;
     }
     for (int i = 0; i < distances.length; i++) {
       if (distance > distances[i] && distance < distances[i+1]) {
         double roc = (angles[i+1] - angles[i]) / (distances[i+1] - distances[i]);
-        double dist = distance -distances[i];
+        double dist = distance - distances[i];
         return angles[i] + dist * roc; 
       }
     }
-    return 0;
+    return Constants.PivotConstants.k_resetPositionDegrees;
   }
 
   private double getRawAngle() {

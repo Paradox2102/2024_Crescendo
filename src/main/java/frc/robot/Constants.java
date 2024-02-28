@@ -40,7 +40,7 @@ public final class Constants {
       // Pivot
       PivotConstants.k_pivotZeroAngle = -80;
       PivotConstants.k_isInverted = true;
-      PivotConstants.k_intakePositionDegrees = 130;
+      PivotConstants.k_intakePositionDegrees = 125;
       PivotConstants.k_f = .015;
       PivotConstants.k_p = .032;
       PivotConstants.k_i = 0;

@@ -14,19 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "set speaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "switch to shoot front"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "enable super structure"
+            "name": "start front"
           }
         },
         {

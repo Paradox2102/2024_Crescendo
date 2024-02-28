@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 import frc.apriltagsCamera.ApriltagsCamera;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.led.commands.Blinker;
 import frc.robot.led.commands.ParadoxAnim;
@@ -26,6 +27,14 @@ public class LEDConfig {
             new RainbowAnim(m_string2), new RainbowAnim(m_string3));
     private ParallelCommandGroup m_cameraFailure = new ParallelCommandGroup(new Blinker(m_string1, 0.5, Color.kRed),
             new Blinker(m_string2, .5, Color.kRed), new Blinker(m_string3, 0.5, Color.kRed));
+    private ParallelCommandGroup m_speaker = new ParallelCommandGroup(new Blinker(m_string1, 0, Color.kPurple),
+            new Blinker(m_string2, 0, Color.kPurple), new Blinker(m_string3, 0, Color.kPurple));
+    private ParallelCommandGroup m_speakerNote = new ParallelCommandGroup(new Blinker(m_string1, 0.5, Color.kPurple),
+            new Blinker(m_string2, 0.5, Color.kPurple), new Blinker(m_string3, 0.5, Color.kPurple));
+    private ParallelCommandGroup m_amp = new ParallelCommandGroup(new Blinker(m_string1, 0, Color.kGreen),
+            new Blinker(m_string2, 0, Color.kGreen), new Blinker(m_string3, 0, Color.kGreen));
+    private ParallelCommandGroup m_ampNote = new ParallelCommandGroup(new Blinker(m_string1, 0.5, Color.kGreen),
+            new Blinker(m_string2, 0.5, Color.kGreen), new Blinker(m_string3, 0.5, Color.kGreen));
 
     public LEDConfig(Robot robot, ApriltagsCamera camera) {
         m_robot = robot;
@@ -35,12 +44,24 @@ public class LEDConfig {
     public void periodic() {
         Command command = null;
 
-        if (!m_camera.isConnected()) {
+        if (!m_camera.isConnected()&&Constants.States.m_autoRotateAim) {
             command = m_cameraFailure;
         } else if (m_camera.isTagVisible() && m_robot.isDisabled()) {
             command = m_paradox;
-        } else {
+        } else if (m_robot.isDisabled()) {
             command = m_rainbow;
+        } else if (Constants.States.m_speakerMode) {
+            if (Constants.States.m_isGamePieceStowed) {
+                command = m_speakerNote;
+            } else {
+                command = m_speaker;
+            }
+        } else {
+            if (Constants.States.m_isGamePieceStowed) {
+                command = m_ampNote;
+            } else {
+                command = m_amp;
+            }
         }
 
         if (command != m_currentCommand) {

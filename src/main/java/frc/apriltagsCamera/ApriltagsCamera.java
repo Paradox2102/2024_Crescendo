@@ -203,7 +203,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	static final int k_maxCameras = 2;
 	static final int k_maxTags = 16;
 	ApriltagsQueue m_queue = new ApriltagsQueue(); // [][] = new ApriltagsQueue[k_maxCameras][k_maxTags];
-	boolean m_dashboard = true;
+	boolean m_dashboard = false;
 
 	/**
 	 * @brief The ApriltagsCameraRegion specifies a single detected region
@@ -286,6 +286,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 			ApriltagsCameraConfig config = m_config[m_info.m_type.ordinal()];
 
 			double time = convertTime(captureTime);
+			double dt = curTime - time;
+			long delay = System.currentTimeMillis() - captureTime;
 			ApriltagLocation tag = ApriltagLocations.findTag(m_tag);
 			ApriltagPosition lastPos = null;
 			Pose2d estPos = poseEstimator.getEstimatedPosition();
@@ -453,6 +455,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 						SmartDashboard.putNumber(String.format("c%d-%d ea", cameraNo, m_tag),
 								estPos.getRotation().getDegrees());
 						SmartDashboard.putNumber(String.format("c%d-%d ad", cameraNo, m_tag), adjust);
+						SmartDashboard.putNumber(String.format("c%d-delay", cameraNo), delay);
+						SmartDashboard.putNumber(String.format("c%d=dt", cameraNo), dt);
 						// SmartDashboard.putNumber(String.format("c%d-%d sd", cameraNo, m_tag),
 						// visionSD.get(2, 0));
 					}
@@ -1011,7 +1015,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 				Logger.setLogFile("ApriltagsCameraLog", "camera", true, false);
 				Logger.log("ApriltagsCameraLog", 1,
-						",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust,frame,dist");
+						",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust,frame,dist,cur time,cap time");
 			} else {
 				Logger.closeLogFile("ApriltagsCameraLog");
 			}

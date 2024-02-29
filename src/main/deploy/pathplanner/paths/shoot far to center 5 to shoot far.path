@@ -33,15 +33,15 @@
     {
       "anchor": {
         "x": 8.29950581516365,
-        "y": 0.7604811409147759
+        "y": 1.26
       },
       "prevControl": {
         "x": 7.171510887418069,
-        "y": 0.9798134879764168
+        "y": 1.4793323470616409
       },
       "nextControl": {
         "x": 9.525817180887529,
-        "y": 0.5220317086906885
+        "y": 1.0215505677759125
       },
       "isLocked": false,
       "linkedName": null
@@ -86,7 +86,7 @@
     "rotateFast": true
   },
   "reversed": false,
-  "folder": "shoot grab shoot",
+  "folder": null,
   "previewStartingState": {
     "rotation": -30.089296823316985,
     "velocity": 0

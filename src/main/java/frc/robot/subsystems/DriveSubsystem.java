@@ -152,7 +152,14 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Red Speaker is Apriltag 4, blue is 7
   public ApriltagLocation getSpeakerLocationMeters() {
-    DriverStation.Alliance alliance = DriverStation.getAlliance().get();
+    DriverStation.Alliance alliance = DriverStation.Alliance.Blue;
+    
+    try {
+      alliance = DriverStation.getAlliance().get();
+    }
+    catch (Exception ex) {
+      
+    }
     return ApriltagLocations.findTag(alliance == DriverStation.Alliance.Red ? 4 : 7);
   }
 

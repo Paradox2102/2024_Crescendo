@@ -51,6 +51,8 @@ public class Robot extends TimedRobot {
 
     ApriltagsCameraStats stats = m_robotContainer.m_apriltagCamera.getStats();
     SmartDashboard.putNumber("cam avg delay", stats.m_averageDelay);
+    SmartDashboard.putNumber("cam min delay", stats.m_minDelay);
+    SmartDashboard.putNumber("cam max delay", stats.m_maxDelay);
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

@@ -251,7 +251,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     double futureY = currentY + yVelocity * Constants.DriveConstants.k_lookAheadTimeSeconds;
     double futureX = currentX + xVelocity * Constants.DriveConstants.k_lookAheadTimeSeconds;
-    double futureAngle = currentAngle.getDegrees() + angularVelocity * Constants.DriveConstants.k_lookAheadTimeSeconds;
+    double futureAngle = currentAngle.getDegrees() + Math.toDegrees(angularVelocity) * Constants.DriveConstants.k_lookAheadTimeSeconds;
 
     m_futurePos = new Pose2d(futureX, futureY, Rotation2d.fromDegrees(futureAngle));
     // *********************************************************

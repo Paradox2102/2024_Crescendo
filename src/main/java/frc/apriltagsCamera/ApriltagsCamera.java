@@ -115,7 +115,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 	ApriltagsCameraConfig m_config[] = {
 			new ApriltagsCameraConfig(0.5, 4.0, 8.0, 5.0, 12.0, 2, 0.1, k_visionSD6mm),
-			new ApriltagsCameraConfig(0.5, 4.0, 8.0, 5.0, 12.0, 2, 0.11, k_visionSD6mm)
+			new ApriltagsCameraConfig(0.5, 4.0, 8.0, 5.0, 12.0, 2, 0.1, k_visionSD6mm)
 	};
 
 	/**
@@ -334,7 +334,9 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 				double deltaAngle = Math.abs(normalizeAngle(lastAngle - cameraAngle));
 
-				adjust *= (1.0 + Math.abs(normalizeAngle(lastAngle - cameraAngle)) * config.m_angleSDAdjust);
+				if (deltaAngle < 10) {
+					adjust *= (1.0 + Math.abs(deltaAngle) * config.m_angleSDAdjust);
+				}
 
 				if ((d > config.m_maxAngleDistance)) {
 						// || (Math.abs(normalizeAngle(lastAngle - cameraAngle)) > config.m_maxAngleError)) {

@@ -466,11 +466,11 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 						SmartDashboard.putNumber(String.format("c%d-%d ea", cameraNo, m_tag),
 								estPos.getRotation().getDegrees());
 						SmartDashboard.putNumber(String.format("c%d-%d ad", cameraNo, m_tag), adjust);
-						SmartDashboard.putNumber(String.format("c%d-delay", cameraNo), delay);
-						SmartDashboard.putNumber(String.format("c%d=dt", cameraNo), dt);
 						// SmartDashboard.putNumber(String.format("c%d-%d sd", cameraNo, m_tag),
 						// visionSD.get(2, 0));
 					}
+					SmartDashboard.putNumber(String.format("c%d-delay", cameraNo), delay);
+					SmartDashboard.putNumber(String.format("c%d=dt", cameraNo), dt);
 				}
 			} else {
 				Logger.log("ApriltagsCamera", 1, String.format("updatePosition: Tag %d not found", m_tag));

@@ -8,6 +8,7 @@ import frc.apriltagsCamera.ApriltagsCamera;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.led.commands.Blinker;
+import frc.robot.led.commands.DisplayCameraError;
 import frc.robot.led.commands.ParadoxAnim;
 import frc.robot.led.commands.RainbowAnim;
 import frc.robot.led.subsystems.LEDSubsystem;
@@ -21,6 +22,7 @@ public class LEDConfig {
 
     private Command m_currentCommand = null;
 
+    @SuppressWarnings("unused")
     private ParallelCommandGroup m_paradox = new ParallelCommandGroup(new ParadoxAnim(m_string1, 0.1),
             new ParadoxAnim(m_string2, 0.1), new ParadoxAnim(m_string3, 0.1));
     private ParallelCommandGroup m_rainbow = new ParallelCommandGroup(new RainbowAnim(m_string1),
@@ -35,10 +37,13 @@ public class LEDConfig {
             new Blinker(m_string2, 0, Color.kGreen), new Blinker(m_string3, 0, Color.kGreen));
     private ParallelCommandGroup m_ampNote = new ParallelCommandGroup(new Blinker(m_string1, 0.2, Color.kGreen),
             new Blinker(m_string2, 0.2, Color.kGreen), new Blinker(m_string3, 0.2, Color.kGreen));
+    private ParallelCommandGroup m_cameraError;
 
     public LEDConfig(Robot robot, ApriltagsCamera camera) {
         m_robot = robot;
         m_camera = camera;
+
+        m_cameraError = new ParallelCommandGroup(new DisplayCameraError(m_string1, m_camera), new DisplayCameraError(m_string2, m_camera), new DisplayCameraError(m_string3, m_camera));
     }
 
     public void periodic() {
@@ -47,7 +52,8 @@ public class LEDConfig {
         if (!m_camera.isConnected()&&Constants.States.m_autoRotateAim) {
             command = m_cameraFailure;
         } else if (m_camera.isTagVisible() && m_robot.isDisabled()) {
-            command = m_paradox;
+            // command = m_paradox;
+            command = m_cameraError;
         } else if (m_robot.isDisabled()) {
             command = m_rainbow;
         } else if (Constants.States.m_speakerMode) {

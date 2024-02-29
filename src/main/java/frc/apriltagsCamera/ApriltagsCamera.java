@@ -56,6 +56,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	private boolean m_log = false;
 	private static double k_maxLogTime = 2.5 * 60; // Length of a match
 	private edu.wpi.first.wpilibj.Timer m_logTimer = new edu.wpi.first.wpilibj.Timer();
+	private double m_yawError = 0;
 
 	public static final Vector<N3> k_odometrySD = VecBuilder.fill(0.1, 0.1, 0.1); // Default odometry standard
 																					// deviations
@@ -96,6 +97,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		private final double m_SDAdjustSlope; // Slop of adjustment between min and max distances
 		private final double m_angleSDAdjust;	// Scale factor for adjusting SD based on difference between yaw and est yaw
 		private final double m_maxDistance; // Max distance beyond which the camera is completely unreliable
+@SuppressWarnings("unused")		
 		private final double m_maxAngleError; // Max acceptable angle error in degrees
 		private final Vector<N3> m_visionSD;
 		private boolean m_start = true;
@@ -129,13 +131,15 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		public int m_minDelay = Integer.MAX_VALUE; // !<Specifies the min frame delay
 		public int m_lostFrames; // !<Specifies the number of lost frames
 		public long m_time; // !<Specifies the elapsed time
+		public double m_yawError;	// !<Specifies the diffence between the current camera yaw and the estimated yaw
 
-		public ApriltagsCameraStats(int avgDelay, int maxDelay, int minDelay, int lostFrames, long time) {
+		public ApriltagsCameraStats(int avgDelay, int maxDelay, int minDelay, int lostFrames, long time, double yawError) {
 			m_averageDelay = avgDelay;
 			m_maxDelay = maxDelay;
 			m_minDelay = minDelay;
 			m_lostFrames = lostFrames;
 			m_time = time;
+			m_yawError = yawError;
 		}
 	}
 
@@ -334,7 +338,12 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 				double deltaAngle = Math.abs(normalizeAngle(lastAngle - cameraAngle));
 
-				if (deltaAngle < 10) {
+				if (d < 100)
+				{
+					m_yawError = deltaAngle;
+				}
+
+				if ((deltaAngle < 10) || (d > 150)) {
 					adjust *= (1.0 + Math.abs(deltaAngle) * config.m_angleSDAdjust);
 				}
 
@@ -816,7 +825,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	public ApriltagsCameraStats getStats() {
 		synchronized (this) {
 			return (new ApriltagsCameraStats(m_averageDelay, m_maxDelay, m_minDelay, m_lostFrames - m_lastLostFrame,
-					System.currentTimeMillis() - m_startTime));
+					System.currentTimeMillis() - m_startTime, m_yawError));
 		}
 	}
 

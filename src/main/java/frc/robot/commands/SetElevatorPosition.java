@@ -17,6 +17,8 @@ import frc.robot.subsystems.ElevatorSubsystem;
 public class SetElevatorPosition extends Command {
     ElevatorSubsystem m_subsystem;
     private double m_position;
+    private boolean m_goingUp;
+    private double m_initalPosition;
 
   /** Creates a new ToggleElevatorPosition. */
   public SetElevatorPosition(ElevatorSubsystem subsystem, double position) {
@@ -31,22 +33,40 @@ public class SetElevatorPosition extends Command {
   @Override
   public void initialize() {
     m_subsystem.setPosition(m_position);
+    m_initalPosition = m_subsystem.getCookedElevatorPosition();
+    m_goingUp = (m_position - m_initalPosition) > 0;
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    /*
+     * sets power according to position
+     */
+    if(m_goingUp) {
+      m_subsystem.setPower(-1);
+    } else {
+      m_subsystem.setPower(1);
+    }    
+  
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_subsystem.setPosition(0);
+    m_subsystem.setPower(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if (m_goingUp && (m_position - m_subsystem.getCookedElevatorPosition()) == 0){
+      return true;
+    } else if (m_goingUp) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

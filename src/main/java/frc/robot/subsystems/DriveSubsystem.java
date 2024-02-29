@@ -240,6 +240,7 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("Face Speaker", Constants.States.m_faceSpeaker);
     SmartDashboard.putBoolean("Shoot Front/Back", Constants.States.m_shootIntakeSide);
     SmartDashboard.putBoolean("Aim On", Constants.States.m_autoRotateAim);
+    SmartDashboard.putString("MESSAGE", "Ajith furry arc???");
 
     m_tracker.update(m_apriltagCamera);
 

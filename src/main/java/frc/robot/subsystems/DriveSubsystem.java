@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.BooleanSupplier;
+
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
@@ -187,10 +189,19 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public double getFutureRotationalDistanceFromSpeakerDegrees() {
+    DriverStation.Alliance alliance = DriverStation.Alliance.Blue;
+    
+    try {
+      alliance = DriverStation.getAlliance().get();
+    }
+    catch (Exception ex) {
+      
+    }
+    boolean isRed = alliance == DriverStation.Alliance.Red;
     ApriltagLocation speaker = getSpeakerLocationMeters();
     double xDist = m_futurePos.getX() - speaker.m_xMeters;
     double yDist = m_futurePos.getY() - speaker.m_yMeters;
-    return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan((yDist / xDist))));
+    return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan((yDist / xDist))) + (isRed ? 180 : 0));
   }
 
   public boolean isInAimingZone() {
@@ -307,7 +318,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @param pose The pose to which to set the odometry.
    */
   public void resetOdometry(Pose2d pose) {
-    m_tracker.setXYAngle(pose.getX(), pose.getY(), pose.getRotation().getDegrees());
+    m_tracker.setXYAngle(pose.getX(), pose.getY(), m_gyro.getAngle());
 }
 
   /**
@@ -378,9 +389,17 @@ public class DriveSubsystem extends SubsystemBase {
     double ySpeedDelivered = ySpeedCommanded * Constants.DriveConstants.k_maxSpeedMetersPerSecond;
     double rotDelivered = m_currentRotation * Constants.DriveConstants.k_maxAngularSpeed;
 
+    BooleanSupplier all = () -> {
+        var alliance = DriverStation.getAlliance();
+        if(alliance.isPresent()) {
+          return alliance.get() == DriverStation.Alliance.Red;
+        }
+        return false;
+      };
+
     var swerveModuleStates = m_swerve.toSwerveModuleStates(
         fieldRelative
-            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, getPose().getRotation())
+            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, Rotation2d.fromDegrees(getPose().getRotation().getDegrees() + (all.getAsBoolean() ? 180 : 0)))
             : new ChassisSpeeds(-xSpeedDelivered, -ySpeedDelivered, rotDelivered));
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, Constants.DriveConstants.k_maxSpeedMetersPerSecond);

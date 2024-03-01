@@ -43,7 +43,7 @@ public class HolderSubsystem extends SubsystemBase {
       m_motor.setInverted(!Constants.States.m_isCompetition);
     }
     setBrakeMode(true);
-    m_motor.setSmartCurrentLimit(1000);
+    m_motor.setSmartCurrentLimit(80);
     setName(shooter ? "ShooterSubsystem" : "HolderSubsystem");
     m_motor.setInverted(shooter);
     m_motor.burnFlash();

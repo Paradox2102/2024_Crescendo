@@ -29,6 +29,7 @@ import frc.robot.commands.drivetrain.AutoOrientCommand;
 import frc.robot.commands.drivetrain.FaceSpeaker;
 import frc.robot.commands.gamePieceManipulation.DefaultHolderCommand;
 import frc.robot.commands.gamePieceManipulation.DefaultShooterCommand;
+import frc.robot.commands.gamePieceManipulation.EjectGamePiece;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
 import frc.robot.commands.gamePieceManipulation.ResetSubsystemsCommand;
@@ -184,8 +185,9 @@ public class RobotContainer {
 
     m_joystick.button(1).toggleOnTrue(new RevCommand(m_shooterSubsystem, m_holderSubsystem));
     m_joystick.button(2).whileTrue(new D2Intake(m_shooterSubsystem, m_holderSubsystem, true));
-    m_joystick.button(6).toggleOnTrue(new ManualPivotCommand(m_pivotSubsystem, 0.25));
-    m_joystick.button(4).toggleOnTrue(new ManualPivotCommand(m_pivotSubsystem, -0.25));
+    // m_joystick.button(6).toggleOnTrue(new ManualPivotCommand(m_pivotSubsystem, 0.25));
+    // m_joystick.button(4).toggleOnTrue(new ManualPivotCommand(m_pivotSubsystem, -0.25));
+    m_joystick.button(4).whileTrue(new EjectGamePiece(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem));
     m_joystick.button(5).onTrue(new SetElevatorPosition(m_elevatorSubsystem, Constants.ElevatorConstants.k_minDistance));
     m_joystick.button(3).onTrue(new SetElevatorPosition(m_elevatorSubsystem, Constants.ElevatorConstants.k_maxDistance));
     m_joystick.button(7).onTrue(new InstantCommand(() -> {Constants.States.m_shootIntakeSide = !Constants.States.m_shootIntakeSide;}));

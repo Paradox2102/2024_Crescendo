@@ -34,6 +34,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_elevatorEncoder = m_elevatorMotor.getEncoder();
     m_elevatorMotor.setIdleMode(IdleMode.kBrake);
     m_elevatorMotor.burnFlash();
+    m_elevatorMotor.setSmartCurrentLimit(80);
   }
 
   public double getRawElevatorPosition() {

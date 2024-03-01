@@ -312,7 +312,7 @@ public final class Constants {
     public static double k_intakeVelocityRPM = 1000;
     public static final double k_speakerShootVelocityRPM = 5000; 
     public static final double k_speakerFeedPower = -0.25;
-    public static final double k_ampFeedPower = -0.25; // -500
+    public static final double k_ampFeedPower = -0.35; // -500
 
     public static final double k_deadzone = 25;
     public static final double k_adjustGamePiecePower = -.2;

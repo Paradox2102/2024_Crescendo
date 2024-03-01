@@ -620,7 +620,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		// }
 		// }
 
-		m_watchdogTimer.scheduleAtFixedRate(new TimerTask() {
+		m_watchdogTimer.schedule(new TimerTask() {
 
 			@Override
 			public void run() {
@@ -633,6 +633,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 						Logger.log("ApriltagsCamera", 3, "Network timeout");
 						m_network.closeConnection();
 					}
+					
+					timeSync();
 				}
 			}
 		}, 200, 200);
@@ -859,7 +861,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 			}
 		}
 
-		timeSync();
+		// timeSync();
 	}
 
 	/**

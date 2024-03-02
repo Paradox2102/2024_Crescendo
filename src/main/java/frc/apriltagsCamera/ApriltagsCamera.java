@@ -291,7 +291,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 			double time = convertTime(captureTime);
 			double dt = curTime - time;
-			if (time < curTime) {
+			if (time > curTime) {
 				time = curTime;
 			}
 			long delay = System.currentTimeMillis() - captureTime;

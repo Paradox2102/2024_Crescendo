@@ -195,7 +195,7 @@ public class RobotContainer {
     m_joystick.button(9).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));
     //m_joystick.button(10).toggleOnTrue(new SetElevatorPosition(m_elevatorSubsystem, 23.5));
     m_joystick.button(11).onTrue(new DisableEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
-    m_joystick.button(12).onTrue(new InstantCommand(() -> {Constants.States.m_autoRotateAim = !Constants.States.m_autoRotateAim;}));
+    m_joystick.button(6).onTrue(new InstantCommand(() -> {Constants.States.m_autoRotateAim = !Constants.States.m_autoRotateAim;}));
 
     //m_testStick.button(1).whileTrue(new CalibrateShooter(m_shooterSubsystem));
   }

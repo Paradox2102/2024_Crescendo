@@ -291,6 +291,9 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 			double time = convertTime(captureTime);
 			double dt = curTime - time;
+			if (time < curTime) {
+				time = curTime;
+			}
 			long delay = System.currentTimeMillis() - captureTime;
 			ApriltagLocation tag = ApriltagLocations.findTag(m_tag);
 			ApriltagPosition lastPos = null;
@@ -567,7 +570,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		}
 	}
 
-	private static final int k_syncRetry = 5000;
+	private static final int k_syncRetry = 1000;
 	private static final int k_syncFirst = 1000;
 	// private static final int k_maxCameras = 2;
 
@@ -627,7 +630,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				if (m_connected) {
 					Logger.log("ApriltagsCamera", -1, "WatchDog");
 
-					m_network.sendMessage("k");
+					// m_network.sendMessage("k");
 
 					if (m_lastMessage + k_timeout < System.currentTimeMillis()) {
 						Logger.log("ApriltagsCamera", 3, "Network timeout");

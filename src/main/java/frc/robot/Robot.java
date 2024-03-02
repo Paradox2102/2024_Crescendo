@@ -91,6 +91,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_robotContainer.m_apriltagCamera.setLogging(true);
     Constants.States.m_shootIntakeSide = true; // true
     Constants.States.m_enableSuperstructure = true;
   }

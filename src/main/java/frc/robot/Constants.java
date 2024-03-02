@@ -48,7 +48,7 @@ public final class Constants {
       PivotConstants.k_iZone = 10;
       PivotConstants.k_resetPositionDegrees = 4;
       PivotConstants.k_offset = .3;
-      PivotConstants.k_ampPositionDegrees = 11;
+      PivotConstants.k_ampPositionDegrees = 6;
 
       // Drive
       DriveConstants.k_FLOffset = 1.81 - (Math.PI / 2);
@@ -288,7 +288,7 @@ public final class Constants {
     public static final int k_shooterMotor = 11;
     public static double k_intakeVelocityRPM = 3000;
     public static final double k_speakerShootVelocityRPM = -5000; // -5750
-    public static final double k_ampShootVelocityRPM = -1100; // -1500
+    public static final double k_ampShootVelocityRPM = -1150; // -1500
     public static final double k_maxVelocityRPM = 6000;
     
     public static final double k_speakerFeedPower = 0.25;

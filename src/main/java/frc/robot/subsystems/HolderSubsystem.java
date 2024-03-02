@@ -77,8 +77,8 @@ public class HolderSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     double velocity = getVelocityRPM();
-    SmartDashboard.putNumber(getName() + " Speed", velocity);
+    SmartDashboard.putNumber(getName() + " Speed", Math.abs(velocity));
     SmartDashboard.putNumber(getName() + " Target Speed", m_velocity);
-    SmartDashboard.putBoolean(getName() + "in shoot speed range", velocity >= 4500);
+    SmartDashboard.putBoolean(getName() + "in shoot speed range", Math.abs(velocity) >= 4500);
   }
 }

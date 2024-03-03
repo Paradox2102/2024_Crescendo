@@ -42,8 +42,8 @@ public class RevCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooterSubsystem.stop();
-    m_holderSubsystem.stop();
+    // m_shooterSubsystem.stop();
+    // m_holderSubsystem.stop();
     Constants.States.m_runningShooterAndHolder = false;
     System.out.println("rev command end");
   }

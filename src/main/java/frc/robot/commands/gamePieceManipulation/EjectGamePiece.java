@@ -32,8 +32,8 @@ public class EjectGamePiece extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooterSubsystem.setPower(1);
-    m_holderSubsystem.setPower(1);
+    m_shooterSubsystem.setPower(-1);
+    m_holderSubsystem.setPower(-1);
   }
 
   // Called once the command ends or is interrupted.

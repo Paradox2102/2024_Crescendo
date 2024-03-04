@@ -30,6 +30,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
           "type": "deadline",
           "data": {
             "commands": [
@@ -47,12 +53,6 @@
                       "type": "wait",
                       "data": {
                         "waitTime": 2.0
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "intake"
                       }
                     },
                     {
@@ -93,12 +93,6 @@
                 "type": "sequential",
                 "data": {
                   "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "intake"
-                      }
-                    },
                     {
                       "type": "named",
                       "data": {

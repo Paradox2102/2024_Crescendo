@@ -37,6 +37,7 @@ public class PivotSubsystem extends SubsystemBase {
 
   /** Creates a new PivotSubsystem. */
   public PivotSubsystem(DriveSubsystem driveSubsystem) {
+    SmartDashboard.putNumber("Amp Angle", 0);
     m_pivotMotor.restoreFactoryDefaults();
     m_PID = new PIDController(Constants.PivotConstants.k_p, Constants.PivotConstants.k_i, Constants.PivotConstants.k_d);
     m_driveSubsystem = driveSubsystem;
@@ -110,7 +111,7 @@ public class PivotSubsystem extends SubsystemBase {
     double pid;
     double angle = getAngleInDegrees();
 
-    FF = Constants.PivotConstants.k_f * Math.sin(Math.toRadians(angle - 25));
+    FF = Constants.PivotConstants.k_f * Math.sin(Math.toRadians(angle - 40));
     if(Math.abs(getAngleInDegrees() - m_setPoint) > k_deadzone){
       pid = m_PID.calculate(angle, m_setPoint);
     } else {
@@ -120,6 +121,7 @@ public class PivotSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Pivot Power", m_power);
     SmartDashboard.putNumber("Pivot Calculated Error", Math.abs(getAngleInDegrees() - m_setPoint));
     SmartDashboard.putNumber("Pivot Set Point", m_setPoint);
+    Constants.PivotConstants.k_ampPositionDegrees = SmartDashboard.getEntry("Amp Angle").getDouble(0);
     if (Constants.States.m_enableSuperstructure) {
       m_pivotMotor.set(m_power);
     }

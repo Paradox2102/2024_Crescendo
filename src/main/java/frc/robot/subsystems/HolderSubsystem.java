@@ -23,6 +23,7 @@ public class HolderSubsystem extends SubsystemBase {
   private double m_velocity = 0;
   /** Creates a new FrontSubsystem. */
   public HolderSubsystem(int id, boolean shooter) {
+    SmartDashboard.putNumber("Amp Velo", 0);
     m_motor = new CANSparkFlex(id, MotorType.kBrushless);
     m_motor.restoreFactoryDefaults();
     m_encoder = m_motor.getEncoder();
@@ -80,5 +81,6 @@ public class HolderSubsystem extends SubsystemBase {
     SmartDashboard.putNumber(getName() + " Speed", Math.abs(velocity));
     SmartDashboard.putNumber(getName() + " Target Speed", m_velocity);
     SmartDashboard.putBoolean(getName() + "in shoot speed range", Math.abs(velocity) >= 4500);
+    Constants.ShooterConstants.k_ampShootVelocityRPM = SmartDashboard.getEntry("Amp Velo").getDouble(0);
   }
 }

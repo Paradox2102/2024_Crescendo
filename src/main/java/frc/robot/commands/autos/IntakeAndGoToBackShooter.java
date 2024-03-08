@@ -25,7 +25,6 @@ public class IntakeAndGoToBackShooter extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Constants.States.m_runningShooterAndHolder = true;
     m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
     m_shooterSubsystem.setVelocityRPM(1000);
   }

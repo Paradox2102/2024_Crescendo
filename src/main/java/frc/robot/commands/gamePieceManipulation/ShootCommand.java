@@ -13,7 +13,6 @@ public class ShootCommand extends Command {
   ManipulatorSubsystem m_shooterSubsystem;
   ManipulatorSubsystem m_holderSubsystem;
   private Timer m_dwellTimer = new Timer();
-  private boolean m_feeding = false;
 
   /** Creates a new ShootCommand. */
   public ShootCommand(ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem) {
@@ -26,9 +25,8 @@ public class ShootCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Constants.States.m_runningShooterAndHolder = true;
-    m_dwellTimer.start();
     m_dwellTimer.reset();
+    m_dwellTimer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -45,14 +43,12 @@ public class ShootCommand extends Command {
           m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerShootVelocityRPM);
           if (m_shooterSubsystem.isReady()) {
             m_holderSubsystem.setPower(Constants.HolderConstants.k_speakerFeedPower);
-            m_feeding = true;
           }
         } else {
           // shooting holder side to speaker
           m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
           if (m_holderSubsystem.isReady()) {
             m_shooterSubsystem.setPower(Constants.ShooterConstants.k_speakerFeedPower);
-            m_feeding = true;
           }
         }
       } else {
@@ -60,10 +56,9 @@ public class ShootCommand extends Command {
         m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_ampShootVelocityRPM);
         if (m_shooterSubsystem.isReady()) {
           m_holderSubsystem.setPower(Constants.HolderConstants.k_ampFeedPower);
-          m_feeding = true;
         }
       }
-    if (!m_feeding) {
+    if (Constants.States.m_hasGamePiece) {
       m_dwellTimer.reset();
     }
   }
@@ -73,10 +68,7 @@ public class ShootCommand extends Command {
   public void end(boolean interrupted) {
     m_shooterSubsystem.stop();
     m_holderSubsystem.stop();
-    Constants.States.m_runningShooterAndHolder = false;
-    Constants.States.m_hasGamePiece = false;
     m_dwellTimer.stop();
-    m_feeding = false;
   }
 
   // Returns true when the command should end.

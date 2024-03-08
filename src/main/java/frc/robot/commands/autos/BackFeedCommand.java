@@ -26,7 +26,6 @@ public class BackFeedCommand extends Command {
   public void initialize() {
     m_dwellTimer.reset();
     m_dwellTimer.start();
-    Constants.States.m_runningShooterAndHolder = true;
     m_shooterSubsystem.setPower(Constants.ShooterConstants.k_speakerFeedPower);
   }
 
@@ -42,7 +41,6 @@ public class BackFeedCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     m_shooterSubsystem.stop();
-    Constants.States.m_runningShooterAndHolder = false;
   }
 
   // Returns true when the command should end.

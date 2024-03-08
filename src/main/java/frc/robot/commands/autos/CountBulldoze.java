@@ -27,7 +27,6 @@ public class CountBulldoze extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Constants.States.m_runningShooterAndHolder = true;
     m_gamePiecesBulldozed = 0;
     m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
     m_shooterSubsytem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
@@ -47,7 +46,6 @@ public class CountBulldoze extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Constants.States.m_runningShooterAndHolder = false;
     m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
   }
 

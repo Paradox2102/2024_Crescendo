@@ -5,7 +5,6 @@
 package frc.robot.commands.test;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.ManipulatorSubsystem;
 
 public class D2Intake extends Command {
@@ -24,7 +23,6 @@ public class D2Intake extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Constants.States.m_runningShooterAndHolder = true;
     m_shooterSubsystem.setVelocityRPM(2000);
     m_holderSubsystem.setVelocityRPM(500);
   }
@@ -37,7 +35,6 @@ public class D2Intake extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Constants.States.m_runningShooterAndHolder = false;
     m_shooterSubsystem.stop();
     m_holderSubsystem.stop();
   }

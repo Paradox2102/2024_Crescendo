@@ -350,7 +350,6 @@ public final class Constants {
     public static boolean m_shootIntakeSide = false;
     public static boolean m_hasGamePiece = false;
     public static boolean m_isGamePieceStowed = false;
-    public static boolean m_runningShooterAndHolder = false;
     public static boolean m_faceSpeaker = false;
     public static boolean m_intaking = false;
     public static boolean m_enableSuperstructure = false;

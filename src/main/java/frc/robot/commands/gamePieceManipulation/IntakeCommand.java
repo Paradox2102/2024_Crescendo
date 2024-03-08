@@ -29,7 +29,6 @@ public class IntakeCommand extends Command {
     m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
     m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
     Constants.States.m_intaking = true;
-    Constants.States.m_runningShooterAndHolder = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,7 +41,6 @@ public class IntakeCommand extends Command {
     m_holderSubsystem.stop();
     m_shooterSubsystem.stop();
     m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
-    Constants.States.m_runningShooterAndHolder = false;
     Constants.States.m_intaking = false;
   }
 

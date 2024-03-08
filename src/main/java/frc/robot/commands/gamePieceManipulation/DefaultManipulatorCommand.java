@@ -14,6 +14,7 @@ public class DefaultManipulatorCommand extends Command {
   ManipulatorSubsystem m_subsystem;
   DriveSubsystem m_driveSubsytem;
   boolean m_shooter;
+  private final double k_revRangeMeters = 10;
   public DefaultManipulatorCommand(ManipulatorSubsystem subsystem, DriveSubsystem driveSubsystem, boolean shooter) {
     m_subsystem = subsystem;
     m_driveSubsytem = driveSubsystem;
@@ -31,7 +32,7 @@ public class DefaultManipulatorCommand extends Command {
   public void execute() {
     if (Constants.States.m_hasGamePiece && !Constants.States.m_isGamePieceStowed) {
       m_subsystem.setPower(Constants.States.m_shootIntakeSide ? -Constants.HolderConstants.k_adjustGamePiecePower : Constants.HolderConstants.k_adjustGamePiecePower);
-    } else if (Constants.States.m_isGamePieceStowed && m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters() < 10) {
+    } else if (Constants.States.m_isGamePieceStowed && m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters() < k_revRangeMeters) {
       if (m_shooter) {
         m_subsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM : Constants.ShooterConstants.k_ampShootVelocityRPM);
       } else {

@@ -10,7 +10,6 @@ import frc.apriltagsCamera.ApriltagsCamera.ApriltagsCameraType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DisableEverything;
 import frc.robot.commands.ManualElevatorCommand;
-import frc.robot.commands.ManualPivotCommand;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetElevatorPosition;
 import frc.robot.commands.ToggleShootSideCommand;
@@ -72,8 +71,8 @@ public class RobotContainer {
   final ShooterSensors m_shooterSensors = new ShooterSensors();
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera);
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem(m_driveSubsystem);
-  private final ManipulatorSubsystem m_shooterSubsystem = new ManipulatorSubsystem(Constants.ShooterConstants.k_shooterMotor, true);
-  private final ManipulatorSubsystem m_holderSubsystem = new ManipulatorSubsystem(Constants.HolderConstants.k_holdingMotor, false);
+  private final ManipulatorSubsystem m_shooterSubsystem = new ManipulatorSubsystem(Constants.ShooterConstants.k_shooterMotor);
+  private final ManipulatorSubsystem m_holderSubsystem = new ManipulatorSubsystem(Constants.HolderConstants.k_holdingMotor);
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
 
   private final CommandJoystick m_joystick = new CommandJoystick(1);

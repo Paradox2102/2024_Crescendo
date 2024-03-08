@@ -23,14 +23,14 @@ public class ManipulatorSubsystem extends SubsystemBase {
 
   private double m_velocity = 0;
   /** Creates a new FrontSubsystem. */
-  public ManipulatorSubsystem(int id, boolean shooter) {
-    m_shooter = shooter;
+  public ManipulatorSubsystem(int id) {
+    m_shooter = id == Constants.ShooterConstants.k_shooterMotor;
     SmartDashboard.putNumber("Amp Velo", 0);
     m_motor = new CANSparkFlex(id, MotorType.kBrushless);
     m_motor.restoreFactoryDefaults();
     m_encoder = m_motor.getEncoder();
     m_PID = m_motor.getPIDController();
-    if (shooter) {
+    if (m_shooter) {
       m_PID.setFF(Constants.ShooterConstants.k_f);
       m_PID.setP(Constants.ShooterConstants.k_p);
       m_PID.setI(Constants.ShooterConstants.k_i);
@@ -47,8 +47,8 @@ public class ManipulatorSubsystem extends SubsystemBase {
     }
     setBrakeMode(true);
     m_motor.setSmartCurrentLimit(80);
-    setName(shooter ? "ShooterSubsystem" : "HolderSubsystem");
-    m_motor.setInverted(shooter);
+    setName(m_shooter ? "ShooterSubsystem" : "HolderSubsystem");
+    m_motor.setInverted(m_shooter);
     m_motor.burnFlash();
   }
 

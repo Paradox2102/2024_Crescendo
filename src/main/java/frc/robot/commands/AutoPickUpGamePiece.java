@@ -7,6 +7,7 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
@@ -75,12 +76,12 @@ public class AutoPickUpGamePiece extends Command {
     double x = m_x.getAsDouble();
     double y = m_y.getAsDouble();
     if (!seeGamePiece) {
-      m_driveSubsystem.drive(x, y, -rot, true, true);
+      m_driveSubsystem.drive(x, y, -rot, true, true, Constants.DriveConstants.k_rotatePoint);
     } else {
       x = Math.abs(x);
       y = Math.abs(y);
       double input = x > y ? x : y;
-      m_driveSubsystem.drive(input, 0, -rot, false, true);
+      m_driveSubsystem.drive(input, 0, -rot, false, true, Constants.DriveConstants.k_rotatePoint);
     }
   }
 

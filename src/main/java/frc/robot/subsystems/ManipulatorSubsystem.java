@@ -53,7 +53,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
   }
 
   public boolean isReady() {
-    return Math.abs(getVelocityRPM()) > m_velocity - (m_shooter ? Constants.ShooterConstants.k_deadzone : Constants.HolderConstants.k_deadzone);
+    return Math.abs(getVelocityRPM()) > Math.abs(m_velocity) - (m_shooter ? Constants.ShooterConstants.k_deadzone : Constants.HolderConstants.k_deadzone);
   }
 
   public void setPower(double power) {

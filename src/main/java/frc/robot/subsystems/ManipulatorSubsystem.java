@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class HolderSubsystem extends SubsystemBase {
+public class ManipulatorSubsystem extends SubsystemBase {
   private CANSparkFlex m_motor;
   private RelativeEncoder m_encoder;
   private final SparkPIDController m_PID;
@@ -23,7 +23,7 @@ public class HolderSubsystem extends SubsystemBase {
 
   private double m_velocity = 0;
   /** Creates a new FrontSubsystem. */
-  public HolderSubsystem(int id, boolean shooter) {
+  public ManipulatorSubsystem(int id, boolean shooter) {
     m_shooter = shooter;
     SmartDashboard.putNumber("Amp Velo", 0);
     m_motor = new CANSparkFlex(id, MotorType.kBrushless);
@@ -53,7 +53,7 @@ public class HolderSubsystem extends SubsystemBase {
   }
 
   public boolean isReady() {
-    return Math.abs(m_velocity - getVelocityRPM()) < Constants.HolderConstants.k_deadzone;
+    return Math.abs(m_velocity - getVelocityRPM()) < (m_shooter ? Constants.ShooterConstants.k_deadzone : Constants.HolderConstants.k_deadzone);
   }
 
   public void setPower(double power) {

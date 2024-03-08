@@ -54,34 +54,16 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "intake",
+      "name": "intake + shoot",
       "waypointRelativePos": 0.75,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "intake"
-              }
-            },
             {
               "type": "wait",
               "data": {
                 "waitTime": 0.5
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "source/amp 3 aim"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "rev shooter"
               }
             }
           ]

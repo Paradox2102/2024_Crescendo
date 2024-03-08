@@ -7,6 +7,7 @@ package frc.robot;
 import java.io.File;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -221,6 +222,8 @@ public final class Constants {
     public static final double k_rotateDeadzone = 2;
 
     public static final double k_lookAheadTimeSeconds = .5;
+
+    public static final Translation2d k_rotatePoint = new Translation2d(0, 0);
 
     public static double k_cameraFrontX = 8.375;
     public static double k_cameraFrontY = 9.5;

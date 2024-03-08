@@ -7,6 +7,7 @@ package frc.robot.commands.test;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.apriltagsCamera.ApriltagsCamera;
 import frc.apriltagsCamera.Logger;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class SlowTurn extends Command {
@@ -35,7 +36,8 @@ public class SlowTurn extends Command {
       0, 
       0.15, 
       true, 
-      true
+      true,
+      Constants.DriveConstants.k_rotatePoint
     );
   }
 

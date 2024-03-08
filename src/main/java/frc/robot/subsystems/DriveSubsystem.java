@@ -122,11 +122,6 @@ public class DriveSubsystem extends SubsystemBase {
     // PathPlannerLogging.setLogActivePathCallback((poses) -> m_field.getObject("path").setPoses(poses));
   }
 
-  // For debugging purposes (drive robot forward at full speed)
-  public void setPower() {
-    drive(1, 0, 0, true, false);
-  }
-
   public SwerveDriveKinematics getSwerve() {
     return m_swerve;
   }
@@ -331,7 +326,7 @@ public class DriveSubsystem extends SubsystemBase {
    *                      field.
    * @param rateLimit     Whether to enable rate limiting for smoother control.
    */
-  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit) {
+  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit, Translation2d rotatePoint) {
     
     double xSpeedCommanded;
     double ySpeedCommanded;
@@ -400,7 +395,7 @@ public class DriveSubsystem extends SubsystemBase {
     var swerveModuleStates = m_swerve.toSwerveModuleStates(
         fieldRelative
             ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, Rotation2d.fromDegrees(getPose().getRotation().getDegrees() + (all.getAsBoolean() ? 180 : 0)))
-            : new ChassisSpeeds(-xSpeedDelivered, -ySpeedDelivered, rotDelivered));
+            : new ChassisSpeeds(-xSpeedDelivered, -ySpeedDelivered, rotDelivered), rotatePoint);
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, Constants.DriveConstants.k_maxSpeedMetersPerSecond);
     m_frontLeft.setDesiredState(swerveModuleStates[0]);

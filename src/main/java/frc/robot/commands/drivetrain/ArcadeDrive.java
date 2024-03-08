@@ -58,7 +58,8 @@ public class ArcadeDrive extends Command {
       x, 
       rot, 
       true, 
-      true
+      true,
+      Constants.DriveConstants.k_rotatePoint
     );
 
     

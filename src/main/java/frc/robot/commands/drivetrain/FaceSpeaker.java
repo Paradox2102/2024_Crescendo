@@ -27,14 +27,14 @@ public class FaceSpeaker extends Command {
   @Override
   public void execute() {
     m_rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getRotationalDistanceFromSpeakerDegrees()), 0);
-    m_subsystem.drive(0, 0, m_rot, true, true);
+    m_subsystem.drive(0, 0, m_rot, true, true, Constants.DriveConstants.k_rotatePoint);
     System.out.println(m_rot);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_subsystem.drive(0, 0, 0, true, false);
+    m_subsystem.drive(0, 0, 0, true, false, Constants.DriveConstants.k_rotatePoint);
   }
 
   // Returns true when the command should end.

@@ -53,6 +53,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -117,6 +118,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("four piece aim", new SetPivotOffInputDistance(m_pivotSubsystem, 2));
     NamedCommands.registerCommand("source 3 start aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1.623));
     NamedCommands.registerCommand("source/amp 3 aim", new SetPivotOffInputDistance(m_pivotSubsystem, 3.77));
+    NamedCommands.registerCommand("aim", new WaitCommand(0));
     autoChooser = AutoBuilder.buildAutoChooser();
 
     // m_apriltagCamera.setCameraInfo(8.375, 12, 180, ApriltagsCameraType.GS_6mm); // y = 6

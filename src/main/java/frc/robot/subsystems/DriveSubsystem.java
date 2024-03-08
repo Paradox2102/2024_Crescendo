@@ -149,15 +149,14 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Red Speaker is Apriltag 4, blue is 7
   public ApriltagLocation getSpeakerLocationMeters() {
-    DriverStation.Alliance alliance = DriverStation.Alliance.Blue;
     
-    try {
-      alliance = DriverStation.getAlliance().get();
-    }
-    catch (Exception ex) {
-      
-    }
-    return ApriltagLocations.findTag(alliance == DriverStation.Alliance.Red ? 4 : 7);
+    return ApriltagLocations.findTag(Constants.States.m_alliance == DriverStation.Alliance.Red ? 4 : 7);
+  }
+
+  // Red Amp is Apriltag 5, blue is 6
+  public ApriltagLocation getAmpLocationMeters() {
+    
+    return ApriltagLocations.findTag(Constants.States.m_alliance == DriverStation.Alliance.Red ? 5 : 6);
   }
 
   public double getTranslationalDistanceFromSpeakerMeters() {
@@ -168,6 +167,14 @@ public class DriveSubsystem extends SubsystemBase {
     return Math.sqrt((xDist * xDist) + (yDist * yDist));
   }
 
+  public double getTranslationalDistanceFromAmpMeters() {
+    ApriltagLocation amp = getAmpLocationMeters();
+    Pose2d robot = m_tracker.getPose2d();
+    double xDist = robot.getX() - amp.m_xMeters;
+    double yDist = robot.getY() - amp.m_yMeters;
+    return Math.sqrt((xDist * xDist) + (yDist * yDist));
+  }
+
   public double getFutureTranslationDistanceFromSpeakerMeters() {
     ApriltagLocation speaker = getSpeakerLocationMeters();
     double xDist = m_futurePos.getX() - speaker.m_xMeters;
@@ -175,34 +182,24 @@ public class DriveSubsystem extends SubsystemBase {
     return Math.sqrt((xDist * xDist) + (yDist * yDist));
   }
 
-  public double getRotationalDistanceFromSpeakerDegrees() {
-    ApriltagLocation speaker = getSpeakerLocationMeters();
-    Pose2d robot = m_tracker.getPose2d();
-    double xDist = robot.getX() - speaker.m_xMeters;
-    double yDist = robot.getY() - speaker.m_yMeters;
-    return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan2(yDist, xDist)));
-  }
-
-  public double getFutureRotationalDistanceFromSpeakerDegrees() {
-    DriverStation.Alliance alliance = DriverStation.Alliance.Blue;
-    
-    try {
-      alliance = DriverStation.getAlliance().get();
+  // returns rotational distance based off amp or speaker
+  public double getFutureRotationalGoalFromTargetDegrees() {
+    boolean isRed = Constants.States.m_alliance == DriverStation.Alliance.Red;
+    if (!Constants.States.m_speakerMode) {
+      return (isRed ? -90 : 90);
     }
-    catch (Exception ex) {
-      
-    }
-    boolean isRed = alliance == DriverStation.Alliance.Red;
     ApriltagLocation speaker = getSpeakerLocationMeters();
     double xDist = m_futurePos.getX() - speaker.m_xMeters;
     double yDist = m_futurePos.getY() - speaker.m_yMeters;
-    return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan((yDist / xDist))) + (isRed ? 180 : 0));
+    return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan((yDist / xDist))) + (isRed ? 180 : 0) + (Constants.States.m_shootIntakeSide ? 0 : 180));
   }
 
-  public boolean isInAimingZone() {
-    return getTranslationalDistanceFromSpeakerMeters() < 7.75;
+  // Is in speaker or amp aiming zone
+  private boolean isInAimingZone() {
+    return Constants.States.m_speakerMode ? getTranslationalDistanceFromSpeakerMeters() < Constants.PivotConstants.k_distancesFront[Constants.PivotConstants.k_distancesFront.length - 1] + 1 : getTranslationalDistanceFromAmpMeters() < 3;
   }
 
+  // is in zone and has game piece and auto aim not disabled
   public boolean shouldAim() {
     return (Constants.States.m_speakerMode && isInAimingZone() && Constants.States.m_hasGamePiece && Constants.States.m_autoRotateAim);
   }
@@ -220,7 +217,8 @@ public class DriveSubsystem extends SubsystemBase {
     double heading = getHeadingInDegrees();
     double rot = m_orientPID.calculate(heading, setpoint);
     rot += (Constants.DriveConstants.k_rotateF * Math.signum(rot));
-    return Math.abs(heading) < Constants.DriveConstants.k_rotateDeadzone ? 0 : rot;
+    // return Math.abs(heading) < Constants.DriveConstants.k_rotateDeadzone ? 0 : rot;
+    return rot;
   }
 
   public Pose2d getEstimatedFuturePos() {

@@ -29,13 +29,11 @@ public class DefaultPivotCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_driveSubsystem.shouldAim()) {
-      m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromRobotPos(m_predictFuture));
-      System.out.println("aiming pivot");
-    } else if (!Constants.States.m_speakerMode) {
+    if (!Constants.States.m_speakerMode && m_driveSubsystem.shouldAim()) {
       m_subsystem.setPositionDegrees(Constants.PivotConstants.k_ampPositionDegrees);
     } else {
-      m_subsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
+      // doesn't need to check aiming zone because getPivotAngleFromRobotPos() does it for you
+      m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromRobotPos(m_predictFuture));
     }
   }
 

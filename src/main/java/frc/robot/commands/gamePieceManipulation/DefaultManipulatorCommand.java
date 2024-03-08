@@ -31,8 +31,9 @@ public class DefaultManipulatorCommand extends Command {
   @Override
   public void execute() {
     if (Constants.States.m_hasGamePiece && !Constants.States.m_isGamePieceStowed) {
-      m_subsystem.setPower(Constants.States.m_shootIntakeSide ? -Constants.HolderConstants.k_adjustGamePiecePower : Constants.HolderConstants.k_adjustGamePiecePower);
-    } else if (Constants.States.m_isGamePieceStowed && m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters() < k_revRangeMeters) {
+      double adjustPower = m_shooter ? Constants.ShooterConstants.k_adjustGamePiecePower : Constants.HolderConstants.k_adjustGamePiecePower;
+      m_subsystem.setPower(Constants.States.m_shootIntakeSide ? -adjustPower : adjustPower);
+    } else if (Constants.States.m_isGamePieceStowed && m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters() < k_revRangeMeters && Constants.States.m_autoRotateAim) {
       if (m_shooter) {
         m_subsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM : Constants.ShooterConstants.k_ampShootVelocityRPM);
       } else {

@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -354,5 +355,6 @@ public final class Constants {
     public static boolean m_intaking = false;
     public static boolean m_enableSuperstructure = false;
     public static boolean m_autoRotateAim = true;
+    public static DriverStation.Alliance m_alliance = DriverStation.Alliance.Blue;
   }
 }

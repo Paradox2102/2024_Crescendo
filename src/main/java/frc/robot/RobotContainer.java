@@ -8,7 +8,7 @@ import frc.apriltagsCamera.PositionServer;
 import frc.apriltagsCamera.ApriltagsCamera;
 import frc.apriltagsCamera.ApriltagsCamera.ApriltagsCameraType;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.DisableEverything;
+import frc.robot.commands.StopEverything;
 import frc.robot.commands.ManualElevatorCommand;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetElevatorPosition;
@@ -25,7 +25,6 @@ import frc.robot.commands.autos.StartFront;
 import frc.robot.commands.autos.WaitForRev;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.AutoOrientCommand;
-import frc.robot.commands.drivetrain.FaceSpeaker;
 import frc.robot.commands.gamePieceManipulation.DefaultManipulatorCommand;
 import frc.robot.commands.gamePieceManipulation.EjectGamePiece;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
@@ -105,8 +104,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("feedthrough", new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
     NamedCommands.registerCommand("back feed", new BackFeedCommand(m_shooterSubsystem));
     NamedCommands.registerCommand("wait for rev", new WaitForRev(m_holderSubsystem, m_shooterSubsystem));
-    NamedCommands.registerCommand("face speaker", new FaceSpeaker(m_driveSubsystem));
-    NamedCommands.registerCommand("stop everything", new DisableEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
+    NamedCommands.registerCommand("stop everything", new StopEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     NamedCommands.registerCommand("reset everything", new ResetSubsystemsCommand(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem));
     NamedCommands.registerCommand("enable super structure", new EnableSuperStructure());
     NamedCommands.registerCommand("bulldoze counter", new CountBulldoze(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
@@ -184,8 +182,6 @@ public class RobotContainer {
 
     m_joystick.button(1).toggleOnTrue(new RevCommand(m_shooterSubsystem, m_holderSubsystem));
     m_joystick.button(2).whileTrue(new D2Intake(m_shooterSubsystem, m_holderSubsystem, true));
-    // m_joystick.button(6).toggleOnTrue(new ManualPivotCommand(m_pivotSubsystem, 0.25));
-    // m_joystick.button(4).toggleOnTrue(new ManualPivotCommand(m_pivotSubsystem, -0.25));
     m_joystick.button(4).whileTrue(new EjectGamePiece(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem));
     m_joystick.button(5).onTrue(new SetElevatorPosition(m_elevatorSubsystem, Constants.ElevatorConstants.k_minDistance));
     m_joystick.button(3).onTrue(new SetElevatorPosition(m_elevatorSubsystem, Constants.ElevatorConstants.k_maxDistance));
@@ -193,7 +189,7 @@ public class RobotContainer {
     m_joystick.button(8).toggleOnTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
     m_joystick.button(9).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));
     //m_joystick.button(10).toggleOnTrue(new SetElevatorPosition(m_elevatorSubsystem, 23.5));
-    m_joystick.button(11).onTrue(new DisableEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
+    m_joystick.button(11).onTrue(new StopEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     m_joystick.button(6).onTrue(new InstantCommand(() -> {Constants.States.m_autoRotateAim = !Constants.States.m_autoRotateAim;}));
 
     //m_testStick.button(1).whileTrue(new CalibrateShooter(m_shooterSubsystem));

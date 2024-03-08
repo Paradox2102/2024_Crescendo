@@ -73,7 +73,25 @@
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 1.75,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "intake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.8,
     "maxAcceleration": 3.0,
@@ -86,7 +104,7 @@
     "rotateFast": true
   },
   "reversed": false,
-  "folder": null,
+  "folder": "shoot grab shoot",
   "previewStartingState": {
     "rotation": -30.089296823316985,
     "velocity": 0

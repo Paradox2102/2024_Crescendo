@@ -129,7 +129,7 @@
     "rotateFast": true
   },
   "reversed": false,
-  "folder": null,
+  "folder": "shoot grab shoot",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

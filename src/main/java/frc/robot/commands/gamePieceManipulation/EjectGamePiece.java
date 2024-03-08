@@ -6,16 +6,15 @@ package frc.robot.commands.gamePieceManipulation;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.HolderSubsystem;
+import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 
 public class EjectGamePiece extends Command {
   /** Creates a new EjectGamePiece. */
   PivotSubsystem m_pivotSubsystem;
-  ShooterSubsystem m_shooterSubsystem;
-  HolderSubsystem m_holderSubsystem;
-  public EjectGamePiece(PivotSubsystem pivotSubsystem, ShooterSubsystem shooterSubsystem, HolderSubsystem holderSubsystem) {
+  ManipulatorSubsystem m_shooterSubsystem;
+  ManipulatorSubsystem m_holderSubsystem;
+  public EjectGamePiece(PivotSubsystem pivotSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem) {
     m_pivotSubsystem = pivotSubsystem;
     m_shooterSubsystem = shooterSubsystem;
     m_holderSubsystem = holderSubsystem;

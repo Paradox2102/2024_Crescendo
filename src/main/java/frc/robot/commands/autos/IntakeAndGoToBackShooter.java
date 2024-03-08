@@ -6,15 +6,15 @@ package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 
 public class IntakeAndGoToBackShooter extends Command {
   /** Creates a new IntakeAndGoToBackShooter. */
-  ShooterSubsystem m_shooterSubsystem;
+  ManipulatorSubsystem m_shooterSubsystem;
   PivotSubsystem m_pivotSubsystem;
   double m_endPos;
-  public IntakeAndGoToBackShooter(ShooterSubsystem shooterSubsystem, PivotSubsystem pivotSubsystem, double endPos) {
+  public IntakeAndGoToBackShooter(ManipulatorSubsystem shooterSubsystem, PivotSubsystem pivotSubsystem, double endPos) {
     m_shooterSubsystem = shooterSubsystem;
     m_pivotSubsystem = pivotSubsystem;
     m_endPos = endPos;

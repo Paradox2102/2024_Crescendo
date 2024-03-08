@@ -6,16 +6,15 @@ package frc.robot.commands.gamePieceManipulation;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.HolderSubsystem;
+import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 
 public class IntakeCommand extends Command {
-  HolderSubsystem m_holderSubsystem;
-  ShooterSubsystem m_shooterSubsystem;
+  ManipulatorSubsystem m_holderSubsystem;
+  ManipulatorSubsystem m_shooterSubsystem;
   PivotSubsystem m_pivotSubsystem;
   /** Creates a new IntakeCommand. */
-  public IntakeCommand(HolderSubsystem holderSubsystem, ShooterSubsystem shooterSubsystem, PivotSubsystem pivotSubsystem) {
+  public IntakeCommand(ManipulatorSubsystem holderSubsystem, ManipulatorSubsystem shooterSubsystem, PivotSubsystem pivotSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_holderSubsystem = holderSubsystem;
     m_shooterSubsystem = shooterSubsystem;

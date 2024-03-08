@@ -19,10 +19,12 @@ public class HolderSubsystem extends SubsystemBase {
   private CANSparkFlex m_motor;
   private RelativeEncoder m_encoder;
   private final SparkPIDController m_PID;
+  boolean m_shooter;
 
   private double m_velocity = 0;
   /** Creates a new FrontSubsystem. */
   public HolderSubsystem(int id, boolean shooter) {
+    m_shooter = shooter;
     SmartDashboard.putNumber("Amp Velo", 0);
     m_motor = new CANSparkFlex(id, MotorType.kBrushless);
     m_motor.restoreFactoryDefaults();

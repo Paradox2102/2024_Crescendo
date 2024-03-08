@@ -6,12 +6,12 @@ package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.HolderSubsystem;
+import frc.robot.subsystems.ManipulatorSubsystem;
 
 public class RevBackShooter extends Command {
   /** Creates a new RevBackShooter. */
-  HolderSubsystem m_subsystem;
-  public RevBackShooter(HolderSubsystem subsystem) {
+  ManipulatorSubsystem m_subsystem;
+  public RevBackShooter(ManipulatorSubsystem subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);

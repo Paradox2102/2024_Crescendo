@@ -6,14 +6,13 @@ package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.HolderSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ManipulatorSubsystem;
 
 public class WaitForRev extends Command {
   /** Creates a new WaitForRev. */
-  HolderSubsystem m_holderSubsytem;
-  ShooterSubsystem m_shooterSubsystem;
-  public WaitForRev(HolderSubsystem holderSubsystem, ShooterSubsystem shooterSubsystem) {
+  ManipulatorSubsystem m_holderSubsytem;
+  ManipulatorSubsystem m_shooterSubsystem;
+  public WaitForRev(ManipulatorSubsystem holderSubsystem, ManipulatorSubsystem shooterSubsystem) {
     m_holderSubsytem = holderSubsystem;
     m_shooterSubsystem = shooterSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.

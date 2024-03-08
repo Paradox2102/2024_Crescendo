@@ -27,8 +27,7 @@ import frc.robot.commands.autos.WaitForRev;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.AutoOrientCommand;
 import frc.robot.commands.drivetrain.FaceSpeaker;
-import frc.robot.commands.gamePieceManipulation.DefaultHolderCommand;
-import frc.robot.commands.gamePieceManipulation.DefaultShooterCommand;
+import frc.robot.commands.gamePieceManipulation.DefaultManipulatorCommand;
 import frc.robot.commands.gamePieceManipulation.EjectGamePiece;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
@@ -41,10 +40,9 @@ import frc.robot.commands.test.D2Intake;
 import frc.robot.led.LEDConfig;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.HolderSubsystem;
+import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSensors;
-import frc.robot.subsystems.ShooterSubsystem;
 import frc.triggers.HoldTrigger;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -74,8 +72,8 @@ public class RobotContainer {
   final ShooterSensors m_shooterSensors = new ShooterSensors();
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera);
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem(m_driveSubsystem);
-  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-  private final HolderSubsystem m_holderSubsystem = new HolderSubsystem(Constants.HolderConstants.k_holdingMotor, false);
+  private final ManipulatorSubsystem m_shooterSubsystem = new ManipulatorSubsystem(Constants.ShooterConstants.k_shooterMotor, true);
+  private final ManipulatorSubsystem m_holderSubsystem = new ManipulatorSubsystem(Constants.HolderConstants.k_holdingMotor, false);
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
 
   private final CommandJoystick m_joystick = new CommandJoystick(1);
@@ -164,8 +162,8 @@ public class RobotContainer {
     ));
 
     m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
-    m_shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(m_shooterSubsystem));
-    m_holderSubsystem.setDefaultCommand(new DefaultHolderCommand(m_holderSubsystem));
+    m_shooterSubsystem.setDefaultCommand(new DefaultManipulatorCommand(m_shooterSubsystem, m_driveSubsystem, true));
+    m_holderSubsystem.setDefaultCommand(new DefaultManipulatorCommand(m_holderSubsystem, m_driveSubsystem, false));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.

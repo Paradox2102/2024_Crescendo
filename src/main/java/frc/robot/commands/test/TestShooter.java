@@ -6,17 +6,16 @@ package frc.robot.commands.test;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.HolderSubsystem;
+import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 
 public class TestShooter extends Command {
-  ShooterSubsystem m_shooterSubsystem;
-  HolderSubsystem m_holderSubsystem;
+  ManipulatorSubsystem m_shooterSubsystem;
+  ManipulatorSubsystem m_holderSubsystem;
   PivotSubsystem m_pivotSubsystem;
   boolean m_shoot;
   /** Creates a new TestShooter. */
-  public TestShooter(ShooterSubsystem shooterSubsystem, HolderSubsystem holderSubsystem, PivotSubsystem pivotSubsystem, boolean shoot) {
+  public TestShooter(ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, PivotSubsystem pivotSubsystem, boolean shoot) {
     m_shooterSubsystem = shooterSubsystem;
     m_holderSubsystem = holderSubsystem;
     m_pivotSubsystem = pivotSubsystem;

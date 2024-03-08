@@ -7,17 +7,16 @@ package frc.robot.commands.gamePieceManipulation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.HolderSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ManipulatorSubsystem;
 
 public class ShootCommand extends Command {
-  ShooterSubsystem m_shooterSubsystem;
-  HolderSubsystem m_holderSubsystem;
+  ManipulatorSubsystem m_shooterSubsystem;
+  ManipulatorSubsystem m_holderSubsystem;
   private Timer m_dwellTimer = new Timer();
   private boolean m_feeding = false;
 
   /** Creates a new ShootCommand. */
-  public ShootCommand(ShooterSubsystem shooterSubsystem, HolderSubsystem holderSubsystem) {
+  public ShootCommand(ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_shooterSubsystem = shooterSubsystem;
     m_holderSubsystem = holderSubsystem;

@@ -6,12 +6,12 @@ package frc.robot.commands.test;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.HolderSubsystem;
+import frc.robot.subsystems.ManipulatorSubsystem;
 
 public class CalibrateShooter extends Command {
-  private HolderSubsystem m_holderSubsystem;
+  private ManipulatorSubsystem m_holderSubsystem;
   /** Creates a new CalibrateShooter. */
-  public CalibrateShooter(HolderSubsystem holderSubsystem) {
+  public CalibrateShooter(ManipulatorSubsystem holderSubsystem) {
     m_holderSubsystem = holderSubsystem;
     addRequirements(m_holderSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.

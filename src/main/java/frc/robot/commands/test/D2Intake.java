@@ -6,15 +6,14 @@ package frc.robot.commands.test;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.HolderSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ManipulatorSubsystem;
 
 public class D2Intake extends Command {
-  ShooterSubsystem m_shooterSubsystem;
-  HolderSubsystem m_holderSubsystem;
+  ManipulatorSubsystem m_shooterSubsystem;
+  ManipulatorSubsystem m_holderSubsystem;
   boolean m_intake;
   /** Creates a new D2Intake. */
-  public D2Intake(ShooterSubsystem shooterSubsystem, HolderSubsystem holderSubsystem, boolean intake) {
+  public D2Intake(ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, boolean intake) {
     m_shooterSubsystem = shooterSubsystem;
     m_holderSubsystem = holderSubsystem;
     m_intake = intake;

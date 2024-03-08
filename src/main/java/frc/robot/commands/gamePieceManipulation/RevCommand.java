@@ -6,19 +6,18 @@ package frc.robot.commands.gamePieceManipulation;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.HolderSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ManipulatorSubsystem;
 
 public class RevCommand extends Command {
-  ShooterSubsystem m_shooterSubsystem;
-  HolderSubsystem m_holderSubsystem;
+  ManipulatorSubsystem m_manipulatorSubsystem;
+  ManipulatorSubsystem m_holderSubsystem;
 
   /** Creates a new RevCommand. */
-  public RevCommand(ShooterSubsystem shooterSubsystem, HolderSubsystem holderSubsystem) {
-    m_shooterSubsystem = shooterSubsystem;
+  public RevCommand(ManipulatorSubsystem manipulatorSubsystem, ManipulatorSubsystem holderSubsystem) {
+    m_manipulatorSubsystem = manipulatorSubsystem;
     m_holderSubsystem = holderSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooterSubsystem, m_holderSubsystem);
+    addRequirements(m_manipulatorSubsystem, m_holderSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -27,11 +26,11 @@ public class RevCommand extends Command {
     System.out.println("revCommand initialize");
     Constants.States.m_runningShooterAndHolder = true;
     if (Constants.States.m_shootIntakeSide) {
-      m_shooterSubsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM : Constants.ShooterConstants.k_ampShootVelocityRPM);
+      m_manipulatorSubsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM : Constants.ShooterConstants.k_ampShootVelocityRPM);
       m_holderSubsystem.setVelocityRPM(0);
     } else {
-      m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerFeedPower);
-      m_shooterSubsystem.setVelocityRPM(0);
+      m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
+      m_manipulatorSubsystem.setVelocityRPM(0);
     }
   }
 
@@ -42,7 +41,7 @@ public class RevCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // m_shooterSubsystem.stop();
+    // m_ManipulatorSubsystem.stop();
     // m_holderSubsystem.stop();
     Constants.States.m_runningShooterAndHolder = false;
     System.out.println("rev command end");

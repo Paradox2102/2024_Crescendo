@@ -6,18 +6,17 @@ package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.HolderSubsystem;
+import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 
 public class CountBulldoze extends Command {
   boolean m_lastState = false;
-  ShooterSubsystem m_shooterSubsytem;
-  HolderSubsystem m_holderSubsystem;
+  ManipulatorSubsystem m_shooterSubsytem;
+  ManipulatorSubsystem m_holderSubsystem;
   PivotSubsystem m_pivotSubsystem;
   int m_gamePiecesBulldozed = 0;
   /** Creates a new CountBulldoze. */
-  public CountBulldoze(ShooterSubsystem shooterSubsystem, HolderSubsystem holderSubsystem, PivotSubsystem pivotSubsystem) {
+  public CountBulldoze(ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, PivotSubsystem pivotSubsystem) {
     m_shooterSubsytem = shooterSubsystem;
     m_holderSubsystem = holderSubsystem;
     m_pivotSubsystem = pivotSubsystem;

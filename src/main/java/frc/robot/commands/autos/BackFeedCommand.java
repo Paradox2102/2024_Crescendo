@@ -7,14 +7,14 @@ package frc.robot.commands.autos;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ManipulatorSubsystem;
 
 public class BackFeedCommand extends Command {
-  ShooterSubsystem m_shooterSubsystem;
+  ManipulatorSubsystem m_shooterSubsystem;
   Timer m_dwellTimer = new Timer();
 
   /** Creates a new RevCommand. */
-  public BackFeedCommand(ShooterSubsystem shooterSubsystem) {
+  public BackFeedCommand(ManipulatorSubsystem shooterSubsystem) {
     m_shooterSubsystem = shooterSubsystem;
     m_dwellTimer.reset();
     // Use addRequirements() here to declare subsystem dependencies.

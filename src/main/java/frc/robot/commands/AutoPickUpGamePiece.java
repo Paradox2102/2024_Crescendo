@@ -7,18 +7,16 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.HolderSubsystem;
+import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 
 public class AutoPickUpGamePiece extends Command {
   DriveSubsystem m_driveSubsystem;
-  HolderSubsystem m_holderSubsystem;
-  ShooterSubsystem m_shooterSubsystem;
+  ManipulatorSubsystem m_holderSubsystem;
+  ManipulatorSubsystem m_shooterSubsystem;
   PivotSubsystem m_pivotSubsystem;
 
   DoubleSupplier m_x;
@@ -37,7 +35,7 @@ public class AutoPickUpGamePiece extends Command {
   double m_setpoint = 0;
 
   /** Creates a new AutoPickUpGamePiece. */
-  public AutoPickUpGamePiece(DriveSubsystem driveSubsystem, PivotSubsystem pivotSubsystem, ShooterSubsystem shooterSubsystem, HolderSubsystem holderSubsystem, DoubleSupplier x, DoubleSupplier y, DoubleSupplier rot) {
+  public AutoPickUpGamePiece(DriveSubsystem driveSubsystem, PivotSubsystem pivotSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, DoubleSupplier x, DoubleSupplier y, DoubleSupplier rot) {
     m_driveSubsystem = driveSubsystem;
     m_pivotSubsystem = pivotSubsystem;
     m_shooterSubsystem = shooterSubsystem;

@@ -24,41 +24,9 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "speaker to center 4 to shoot far"
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "intake"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "source/amp 3 shots"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "rev shooter"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
+            "pathName": "speaker to center 4 to shoot far"
           }
         },
         {
@@ -68,41 +36,9 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "shoot far to center 5 to shoot far"
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "intake"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "source/amp 3 shots"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "rev shooter"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
+            "pathName": "shoot far to center 5 to shoot far"
           }
         },
         {

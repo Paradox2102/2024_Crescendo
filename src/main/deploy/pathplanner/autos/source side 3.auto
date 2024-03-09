@@ -24,21 +24,9 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "speaker to center 4 to shoot far"
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "feedthrough"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "shoot far to center 5 to shoot far"
           }
         },
         {

@@ -30,21 +30,9 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "speaker to center 1 to shoot"
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "feedthrough"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "shoot to center 2 to shoot"
           }
         },
         {

@@ -54,10 +54,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("cam avg delay", stats.m_averageDelay);
     SmartDashboard.putNumber("cam min delay", stats.m_minDelay);
     SmartDashboard.putNumber("cam max delay", stats.m_maxDelay);
-     try {
-      Constants.States.m_alliance = DriverStation.getAlliance().get();
-    }
-    catch (Exception ex) {}
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -75,11 +71,14 @@ public class Robot extends TimedRobot {
     //m_robotContainer.m_apriltagCamera.disableCameras(true);
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     m_robotContainer.m_apriltagCamera.setLogging(true);
-    Constants.States.m_enableSuperstructure = false;
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    try {
+      Constants.States.m_alliance = DriverStation.getAlliance().get();
+    }
+    catch (Exception ex) {}
   }
 
   /** This function is called periodically during autonomous. */
@@ -97,7 +96,10 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     Constants.States.m_shootIntakeSide = true; // true
-    Constants.States.m_enableSuperstructure = true;
+    try {
+      Constants.States.m_alliance = DriverStation.getAlliance().get();
+    }
+    catch (Exception ex) {}
   }
 
   /** This function is called periodically during operator control. */

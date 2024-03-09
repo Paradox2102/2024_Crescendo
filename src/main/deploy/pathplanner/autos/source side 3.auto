@@ -24,27 +24,103 @@
           }
         },
         {
-          "type": "path",
+          "type": "deadline",
           "data": {
-            "pathName": "speaker to center 4 to shoot far"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "speaker to center 4 to shoot far"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 3.0
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "intake"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "source/amp 3 aim"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "rev shooter"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "feedthrough"
+            "name": "shoot"
           }
         },
         {
-          "type": "path",
+          "type": "deadline",
           "data": {
-            "pathName": "shoot far to center 5 to shoot far"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "shoot far to center 5 to shoot far"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 2.0
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "intake"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "source/amp 3 aim"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "rev shooter"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "feedthrough"
+            "name": "shoot"
           }
         }
       ]

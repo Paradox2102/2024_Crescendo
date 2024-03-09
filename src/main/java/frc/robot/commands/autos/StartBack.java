@@ -16,6 +16,6 @@ public class StartBack extends SequentialCommandGroup {
   public StartBack() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new SetSpeakerAmpMode(true), new ToggleShootSideCommand(false), new EnableSuperStructure());
+    addCommands(new SetSpeakerAmpMode(true), new ToggleShootSideCommand(false));
   }
 }

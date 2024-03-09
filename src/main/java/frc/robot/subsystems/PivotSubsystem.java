@@ -122,8 +122,6 @@ public class PivotSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Pivot Calculated Error", Math.abs(getAngleInDegrees() - m_setPoint));
     SmartDashboard.putNumber("Pivot Set Point", m_setPoint);
     Constants.PivotConstants.k_ampPositionDegrees = SmartDashboard.getEntry("Amp Angle").getDouble(0);
-    if (Constants.States.m_enableSuperstructure) {
-      m_pivotMotor.set(m_power);
-    }
+    m_pivotMotor.set(m_power);
   }
 }

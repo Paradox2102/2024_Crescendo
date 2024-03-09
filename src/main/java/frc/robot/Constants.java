@@ -362,7 +362,6 @@ public final class Constants {
     public static boolean m_isGamePieceStowed = false;
     public static boolean m_faceSpeaker = false;
     public static boolean m_intaking = false;
-    public static boolean m_enableSuperstructure = false;
     public static boolean m_autoRotateAim = true;
     public static DriverStation.Alliance m_alliance = DriverStation.Alliance.Blue;
   }

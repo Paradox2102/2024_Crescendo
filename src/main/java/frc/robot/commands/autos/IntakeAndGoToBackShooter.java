@@ -13,11 +13,11 @@ public class IntakeAndGoToBackShooter extends Command {
   /** Creates a new IntakeAndGoToBackShooter. */
   ManipulatorSubsystem m_shooterSubsystem;
   PivotSubsystem m_pivotSubsystem;
-  double m_endPos;
-  public IntakeAndGoToBackShooter(ManipulatorSubsystem shooterSubsystem, PivotSubsystem pivotSubsystem, double endPos) {
+  double m_endDistance;
+  public IntakeAndGoToBackShooter(ManipulatorSubsystem shooterSubsystem, PivotSubsystem pivotSubsystem, double endDistance) {
     m_shooterSubsystem = shooterSubsystem;
     m_pivotSubsystem = pivotSubsystem;
-    m_endPos = endPos;
+    m_endDistance = endDistance;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooterSubsystem, m_pivotSubsystem);
   }
@@ -37,7 +37,7 @@ public class IntakeAndGoToBackShooter extends Command {
   @Override
   public void end(boolean interrupted) {
     m_shooterSubsystem.stop();
-    m_pivotSubsystem.setPositionDegrees(m_pivotSubsystem.getPivotAngleFromDistanceFromSpeaker(1.8));
+    m_pivotSubsystem.setPositionDegrees(m_pivotSubsystem.getPivotAngleFromDistanceFromSpeaker(m_endDistance));
   }
 
   // Returns true when the command should end.

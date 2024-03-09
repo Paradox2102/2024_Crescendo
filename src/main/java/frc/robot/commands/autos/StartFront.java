@@ -16,6 +16,6 @@ public class StartFront extends SequentialCommandGroup {
   public StartFront() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new SetSpeakerAmpMode(true), new ToggleShootSideCommand(true), new EnableSuperStructure());
+    addCommands(new SetSpeakerAmpMode(true), new ToggleShootSideCommand(true));
   }
 }

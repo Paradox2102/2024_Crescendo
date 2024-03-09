@@ -32,6 +32,25 @@
                 "data": {
                   "pathName": "speaker to center 3"
                 }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 3.25
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "intake"
+                      }
+                    }
+                  ]
+                }
               }
             ]
           }
@@ -45,6 +64,18 @@
                 "data": {
                   "pathName": "center 3 to shoot"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "source/amp 3 aim"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "rev shooter"
+                }
               }
             ]
           }
@@ -52,7 +83,7 @@
         {
           "type": "named",
           "data": {
-            "name": "feedthrough"
+            "name": "shoot"
           }
         }
       ]

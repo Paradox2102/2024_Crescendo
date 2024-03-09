@@ -87,7 +87,10 @@ public final class Constants {
         4.75,
         5,
         5.25,
-        5.5
+        5.5, 
+        5.8,
+        6.25,
+        7
       };
       PivotConstants.k_anglesFront = new double[] {
         10, // 1.3,
@@ -102,7 +105,10 @@ public final class Constants {
         39.1, // 4.75,
         39.2, // 5,
         39.4, // 5.25,
-        42.15 // 5.5
+        42.15, // 5.5
+        40.5, // 5.8
+        40.4, // 6.25
+        40.1 // 7
       };
       PivotConstants.k_distancesBack = new double[] {
         1.4,
@@ -222,7 +228,7 @@ public final class Constants {
     public static final double k_rotateIZone = 70;
     public static final double k_rotateDeadzone = 2;
 
-    public static final double k_lookAheadTimeSeconds = .5;
+    public static final double k_lookAheadTimeSeconds = .2;
 
     public static final Translation2d k_rotatePoint = new Translation2d(0, 0);
 
@@ -308,6 +314,9 @@ public final class Constants {
     public static double k_i = 0; //.00052
     public static double k_d = 0;
     public static double k_iZone = 0;
+
+    public static final double[] k_revDistances = {5.8, 6.5, 8, 10, 12};
+    public static final double[] k_revSpeeds = {-5000, -5500, -5750, -4000, -2000};
   }
 
   // Positive is intake. negative is shoot intake side

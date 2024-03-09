@@ -58,14 +58,14 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void periodic() {
     //setPosition
     double pid = m_PID.calculate(getCookedElevatorPosition(), m_elevatorPoint);
-    SmartDashboard.putNumber("Distance from Elevator Point", m_elevatorPoint - getCookedElevatorPosition());
+    // SmartDashboard.putNumber("Distance from Elevator Point", m_elevatorPoint - getCookedElevatorPosition());
     //power
-    SmartDashboard.putNumber("Elevator Power", m_power);
+    // SmartDashboard.putNumber("Elevator Power", m_power);
     m_power = Constants.ElevatorConstants.k_f * Math.signum(pid) + pid;
     // m_elevatorMotor.set(m_power);
     //show displays on the SmartDasboard --> where elevator is positioned
-    SmartDashboard.putNumber("Elevator Raw Position", getRawElevatorPosition());
-    SmartDashboard.putNumber("Elevator Cooked Position", getCookedElevatorPosition());
+    // SmartDashboard.putNumber("Elevator Raw Position", getRawElevatorPosition());
+    // SmartDashboard.putNumber("Elevator Cooked Position", getCookedElevatorPosition());
     // This method will be called once per scheduler run
   }
 }

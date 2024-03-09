@@ -66,7 +66,8 @@ public class ShootCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // Shooter automatically stops in default manipulator command (not added here so can flow into amp shoot)
+    m_shooterSubsystem.stop();
+    m_holderSubsystem.stop();
     m_dwellTimer.stop();
   }
 

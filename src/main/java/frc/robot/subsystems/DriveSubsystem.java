@@ -186,7 +186,7 @@ public class DriveSubsystem extends SubsystemBase {
   public double getFutureRotationalGoalFromTargetDegrees() {
     boolean isRed = Constants.States.m_alliance == DriverStation.Alliance.Red;
     if (!Constants.States.m_speakerMode) {
-      return (isRed ? -90 : 90);
+      return (isRed ? 90 : -90);
     }
     ApriltagLocation speaker = getSpeakerLocationMeters();
     double xDist = m_futurePos.getX() - speaker.m_xMeters;
@@ -201,7 +201,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   // is in zone and has game piece and auto aim not disabled
   public boolean shouldAim() {
-    return (Constants.States.m_speakerMode && isInAimingZone() && Constants.States.m_hasGamePiece && Constants.States.m_autoRotateAim);
+    return (isInAimingZone() && Constants.States.m_hasGamePiece && Constants.States.m_autoRotateAim);
   }
 
   public SwerveModulePosition[] getModulePosition() {
@@ -228,23 +228,23 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    SmartDashboard.putNumber("Turn FR", (m_frontRight.getAngleRadians()));///Math.PI);
-    SmartDashboard.putNumber("Turn FL", m_frontLeft.getAngleRadians());// - (Math.PI / 2)) / Math.PI);
-    SmartDashboard.putNumber("Turn BR", m_backRight.getAngleRadians());// + (Math.PI / 2)) / Math.PI);
-    SmartDashboard.putNumber("Turn BL", m_backLeft.getAngleRadians());// + (Math.PI)) / Math.PI);
+    // SmartDashboard.putNumber("Turn FR", (m_frontRight.getAngleRadians()));///Math.PI);
+    // SmartDashboard.putNumber("Turn FL", m_frontLeft.getAngleRadians());// - (Math.PI / 2)) / Math.PI);
+    // SmartDashboard.putNumber("Turn BR", m_backRight.getAngleRadians());// + (Math.PI / 2)) / Math.PI);
+    // SmartDashboard.putNumber("Turn BL", m_backLeft.getAngleRadians());// + (Math.PI)) / Math.PI);
     // SmartDashboard.putNumber("Pose Est X", (m_tracker.getPose2dFRC().getTranslation().getX()));
     // SmartDashboard.putNumber("Pose Est Y", (m_tracker.getPose2dFRC().getTranslation().getY()));
     // SmartDashboard.putNumber("Pose Est Rot", (m_tracker.getPose2dFRC().getRotation().getDegrees()));
-    SmartDashboard.putNumber("Pigeon2", m_gyro.getYaw().getValueAsDouble());
-    SmartDashboard.putNumber("Gyro Rotation2D", getGyroRotation2d().getDegrees());
-    SmartDashboard.putNumber("Tracker Rotation2D", m_tracker.getPose2d().getRotation().getDegrees());
-    SmartDashboard.putNumber("Speaker Distance Translation", getTranslationalDistanceFromSpeakerMeters());
-    SmartDashboard.putNumber("Speaker X", getSpeakerLocationMeters().m_xMeters);
-    SmartDashboard.putNumber("Speaker Y", getSpeakerLocationMeters().m_yMeters);
-    SmartDashboard.putBoolean("Face Speaker", Constants.States.m_faceSpeaker);
-    SmartDashboard.putBoolean("Shoot Front/Back", Constants.States.m_shootIntakeSide);
-    SmartDashboard.putBoolean("Aim On", Constants.States.m_autoRotateAim);
-    SmartDashboard.putString("MESSAGE", "Ajith furry arc???");
+    // SmartDashboard.putNumber("Pigeon2", m_gyro.getYaw().getValueAsDouble());
+    // SmartDashboard.putNumber("Gyro Rotation2D", getGyroRotation2d().getDegrees());
+    // SmartDashboard.putNumber("Tracker Rotation2D", m_tracker.getPose2d().getRotation().getDegrees());
+    // SmartDashboard.putNumber("Speaker Distance Translation", getTranslationalDistanceFromSpeakerMeters());
+    // SmartDashboard.putNumber("Speaker X", getSpeakerLocationMeters().m_xMeters);
+    // SmartDashboard.putNumber("Speaker Y", getSpeakerLocationMeters().m_yMeters);
+    // SmartDashboard.putBoolean("Face Speaker", Constants.States.m_faceSpeaker);
+    // SmartDashboard.putBoolean("Shoot Front/Back", Constants.States.m_shootIntakeSide);
+    // SmartDashboard.putBoolean("Aim On", Constants.States.m_autoRotateAim);
+    // SmartDashboard.putString("MESSAGE", "Ajith furry arc???");
 
     m_tracker.update(m_apriltagCamera);
 

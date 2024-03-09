@@ -26,9 +26,9 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "wait for rev"
+                        "waitTime": 1.0
                       }
                     },
                     {

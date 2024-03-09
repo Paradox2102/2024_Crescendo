@@ -1,0 +1,156 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.9231639413397603,
+      "y": 6.249595017004761
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "start back"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "subwoofer aim"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "wait for rev"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "back feed"
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "begin 4 Path"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake back"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "back 1st Path"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "back feed"
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "2nd Go Path"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake back"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "back 2nd Path"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "back feed"
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "3rd Go Path"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake back"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "back 3rd Path"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "back feed"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "rev back"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

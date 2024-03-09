@@ -13,8 +13,8 @@ import frc.robot.subsystems.PivotSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DisableEverything extends InstantCommand {
-  public DisableEverything(DriveSubsystem driveSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, PivotSubsystem pivotSubsystem) {
+public class StopEverything extends InstantCommand {
+  public StopEverything(DriveSubsystem driveSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, PivotSubsystem pivotSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveSubsystem, shooterSubsystem, holderSubsystem, pivotSubsystem);
   }

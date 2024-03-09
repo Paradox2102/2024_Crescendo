@@ -31,6 +31,7 @@ public class IntakeCommand extends Command {
     Constants.States.m_intaking = true;
   }
 
+  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {}
@@ -47,6 +48,6 @@ public class IntakeCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Constants.States.m_isGamePieceStowed;
+    return Constants.States.m_hasGamePiece;
   }
 }

@@ -20,16 +20,18 @@ public class ManipulatorSubsystem extends SubsystemBase {
   private RelativeEncoder m_encoder;
   private final SparkPIDController m_PID;
   boolean m_shooter;
+  DriveSubsystem m_driveSubsystem;
 
   private double m_velocity = 0;
   /** Creates a new FrontSubsystem. */
-  public ManipulatorSubsystem(int id) {
+  public ManipulatorSubsystem(DriveSubsystem driveSubsystem, int id) {
     m_shooter = id == Constants.ShooterConstants.k_shooterMotor;
     SmartDashboard.putNumber("Amp Velo", 0);
     m_motor = new CANSparkFlex(id, MotorType.kBrushless);
     m_motor.restoreFactoryDefaults();
     m_encoder = m_motor.getEncoder();
     m_PID = m_motor.getPIDController();
+    m_driveSubsystem = driveSubsystem;
     if (m_shooter) {
       m_PID.setFF(Constants.ShooterConstants.k_f);
       m_PID.setP(Constants.ShooterConstants.k_p);
@@ -75,6 +77,16 @@ public class ManipulatorSubsystem extends SubsystemBase {
 
   public void stop() {
     setPower(0);
+  }
+
+  public double getRevSpeed() {
+    double distanceFromSpeaker = m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters();
+    for (int i = 0; i < Constants.ShooterConstants.k_revDistances.length; i++) {
+      if (distanceFromSpeaker <= Constants.ShooterConstants.k_revDistances[i]) {
+        return Constants.ShooterConstants.k_revSpeeds[i];
+      }
+    }
+    return 0;
   }
 
   @Override

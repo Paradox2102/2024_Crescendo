@@ -70,8 +70,8 @@ public class RobotContainer {
   final ShooterSensors m_shooterSensors = new ShooterSensors();
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera);
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem(m_driveSubsystem);
-  private final ManipulatorSubsystem m_shooterSubsystem = new ManipulatorSubsystem(Constants.ShooterConstants.k_shooterMotor);
-  private final ManipulatorSubsystem m_holderSubsystem = new ManipulatorSubsystem(Constants.HolderConstants.k_holdingMotor);
+  private final ManipulatorSubsystem m_shooterSubsystem = new ManipulatorSubsystem(m_driveSubsystem, Constants.ShooterConstants.k_shooterMotor);
+  private final ManipulatorSubsystem m_holderSubsystem = new ManipulatorSubsystem(m_driveSubsystem, Constants.HolderConstants.k_holdingMotor);
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
 
   private final CommandJoystick m_joystick = new CommandJoystick(1);
@@ -165,7 +165,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
-    m_driverController.leftTrigger().toggleOnTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
+    m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
     m_driverController.rightTrigger().whileTrue(new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
         
     m_driverController.y().onTrue(new AutoOrientCommand(m_driveSubsystem, 180, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));

@@ -41,9 +41,6 @@ public class AutoOrientCommand extends Command {
   public void execute() {
     double x = m_x.getAsDouble();
     double y = m_y.getAsDouble();
-    // double heading = m_subsystem.getHeadingInDegrees();
-    // double rot = m_pid.calculate(heading, m_angle);
-    // rot += (k_f * Math.signum(rot));
     double rot = m_subsystem.orientPID(m_angle);
     m_subsystem.drive(y, -x, rot, true, true, Constants.DriveConstants.k_rotatePoint);
   }

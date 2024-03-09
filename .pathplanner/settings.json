@@ -3,16 +3,13 @@
   "robotLength": 0.83,
   "holonomicMode": true,
   "pathFolders": [
-    "New New Folder",
+    "shoot grab shoot",
     "mobility",
     "move to shoot",
-    "shoot grab shoot",
     "shoot to piece",
     "start to piece"
   ],
-  "autoFolders": [
-    "New Folder"
-  ],
+  "autoFolders": [],
   "defaultMaxVel": 4.8,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,

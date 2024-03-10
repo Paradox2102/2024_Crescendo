@@ -45,7 +45,7 @@ public final class Constants {
       PivotConstants.k_intakePositionDegrees = 128;
       PivotConstants.k_f = .015;
       PivotConstants.k_p = .032;
-      PivotConstants.k_i = 0;
+      PivotConstants.k_i = 0.00005;
       PivotConstants. k_d = .0005;
       PivotConstants.k_iZone = 10;
       PivotConstants.k_resetPositionDegrees = 4;
@@ -60,10 +60,10 @@ public final class Constants {
 
       // Shooter
       ShooterConstants.k_f = 1.1 / ShooterConstants.k_maxVelocityRPM;
-      ShooterConstants.k_p = 0.00005;
-      ShooterConstants.k_i = 0.0000001;
+      ShooterConstants.k_p = 0.0004; //0.00005
+      ShooterConstants.k_i = 0.0000003; //0.0000001
       ShooterConstants.k_d = 0;
-      ShooterConstants.k_iZone = 200;
+      ShooterConstants.k_iZone = 400;
 
       // Holder 
       HolderConstants.k_f = 1.1 /  ShooterConstants.k_maxVelocityRPM;
@@ -241,10 +241,10 @@ public final class Constants {
   public static class PivotConstants {
 
     public static double k_f = .015;
-    public static double k_p = 0.017;
-    public static double k_i = 0.02;
-    public static double k_d = 0;
-    public static double k_iZone = 10;
+    public static double k_p = 0.017; // .017
+    public static double k_i = 0.02; // .02
+    public static double k_d = 0; // 0
+    public static double k_iZone = 10; // 10
 
     public static boolean k_isInverted = false;
     public static final int k_pivotMotor = 9;
@@ -299,7 +299,7 @@ public final class Constants {
     public static double k_intakeVelocityRPM = 3000;
     public static final double k_speakerShootVelocityRPM = -5000; // -5750
     public static double k_ampShootVelocityRPM = -1150; // -1500
-    public static final double k_maxVelocityRPM = 6000;
+    public static final double k_maxVelocityRPM = 6250; //6000
     
     public static final double k_speakerFeedPower = 0.25;
     public static final double k_deadzone = 25;
@@ -316,7 +316,7 @@ public final class Constants {
     public static double k_iZone = 0;
 
     public static final double[] k_revDistances = {5.8, 6.5, 8, 10, 12};
-    public static final double[] k_revSpeeds = {-5000, -5500, -5750, -4000, -2000};
+    public static final double[] k_revSpeeds = {-5000, -5500, -5750, -4000, -2000}; //{-5000, -5500, -5750, -4000, -2000}
   }
 
   // Positive is intake. negative is shoot intake side
@@ -331,10 +331,10 @@ public final class Constants {
     public static final double k_adjustGamePiecePower = -.2;
 
     public static double k_f = 1.0 / 5350;
-    public static double k_p = 0.00004;
-    public static double k_i = 0.0015;
-    public static double k_d = 0;
-    public static double k_iZone = 50;
+    public static double k_p = 0.00004; //0.00004
+    public static double k_i = 0.0015; //0.0015
+    public static double k_d = 0; // 0
+    public static double k_iZone = 50; // 50
   }
 
   public static class ElevatorConstants {

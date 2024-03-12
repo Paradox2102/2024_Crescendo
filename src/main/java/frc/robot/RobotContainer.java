@@ -23,6 +23,7 @@ import frc.robot.commands.autos.StartBack;
 import frc.robot.commands.autos.StartFront;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.AutoOrientCommand;
+import frc.robot.commands.drivetrain.EjectSpinCommand;
 import frc.robot.commands.gamePieceManipulation.DefaultManipulatorCommand;
 import frc.robot.commands.gamePieceManipulation.EjectGamePiece;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
@@ -183,7 +184,7 @@ public class RobotContainer {
     m_joystick.button(7).onTrue(new InstantCommand(() -> {Constants.States.m_shootIntakeSide = !Constants.States.m_shootIntakeSide;}));
     m_joystick.button(8).toggleOnTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
     m_joystick.button(9).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));
-    //m_joystick.button(10).toggleOnTrue(new SetElevatorPosition(m_elevatorSubsystem, 23.5));
+    m_joystick.button(10).whileTrue(new EjectSpinCommand(m_driveSubsystem, () -> m_joystick.getY()));
     m_joystick.button(11).onTrue(new StopEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     m_joystick.button(6).onTrue(new InstantCommand(() -> {Constants.States.m_autoRotateAim = !Constants.States.m_autoRotateAim;}));
 

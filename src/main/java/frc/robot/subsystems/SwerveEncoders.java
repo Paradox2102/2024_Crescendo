@@ -9,21 +9,39 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 
+import frc.robot.Constants;
+
 /** Add your docs here. */
 public class SwerveEncoders {
-    private static final double k_ticksToDegrees = 48/360;
-    AbsoluteEncoder m_absolute;
-    RelativeEncoder m_relative;
+    private final AbsoluteEncoder m_absolute;
+    private final RelativeEncoder m_relative;
+    private double m_startingOffset;
+
     public SwerveEncoders(CANSparkMax motor) {
         m_absolute = motor.getAbsoluteEncoder(Type.kDutyCycle);
         m_relative = motor.getEncoder();
     }
 
     public void initialize() {
-        m_relative.setPosition(m_absolute.getPosition());
+        m_relative.setPositionConversionFactor(Constants.DriveConstants.k_turnTicksToRadiansPosition);
+        m_relative.setVelocityConversionFactor(Constants.DriveConstants.k_turnTicksToDegreesVelocity);
+
+        setPositionOffset();
     }
 
-    public double getRelativePosInDegrees() {
-        return m_relative.getPosition() * k_ticksToDegrees;
+    public void setPositionOffset(){
+        m_startingOffset = m_absolute.getPosition();
+    }
+
+    public double getPosition() {
+        return m_relative.getPosition() + m_startingOffset;
+    }
+
+    public double getVelocity() {
+        return m_relative.getVelocity();
+    }
+
+    public double getAbsolutePosConversionFactor(){
+        return m_absolute.getPositionConversionFactor();
     }
 }

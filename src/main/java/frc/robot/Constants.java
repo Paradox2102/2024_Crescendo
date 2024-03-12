@@ -206,7 +206,7 @@ public final class Constants {
     public static final int k_turnMotorCurrentLimit = 20; // amps
 
     // Driving Constants
-    public static double k_maxSpeedMetersPerSecond = 2;
+    public static double k_maxSpeedMetersPerSecond = 1.5;
     public static final double k_maxDriveAcceleration = 3;
     public static final double k_maxAngularSpeed = Math.PI * 2; // radians per second
     public static final double k_maxAngularAcceleration = Math.PI;

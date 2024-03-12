@@ -301,7 +301,7 @@ public final class Constants {
     public static double k_ampShootVelocityRPM = -1150; // -1500
     public static final double k_maxVelocityRPM = 6250; //6000
     
-    public static final double k_speakerFeedPower = 0.25;
+    public static final double k_speakerFeedPower = 1;
     public static final double k_deadzone = 25;
 
     public static final double k_adjustGamePiecePower = -.2;
@@ -324,7 +324,7 @@ public final class Constants {
     public static final int k_holdingMotor = 10;
     public static double k_intakeVelocityRPM = 1000;
     public static final double k_speakerShootVelocityRPM = 5000; 
-    public static final double k_speakerFeedPower = -0.25;
+    public static final double k_speakerFeedPower = -1;
     public static final double k_ampFeedPower = -0.35; // -500
 
     public static final double k_deadzone = 25;

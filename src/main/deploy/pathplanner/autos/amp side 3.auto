@@ -56,15 +56,22 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "race",
                       "data": {
-                        "name": "source/amp 3 aim"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "rev shooter"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "auto aim"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "rev shooter"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -106,15 +113,22 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "race",
                       "data": {
-                        "name": "source/amp 3 aim"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "rev shooter"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "auto aim"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "rev shooter"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]

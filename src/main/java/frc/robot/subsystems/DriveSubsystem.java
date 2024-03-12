@@ -189,9 +189,9 @@ public class DriveSubsystem extends SubsystemBase {
       return (isRed ? 90 : -90);
     }
     ApriltagLocation speaker = getSpeakerLocationMeters();
-    double xDist = m_futurePos.getX() - speaker.m_xMeters;
-    double yDist = m_futurePos.getY() - speaker.m_yMeters;
-    return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan((yDist / xDist))) + (isRed ? 180 : 0) + (Constants.States.m_shootIntakeSide ? 0 : 180));
+    double xDist = m_tracker.getPose2d().getX() - speaker.m_xMeters; // m_futurePos
+    double yDist = m_tracker.getPose2d().getY() - speaker.m_yMeters; // m_futurePos
+    return ParadoxField.normalizeAngle(Math.toDegrees(Math.atan2(yDist, xDist)) + (isRed ? 180 : 0) + (Constants.States.m_shootIntakeSide ? 0 : 180));
   }
 
   // Is in speaker or amp aiming zone
@@ -251,6 +251,8 @@ public class DriveSubsystem extends SubsystemBase {
 
     // Estimate future position of robot *****************************************
     Pose2d currentPos = m_tracker.getPose2d();
+    SmartDashboard.putNumber("Rot Error", m_orientPID.getPositionError());
+    SmartDashboard.putNumber("Rotate PID", m_orientPID.calculate(getFutureRotationalGoalFromTargetDegrees()));
 
     double currentY = currentPos.getY();
     double currentX = currentPos.getX();
@@ -263,7 +265,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     double futureY = currentY + yVelocity * Constants.DriveConstants.k_lookAheadTimeSeconds;
     double futureX = currentX + xVelocity * Constants.DriveConstants.k_lookAheadTimeSeconds;
-    double futureAngle = currentAngle.getDegrees() + Math.toDegrees(angularVelocity) * Constants.DriveConstants.k_lookAheadTimeSeconds;
+    double futureAngle = ParadoxField.normalizeAngle(currentAngle.getDegrees() + Math.toDegrees(angularVelocity) * Constants.DriveConstants.k_lookAheadTimeSeconds);
 
     m_futurePos = new Pose2d(futureX, futureY, Rotation2d.fromDegrees(futureAngle));
     // *********************************************************

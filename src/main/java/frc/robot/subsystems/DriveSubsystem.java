@@ -245,14 +245,14 @@ public class DriveSubsystem extends SubsystemBase {
     // SmartDashboard.putBoolean("Shoot Front/Back", Constants.States.m_shootIntakeSide);
     // SmartDashboard.putBoolean("Aim On", Constants.States.m_autoRotateAim);
     // SmartDashboard.putString("MESSAGE", "Ajith furry arc???");
-    SmartDashboard.putNumber("Target Rot", getFutureRotationalGoalFromTargetDegrees());
-    SmartDashboard.putNumber("Rotate PID Input", m_orientPID.calculate(getFutureRotationalGoalFromTargetDegrees()));
 
     m_tracker.update(m_apriltagCamera);
 
 
     // Estimate future position of robot *****************************************
     Pose2d currentPos = m_tracker.getPose2d();
+    SmartDashboard.putNumber("Rot Error", m_orientPID.getPositionError());
+    SmartDashboard.putNumber("Rotate PID", m_orientPID.calculate(getFutureRotationalGoalFromTargetDegrees()));
 
     double currentY = currentPos.getY();
     double currentX = currentPos.getX();

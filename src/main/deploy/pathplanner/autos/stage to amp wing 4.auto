@@ -1,0 +1,150 @@
+{
+  "version": 1.0,
+  "startingPose": null,
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "start back"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "subwoofer aim"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.0
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "back feed"
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "speaker to wing 3"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake back"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "wing 3 turnaround"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "back feed"
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "wing 3 to 2"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake back"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "wing 2 turnaround"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "back feed"
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "wing 2 to 1"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake back"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "wing 1 turnaround"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "back feed"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "rev back"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

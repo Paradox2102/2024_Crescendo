@@ -57,6 +57,7 @@ public final class Constants {
       DriveConstants.k_FROffset = .04;
       DriveConstants.k_BLOffset = 4.19 + (Math.PI);
       DriveConstants.k_BROffset = 2.02 + (Math.PI / 2);
+      DriveConstants.k_maxSpeedMetersPerSecond = 4.8;
 
       // Shooter
       ShooterConstants.k_f = 1.1 / ShooterConstants.k_maxVelocityRPM;
@@ -155,10 +156,10 @@ public final class Constants {
 
     public static final double k_driveRadius = .475953574;
 
-    public static double k_FLOffset = 4.8 - (Math.PI / 2); // 1.67
-    public static double k_FROffset = 5.33; // 2.21
-    public static double k_BLOffset = 0.16 + (Math.PI); // 2.25
-    public static double k_BROffset = 4.87 + (Math.PI / 2); // 5.17
+    public static double k_FLOffset = 6.25 - (Math.PI / 2); // 4.8
+    public static double k_FROffset = 6.28; // 5.33
+    public static double k_BLOffset = 0.03 + (Math.PI); // 0.16
+    public static double k_BROffset = 6.27 + (Math.PI / 2); // 4.87
 
     public static final int k_drivingMotorPinionTeeth = 14;
 
@@ -205,7 +206,7 @@ public final class Constants {
     public static final int k_turnMotorCurrentLimit = 20; // amps
 
     // Driving Constants
-    public static final double k_maxSpeedMetersPerSecond = 4.8;
+    public static double k_maxSpeedMetersPerSecond = 2;
     public static final double k_maxDriveAcceleration = 3;
     public static final double k_maxAngularSpeed = Math.PI * 2; // radians per second
     public static final double k_maxAngularAcceleration = Math.PI;

@@ -13,16 +13,25 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class StickSubsystem extends SubsystemBase {
-  // private CANSparkMax m_leftMotor = ;
-  // private CANSparkMax m_rightMotor = ;
+  private CANSparkMax m_leftMotor = new CANSparkMax(Constants.StickConstants.k_leftStickMotor, MotorType.kBrushless);
+  private CANSparkMax m_rightMotor = new CANSparkMax(Constants.StickConstants.m_rightStickMotor, MotorType.kBrushless);
 
-  private RelativeEncoder m_stickEncoder;
+  // private RelativeEncoder m_leftstickEncoder;
+
   /** Creates a new StickSubsystem. */
-  public StickSubsystem() {}
+  public StickSubsystem() {
+    // m_leftStickEncoder = m_leftMotor.getEncoder();
+  }
+
+  public void setPoint() {
+
+  }
 
   @Override
   public void periodic() {

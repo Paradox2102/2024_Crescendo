@@ -17,7 +17,8 @@ public class LEDConfig {
     private final LEDSubsystem m_string1 = new LEDSubsystem(0, 45);
     private final LEDSubsystem m_string2 = new LEDSubsystem(45, 46, true);
     private final LEDSubsystem m_string3 = new LEDSubsystem(45 + 46, 30);
-    private final ApriltagsCamera m_camera;
+    private final ApriltagsCamera m_cameraFrontBack;
+    private final ApriltagsCamera m_cameraLeftRight;
     private final Robot m_robot;
 
     private Command m_currentCommand = null;
@@ -39,19 +40,20 @@ public class LEDConfig {
             new Blinker(m_string2, 0.2, Color.kGreen), new Blinker(m_string3, 0.2, Color.kGreen));
     private ParallelCommandGroup m_cameraError;
 
-    public LEDConfig(Robot robot, ApriltagsCamera camera) {
+    public LEDConfig(Robot robot, ApriltagsCamera cameraFrontBack, ApriltagsCamera cameraLeftRight) {
         m_robot = robot;
-        m_camera = camera;
+        m_cameraFrontBack = cameraFrontBack;
+        m_cameraLeftRight = cameraLeftRight;
 
-        m_cameraError = new ParallelCommandGroup(new DisplayCameraError(m_string1, m_camera), new DisplayCameraError(m_string2, m_camera), new DisplayCameraError(m_string3, m_camera));
+        m_cameraError = new ParallelCommandGroup(new DisplayCameraError(m_string1, m_cameraFrontBack), new DisplayCameraError(m_string2, m_cameraFrontBack), new DisplayCameraError(m_string3, m_cameraFrontBack));
     }
 
     public void periodic() {
         Command command = null;
 
-        if (!m_camera.isConnected()&&Constants.States.m_autoRotateAim) {
+        if ((!m_cameraFrontBack.isConnected() && !m_cameraLeftRight.isConnected()) && Constants.States.m_autoRotateAim) {
             command = m_cameraFailure;
-        } else if (m_camera.isTagVisible() && m_robot.isDisabled()) {
+        } else if (m_cameraFrontBack.isTagVisible() && m_robot.isDisabled()) {
             // command = m_paradox;
             command = m_cameraError;
         } else if (m_robot.isDisabled()) {

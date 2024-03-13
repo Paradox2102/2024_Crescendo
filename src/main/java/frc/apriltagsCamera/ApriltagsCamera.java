@@ -432,7 +432,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 							Logger.log("ApriltagsCamera", 3, "Max log time reached");
 						} else {
 							Logger.log("ApriltagsCameraLog", 1,
-									String.format(",%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%f,%f,%f", m_tag,
+									String.format(",%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%f,%f,%f", String.format("%s-%d-%d", m_ip, cameraNo, m_tag),
 											lastAngle, cameraAngle, calculateAngle, updateAngle,
 											estPos.getRotation().getDegrees(),
 											calculatedPos.getX(), estPos.getX(),
@@ -457,23 +457,23 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 					if (m_dashboard) {
 						// SmartDashboard.putString(String.format("c%d-%d est", cameraNo, m_tag),
 						// actual ? "actual" : "estimated");
-						SmartDashboard.putNumber(String.format("c%d-%d yaw", cameraNo, m_tag), m_yaw);
-						SmartDashboard.putNumber(String.format("c%d-%d dxp", cameraNo, m_tag), dxp);
-						SmartDashboard.putNumber(String.format("c%d-%d dyp", cameraNo, m_tag), dyp);
-						SmartDashboard.putNumber(String.format("c%d-%d cx", cameraNo, m_tag), calculatedPos.getX());
-						SmartDashboard.putNumber(String.format("c%d-%d cy", cameraNo, m_tag), calculatedPos.getY());
-						SmartDashboard.putNumber(String.format("c%d-%d ca", cameraNo, m_tag), cameraAngle);
-						SmartDashboard.putNumber(String.format("c%d-%d cac", cameraNo, m_tag), calculateAngle);
-						SmartDashboard.putNumber(String.format("c%d-%d ex", cameraNo, m_tag), estPos.getX());
-						SmartDashboard.putNumber(String.format("c%d-%d ey", cameraNo, m_tag), estPos.getY());
-						SmartDashboard.putNumber(String.format("c%d-%d ea", cameraNo, m_tag),
+						SmartDashboard.putNumber(String.format("c%s-%d-%d yaw", m_ip, cameraNo, m_tag), m_yaw);
+						SmartDashboard.putNumber(String.format("c%s-%d-%d dxp", m_ip, cameraNo, m_tag), dxp);
+						SmartDashboard.putNumber(String.format("c%s-%d-%d dyp", m_ip, cameraNo, m_tag), dyp);
+						SmartDashboard.putNumber(String.format("c%s-%d-%d cx", m_ip, cameraNo, m_tag), calculatedPos.getX());
+						SmartDashboard.putNumber(String.format("c%s-%d-%d cy", m_ip, cameraNo, m_tag), calculatedPos.getY());
+						SmartDashboard.putNumber(String.format("c%s-%d-%d ca", m_ip, cameraNo, m_tag), cameraAngle);
+						SmartDashboard.putNumber(String.format("c%s-%d-%d cac", m_ip, cameraNo, m_tag), calculateAngle);
+						SmartDashboard.putNumber(String.format("c%s-%d-%d ex", m_ip, cameraNo, m_tag), estPos.getX());
+						SmartDashboard.putNumber(String.format("c%s-%d-%d ey", m_ip, cameraNo, m_tag), estPos.getY());
+						SmartDashboard.putNumber(String.format("c%s-%d-%d ea", m_ip, cameraNo, m_tag),
 								estPos.getRotation().getDegrees());
-						SmartDashboard.putNumber(String.format("c%d-%d ad", cameraNo, m_tag), adjust);
+						SmartDashboard.putNumber(String.format("c%s-%d-%d ad", m_ip, cameraNo, m_tag), adjust);
 						// SmartDashboard.putNumber(String.format("c%d-%d sd", cameraNo, m_tag),
 						// visionSD.get(2, 0));
 					}
-					SmartDashboard.putNumber(String.format("c%d-delay", cameraNo), delay);
-					SmartDashboard.putNumber(String.format("c%d=dt", cameraNo), dt);
+					SmartDashboard.putNumber(String.format("c%s-%d-delay", m_ip, cameraNo), delay);
+					SmartDashboard.putNumber(String.format("c%s-%d=dt", m_ip, cameraNo), dt);
 				}
 			} else {
 				Logger.log("ApriltagsCamera", 1, String.format("updatePosition: Tag %d not found", m_tag));
@@ -755,8 +755,17 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	 * @param host - Specifies IP for the host
 	 * @param port - Specifies the port (default is 5800)
 	 */
+	private String m_ip = "?";
+
 	public void connect(String host, int port) {
 		m_network = new Network();
+
+		String[] s = host.split(".");
+
+		if (s.length >= 4)
+		{
+			m_ip = s[3];
+		}
 
 		m_startTime = System.currentTimeMillis();
 

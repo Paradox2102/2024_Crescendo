@@ -98,6 +98,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_orientPID.setIZone(Constants.DriveConstants.k_rotateIZone);
 
     m_frontBackCamera = frontBackCamera;
+    m_sideCamera = sideCamera;
 
     AutoBuilder.configureHolonomic(
         this::getPose, this::resetOdometry, this::getChassisSpeeds,
@@ -197,7 +198,7 @@ public class DriveSubsystem extends SubsystemBase {
         m_futurePos.getX() - speaker.m_xMeters; // m_futurePos
     double yDist =
         m_futurePos.getY() - speaker.m_yMeters; // m_futurePos
-    System.out.println(Math.toDegrees(Math.atan2(yDist, xDist)));
+    // System.out.println(Math.toDegrees(Math.atan2(yDist, xDist)));
     return ParadoxField.normalizeAngle(
         Math.toDegrees(Math.atan2(yDist, xDist)) + (isRed ? 180 : 0) +
         (Constants.States.m_shootIntakeSide ? 0 : 180));

@@ -62,6 +62,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   ApriltagsCamera m_apriltagCamera = new ApriltagsCamera();
+  ApriltagsCamera m_apriltagCameraSide = new ApriltagsCamera();
   PositionServer m_posServer = new PositionServer(m_apriltagCamera);
   Constants m_constants = new Constants();
   LEDConfig m_ledConfig;
@@ -88,7 +89,7 @@ public class RobotContainer {
   public RobotContainer(Robot robot) {
     // Configure the trigger bindings
     configureBindings();
-    m_ledConfig = new LEDConfig(robot, m_apriltagCamera);
+    m_ledConfig = new LEDConfig(robot, m_apriltagCamera, m_apriltagCameraSide);
 
     m_driveSubsystem.setTracker(m_tracker);
     NamedCommands.registerCommand("intake", new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
@@ -120,6 +121,11 @@ public class RobotContainer {
     // Back
     m_apriltagCamera.setCameraInfo(Constants.DriveConstants.k_cameraBackX, Constants.DriveConstants.k_cameraBackY, 0, ApriltagsCameraType.GS_6mm); // y = 9.5
     m_apriltagCamera.connect("10.21.2.11", 5800);
+    
+
+    m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraRightX, Constants.DriveConstants.k_cameraRightY, -90, ApriltagsCameraType.GS_6mm); 
+    m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraLeftX, Constants.DriveConstants.k_cameraLeftY, 90, ApriltagsCameraType.GS_6mm); 
+    m_apriltagCameraSide.connect("10.21.2.12", 5800);
 
     m_posServer.start();
     SmartDashboard.putData("Auto To Run",autoChooser);

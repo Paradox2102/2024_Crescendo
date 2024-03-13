@@ -229,12 +229,17 @@ public final class Constants {
 
     public static final double k_lookAheadTimeSeconds = .2;
 
-    public static final Translation2d k_rotatePoint = new Translation2d(0, 0);
+    public static Translation2d k_rotatePoint = new Translation2d(0, 0);
 
     public static double k_cameraFrontX = 8.375;
     public static double k_cameraFrontY = 9.5;
     public static double k_cameraBackX = 11.5;
     public static double k_cameraBackY = 6;
+
+    public static double k_cameraLeftX = 11.75;
+    public static double k_cameraLeftY = -5.6;
+    public static double k_cameraRightX = -11.75;
+    public static double k_cameraRightY = -5.6;
   }
 
   public static class PivotConstants {
@@ -349,6 +354,11 @@ public final class Constants {
 //PID (kinda) tuning
     // public static final double k_P = 0.002;
     public static final double k_f = 0.9;
+  }
+
+  public static class StickConstants {
+    public static final int k_leftStickMotor = 13;
+    public static final int m_rightStickMotor = 14;
   }
 
   public static final double k_idealShootingDistanceMeters = 3;

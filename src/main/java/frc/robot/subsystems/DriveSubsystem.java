@@ -435,7 +435,7 @@ public class DriveSubsystem extends SubsystemBase {
     double ySpeedDelivered =
         ySpeedCommanded * Constants.DriveConstants.k_maxSpeedMetersPerSecond;
     double rotDelivered =
-        m_currentRotation * Constants.DriveConstants.k_maxAngularSpeed;
+        m_currentRotation * (rotatePoint.equals(new Translation2d(0, 0)) ? Constants.DriveConstants.k_maxAngularSpeed : 2 * Constants.DriveConstants.k_maxAngularSpeed);
 
     BooleanSupplier all = () -> {
       var alliance = DriverStation.getAlliance();

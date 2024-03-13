@@ -6,6 +6,7 @@ package frc.robot.commands.gamePieceManipulation;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.ToggleShootSideCommand;
 import frc.robot.commands.drivetrain.JukeShotRotateAim;
 import frc.robot.subsystems.DriveSubsystem;
@@ -23,6 +24,7 @@ public class JukeShot extends SequentialCommandGroup {
       new ToggleShootSideCommand(false),
       new ParallelDeadlineGroup(
         new JukeShotRotateAim(driveSubsystem, rotateLeft), 
+        new WaitCommand(1),
         new DefaultManipulatorCommand(holderSubsystem, driveSubsystem, false),
         new DefaultManipulatorCommand(shooterSubsystem, driveSubsystem, true)
       ),

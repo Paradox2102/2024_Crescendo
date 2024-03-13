@@ -226,6 +226,7 @@ public final class Constants {
     public static final double k_rotateD = 0;
     public static final double k_rotateIZone = 70;
     public static final double k_rotateDeadzone = 2;
+    public static final double k_maxRotInput = .6;
 
     public static final double k_lookAheadTimeSeconds = .2;
 
@@ -373,6 +374,5 @@ public final class Constants {
     public static boolean m_intaking = false;
     public static boolean m_autoRotateAim = true;
     public static DriverStation.Alliance m_alliance = DriverStation.Alliance.Blue;
-    public static double rotateDirection = 0;
   }
 }

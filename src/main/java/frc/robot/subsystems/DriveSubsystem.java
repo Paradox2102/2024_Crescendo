@@ -235,6 +235,7 @@ public class DriveSubsystem extends SubsystemBase {
     // rot += (Constants.DriveConstants.k_rotateF * Math.signum(rot));
     // return Math.abs(heading) < Constants.DriveConstants.k_rotateDeadzone ? 0
     // : rot;
+    rot = rot > Constants.DriveConstants.k_maxRotInput ? Constants.DriveConstants.k_maxRotInput : rot;
     return rot;
   }
 
@@ -246,6 +247,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Rotate Error", getRotationDistanceFromTargetError());
     // // Update the odometry in the periodic block
     // SmartDashboard.putNumber("Turn FR",
     //                          (m_frontRight.getAngleRadians())); /// Math.PI);
@@ -290,10 +292,6 @@ public class DriveSubsystem extends SubsystemBase {
     // Estimate future position of robot
     // *****************************************
     Pose2d currentPos = m_tracker.getPose2d();
-    SmartDashboard.putNumber("Rot Error", m_orientPID.getPositionError());
-    SmartDashboard.putNumber(
-        "Rotate PID",
-        m_orientPID.calculate(getFutureRotationalGoalFromTargetDegrees()));
 
     double currentY = currentPos.getY();
     double currentX = currentPos.getX();

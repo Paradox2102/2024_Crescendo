@@ -229,7 +229,7 @@ public final class Constants {
 
     public static final double k_lookAheadTimeSeconds = .2;
 
-    public static final Translation2d k_rotatePoint = new Translation2d(0, 0);
+    public static Translation2d k_rotatePoint = new Translation2d(0, 0);
 
     public static double k_cameraFrontX = 8.375;
     public static double k_cameraFrontY = 9.5;

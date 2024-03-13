@@ -271,7 +271,7 @@ public class DriveSubsystem extends SubsystemBase {
     // Constants.States.m_faceSpeaker); SmartDashboard.putBoolean("Shoot
     // Front/Back", Constants.States.m_shootIntakeSide);
     // SmartDashboard.putBoolean("Aim On", Constants.States.m_autoRotateAim);
-    SmartDashboard.putNumber("FL Motor Encoder Pos", m_frontLeft.getMotorPosRadians());
+    SmartDashboard.putNumber("FL Motor Encoder Pos", m_frontLeft.getMagEncoderPosRadians());
     SmartDashboard.putNumber("FL Mag Encoder Pos", m_frontLeft.getMagEncoderPosRadians());
     SmartDashboard.putNumber("FR Motor Encoder Pos", m_frontRight.getMotorPosRadians());
     SmartDashboard.putNumber("FR Mag Encoder Pos", m_frontRight.getMagEncoderPosRadians());

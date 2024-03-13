@@ -194,9 +194,10 @@ public class DriveSubsystem extends SubsystemBase {
     // speaker.toPose2d().minus(m_futurePos).getTranslation().getAngle();
     // - Gavin
     double xDist =
-        m_tracker.getPose2d().getX() - speaker.m_xMeters; // m_futurePos
+        m_futurePos.getX() - speaker.m_xMeters; // m_futurePos
     double yDist =
-        m_tracker.getPose2d().getY() - speaker.m_yMeters; // m_futurePos
+        m_futurePos.getY() - speaker.m_yMeters; // m_futurePos
+    System.out.println(Math.toDegrees(Math.atan2(yDist, xDist)));
     return ParadoxField.normalizeAngle(
         Math.toDegrees(Math.atan2(yDist, xDist)) + (isRed ? 180 : 0) +
         (Constants.States.m_shootIntakeSide ? 0 : 180));
@@ -229,7 +230,8 @@ public class DriveSubsystem extends SubsystemBase {
   public double orientPID(double setpoint) {
     double heading = getHeadingInDegrees();
     double rot = m_orientPID.calculate(heading, setpoint);
-    rot += (Constants.DriveConstants.k_rotateF * Math.signum(rot));
+    
+    // rot += (Constants.DriveConstants.k_rotateF * Math.signum(rot));
     // return Math.abs(heading) < Constants.DriveConstants.k_rotateDeadzone ? 0
     // : rot;
     return rot;

@@ -25,7 +25,7 @@ public class MaxSwerveModule {
   private final RelativeEncoder m_drivingEncoder;
   private final AbsoluteEncoder m_turningEncoder;
   private final SwerveEncoders m_encoders;
-  private boolean m_useDefaultEncoders = false;
+  private boolean m_useDefaultEncoders = true;
 
   private final SparkPIDController m_drivePID;
   private final SparkPIDController m_turnPID;

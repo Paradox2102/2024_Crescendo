@@ -85,11 +85,11 @@ public class DriveSubsystem extends SubsystemBase {
       new Translation2d(-.298, .298), new Translation2d(-.298, -.298));
 
   PositionTrackerPose m_tracker;
-  ApriltagsCamera m_apriltagCamera;
-  ;
+  ApriltagsCamera m_frontBackCamera;
+  ApriltagsCamera m_sideCamera;
 
   /** Creates a new DriveSubsystem. */
-  public DriveSubsystem(ApriltagsCamera apriltagCamera) {
+  public DriveSubsystem(ApriltagsCamera frontBackCamera, ApriltagsCamera sideCamera) {
     m_gyro.reset();
     SmartDashboard.putData("Field", m_field);
     m_visionCamera = new Camera();
@@ -97,7 +97,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_orientPID.enableContinuousInput(-180, 180);
     m_orientPID.setIZone(Constants.DriveConstants.k_rotateIZone);
 
-    m_apriltagCamera = apriltagCamera;
+    m_frontBackCamera = frontBackCamera;
 
     AutoBuilder.configureHolonomic(
         this::getPose, this::resetOdometry, this::getChassisSpeeds,
@@ -280,7 +280,7 @@ public class DriveSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("BR Motor Encoder Pos", m_backRight.getMotorPosRadians());
     // SmartDashboard.putNumber("BR Mag Encoder Pos", m_backRight.getMagEncoderPosRadians());
 
-    m_tracker.update(m_apriltagCamera);
+    m_tracker.update(m_frontBackCamera, m_sideCamera);
 
     // Estimate future position of robot
     // *****************************************

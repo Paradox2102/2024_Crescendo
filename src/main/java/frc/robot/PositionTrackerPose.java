@@ -79,38 +79,38 @@ public class PositionTrackerPose {
 
   ApriltagLocation tags[] = {new ApriltagLocation(1, 0, 0, -90)};
 
-  public void update(ApriltagsCamera frontCamera, ApriltagsCamera rearCamera) {
-    m_poseEstimator.updateWithTime(ApriltagsCamera.getTime(),
-                                   m_driveSubsystem.getGyroRotation2d(),
-                                   m_driveSubsystem.getModulePosition());
-    if (!DriverStation.isAutonomous()) {
-      // frontCamera.processRegions(m_poseEstimator);
-      // rearCamera.processRegions(m_poseEstimator);
-    }
+  // public void update(ApriltagsCamera frontCamera, ApriltagsCamera rearCamera) {
+  //   m_poseEstimator.updateWithTime(ApriltagsCamera.getTime(),
+  //                                  m_driveSubsystem.getGyroRotation2d(),
+  //                                  m_driveSubsystem.getModulePosition());
+  //   if (!DriverStation.isAutonomous()) {
+  //     // frontCamera.processRegions(m_poseEstimator);
+  //     // rearCamera.processRegions(m_poseEstimator);
+  //   }
 
-    Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
-    if (alliance.isPresent()) {
-      // m_posServer.setAllianceColor(alliance.get() ==
-      // DriverStation.Alliance.Red);
-    }
-    Pose2d pos = m_poseEstimator.getEstimatedPosition();
-    SmartDashboard.putNumber("xPos", pos.getX());
-    SmartDashboard.putNumber("yPos", pos.getY());
-    SmartDashboard.putNumber("Robot Angle", pos.getRotation().getDegrees());
-    m_posServer.setPosition(pos.getX(), pos.getY(),
-                            pos.getRotation().getDegrees());
+  //   Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+  //   if (alliance.isPresent()) {
+  //     // m_posServer.setAllianceColor(alliance.get() ==
+  //     // DriverStation.Alliance.Red);
+  //   }
+  //   Pose2d pos = m_poseEstimator.getEstimatedPosition();
+  //   SmartDashboard.putNumber("xPos", pos.getX());
+  //   SmartDashboard.putNumber("yPos", pos.getY());
+  //   SmartDashboard.putNumber("Robot Angle", pos.getRotation().getDegrees());
+  //   m_posServer.setPosition(pos.getX(), pos.getY(),
+  //                           pos.getRotation().getDegrees());
 
-    // PositionServer.Target target = m_posServer.getTarget();
+  //   // PositionServer.Target target = m_posServer.getTarget();
 
-    // if (target != null) {
-    // 	// Logger.log("PositionTracker", 1, String.format("x=%f,y=%f,h=%f",
-    // target.m_x,
-    // 	// target.m_y, target.m_h));
-    // 	SmartDashboard.putNumber("TargetX", target.m_x);
-    // 	SmartDashboard.putNumber("TargetY", target.m_y);
-    // 	SmartDashboard.putNumber("TargetH", target.m_h);
-    // }
-  }
+  //   // if (target != null) {
+  //   // 	// Logger.log("PositionTracker", 1, String.format("x=%f,y=%f,h=%f",
+  //   // target.m_x,
+  //   // 	// target.m_y, target.m_h));
+  //   // 	SmartDashboard.putNumber("TargetX", target.m_x);
+  //   // 	SmartDashboard.putNumber("TargetY", target.m_y);
+  //   // 	SmartDashboard.putNumber("TargetH", target.m_h);
+  //   // }
+  // }
 
   // private void logUpdate()
   // {
@@ -131,7 +131,7 @@ public class PositionTrackerPose {
 
   // }
 
-  public void update(ApriltagsCamera camera) {
+  public void update(ApriltagsCamera frontBackCamera, ApriltagsCamera sideCamera) {
     // logUpdate();
     m_poseEstimator.updateWithTime(ApriltagsCamera.getTime(),
                                    m_driveSubsystem.getGyroRotation2d(),
@@ -141,7 +141,8 @@ public class PositionTrackerPose {
     // 								pose.getX(),
     // pose.getY(), pose.getRotation().getDegrees())); if
     // (!DriverStation.isAutonomous()) {
-    camera.processRegions(m_poseEstimator);
+    frontBackCamera.processRegions(m_poseEstimator);
+    sideCamera.processRegions(m_poseEstimator);
     // }
     Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
     if (alliance.isPresent()) {

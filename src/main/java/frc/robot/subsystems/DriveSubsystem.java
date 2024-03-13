@@ -241,17 +241,17 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // Update the odometry in the periodic block
-    SmartDashboard.putNumber("Turn FR",
-                             (m_frontRight.getAngleRadians())); /// Math.PI);
-    SmartDashboard.putNumber(
-        "Turn FL",
-        m_frontLeft.getAngleRadians()); // - (Math.PI / 2)) / Math.PI);
-    SmartDashboard.putNumber(
-        "Turn BR",
-        m_backRight.getAngleRadians()); // + (Math.PI / 2)) / Math.PI);
-    SmartDashboard.putNumber(
-        "Turn BL", m_backLeft.getAngleRadians()); // + (Math.PI)) / Math.PI);
+    // // Update the odometry in the periodic block
+    // SmartDashboard.putNumber("Turn FR",
+    //                          (m_frontRight.getAngleRadians())); /// Math.PI);
+    // SmartDashboard.putNumber(
+    //     "Turn FL",
+    //     m_frontLeft.getAngleRadians()); // - (Math.PI / 2)) / Math.PI);
+    // SmartDashboard.putNumber(
+    //     "Turn BR",
+    //     m_backRight.getAngleRadians()); // + (Math.PI / 2)) / Math.PI);
+    // SmartDashboard.putNumber(
+    //     "Turn BL", m_backLeft.getAngleRadians()); // + (Math.PI)) / Math.PI);
     // SmartDashboard.putNumber("Pose Est X",
     // (m_tracker.getPose2dFRC().getTranslation().getX()));
     // SmartDashboard.putNumber("Pose Est Y",
@@ -271,7 +271,14 @@ public class DriveSubsystem extends SubsystemBase {
     // Constants.States.m_faceSpeaker); SmartDashboard.putBoolean("Shoot
     // Front/Back", Constants.States.m_shootIntakeSide);
     // SmartDashboard.putBoolean("Aim On", Constants.States.m_autoRotateAim);
-    // SmartDashboard.putString("MESSAGE", "Ajith furry arc???");
+    SmartDashboard.putNumber("FL Motor Encoder Pos", m_frontLeft.getMotorPosRadians());
+    SmartDashboard.putNumber("FL Mag Encoder Pos", m_frontLeft.getMagEncoderPosRadians());
+    SmartDashboard.putNumber("FR Motor Encoder Pos", m_frontRight.getMotorPosRadians());
+    SmartDashboard.putNumber("FR Mag Encoder Pos", m_frontRight.getMagEncoderPosRadians());
+    SmartDashboard.putNumber("BL Motor Encoder Pos", m_backLeft.getMotorPosRadians());
+    SmartDashboard.putNumber("BL Mag Encoder Pos", m_backLeft.getMagEncoderPosRadians());
+    SmartDashboard.putNumber("BR Motor Encoder Pos", m_backRight.getMotorPosRadians());
+    SmartDashboard.putNumber("BR Mag Encoder Pos", m_backRight.getMagEncoderPosRadians());
 
     m_tracker.update(m_apriltagCamera);
 
@@ -531,5 +538,12 @@ public class DriveSubsystem extends SubsystemBase {
   public double getHeadingInDegrees() {
     double angle = m_tracker.getPose2d().getRotation().getDegrees();
     return ParadoxField.normalizeAngle(angle);
+  }
+
+  public void spinAllModules(){
+    m_frontLeft.setTurn();
+    m_frontRight.setTurn();
+    m_backLeft.setTurn();
+    m_backRight.setTurn();
   }
 }

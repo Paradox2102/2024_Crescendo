@@ -139,8 +139,12 @@ public class MaxSwerveModule {
         new Rotation2d((m_useDefaultEncoders ? m_turningEncoder.getPosition() : m_encoders.getPosition()) - m_chassisAngularOffset));
   }
 
-  public double getAngleRadians() {
-    return m_useDefaultEncoders ? m_turningEncoder.getPosition() : m_encoders.getPosition();
+  public double getMotorPosRadians() {
+    return m_encoders.getPosition();
+  }
+
+    public double getMagEncoderPosRadians() {
+    return m_turningEncoder.getPosition();
   }
 
   /**

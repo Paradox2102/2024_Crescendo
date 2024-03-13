@@ -28,6 +28,7 @@ import frc.robot.commands.gamePieceManipulation.DefaultManipulatorCommand;
 import frc.robot.commands.gamePieceManipulation.EjectGamePiece;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
+import frc.robot.commands.gamePieceManipulation.JukeShot;
 import frc.robot.commands.gamePieceManipulation.ResetSubsystemsCommand;
 import frc.robot.commands.gamePieceManipulation.RevCommand;
 import frc.robot.commands.gamePieceManipulation.ShootCommand;
@@ -178,8 +179,8 @@ public class RobotContainer {
 
     m_driverController.povUp().onTrue(new ResetGyro(m_driveSubsystem, 180));
     m_driverController.povDown().onTrue(new ResetGyro(m_driveSubsystem, 0));
-    m_driverController.povRight().onTrue(new ResetGyro(m_driveSubsystem, 90));
-    m_driverController.povLeft().onTrue(new ResetGyro(m_driveSubsystem, -90));
+    m_driverController.povRight().toggleOnTrue(new JukeShot(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, true));
+    m_driverController.povLeft().toggleOnTrue(new JukeShot(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, false));
 
     //ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
 

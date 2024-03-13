@@ -238,6 +238,10 @@ public class DriveSubsystem extends SubsystemBase {
     return rot;
   }
 
+  public double getRotationDistanceFromTargetError() {
+    return ParadoxField.normalizeAngle(getHeadingInDegrees() - getFutureRotationalGoalFromTargetDegrees());
+  }
+
   public Pose2d getEstimatedFuturePos() { return m_futurePos; }
 
   @Override

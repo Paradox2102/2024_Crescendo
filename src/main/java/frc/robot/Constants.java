@@ -356,6 +356,11 @@ public final class Constants {
     public static final double k_f = 0.9;
   }
 
+  public static class StickConstants {
+    public static final int k_leftStickMotor = 13;
+    public static final int m_rightStickMotor = 14;
+  }
+
   public static final double k_idealShootingDistanceMeters = 3;
 
   public static class States {

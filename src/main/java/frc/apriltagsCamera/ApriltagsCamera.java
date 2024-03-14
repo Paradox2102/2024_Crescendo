@@ -760,7 +760,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	public void connect(String host, int port) {
 		m_network = new Network();
 
-		String[] s = host.split(".");
+		String[] s = host.split("\\.");
 
 		if (s.length >= 4)
 		{

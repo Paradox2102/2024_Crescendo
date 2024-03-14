@@ -478,6 +478,13 @@ public class DriveSubsystem extends SubsystemBase {
 
   public PositionTrackerPose getTracker() { return m_tracker; }
 
+  public void setBrakeMode(boolean brake) {
+    m_frontLeft.setBrakeMode(brake);
+    m_frontRight.setBrakeMode(brake);
+    m_backLeft.setBrakeMode(brake);
+    m_backRight.setBrakeMode(brake);
+  }
+
   /**
    * Sets the wheels into an X formation to prevent movement.
    */
@@ -524,9 +531,6 @@ public class DriveSubsystem extends SubsystemBase {
     m_backRight.resetEncoders();
   }
 
-  // Debugging purposes (drives one motor)
-  public void setOnePower() { m_backLeft.setDrive(); }
-
   /** Zeroes the heading of the robot. */
   public void setHeading(double angle) {
     m_tracker.setXYAngle(m_tracker.getPose2d().getX(),
@@ -541,12 +545,5 @@ public class DriveSubsystem extends SubsystemBase {
   public double getHeadingInDegrees() {
     double angle = m_tracker.getPose2d().getRotation().getDegrees();
     return ParadoxField.normalizeAngle(angle);
-  }
-
-  public void spinAllModules(){
-    m_frontLeft.setTurn();
-    m_frontRight.setTurn();
-    m_backLeft.setTurn();
-    m_backRight.setTurn();
   }
 }

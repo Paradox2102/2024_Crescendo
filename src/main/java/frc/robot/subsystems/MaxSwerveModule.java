@@ -191,13 +191,8 @@ public class MaxSwerveModule {
     m_drivingEncoder.setPosition(0);
   }
 
-  // Manually run the turn motor for debugging purposes
-  public void setTurn() {
-    m_turn.set(.5);
-  }
-
-  // Manually run the drive motors for debugging purposes
-  public void setDrive() {
-    m_drive.set(.5);
+  public void setBrakeMode(boolean brake) {
+    m_turn.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
+    m_drive.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
   }
 }

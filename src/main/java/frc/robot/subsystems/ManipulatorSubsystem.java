@@ -50,7 +50,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
     setBrakeMode(true);
     m_motor.setSmartCurrentLimit(80);
     setName(m_shooter ? "ShooterSubsystem" : "HolderSubsystem");
-    m_motor.setInverted(m_shooter);
+    m_motor.setInverted(Constants.States.m_isCompetition ? !m_shooter : m_shooter);
     m_motor.burnFlash();
   }
 

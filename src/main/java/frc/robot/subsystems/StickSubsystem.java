@@ -40,7 +40,7 @@ public class StickSubsystem extends SubsystemBase {
 
     setBrakeMode(true);
 
-    m_rightMotor.follow(m_leftMotor, true);
+    // m_rightMotor.follow(m_leftMotor, true);
   }
 
   //getting the positions
@@ -55,6 +55,7 @@ public class StickSubsystem extends SubsystemBase {
 
   public void setPower(double power) {
     m_leftMotor.set(power);
+    m_rightMotor.set(-power);
   }
 
   public void stop() {

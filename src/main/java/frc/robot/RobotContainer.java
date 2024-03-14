@@ -34,6 +34,7 @@ import frc.robot.commands.gamePieceManipulation.ShootCommand;
 import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.SetPivotOffInputDistance;
 import frc.robot.commands.stick.ManualStickCommand;
+import frc.robot.commands.stick.SetStickPos;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.led.LEDConfig;
 import frc.robot.subsystems.DriveSubsystem;
@@ -196,7 +197,9 @@ public class RobotContainer {
     m_joystick.button(10).whileTrue(new EjectSpinCommand(m_driveSubsystem, m_pivotSubsystem, () -> m_joystick.getY()));
     m_joystick.button(11).onTrue(new StopEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     m_joystick.button(6).onTrue(new InstantCommand(() -> {Constants.States.m_autoRotateAim = !Constants.States.m_autoRotateAim;}));
+
     m_joystick.button(3).whileTrue(new ManualStickCommand(m_stickSubsystem, () -> m_joystick.getY()));
+    m_joystick.button(5).onTrue(new SetStickPos(m_stickSubsystem));
 
     ToggleTrigger m_brakeMode = new ToggleTrigger(m_joystick.button(12));
     m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode), m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, m_elevatorSubsystem, m_stickSubsystem));

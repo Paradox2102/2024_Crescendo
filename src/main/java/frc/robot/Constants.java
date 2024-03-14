@@ -40,7 +40,7 @@ public final class Constants {
       DriveConstants.k_cameraBackY = 11.5;
 
       // Pivot
-      PivotConstants.k_pivotZeroAngle = -80;
+      PivotConstants.k_pivotZeroAngle = 157.7;
       PivotConstants.k_isInverted = true;
       PivotConstants.k_intakePositionDegrees = 128;
       PivotConstants.k_f = .015;
@@ -361,7 +361,7 @@ public final class Constants {
     public static final int k_leftStickMotor = 13;
     public static final int k_rightStickMotor = 14;
 
-    public static final double k_maxExtentRotations = 4;
+    public static final double k_maxExtentRotations = 2.8;
   }
 
   public static final double k_idealShootingDistanceMeters = 3;

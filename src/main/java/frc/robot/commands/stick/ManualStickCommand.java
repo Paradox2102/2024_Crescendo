@@ -31,9 +31,9 @@ public class ManualStickCommand extends Command {
     double y = m_y.getAsDouble();
 
     if (y < 0) {
-      m_stickSubsystem.setPower(1);
+      m_stickSubsystem.setPower(.25);
     } else if (y > 0) {
-      m_stickSubsystem.setPower(-1);
+      m_stickSubsystem.setPower(-.25);
     } else {
       m_stickSubsystem.stop();;
     }

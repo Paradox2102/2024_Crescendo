@@ -40,7 +40,10 @@ import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSensors;
+import frc.robot.subsystems.StickSubsystem;
 import frc.triggers.HoldTrigger;
+import frc.triggers.ToggleTrigger;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -72,6 +75,7 @@ public class RobotContainer {
   private final ManipulatorSubsystem m_shooterSubsystem = new ManipulatorSubsystem(m_driveSubsystem, Constants.ShooterConstants.k_shooterMotor);
   private final ManipulatorSubsystem m_holderSubsystem = new ManipulatorSubsystem(m_driveSubsystem, Constants.HolderConstants.k_holdingMotor);
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
+  private final StickSubsystem m_stickSubsystem = new StickSubsystem();
 
   private final CommandJoystick m_joystick = new CommandJoystick(1);
   //private final CommandJoystick m_testStick = new CommandJoystick(2);
@@ -191,6 +195,9 @@ public class RobotContainer {
     m_joystick.button(10).whileTrue(new EjectSpinCommand(m_driveSubsystem, m_pivotSubsystem, () -> m_joystick.getY()));
     m_joystick.button(11).onTrue(new StopEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     m_joystick.button(6).onTrue(new InstantCommand(() -> {Constants.States.m_autoRotateAim = !Constants.States.m_autoRotateAim;}));
+
+    ToggleTrigger m_brakeMode = new ToggleTrigger(m_joystick.button(12));
+    m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode), m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, m_elevatorSubsystem, m_stickSubsystem));
   }
   public double getThrottle() {
     return m_joystick.getThrottle();

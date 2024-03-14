@@ -45,4 +45,9 @@ public class SetRobotBreakMode extends InstantCommand {
     m_holderSubsystem.setBrakeMode(brake);
     m_stickSubsystem.setBrakeMode(brake);
   }
+
+  @Override
+  public boolean runsWhenDisabled() {
+    return true;
+  }
 }

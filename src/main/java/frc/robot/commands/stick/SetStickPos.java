@@ -14,8 +14,9 @@ public class SetStickPos extends Command {
   double m_power = 1;
   boolean m_extending = true;
 
-  public SetStickPos(StickSubsystem stickSubsystem) {
+  public SetStickPos(StickSubsystem stickSubsystem, boolean in) {
     m_subsystem = stickSubsystem;
+    m_extending = in;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }
@@ -23,7 +24,7 @@ public class SetStickPos extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_power = m_subsystem.m_retracted ? 1 : -1;
+    m_power = m_extending ? 0.5 : -0.5;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,13 +37,13 @@ public class SetStickPos extends Command {
   @Override
   public void end(boolean interrupted) {
     m_subsystem.stop();
-    m_subsystem.m_retracted = !m_subsystem.m_retracted;
+    m_subsystem.m_retracted = m_subsystem.getPositionInRotations() < 2;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     double pos = m_subsystem.getPositionInRotations();
-    return m_subsystem.m_retracted ?  pos >= Constants.StickConstants.k_maxExtentRotations : pos <= 0;
+    return m_subsystem.m_retracted ?  pos >= Constants.StickConstants.k_maxExtentRotations : pos <= 0.5;
   }
 }

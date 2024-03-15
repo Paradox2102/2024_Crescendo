@@ -95,6 +95,6 @@ public class ManipulatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber(getName() + " Speed", Math.abs(velocity));
     SmartDashboard.putNumber(getName() + " Target Speed", m_velocity);
     SmartDashboard.putBoolean(getName() + "in shoot speed range", Math.abs(velocity) >= 4500);
-    Constants.ShooterConstants.k_ampShootVelocityRPM = SmartDashboard.getEntry("Amp Velo").getDouble(0);
+    //Constants.ShooterConstants.k_ampShootVelocityRPM = SmartDashboard.getEntry("Amp Velo").getDouble(0);
   }
 }

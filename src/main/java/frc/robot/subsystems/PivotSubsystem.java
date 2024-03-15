@@ -12,6 +12,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.apriltagsCamera.Logger;
 import frc.robot.Constants;
 import frc.robot.ParadoxField;
 import frc.robot.Constants.PivotConstants;
@@ -58,6 +59,8 @@ public class PivotSubsystem extends SubsystemBase {
   }
 
   public void setPositionDegrees(double angle) {
+    Logger.log("PiviotSubsystem", 1, String.format("setPositionDegrees=%f", angle));
+    
     m_setPoint = angle;
   }
 
@@ -121,7 +124,7 @@ public class PivotSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Pivot Power", m_power);
     SmartDashboard.putNumber("Pivot Calculated Error", Math.abs(getAngleInDegrees() - m_setPoint));
     SmartDashboard.putNumber("Pivot Set Point", m_setPoint);
-    Constants.PivotConstants.k_ampPositionDegrees = SmartDashboard.getEntry("Amp Angle").getDouble(0);
+    //Constants.PivotConstants.k_ampPositionDegrees = SmartDashboard.getEntry("Amp Angle").getDouble(0);
     m_pivotMotor.set(m_power);
   }
 }

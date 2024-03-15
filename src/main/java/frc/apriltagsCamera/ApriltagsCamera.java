@@ -64,7 +64,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	// // Default vision standerd devations
 	// public static final Vector<N3> k_visionSD = VecBuilder.fill(0.05, 0.05,
 	// 0.05); // Default vision standerd devations
-	public static final Vector<N3> k_visionSD6mm = VecBuilder.fill(0.01, 0.01, 0.5); // Default vision standerd devations
+	public static final Vector<N3> k_visionSD6mm = VecBuilder.fill(0.01, 0.01, 0.5); // Default vision standerd
+																						// devations
 
 	// private static final double k_minSDAdjustDistance = 0.5; // Minimum distance
 	// for which we apply the standard
@@ -95,9 +96,10 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		private final double m_maxAngleDistance; // If this distance is greater than this value, do not update
 													// the estimated angle
 		private final double m_SDAdjustSlope; // Slop of adjustment between min and max distances
-		private final double m_angleSDAdjust;	// Scale factor for adjusting SD based on difference between yaw and est yaw
+		private final double m_angleSDAdjust; // Scale factor for adjusting SD based on difference between yaw and est
+												// yaw
 		private final double m_maxDistance; // Max distance beyond which the camera is completely unreliable
-@SuppressWarnings("unused")		
+		@SuppressWarnings("unused")
 		private final double m_maxAngleError; // Max acceptable angle error in degrees
 		private final Vector<N3> m_visionSD;
 		private boolean m_start = true;
@@ -131,9 +133,10 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		public int m_minDelay = Integer.MAX_VALUE; // !<Specifies the min frame delay
 		public int m_lostFrames; // !<Specifies the number of lost frames
 		public long m_time; // !<Specifies the elapsed time
-		public double m_yawError;	// !<Specifies the diffence between the current camera yaw and the estimated yaw
+		public double m_yawError; // !<Specifies the diffence between the current camera yaw and the estimated yaw
 
-		public ApriltagsCameraStats(int avgDelay, int maxDelay, int minDelay, int lostFrames, long time, double yawError) {
+		public ApriltagsCameraStats(int avgDelay, int maxDelay, int minDelay, int lostFrames, long time,
+				double yawError) {
 			m_averageDelay = avgDelay;
 			m_maxDelay = maxDelay;
 			m_minDelay = minDelay;
@@ -190,7 +193,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		ApriltagPosition findPosition(double time) {
 			int position = (m_position + k_queueSize - 1) % k_queueSize;
 			while (position != m_position && m_queue[position].m_estPos != null) {
-				if (time > m_queue[position].m_time) {
+				if (time <= m_queue[position].m_time) {
 					// Logger.log("ApriltagsQueue", 1, String.format("found at %d", (m_position -
 					// position + k_queueSize) % k_queueSize));
 					return (m_queue[position]);
@@ -208,6 +211,16 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	static final int k_maxTags = 16;
 	ApriltagsQueue m_queue = new ApriltagsQueue(); // [][] = new ApriltagsQueue[k_maxCameras][k_maxTags];
 	boolean m_dashboard = false;
+
+	public Pose2d getPoseAtTime(double time) {
+		ApriltagPosition item = m_queue.findPosition(time);
+
+		if (item != null) {
+			return item.m_estPos;
+		}
+
+		return null;
+	}
 
 	/**
 	 * @brief The ApriltagsCameraRegion specifies a single detected region
@@ -341,8 +354,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 				double deltaAngle = Math.abs(normalizeAngle(lastAngle - cameraAngle));
 
-				if (d < 100)
-				{
+				if (d < 100) {
 					m_yawError = deltaAngle;
 				}
 
@@ -351,16 +363,17 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				}
 
 				if ((d > config.m_maxAngleDistance)) {
-						// || (Math.abs(normalizeAngle(lastAngle - cameraAngle)) > config.m_maxAngleError)) {
+					// || (Math.abs(normalizeAngle(lastAngle - cameraAngle)) >
+					// config.m_maxAngleError)) {
 					// If max error is exceeded, increase the standard deviation adjustment and use
 					// the estimated angle for calculations
 					// adjust *= 2;
 					// calculateAngle = lastAngle;
 
 					// if (d > config.m_maxAngleDistance) {
-						// If the robot is too far away, do not use the last angle to update the
-						// estimator
-						updateAngle = lastAngle;
+					// If the robot is too far away, do not use the last angle to update the
+					// estimator
+					updateAngle = lastAngle;
 					// }
 				}
 				calculateAngle = lastAngle; // For now always use estimated angle for
@@ -371,8 +384,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 						config.m_start = false;
 					}
 					adjust = 1.0;
-				}
-				else if (adjust != 1.0) {
+				} else if (adjust != 1.0) {
 					// Only need to adjust the angle parameter
 					double adjustPos = 1.0 + ((adjust - 1.0) / 2);
 					visionSD.set(0, 0, visionSD.get(0, 0) * adjustPos);
@@ -432,7 +444,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 							Logger.log("ApriltagsCamera", 3, "Max log time reached");
 						} else {
 							Logger.log("ApriltagsCameraLog", 1,
-									String.format(",%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%f,%f,%f", String.format("%s-%d-%d", m_ip, cameraNo, m_tag),
+									String.format(",%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%f,%f,%f",
+											String.format("%s-%d-%d", m_ip, cameraNo, m_tag),
 											lastAngle, cameraAngle, calculateAngle, updateAngle,
 											estPos.getRotation().getDegrees(),
 											calculatedPos.getX(), estPos.getX(),
@@ -460,8 +473,10 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 						SmartDashboard.putNumber(String.format("c%s-%d-%d yaw", m_ip, cameraNo, m_tag), m_yaw);
 						SmartDashboard.putNumber(String.format("c%s-%d-%d dxp", m_ip, cameraNo, m_tag), dxp);
 						SmartDashboard.putNumber(String.format("c%s-%d-%d dyp", m_ip, cameraNo, m_tag), dyp);
-						SmartDashboard.putNumber(String.format("c%s-%d-%d cx", m_ip, cameraNo, m_tag), calculatedPos.getX());
-						SmartDashboard.putNumber(String.format("c%s-%d-%d cy", m_ip, cameraNo, m_tag), calculatedPos.getY());
+						SmartDashboard.putNumber(String.format("c%s-%d-%d cx", m_ip, cameraNo, m_tag),
+								calculatedPos.getX());
+						SmartDashboard.putNumber(String.format("c%s-%d-%d cy", m_ip, cameraNo, m_tag),
+								calculatedPos.getY());
 						SmartDashboard.putNumber(String.format("c%s-%d-%d ca", m_ip, cameraNo, m_tag), cameraAngle);
 						SmartDashboard.putNumber(String.format("c%s-%d-%d cac", m_ip, cameraNo, m_tag), calculateAngle);
 						SmartDashboard.putNumber(String.format("c%s-%d-%d ex", m_ip, cameraNo, m_tag), estPos.getX());
@@ -636,7 +651,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 						Logger.log("ApriltagsCamera", 3, "Network timeout");
 						m_network.closeConnection();
 					}
-					
+
 					timeSync();
 				}
 			}
@@ -762,8 +777,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 		String[] s = host.split("\\.");
 
-		if (s.length >= 4)
-		{
+		if (s.length >= 4) {
 			m_ip = s[3];
 		}
 
@@ -899,8 +913,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	 * @return true if at least one apriltag is visible by either camera
 	 */
 	public boolean isTagVisible() {
-		for (ApriltagsCameraInfo camera : m_cameras)
-		{
+		for (ApriltagsCameraInfo camera : m_cameras) {
 			if (camera.m_regions != null && camera.m_regions.getRegionCount() > 0) {
 				return true;
 			}
@@ -994,7 +1007,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 					for (ApriltagsCameraRegion region : regions.m_regions) {
 						// Logger.log("ApriltagsCamera", 1, "Calling updatePosition");
-						region.updatePosition(cameraNo, poseEstimator, regions.m_captureTime, regions.m_frameNo, curTime);
+						region.updatePosition(cameraNo, poseEstimator, regions.m_captureTime, regions.m_frameNo,
+								curTime);
 						nProcessed++;
 					}
 					nFrames++;

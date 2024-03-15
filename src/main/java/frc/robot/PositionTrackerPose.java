@@ -68,6 +68,10 @@ public class PositionTrackerPose {
     System.out.println("pose2d " + getPose2d());
   }
 
+  public void setPose(Pose2d pose) {
+    m_poseEstimator.resetPosition(m_driveSubsystem.getGyroRotation2d(), m_driveSubsystem.getModulePosition(), pose);
+  }
+
   public static class PositionContainer {
     public double x, y;
 

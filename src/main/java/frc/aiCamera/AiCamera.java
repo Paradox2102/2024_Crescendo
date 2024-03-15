@@ -49,10 +49,10 @@ public class AiCamera implements Network.NetworkReceiver {
 	// private Timer m_watchdogTimer = new Timer();
 
 	public class AiRegion {
-		double m_ux;
-		double m_uy;
-		double m_lx;
-		double m_ly;
+		public double m_ux;
+		public double m_uy;
+		public double m_lx;
+		public double m_ly;
 
 		public AiRegion(double ux, double uy, double lx, double ly) {
 			m_ux = ux;
@@ -63,11 +63,11 @@ public class AiCamera implements Network.NetworkReceiver {
 	}
 
 	public class AiRegions {
-		int m_frameNo;
-		int m_width;
-		int m_height;
-		long m_time;
-		ArrayList<AiRegion> m_regions = new ArrayList<AiRegion>();
+		public int m_frameNo;
+		public int m_width;
+		public int m_height;
+		public long m_time;
+		public ArrayList<AiRegion> m_regions = new ArrayList<AiRegion>();
 
 		public AiRegions(int frameNo, int width, int height) {
 			m_frameNo = frameNo;
@@ -76,7 +76,7 @@ public class AiCamera implements Network.NetworkReceiver {
 			m_time = System.currentTimeMillis() - m_startTime;
 		}
 
-		AiRegion getLargestRegion() {
+		public AiRegion getLargestRegion() {
 			AiRegion region = null;
 			double largest = 0;
 

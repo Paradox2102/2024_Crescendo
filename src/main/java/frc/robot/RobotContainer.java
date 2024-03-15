@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.apriltagsCamera.PositionServer;
+import frc.aiCamera.AiCamera;
 import frc.apriltagsCamera.ApriltagsCamera;
 import frc.apriltagsCamera.ApriltagsCamera.ApriltagsCameraType;
 import frc.robot.Constants.OperatorConstants;
@@ -33,6 +34,7 @@ import frc.robot.commands.gamePieceManipulation.RevCommand;
 import frc.robot.commands.gamePieceManipulation.ShootCommand;
 import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.SetPivotOffInputDistance;
+import frc.robot.commands.test.CalibrateAiDistance;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.led.LEDConfig;
 import frc.robot.subsystems.DriveSubsystem;
@@ -63,6 +65,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   ApriltagsCamera m_apriltagCamera = new ApriltagsCamera();
   ApriltagsCamera m_apriltagCameraSide = new ApriltagsCamera();
+  AiCamera m_aiCamera = new AiCamera();
   PositionServer m_posServer = new PositionServer(m_apriltagCamera);
   Constants m_constants = new Constants();
   LEDConfig m_ledConfig;
@@ -75,7 +78,7 @@ public class RobotContainer {
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
 
   private final CommandJoystick m_joystick = new CommandJoystick(1);
-  //private final CommandJoystick m_testStick = new CommandJoystick(2);
+  private final CommandJoystick m_testStick = new CommandJoystick(2);
   public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);
 
 
@@ -127,6 +130,8 @@ public class RobotContainer {
     m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraLeftX, Constants.DriveConstants.k_cameraLeftY, 90, ApriltagsCameraType.GS_6mm); 
     m_apriltagCameraSide.connect("10.21.2.12", 5800);
 
+    m_aiCamera.connect("10.21.2.86", 5800);
+
     m_posServer.start();
     SmartDashboard.putData("Auto To Run",autoChooser);
   }
@@ -160,6 +165,8 @@ public class RobotContainer {
       new Trigger(m_slowMode),
       new Trigger(m_slowMode1)
     ));
+
+    m_testStick.button(1).whileTrue(new CalibrateAiDistance(m_driveSubsystem, m_aiCamera, m_tracker));
 
     m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
     m_shooterSubsystem.setDefaultCommand(new DefaultManipulatorCommand(m_shooterSubsystem, m_driveSubsystem, true));

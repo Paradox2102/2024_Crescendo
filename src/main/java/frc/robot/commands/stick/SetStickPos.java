@@ -15,8 +15,9 @@ public class SetStickPos extends Command {
   boolean m_extending = true;
   boolean m_runningShootSequence;
 
-  public SetStickPos(StickSubsystem stickSubsystem) {
+  public SetStickPos(StickSubsystem stickSubsystem, boolean runningShootSequence) {
     m_subsystem = stickSubsystem;
+    m_runningShootSequence = runningShootSequence;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }
@@ -41,7 +42,9 @@ public class SetStickPos extends Command {
   @Override
   public void end(boolean interrupted) {
     m_subsystem.stop();
-    m_subsystem.m_retracted = !m_subsystem.m_retracted;
+    if (m_power != 0) {
+      m_subsystem.m_retracted = !m_subsystem.m_retracted;
+    }
   }
 
   // Returns true when the command should end.

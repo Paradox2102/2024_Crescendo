@@ -237,9 +237,9 @@ public final class Constants {
     public static double k_cameraBackX = 11.5;
     public static double k_cameraBackY = 6;
 
-    public static double k_cameraLeftX = 11.75;
-    public static double k_cameraLeftY = -5.6;
-    public static double k_cameraRightX = -11.75;
+    public static double k_cameraLeftX = -11.75 + 7;
+    public static double k_cameraLeftY = 5.6;
+    public static double k_cameraRightX = 11.75 - 7;
     public static double k_cameraRightY = -5.6;
   }
 

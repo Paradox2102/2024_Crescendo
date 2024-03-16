@@ -59,7 +59,7 @@ public class PivotSubsystem extends SubsystemBase {
   }
 
   public void setPositionDegrees(double angle) {
-    Logger.log("PiviotSubsystem", 1, String.format("setPositionDegrees=%f", angle));
+    // Logger.log("PiviotSubsystem", 1, String.format("setPositionDegrees=%f", angle));
     
     m_setPoint = angle;
   }

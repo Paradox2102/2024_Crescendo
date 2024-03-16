@@ -38,28 +38,15 @@
                                   "data": {
                                     "commands": [
                                       {
-                                        "type": "sequential",
+                                        "type": "named",
                                         "data": {
-                                          "commands": [
-                                            {
-                                              "type": "wait",
-                                              "data": {
-                                                "waitTime": 0.5
-                                              }
-                                            },
-                                            {
-                                              "type": "named",
-                                              "data": {
-                                                "name": "auto aim"
-                                              }
-                                            }
-                                          ]
+                                          "name": "back feed"
                                         }
                                       },
                                       {
                                         "type": "named",
                                         "data": {
-                                          "name": "back feed"
+                                          "name": "auto aim"
                                         }
                                       }
                                     ]
@@ -84,7 +71,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 0.5
+                              "waitTime": 1.0
                             }
                           },
                           {
@@ -127,9 +114,9 @@
                                   "data": {
                                     "commands": [
                                       {
-                                        "type": "wait",
+                                        "type": "named",
                                         "data": {
-                                          "waitTime": 0.5
+                                          "name": "back feed"
                                         }
                                       },
                                       {
@@ -139,12 +126,6 @@
                                         }
                                       }
                                     ]
-                                  }
-                                },
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "back feed"
                                   }
                                 },
                                 {

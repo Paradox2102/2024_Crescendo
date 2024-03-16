@@ -42,7 +42,7 @@ public final class Constants {
       // Pivot
       PivotConstants.k_pivotZeroAngle = 157.7;
       PivotConstants.k_isInverted = true;
-      PivotConstants.k_intakePositionDegrees = 128;
+      PivotConstants.k_intakePositionDegrees = 131;
       PivotConstants.k_f = .015;
       PivotConstants.k_p = .032;
       PivotConstants.k_i = 0.00005;
@@ -94,22 +94,22 @@ public final class Constants {
         7
       };
       PivotConstants.k_anglesFront = new double[] {
-        10, // 1.3,
-        18.9, // 2,
-        27, // 2.55,
-        33, // 3.1,
-        34, // 3.5,
-        36.27, // 3.75,
-        38.32, // 4,S
-        38.5, // 4.25,
-        39, // 4.5,
-        39.1, // 4.75,
-        39.2, // 5,
-        39.4, // 5.25,
-        42.15, // 5.5
-        40.5, // 5.8
-        40.4, // 6.25
-        40.1 // 7
+        17, // 1.3,
+        25.9, // 2,
+        33, // 2.55,
+        40, // 3.1,
+        41, // 3.5,
+        43.27, // 3.75,
+        44, // 4
+        44.5, // 4.25,
+        44.6, // 4.5,
+        45.1, // 4.75,
+        45.2, // 5,
+        45.3, // 5.25,
+        45.8, // 5.5
+        46.3, // 5.8
+        46.4, // 6.25
+        46.1 // 7
       };
       PivotConstants.k_distancesBack = new double[] {
         1.4,
@@ -118,16 +118,20 @@ public final class Constants {
         2.25,
         2.5,
         2.75,
-        3
+        3,
+        3.5,
+        4
       };
       PivotConstants.k_anglesBack = new double[] {
-        115, //1.5
-        110, //1.75
-        108, //2
-        105, //2.25
-        103, //2.5
-        101, //2.75
-        100 //3
+        117, //1.5
+        112, //1.75
+        110, //2
+        107, //2.25
+        105, //2.5
+        103, //2.75
+        102, //3
+        100, // 3.5
+        95 // 4
       };
 
     } else {
@@ -206,7 +210,7 @@ public final class Constants {
     public static final int k_turnMotorCurrentLimit = 20; // amps
 
     // Driving Constants
-    public static double k_maxSpeedMetersPerSecond = 1.5;
+    public static double k_maxSpeedMetersPerSecond = 4.8;
     public static final double k_maxDriveAcceleration = 3;
     public static final double k_maxAngularSpeed = Math.PI * 2; // radians per second
     public static final double k_maxAngularAcceleration = Math.PI;
@@ -221,12 +225,12 @@ public final class Constants {
         new SwerveModuleState(0, new Rotation2d(3 * Math.PI / 4)),
         new SwerveModuleState(0, new Rotation2d(Math.PI / 4))
     };
-    public static final double k_rotateP = .028;
-    public static final double k_rotateI = 0;//.005;
-    public static final double k_rotateD = 0;
+    public static final double k_rotateP = .015;
+    public static final double k_rotateI = .01;//.005;
+    public static final double k_rotateD = .0001;
     public static final double k_rotateIZone = 70;
     public static final double k_rotateDeadzone = 2;
-    public static final double k_maxRotInput = .6;
+    public static final double k_maxRotInput = .7;
 
     public static final double k_lookAheadTimeSeconds = .2;
 
@@ -259,7 +263,7 @@ public final class Constants {
 
     // Positions
     public static double k_intakePositionDegrees = 112;
-    public static double k_resetPositionDegrees = 4;
+    public static double k_resetPositionDegrees = 8;
     public static double k_ampPositionDegrees = 23;
 
     public static double[] k_distancesFront = {
@@ -303,7 +307,7 @@ public final class Constants {
     public static final int k_shooterMotor = 11;
     public static double k_intakeVelocityRPM = 3000;
     public static final double k_speakerShootVelocityRPM = -5000; // -5750
-    public static double k_ampShootVelocityRPM = -1950; // -1550
+    public static double k_ampShootVelocityRPM = -1950; // -1950
     public static final double k_maxVelocityRPM = 6250; //6000
     
     public static final double k_speakerFeedPower = 1;
@@ -321,7 +325,7 @@ public final class Constants {
     public static double k_iZone = 0;
 
     public static final double[] k_revDistances = {5.8, 6.5, 8, 10, 12};
-    public static final double[] k_revSpeeds = {-5000, -5500, -5750, -4000, -2000}; //{-5000, -5500, -5750, -4000, -2000}
+    public static final double[] k_revSpeeds = {-5000, -6000, -6000, -4000, -2000}; //{-5000, -5500, -5750, -4000, -2000}
   }
 
   // Positive is intake. negative is shoot intake side

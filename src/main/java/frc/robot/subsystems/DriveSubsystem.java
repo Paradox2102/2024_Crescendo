@@ -211,7 +211,7 @@ public class DriveSubsystem extends SubsystemBase {
               Constants.PivotConstants.k_distancesFront
                       [Constants.PivotConstants.k_distancesFront.length - 1] +
                   1
-        : getTranslationalDistanceFromAmpMeters() < 3;
+        : getTranslationalDistanceFromAmpMeters() < 5;
   }
 
   // is in zone and has game piece and auto aim not disabled
@@ -269,8 +269,7 @@ public class DriveSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("Gyro Rotation2D",
     // getGyroRotation2d().getDegrees()); SmartDashboard.putNumber("Tracker
     // Rotation2D", m_tracker.getPose2d().getRotation().getDegrees());
-    // SmartDashboard.putNumber("Speaker Distance Translation",
-    // getTranslationalDistanceFromSpeakerMeters());
+    SmartDashboard.putNumber("Speaker Distance Translation", getTranslationalDistanceFromSpeakerMeters());
     // SmartDashboard.putNumber("Speaker X",
     // getSpeakerLocationMeters().m_xMeters); SmartDashboard.putNumber("Speaker
     // Y", getSpeakerLocationMeters().m_yMeters);

@@ -38,7 +38,6 @@ public class JukeShotRotateAim extends Command {
     double rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getFutureRotationalGoalFromTargetDegrees()), 0);
     // Force it to rotate the way we want depending on which corner we are rotating from
     rot *= (Math.signum(rot) == (m_left ? -1 : 1) ? 1 : -1);
-    rot *= .25;
     m_subsystem.drive(
       0, 
       0, 
@@ -66,7 +65,7 @@ public class JukeShotRotateAim extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return Math.abs(m_subsystem.getRotationDistanceFromTargetError()) < 10;
-    return m_timer.get() > 1;
+    return Math.abs(m_subsystem.getRotationDistanceFromTargetError()) < 10;
+    // return m_timer.get() > 1;
   }
 }

@@ -19,9 +19,12 @@ public class StopEverything extends InstantCommand {
     addRequirements(driveSubsystem, shooterSubsystem, holderSubsystem, pivotSubsystem);
   }
 
+  public StopEverything(DriveSubsystem driveSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(driveSubsystem, shooterSubsystem, holderSubsystem);
+  }
+
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    Constants.States.m_speakerMode = false;
-  }
+  public void initialize() {}
 }

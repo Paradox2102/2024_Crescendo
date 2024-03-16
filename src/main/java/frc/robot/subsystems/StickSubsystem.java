@@ -48,7 +48,7 @@ public class StickSubsystem extends SubsystemBase {
     setBrakeMode(true);
     m_stallTimer.reset();
     m_stallTimer.start();
-    // m_rightMotor.follow(m_leftMotor, true);
+    m_rightMotor.follow(m_leftMotor, true);
   }
 
   //getting the positions
@@ -64,7 +64,6 @@ public class StickSubsystem extends SubsystemBase {
   public void setPower(double power) {
     m_isRunning = true;
     m_leftMotor.set(power);
-    m_rightMotor.set(-power);
   }
 
   public void stop() {
@@ -75,17 +74,17 @@ public class StickSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(m_isRunning == true && Math.abs(m_leftEncoder.getVelocity()) < 0.5 && Math.abs(m_rightEncoder.getVelocity()) < 0.5){
-      if(m_stallTimer.get() >= 0.1){
-        m_isRunning = false;
-        stop();
-        m_leftEncoder.setPosition(m_retracted ? 0 : Constants.StickConstants.k_maxExtentRotations);
-      }
-    } else {
-      m_stallTimer.reset();
-    }
+    // if(m_isRunning == true && Math.abs(m_leftEncoder.getVelocity()) < 0.5 && Math.abs(m_rightEncoder.getVelocity()) < 0.5){
+    //   if(m_stallTimer.get() >= 0.1){
+    //     m_isRunning = false;
+    //     stop();
+    //     m_leftEncoder.setPosition(m_retracted ? 0 : Constants.StickConstants.k_maxExtentRotations);
+    //   }
+    // } else {
+    //   m_stallTimer.reset();
+    // }
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Stick Extent", getPositionInRotations());
-    SmartDashboard.putNumber("Stick Velocity", m_leftEncoder.getVelocity());
+    // SmartDashboard.putNumber("Stick Extent", getPositionInRotations());
+    // SmartDashboard.putNumber(("Stick Velocity", m_leftEncoder.getVelocity());
   }
 }

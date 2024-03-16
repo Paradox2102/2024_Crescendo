@@ -51,6 +51,9 @@ public class SetStickPos extends Command {
   @Override
   public boolean isFinished() {
     double pos = m_subsystem.getPositionInRotations();
+    if (m_runningShootSequence && Constants.States.m_speakerMode) {
+      return true;
+    }
     return m_subsystem.m_retracted ?  pos >= Constants.StickConstants.k_maxExtentRotations : pos <= 0;
   }
 }

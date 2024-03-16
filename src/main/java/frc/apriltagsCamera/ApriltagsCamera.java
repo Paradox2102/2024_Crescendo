@@ -760,7 +760,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	public void connect(String host, int port) {
 		m_network = new Network();
 
-		String[] s = host.split(".");
+		String[] s = host.split("\\.");
 
 		if (s.length >= 4)
 		{
@@ -957,11 +957,13 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 	@Override
 	public void disconnected() {
+		Logger.log("ApriltagsCamera", 1, String.format("%s disconnected", m_ip));
 		m_connected = false;
 	}
 
 	@Override
 	public void connected() {
+		Logger.log("ApriltagsCamera", 1, String.format("%s connected", m_ip));
 		m_connected = true;
 
 		m_syncTime = getTimeMs() + k_syncFirst;

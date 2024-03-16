@@ -20,7 +20,7 @@ public class ShootSequence extends SequentialCommandGroup {
     addCommands(
       new SetStickPos(stickSubsystem, true),
       new ShootCommand(shooterSubsystem, holderSubsystem),
-      new SetStickPos(stickSubsystem, false)
+      new SetStickPos(stickSubsystem, true)
     );
   }
 }

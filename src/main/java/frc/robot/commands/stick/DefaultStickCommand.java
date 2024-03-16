@@ -10,7 +10,7 @@ import frc.robot.subsystems.StickSubsystem;
 public class DefaultStickCommand extends Command {
   /** Creates a new DefaultStickCommand. */
   StickSubsystem m_subsystem;
-  private final double k_stallPower = .075;
+  private final double k_stallPower = .03;
   public DefaultStickCommand(StickSubsystem stickSubsystem) {
     m_subsystem = stickSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.

@@ -198,9 +198,6 @@ public class RobotContainer {
     m_joystick.button(10).whileTrue(new EjectSpinCommand(m_driveSubsystem, m_pivotSubsystem, () -> m_joystick.getY()));
     m_joystick.button(11).onTrue(new StopEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     m_joystick.button(6).onTrue(new InstantCommand(() -> {Constants.States.m_autoRotateAim = !Constants.States.m_autoRotateAim;}));
-
-    m_joystick.button(3).onTrue(new SetStickPos(m_stickSubsystem, false));
-    m_joystick.button(5).onTrue(new SetStickPos(m_stickSubsystem, true));
     
     m_joystick.button(12).toggleOnTrue(new RunCommand(() -> {m_driveSubsystem.spinAllModules();}));
 

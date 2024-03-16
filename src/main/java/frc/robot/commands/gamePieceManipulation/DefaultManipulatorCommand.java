@@ -36,9 +36,7 @@ public class DefaultManipulatorCommand extends Command {
     } else if (Constants.States.m_isGamePieceStowed && m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters() < k_revRangeMeters && Constants.States.m_autoRotateAim) {
       // Shooter
       if (m_shooter && Constants.States.m_shootIntakeSide) { // if shooter and shoot intake side rev
-        // m_subsystem.setVelocityRPM(Constants.States.m_speakerMode ? m_subsystem.getRevSpeed() : Constants.ShooterConstants.k_ampShootVelocityRPM);
-      
-        m_subsystem.stop();
+        m_subsystem.setVelocityRPM(Constants.States.m_speakerMode ? m_subsystem.getRevSpeed() : Constants.ShooterConstants.k_ampShootVelocityRPM);
       } else if (m_shooter) { // else stop cause holder is revving
         m_subsystem.stop();
       }

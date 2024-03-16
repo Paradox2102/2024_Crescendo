@@ -15,7 +15,7 @@ public class SetApriltagsLogging extends InstantCommand {
   ApriltagsCamera m_camera;
   boolean m_log;
 
-  public SetApriltagsLogging(ApriltagsCamera camera, boolean log) {
+  public SetApriltagsLogging(ApriltagsCamera camera, ApriltagsCamera sideCamera, boolean log) {
     Logger.log("SetApriltagsLogging", 3, "SetApriltagsLogging()");
     m_camera = camera;
     m_log = log;

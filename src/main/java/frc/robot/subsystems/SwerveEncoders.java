@@ -16,6 +16,8 @@ import frc.robot.Constants;
 public class SwerveEncoders {
     private final AbsoluteEncoder m_absolute;
     private final RelativeEncoder m_relative;
+    private static final double k_relativePosConversionFactor = Constants.DriveConstants.k_turnTicksToRadiansPosition/48;
+    private static final double k_relativeVelConversionFactor = Constants.DriveConstants.k_turnTicksToDegreesVelocity/48;
     private double m_startingOffset;
 
     public SwerveEncoders(CANSparkMax motor) {
@@ -24,9 +26,9 @@ public class SwerveEncoders {
     }
 
     public void initialize() {
-        m_relative.setPositionConversionFactor(Constants.DriveConstants.k_turnTicksToRadiansPosition);
+        m_relative.setPositionConversionFactor(k_relativePosConversionFactor);
         m_absolute.setPositionConversionFactor(Constants.DriveConstants.k_turnTicksToRadiansPosition);
-        m_relative.setVelocityConversionFactor(Constants.DriveConstants.k_turnTicksToDegreesVelocity);
+        m_relative.setVelocityConversionFactor(k_relativeVelConversionFactor);
         m_absolute.setVelocityConversionFactor(Constants.DriveConstants.k_turnTicksToDegreesVelocity);
 
         setPositionOffset();
@@ -37,7 +39,7 @@ public class SwerveEncoders {
     }
 
     public double getPosition() {
-        return MathUtil.angleModulus(m_relative.getPosition()) + m_startingOffset;
+        return MathUtil.angleModulus(m_relative.getPosition()) + Math.PI + m_startingOffset;
     }
 
     public double getVelocity() {

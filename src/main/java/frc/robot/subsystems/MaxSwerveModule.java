@@ -197,6 +197,6 @@ public class MaxSwerveModule {
   }
 
   public void spin() {
-    m_turn.set(0.5);
+    m_turn.set(0.15);
   }
 }

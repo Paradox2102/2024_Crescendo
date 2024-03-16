@@ -16,8 +16,8 @@ import frc.robot.Constants;
 public class SwerveEncoders {
     private final AbsoluteEncoder m_absolute;
     private final RelativeEncoder m_relative;
-    private static final double k_relativePosConversionFactor = Constants.DriveConstants.k_turnTicksToRadiansPosition/48;
-    private static final double k_relativeVelConversionFactor = Constants.DriveConstants.k_turnTicksToDegreesVelocity/48;
+    private static final double k_relativePosConversionFactor = Constants.DriveConstants.k_turnTicksToRadiansPosition/1920;
+    private static final double k_relativeVelConversionFactor = Constants.DriveConstants.k_turnTicksToDegreesVelocity/192;
     private double m_startingOffset;
 
     public SwerveEncoders(CANSparkMax motor) {

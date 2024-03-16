@@ -150,10 +150,10 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    new Trigger(() -> getPositionServerButtonState(1)).onTrue(new SetApriltagsLogging(m_apriltagCamera, true));
-    new Trigger(() -> getPositionServerButtonState(2)).onTrue(new SetApriltagsLogging(m_apriltagCamera, false));
-    new Trigger(() -> getPositionServerButtonState(3)).onTrue(new SetApriltagsDashboard(m_apriltagCamera, true));
-    new Trigger(() -> getPositionServerButtonState(4)).onTrue(new SetApriltagsDashboard(m_apriltagCamera, false));
+    new Trigger(() -> getPositionServerButtonState(1)).onTrue(new SetApriltagsLogging(m_apriltagCamera, m_apriltagCameraSide, true));
+    new Trigger(() -> getPositionServerButtonState(2)).onTrue(new SetApriltagsLogging(m_apriltagCamera, m_apriltagCameraSide, false));
+    new Trigger(() -> getPositionServerButtonState(3)).onTrue(new SetApriltagsDashboard(m_apriltagCamera, m_apriltagCameraSide, true));
+    new Trigger(() -> getPositionServerButtonState(4)).onTrue(new SetApriltagsDashboard(m_apriltagCamera, m_apriltagCameraSide, false));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     HoldTrigger m_slowMode = new HoldTrigger(m_driverController.rightBumper());
     HoldTrigger m_slowMode1 = new HoldTrigger(m_driverController.leftBumper());

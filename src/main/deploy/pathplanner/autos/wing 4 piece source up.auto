@@ -26,9 +26,9 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "wait for rev"
+                        "waitTime": 1.0
                       }
                     },
                     {
@@ -44,7 +44,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "begin 4 Path"
+                              "pathName": "speaker to wing 3"
                             }
                           },
                           {
@@ -57,9 +57,22 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "back 1st Path"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "wing 3 to speaker source"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "auto aim"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -75,7 +88,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "2nd Go Path"
+                              "pathName": "wing 3 to 2"
                             }
                           },
                           {
@@ -88,9 +101,22 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "back 2nd Path"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "wing 2 to speaker source"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "auto aim"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -106,7 +132,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3rd Go Path"
+                              "pathName": "wing 2 to 1"
                             }
                           },
                           {
@@ -119,9 +145,22 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "back 3rd Path"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "wing 1 to speaker"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "auto aim"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -132,19 +171,19 @@
                     }
                   ]
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "rev back"
+                }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "rev back"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "Wing Autos",
   "choreoAuto": false
 }

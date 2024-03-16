@@ -1,0 +1,95 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.3038434219362085,
+        "y": 4.198647786608551
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.2620658320197058,
+        "y": 2.120212688262528
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.3060968445853818,
+        "y": 1.756882382864025
+      },
+      "prevControl": {
+        "x": 1.2840813383025438,
+        "y": 1.9385475355632764
+      },
+      "nextControl": {
+        "x": 1.3281123508682198,
+        "y": 1.5752172301647736
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.7842857059759927,
+        "y": 0.8146630033718082
+      },
+      "prevControl": {
+        "x": 1.1914827109039121,
+        "y": 0.8937034027147525
+      },
+      "nextControl": {
+        "x": 2.4109495547235373,
+        "y": 0.731107823538802
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.016724608512831,
+        "y": 0.6997746311014252
+      },
+      "prevControl": {
+        "x": 1.9618404631211317,
+        "y": 0.7206634260596779
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 2.0,
+      "rotationDegrees": -32.3474434994419,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": -25.57718384684236,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.8,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "mobility",
+  "previewStartingState": {
+    "rotation": -53.42696902148076,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

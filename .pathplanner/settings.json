@@ -9,7 +9,11 @@
     "shoot to piece",
     "start to piece"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "Leave Autos & 1 Pieces",
+    "3 Pieces",
+    "Wing Autos"
+  ],
   "defaultMaxVel": 4.8,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,

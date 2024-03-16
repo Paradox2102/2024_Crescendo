@@ -44,7 +44,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "speaker to wing 3"
+                              "pathName": "speaker to wing 1"
                             }
                           },
                           {
@@ -63,7 +63,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "wing 3 turnaround"
+                              "pathName": "wing 1 to speaker"
                             }
                           },
                           {
@@ -88,7 +88,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "wing 3 to 2"
+                              "pathName": "wing 1 to 2"
                             }
                           },
                           {
@@ -107,7 +107,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "wing 2 turnaround"
+                              "pathName": "wing 2 to speaker amp"
                             }
                           },
                           {
@@ -132,7 +132,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "wing 2 to 1"
+                              "pathName": "wing 2 to wing 3"
                             }
                           },
                           {
@@ -151,7 +151,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "wing 1 turnaround"
+                              "pathName": "wing 3 to speaker amp"
                             }
                           },
                           {
@@ -184,6 +184,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Wing Autos",
   "choreoAuto": false
 }

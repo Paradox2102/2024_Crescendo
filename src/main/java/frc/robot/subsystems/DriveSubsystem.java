@@ -278,14 +278,14 @@ public class DriveSubsystem extends SubsystemBase {
     // Constants.States.m_faceSpeaker); SmartDashboard.putBoolean("Shoot
     // Front/Back", Constants.States.m_shootIntakeSide);
     // SmartDashboard.putBoolean("Aim On", Constants.States.m_autoRotateAim);
-    // SmartDashboard.putNumber("FL Motor Encoder Pos", m_frontLeft.getMotorPosRadians());
-    // SmartDashboard.putNumber("FL Mag Encoder Pos", m_frontLeft.getMagEncoderPosRadians());
-    // SmartDashboard.putNumber("FR Motor Encoder Pos", m_frontRight.getMotorPosRadians());
-    // SmartDashboard.putNumber("FR Mag Encoder Pos", m_frontRight.getMagEncoderPosRadians());
-    // SmartDashboard.putNumber("BL Motor Encoder Pos", m_backLeft.getMotorPosRadians());
-    // SmartDashboard.putNumber("BL Mag Encoder Pos", m_backLeft.getMagEncoderPosRadians());
-    // SmartDashboard.putNumber("BR Motor Encoder Pos", m_backRight.getMotorPosRadians());
-    // SmartDashboard.putNumber("BR Mag Encoder Pos", m_backRight.getMagEncoderPosRadians());
+    SmartDashboard.putNumber("FL Motor Encoder Pos", m_frontLeft.getMotorPosRadians());
+    SmartDashboard.putNumber("FL Mag Encoder Pos", m_frontLeft.getMagEncoderPosRadians());
+    SmartDashboard.putNumber("FR Motor Encoder Pos", m_frontRight.getMotorPosRadians());
+    SmartDashboard.putNumber("FR Mag Encoder Pos", m_frontRight.getMagEncoderPosRadians());
+    SmartDashboard.putNumber("BL Motor Encoder Pos", m_backLeft.getMotorPosRadians());
+    SmartDashboard.putNumber("BL Mag Encoder Pos", m_backLeft.getMagEncoderPosRadians());
+    SmartDashboard.putNumber("BR Motor Encoder Pos", m_backRight.getMotorPosRadians());
+    SmartDashboard.putNumber("BR Mag Encoder Pos", m_backRight.getMagEncoderPosRadians());
 
     m_tracker.update(m_frontBackCamera, m_sideCamera);
 
@@ -497,6 +497,13 @@ public class DriveSubsystem extends SubsystemBase {
         new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
     m_backRight.setDesiredState(
         new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+  }
+
+  public void spinAllModules(){
+    m_frontLeft.spin();
+    m_frontRight.spin();
+    m_backLeft.spin();
+    m_backRight.spin();
   }
 
   /**

@@ -53,6 +53,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -200,9 +201,11 @@ public class RobotContainer {
 
     m_joystick.button(3).onTrue(new SetStickPos(m_stickSubsystem, false));
     m_joystick.button(5).onTrue(new SetStickPos(m_stickSubsystem, true));
+    
+    m_joystick.button(12).toggleOnTrue(new RunCommand(() -> {m_driveSubsystem.spinAllModules();}));
 
-    ToggleTrigger m_brakeMode = new ToggleTrigger(m_joystick.button(12));
-    m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode), m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, m_elevatorSubsystem, m_stickSubsystem));
+    //ToggleTrigger m_brakeMode = new ToggleTrigger(m_joystick.button(12));
+    //m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode), m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, m_elevatorSubsystem, m_stickSubsystem));
   }
   public double getThrottle() {
     return m_joystick.getThrottle();

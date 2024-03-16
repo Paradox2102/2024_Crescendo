@@ -195,4 +195,8 @@ public class MaxSwerveModule {
     m_turn.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
     m_drive.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
   }
+
+  public void spin() {
+    m_turn.set(0.5);
+  }
 }

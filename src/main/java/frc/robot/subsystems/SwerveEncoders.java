@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 
+import edu.wpi.first.math.MathUtil;
 import frc.robot.Constants;
 
 /** Add your docs here. */
@@ -24,7 +25,9 @@ public class SwerveEncoders {
 
     public void initialize() {
         m_relative.setPositionConversionFactor(Constants.DriveConstants.k_turnTicksToRadiansPosition);
+        m_absolute.setPositionConversionFactor(Constants.DriveConstants.k_turnTicksToRadiansPosition);
         m_relative.setVelocityConversionFactor(Constants.DriveConstants.k_turnTicksToDegreesVelocity);
+        m_absolute.setVelocityConversionFactor(Constants.DriveConstants.k_turnTicksToDegreesVelocity);
 
         setPositionOffset();
     }
@@ -34,7 +37,7 @@ public class SwerveEncoders {
     }
 
     public double getPosition() {
-        return m_relative.getPosition() + m_startingOffset;
+        return MathUtil.angleModulus(m_relative.getPosition()) + m_startingOffset;
     }
 
     public double getVelocity() {

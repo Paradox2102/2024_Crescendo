@@ -31,10 +31,9 @@ import frc.robot.commands.gamePieceManipulation.JukeShot;
 import frc.robot.commands.gamePieceManipulation.ResetSubsystemsCommand;
 import frc.robot.commands.gamePieceManipulation.RevCommand;
 import frc.robot.commands.gamePieceManipulation.ShootCommand;
+import frc.robot.commands.gamePieceManipulation.ShootSequence;
 import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.SetPivotOffInputDistance;
-import frc.robot.commands.stick.ManualStickCommand;
-import frc.robot.commands.stick.SetStickPos;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.led.LEDConfig;
 import frc.robot.subsystems.DriveSubsystem;
@@ -44,7 +43,6 @@ import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSensors;
 import frc.robot.subsystems.StickSubsystem;
 import frc.triggers.HoldTrigger;
-import frc.triggers.ToggleTrigger;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -174,7 +172,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
-    m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
+    m_driverController.leftTrigger().toggleOnTrue(new ShootSequence(m_shooterSubsystem, m_holderSubsystem, m_stickSubsystem));
     m_driverController.rightTrigger().whileTrue(new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
         
     m_driverController.y().onTrue(new AutoOrientCommand(m_driveSubsystem, 180, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));

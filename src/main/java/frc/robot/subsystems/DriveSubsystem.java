@@ -247,7 +247,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Rotate Error", getRotationDistanceFromTargetError());
+    // SmartDashboard.putNumber("Rotate Error", getRotationDistanceFromTargetError());
     // // Update the odometry in the periodic block
     // SmartDashboard.putNumber("Turn FR",
     //                          (m_frontRight.getAngleRadians())); /// Math.PI);
@@ -269,7 +269,7 @@ public class DriveSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("Gyro Rotation2D",
     // getGyroRotation2d().getDegrees()); SmartDashboard.putNumber("Tracker
     // Rotation2D", m_tracker.getPose2d().getRotation().getDegrees());
-    SmartDashboard.putNumber("Speaker Distance Translation", getTranslationalDistanceFromSpeakerMeters());
+    // SmartDashboard.putNumber("Speaker Distance Translation", getTranslationalDistanceFromSpeakerMeters());
     // SmartDashboard.putNumber("Speaker X",
     // getSpeakerLocationMeters().m_xMeters); SmartDashboard.putNumber("Speaker
     // Y", getSpeakerLocationMeters().m_yMeters);
@@ -277,10 +277,10 @@ public class DriveSubsystem extends SubsystemBase {
     // Constants.States.m_faceSpeaker); SmartDashboard.putBoolean("Shoot
     // Front/Back", Constants.States.m_shootIntakeSide);
     // SmartDashboard.putBoolean("Aim On", Constants.States.m_autoRotateAim);
-    SmartDashboard.putNumber("FL Encoder Diff", m_frontLeft.getMagEncoderPosRadians() - m_frontLeft.getMotorPosRadians());
-    SmartDashboard.putNumber("FR Encoder Diff", m_frontRight.getMagEncoderPosRadians() - m_frontRight.getMotorPosRadians());
-    SmartDashboard.putNumber("BL Encoder Diff", m_backLeft.getMagEncoderPosRadians() - m_backLeft.getMotorPosRadians());
-    SmartDashboard.putNumber("BR Encoder Diff", m_backRight.getMagEncoderPosRadians() - m_backRight.getMotorPosRadians());
+    // SmartDashboard.putNumber("FL Encoder Diff", m_frontLeft.getMagEncoderPosRadians() - m_frontLeft.getMotorPosRadians());
+    // SmartDashboard.putNumber("FR Encoder Diff", m_frontRight.getMagEncoderPosRadians() - m_frontRight.getMotorPosRadians());
+    // SmartDashboard.putNumber("BL Encoder Diff", m_backLeft.getMagEncoderPosRadians() - m_backLeft.getMotorPosRadians());
+    // SmartDashboard.putNumber("BR Encoder Diff", m_backRight.getMagEncoderPosRadians() - m_backRight.getMotorPosRadians());
     m_tracker.update(m_frontBackCamera, m_sideCamera);
 
     // Estimate future position of robot

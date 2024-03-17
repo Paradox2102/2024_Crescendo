@@ -120,7 +120,9 @@ public final class Constants {
         2.75,
         3,
         3.5,
-        4
+        4,
+        8
+
       };
       PivotConstants.k_anglesBack = new double[] {
         117, //1.5
@@ -128,10 +130,11 @@ public final class Constants {
         110, //2
         107, //2.25
         105, //2.5
-        103, //2.75
-        102, //3
-        98, // 3.5
-        95 // 4
+        101, //2.75
+        99, //3
+        96, // 3.5
+        95, // 4
+        70 // 8
       };
 
     } else {
@@ -307,7 +310,7 @@ public final class Constants {
     public static final int k_shooterMotor = 11;
     public static double k_intakeVelocityRPM = 3000;
     public static final double k_speakerShootVelocityRPM = -5000; // -5750
-    public static double k_ampShootVelocityRPM = -1950; // -1950
+    public static double k_ampShootVelocityRPM = -1800; // -1950
     public static final double k_maxVelocityRPM = 6250; //6000
     
     public static final double k_speakerFeedPower = 1;

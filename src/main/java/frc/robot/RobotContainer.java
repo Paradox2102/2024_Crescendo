@@ -34,7 +34,6 @@ import frc.robot.commands.gamePieceManipulation.ShootCommand;
 import frc.robot.commands.gamePieceManipulation.ShootSequence;
 import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.SetPivotOffInputDistance;
-import frc.robot.commands.stick.DefaultStickCommand;
 import frc.robot.commands.stick.SetStickPos;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.led.LEDConfig;
@@ -170,7 +169,6 @@ public class RobotContainer {
     m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
     m_shooterSubsystem.setDefaultCommand(new DefaultManipulatorCommand(m_shooterSubsystem, m_driveSubsystem, true));
     m_holderSubsystem.setDefaultCommand(new DefaultManipulatorCommand(m_holderSubsystem, m_driveSubsystem, false));
-    m_stickSubsystem.setDefaultCommand(new DefaultStickCommand(m_stickSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.

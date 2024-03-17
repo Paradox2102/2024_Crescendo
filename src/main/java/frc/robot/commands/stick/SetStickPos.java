@@ -25,35 +25,25 @@ public class SetStickPos extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (m_runningShootSequence && Constants.States.m_speakerMode) {
-      m_power = 0;
-    } else {
-      m_power = m_subsystem.m_retracted ? 1 : -1;
+    if (m_runningShootSequence && Constants.States.m_speakerMode) {}
+    else {
+      m_subsystem.setPose(true);
     }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_subsystem.setPower(m_power);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_subsystem.stop();
-    if (m_power != 0) {
-      m_subsystem.m_retracted = !m_subsystem.m_retracted;
-    }
+    m_subsystem.setPose(false);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    double pos = m_subsystem.getPositionInRotations();
-    if (m_runningShootSequence && Constants.States.m_speakerMode) {
-      return true;
-    }
-    return m_subsystem.m_retracted ?  pos >= Constants.StickConstants.k_maxExtentRotations : pos <= .2;
+    return false;
   }
 }

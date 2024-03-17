@@ -4,6 +4,7 @@
 
 package frc.robot.commands.gamePieceManipulation;
 
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.stick.SetStickPos;
 import frc.robot.subsystems.ManipulatorSubsystem;
@@ -18,9 +19,10 @@ public class ShootSequence extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SetStickPos(stickSubsystem, true),
-      new ShootCommand(shooterSubsystem, holderSubsystem),
-      new SetStickPos(stickSubsystem, true)
+      new ParallelDeadlineGroup(
+        new ShootCommand(shooterSubsystem, holderSubsystem),
+        new SetStickPos(stickSubsystem, true)
+      )
     );
   }
 }

@@ -24,9 +24,22 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "path",
+                            "type": "sequential",
                             "data": {
-                              "pathName": "speaker to wing 3"
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.9
+                                  }
+                                },
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "speaker to wing 3"
+                                  }
+                                }
+                              ]
                             }
                           },
                           {
@@ -38,9 +51,9 @@
                                   "data": {
                                     "commands": [
                                       {
-                                        "type": "named",
+                                        "type": "wait",
                                         "data": {
-                                          "name": "back feed"
+                                          "waitTime": 1.0
                                         }
                                       },
                                       {
@@ -50,6 +63,12 @@
                                         }
                                       }
                                     ]
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "back feed"
                                   }
                                 },
                                 {
@@ -71,7 +90,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 1.0
+                              "waitTime": 0.5
                             }
                           },
                           {
@@ -114,9 +133,9 @@
                                   "data": {
                                     "commands": [
                                       {
-                                        "type": "named",
+                                        "type": "wait",
                                         "data": {
-                                          "name": "back feed"
+                                          "waitTime": 0.65
                                         }
                                       },
                                       {
@@ -126,6 +145,12 @@
                                         }
                                       }
                                     ]
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "back feed"
                                   }
                                 },
                                 {
@@ -182,7 +207,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 1.5
+                                    "waitTime": 1.0
                                   }
                                 },
                                 {

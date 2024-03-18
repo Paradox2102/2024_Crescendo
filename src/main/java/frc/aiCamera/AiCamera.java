@@ -257,7 +257,7 @@ public class AiCamera implements Network.NetworkReceiver {
 		double a[] = parseDouble(args, 4);
 
 		if (a != null) {
-			Logger.log("AiCamera", 1, String.format("R %f %f %f %f", a[0], a[1], a[2], a[3]));	
+			// Logger.log("AiCamera", 1, String.format("R %f %f %f %f", a[0], a[1], a[2], a[3]));	
 			SmartDashboard.putNumber("AI ul X", a[0]);
 			SmartDashboard.putNumber("AI ul Y", a[1]);
 			SmartDashboard.putNumber("AI lr X", a[2]);
@@ -291,7 +291,7 @@ public class AiCamera implements Network.NetworkReceiver {
 	// ! @cond PRIVATE
 	@Override
 	public void processData(String data) {
-		Logger.log("ApriltagCamera", 1, String.format("Data: %s", data));
+		// Logger.log("ApriltagCamera", 1, String.format("Data: %s", data));
 
 		switch (data.charAt(0)) {
 			case 'F':

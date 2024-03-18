@@ -193,7 +193,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		ApriltagPosition findPosition(double time) {
 			int position = (m_position + k_queueSize - 1) % k_queueSize;
 			while (position != m_position && m_queue[position].m_estPos != null) {
-				if (time <= m_queue[position].m_time) {
+				if (time >= m_queue[position].m_time) {
 					// Logger.log("ApriltagsQueue", 1, String.format("found at %d", (m_position -
 					// position + k_queueSize) % k_queueSize));
 					return (m_queue[position]);
@@ -988,11 +988,13 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	// boolean m_logTags = false;
 
 	public void processRegions(SwerveDrivePoseEstimator poseEstimator) {
+		int nProcessed = 0;
+		double curTime = getTime();
+		Pose2d estPos = poseEstimator.getEstimatedPosition();
+
 		if (m_connected) {
 			int cameraNo = 0;
-			int nProcessed = 0;
 			int nFrames = 0;
-			double curTime = getTime();
 			for (ApriltagsCameraInfo info : m_cameras) {
 				ApriltagsCameraRegions regions = info.m_regions;
 
@@ -1019,9 +1021,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 			if (m_log && ((nProcessed == 0) && (nFrames > 0))) {
 				// If logging is enabled log only the estimated pose
-				Pose2d estPos = poseEstimator.getEstimatedPosition();
 
-				m_queue.add(estPos, curTime);
+				// m_queue.add(estPos, curTime);
 				// Logger.log("ApriltagsCameraLog", 1, ",tag,last yaw,cam yaw,calc yaw,update
 				// yaw, est yaw,x,est x,y,est y,adjust");
 
@@ -1029,6 +1030,11 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 						String.format(",,,,,,%f,,%f,,%f,,,%f,", estPos.getRotation().getDegrees(), estPos.getX(),
 								estPos.getY(), curTime));
 			}
+		}
+
+		if (nProcessed == 0)
+		{
+			m_queue.add(estPos, curTime);
 		}
 	}
 

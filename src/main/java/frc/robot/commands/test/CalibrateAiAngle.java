@@ -24,22 +24,25 @@ public class CalibrateAiAngle extends Command {
   int m_lastFrame = -1;
 
   /** Creates a new CalibrateAiAngle. */
-  public CalibrateAiAngle(DriveSubsystem subsystem, AiCamera camera, PositionTrackerPose poseTracker) {
+  public CalibrateAiAngle(DriveSubsystem subsystem, ApriltagsCamera aprilCamera, AiCamera camera, PositionTrackerPose poseTracker) {
     m_subsystem = subsystem;
     m_camera = camera;
+    m_apriltagsCamera = aprilCamera;
     m_poseTracker = poseTracker;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }
+  double m_lastAngle = 0;
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_poseTracker.setPose(new Pose2d(0, 0, Rotation2d.fromDegrees(0)));
     m_lastFrame = -1;
+    m_lastAngle = 0;
   }
 
-  double m_rot = 0.5;
+  double m_rot = 0.05;
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -53,18 +56,20 @@ public class CalibrateAiAngle extends Command {
       AiRegion region = regions.getLargestRegion();
 
       if (region != null) {
-        // Pose2d pose = m_poseTracker.getPose2d();
-        Pose2d poseAtImageTime = m_apriltagsCamera.getPoseAtTime(ApriltagsCamera.getTime() + 0.070);  // MUSTFIX - need to get actual delay
+        Pose2d pose = m_poseTracker.getPose2d();
+        // Pose2d poseAtImageTime = m_apriltagsCamera.getPoseAtTime(ApriltagsCamera.getTime() + 0.070);  // MUSTFIX - need to get actual delay
 
-        Logger.log("CalibrateAiAngle", 1, String.format(",%f,%f", poseAtImageTime.getRotation().getDegrees(), (region.m_lx + region.m_ux) / 2));
+        Logger.log("CalibrateAiAngle", 1, String.format(",%f,%f,%f,%f", pose.getRotation().getDegrees(), (region.m_lx + region.m_ux) / 2, region.m_ly, region.m_uy));
       }
     }
 
     double angle = m_poseTracker.getPose2d().getRotation().getDegrees();
 
-    if (Math.abs(angle) > 20) {
+    if ((Math.abs(m_lastAngle) < 20) && (Math.abs(angle) > 20)) {
       m_rot = -m_rot;
     }
+
+    m_lastAngle = angle;
 
     m_subsystem.drive(0, 0, m_rot, true, true, Constants.DriveConstants.k_rotatePoint);
   }

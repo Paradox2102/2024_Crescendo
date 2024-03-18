@@ -24,8 +24,9 @@ public class CalibrateAiDistance extends Command {
   int m_lastFrame = -1;
 
   /** Creates a new CalibrateAiDistance. */
-  public CalibrateAiDistance(DriveSubsystem subsystem, AiCamera camera, PositionTrackerPose poseTracker) {
+  public CalibrateAiDistance(DriveSubsystem subsystem, ApriltagsCamera aprilCamera, AiCamera camera, PositionTrackerPose poseTracker) {
     m_subsystem = subsystem;
+    m_apriltagsCamera = aprilCamera;
     m_camera = camera;
     m_poseTracker = poseTracker;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -35,14 +36,17 @@ public class CalibrateAiDistance extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    Logger.log("CalibrateAiDistance", 2, "initialize()");
     m_poseTracker.setPose(new Pose2d(0, 0, Rotation2d.fromDegrees(0)));
     m_lastFrame = -1;
+    Pose2d pos = m_apriltagsCamera.getPoseAtTime(ApriltagsCamera.getTime() - 0.070);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     AiRegions regions = m_camera.getRegions();
+    // Logger.log("CalibrateAiDistance", 1, "execute()");
 
     if (regions != null && (regions.m_frameNo != m_lastFrame))
     {
@@ -51,13 +55,13 @@ public class CalibrateAiDistance extends Command {
       AiRegion region = regions.getLargestRegion();
 
       if (region != null) {
-        // Pose2d pose = m_poseTracker.getPose2d();
-        Pose2d poseAtImageTime = m_apriltagsCamera.getPoseAtTime(ApriltagsCamera.getTime() + 0.070);  // MUSTFIX - need to get actual delay
+        Pose2d pose = m_poseTracker.getPose2d();
+        // Pose2d poseAtImageTime = m_apriltagsCamera.getPoseAtTime(ApriltagsCamera.getTime() - 0.070);  // MUSTFIX - need to get actual delay
 
-        Logger.log("CalibrateAiDistance", 1, String.format(",%f,%f", poseAtImageTime.getTranslation().getX(), region.m_ly));
+        Logger.log("CalibrateAiDistance", 1, String.format(",%f,%f,%f", pose.getTranslation().getX(), region.m_ly, region.m_uy));
       }
     }
-    m_subsystem.drive(0.5, 0, 0, true, true, Constants.DriveConstants.k_rotatePoint);
+    m_subsystem.drive(0.25, 0, 0, true, true, Constants.DriveConstants.k_rotatePoint);
   }
 
   // Called once the command ends or is interrupted.

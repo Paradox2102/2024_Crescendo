@@ -34,6 +34,7 @@ import frc.robot.commands.gamePieceManipulation.RevCommand;
 import frc.robot.commands.gamePieceManipulation.ShootCommand;
 import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.SetPivotOffInputDistance;
+import frc.robot.commands.test.CalibrateAiAngle;
 import frc.robot.commands.test.CalibrateAiDistance;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.led.LEDConfig;
@@ -130,7 +131,7 @@ public class RobotContainer {
     m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraLeftX, Constants.DriveConstants.k_cameraLeftY, 90, ApriltagsCameraType.GS_6mm); 
     m_apriltagCameraSide.connect("10.21.2.12", 5800);
 
-    m_aiCamera.connect("10.21.2.86", 5800);
+    m_aiCamera.connect("10.21.2.10", 5800);
 
     m_posServer.start();
     SmartDashboard.putData("Auto To Run",autoChooser);
@@ -166,7 +167,8 @@ public class RobotContainer {
       new Trigger(m_slowMode1)
     ));
 
-    m_testStick.button(1).whileTrue(new CalibrateAiDistance(m_driveSubsystem, m_aiCamera, m_tracker));
+    m_testStick.button(1).whileTrue(new CalibrateAiDistance(m_driveSubsystem, m_apriltagCamera, m_aiCamera, m_tracker));
+    m_testStick.button(2).whileTrue(new CalibrateAiAngle(m_driveSubsystem, m_apriltagCamera, m_aiCamera, m_tracker));
 
     m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
     m_shooterSubsystem.setDefaultCommand(new DefaultManipulatorCommand(m_shooterSubsystem, m_driveSubsystem, true));

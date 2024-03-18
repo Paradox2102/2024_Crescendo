@@ -63,6 +63,7 @@ public class PivotSubsystem extends SubsystemBase {
     m_setPoint = angle;
   }
 
+  // Autos only, to be removed
   public double getPivotAngleFromDistanceFromSpeaker(double distance) {
     double[] distances = Constants.States.m_shootIntakeSide ? k_frontDistances : k_backDistances;
     double[] angles = Constants.States.m_shootIntakeSide ? k_anglesFront : k_anglesBack;

@@ -70,7 +70,7 @@ public class PivotSubsystem extends SubsystemBase {
       return 0;
     }
     for (int i = 0; i < distances.length; i++) {
-      if (distance > distances[i] && distance < distances[i+1]) {
+      if (distance > distances[i] && distance <= distances[i+1]) {
         double roc = (angles[i+1] - angles[i]) / (distances[i+1] - distances[i]);
         double dist = distance -distances[i];
         return (angles[i] + dist * roc) + PivotConstants.k_offset; 

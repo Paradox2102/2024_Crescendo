@@ -235,7 +235,7 @@ public class DriveSubsystem extends SubsystemBase {
     // rot += (Constants.DriveConstants.k_rotateF * Math.signum(rot));
     // return Math.abs(heading) < Constants.DriveConstants.k_rotateDeadzone ? 0
     // : rot;
-    rot = rot > Constants.DriveConstants.k_maxRotInput ? Constants.DriveConstants.k_maxRotInput : rot;
+    rot = Math.abs(rot) > Constants.DriveConstants.k_maxRotInput ? Constants.DriveConstants.k_maxRotInput * Math.signum(rot) : rot;
     return rot;
   }
 

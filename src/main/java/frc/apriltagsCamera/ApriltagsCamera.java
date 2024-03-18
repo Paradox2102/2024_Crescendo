@@ -190,7 +190,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		ApriltagPosition findPosition(double time) {
 			int position = (m_position + k_queueSize - 1) % k_queueSize;
 			while (position != m_position && m_queue[position].m_estPos != null) {
-				if (time > m_queue[position].m_time) {
+				if (time >= m_queue[position].m_time) {
 					// Logger.log("ApriltagsQueue", 1, String.format("found at %d", (m_position -
 					// position + k_queueSize) % k_queueSize));
 					return (m_queue[position]);

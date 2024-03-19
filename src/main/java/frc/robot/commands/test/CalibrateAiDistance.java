@@ -40,6 +40,7 @@ public class CalibrateAiDistance extends Command {
     m_poseTracker.setPose(new Pose2d(0, 0, Rotation2d.fromDegrees(0)));
     m_lastFrame = -1;
     Pose2d pos = m_apriltagsCamera.getPoseAtTime(ApriltagsCamera.getTime() - 0.070);
+    Logger.setLogFile("CalibrateAiDistanceLog", "CalAiDist");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -55,10 +56,10 @@ public class CalibrateAiDistance extends Command {
       AiRegion region = regions.getLargestRegion();
 
       if (region != null) {
-        Pose2d pose = m_poseTracker.getPose2d();
-        // Pose2d poseAtImageTime = m_apriltagsCamera.getPoseAtTime(ApriltagsCamera.getTime() - 0.070);  // MUSTFIX - need to get actual delay
+        // Pose2d pose = m_poseTracker.getPose2d();
+        Pose2d pose = m_apriltagsCamera.getPoseAtTime(ApriltagsCamera.getTime() - 0.070);  // MUSTFIX - need to get actual delay
 
-        Logger.log("CalibrateAiDistance", 1, String.format(",%f,%f,%f", pose.getTranslation().getX(), region.m_ly, region.m_uy));
+        Logger.log("CalibrateAiDistanceLog", 1, String.format(",%f,%f,%f", pose.getTranslation().getX(), region.m_ly, region.m_uy));
       }
     }
     m_subsystem.drive(0.25, 0, 0, true, true, Constants.DriveConstants.k_rotatePoint);
@@ -67,7 +68,7 @@ public class CalibrateAiDistance extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-  
+    Logger.closeAllLogFiles();
   }
 
   // Returns true when the command should end.

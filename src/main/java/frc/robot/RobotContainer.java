@@ -22,6 +22,7 @@ import frc.robot.commands.autos.IntakeAndGoToBackShooter;
 import frc.robot.commands.autos.RevBackShooter;
 import frc.robot.commands.autos.StartBack;
 import frc.robot.commands.autos.StartFront;
+import frc.robot.commands.drivetrain.AiDriveToTarget;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.AutoOrientCommand;
 import frc.robot.commands.drivetrain.EjectSpinCommand;
@@ -57,9 +58,12 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
@@ -74,22 +78,24 @@ public class RobotContainer {
   final ShooterSensors m_shooterSensors = new ShooterSensors();
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera, m_apriltagCameraSide);
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem(m_driveSubsystem);
-  private final ManipulatorSubsystem m_shooterSubsystem = new ManipulatorSubsystem(m_driveSubsystem, Constants.ShooterConstants.k_shooterMotor);
-  private final ManipulatorSubsystem m_holderSubsystem = new ManipulatorSubsystem(m_driveSubsystem, Constants.HolderConstants.k_holdingMotor);
+  private final ManipulatorSubsystem m_shooterSubsystem = new ManipulatorSubsystem(m_driveSubsystem,
+      Constants.ShooterConstants.k_shooterMotor);
+  private final ManipulatorSubsystem m_holderSubsystem = new ManipulatorSubsystem(m_driveSubsystem,
+      Constants.HolderConstants.k_holdingMotor);
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
 
   private final CommandJoystick m_joystick = new CommandJoystick(1);
   private final CommandJoystick m_testStick = new CommandJoystick(2);
   public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);
 
-
-
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandXboxController m_driverController = new CommandXboxController(
+      OperatorConstants.kDriverControllerPort);
   private final SendableChooser<Command> autoChooser;
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer(Robot robot) {
     // Configure the trigger bindings
     configureBindings();
@@ -97,7 +103,8 @@ public class RobotContainer {
 
     m_driveSubsystem.setTracker(m_tracker);
     NamedCommands.registerCommand("intake", new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
-    NamedCommands.registerCommand("intake back", new IntakeAndGoToBackShooter(m_shooterSubsystem, m_pivotSubsystem, 1.8));
+    NamedCommands.registerCommand("intake back",
+        new IntakeAndGoToBackShooter(m_shooterSubsystem, m_pivotSubsystem, 1.8));
     NamedCommands.registerCommand("rev shooter", new RevCommand(m_shooterSubsystem, m_holderSubsystem));
     NamedCommands.registerCommand("rev back", new RevBackShooter(m_holderSubsystem));
     NamedCommands.registerCommand("switch to shoot back", new ToggleShootSideCommand(false));
@@ -107,9 +114,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("shoot", new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
     NamedCommands.registerCommand("feedthrough", new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
     NamedCommands.registerCommand("back feed", new BackFeedCommand(m_shooterSubsystem));
-    NamedCommands.registerCommand("stop everything", new StopEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
-    NamedCommands.registerCommand("reset everything", new ResetSubsystemsCommand(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem));
-    NamedCommands.registerCommand("bulldoze counter", new CountBulldoze(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
+    NamedCommands.registerCommand("stop everything",
+        new StopEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
+    NamedCommands.registerCommand("reset everything",
+        new ResetSubsystemsCommand(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem));
+    NamedCommands.registerCommand("bulldoze counter",
+        new CountBulldoze(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
     // Aim
     NamedCommands.registerCommand("subwoofer aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1.5));
     NamedCommands.registerCommand("four piece aim", new SetPivotOffInputDistance(m_pivotSubsystem, 2));
@@ -118,23 +128,28 @@ public class RobotContainer {
     NamedCommands.registerCommand("auto aim", new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
     autoChooser = AutoBuilder.buildAutoChooser();
 
-    // m_apriltagCamera.setCameraInfo(8.375, 12, 180, ApriltagsCameraType.GS_6mm); // y = 6
-    // m_apriltagCamera.setCameraInfo(5.125, 15.5, 0, ApriltagsCameraType.GS_6mm); // y = 9.5
+    // m_apriltagCamera.setCameraInfo(8.375, 12, 180, ApriltagsCameraType.GS_6mm);
+    // // y = 6
+    // m_apriltagCamera.setCameraInfo(5.125, 15.5, 0, ApriltagsCameraType.GS_6mm);
+    // // y = 9.5
     // Front
-    m_apriltagCamera.setCameraInfo(Constants.DriveConstants.k_cameraFrontX, Constants.DriveConstants.k_cameraFrontY, 180, ApriltagsCameraType.GS_6mm); // y = 6
+    m_apriltagCamera.setCameraInfo(Constants.DriveConstants.k_cameraFrontX, Constants.DriveConstants.k_cameraFrontY,
+        180, ApriltagsCameraType.GS_6mm); // y = 6
     // Back
-    m_apriltagCamera.setCameraInfo(Constants.DriveConstants.k_cameraBackX, Constants.DriveConstants.k_cameraBackY, 0, ApriltagsCameraType.GS_6mm); // y = 9.5
+    m_apriltagCamera.setCameraInfo(Constants.DriveConstants.k_cameraBackX, Constants.DriveConstants.k_cameraBackY, 0,
+        ApriltagsCameraType.GS_6mm); // y = 9.5
     m_apriltagCamera.connect("10.21.2.11", 5800);
-    
 
-    m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraRightX, Constants.DriveConstants.k_cameraRightY, -90, ApriltagsCameraType.GS_6mm); 
-    m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraLeftX, Constants.DriveConstants.k_cameraLeftY, 90, ApriltagsCameraType.GS_6mm); 
+    m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraRightX, Constants.DriveConstants.k_cameraRightY,
+        -90, ApriltagsCameraType.GS_6mm);
+    m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraLeftX, Constants.DriveConstants.k_cameraLeftY,
+        90, ApriltagsCameraType.GS_6mm);
     m_apriltagCameraSide.connect("10.21.2.12", 5800);
 
     m_aiCamera.connect("10.21.2.10", 5800);
 
     m_posServer.start();
-    SmartDashboard.putData("Auto To Run",autoChooser);
+    SmartDashboard.putData("Auto To Run", autoChooser);
   }
 
   private boolean getPositionServerButtonState(int button) {
@@ -142,12 +157,17 @@ public class RobotContainer {
   }
 
   /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
+   * Use this method to define your trigger->command mappings. Triggers can be
+   * created via the
+   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
+   * an arbitrary
    * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
+   * {@link
+   * CommandXboxController
+   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+   * PS4} controllers or
+   * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
   private void configureBindings() {
@@ -159,52 +179,73 @@ public class RobotContainer {
     HoldTrigger m_slowMode = new HoldTrigger(m_driverController.rightBumper());
     HoldTrigger m_slowMode1 = new HoldTrigger(m_driverController.leftBumper());
     m_driveSubsystem.setDefaultCommand(new ArcadeDrive(
-      m_driveSubsystem, 
-      () -> m_driverController.getLeftX(), 
-      () -> m_driverController.getLeftY(),
-      () -> m_driverController.getRightX(),
-      new Trigger(m_slowMode),
-      new Trigger(m_slowMode1)
-    ));
+        m_driveSubsystem,
+        () -> m_driverController.getLeftX(),
+        () -> m_driverController.getLeftY(),
+        () -> m_driverController.getRightX(),
+        new Trigger(m_slowMode),
+        new Trigger(m_slowMode1)));
 
     m_testStick.button(1).whileTrue(new CalibrateAiDistance(m_driveSubsystem, m_apriltagCamera, m_aiCamera, m_tracker));
     m_testStick.button(2).whileTrue(new CalibrateAiAngle(m_driveSubsystem, m_apriltagCamera, m_aiCamera, m_tracker));
+    // public AiDriveToTarget(DriveSubsystem driveSubsystem, ApriltagsCamera
+    // aprilCamera, AiCamera aiCamera,
+
+    m_testStick.button(11).toggleOnTrue(new AiDriveToTarget(m_driveSubsystem, m_apriltagCamera, m_aiCamera,
+        () -> m_driverController.getLeftX(),
+        () -> m_driverController.getLeftY(),
+        () -> m_driverController.getRightX()));
 
     m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
     m_shooterSubsystem.setDefaultCommand(new DefaultManipulatorCommand(m_shooterSubsystem, m_driveSubsystem, true));
     m_holderSubsystem.setDefaultCommand(new DefaultManipulatorCommand(m_holderSubsystem, m_driveSubsystem, false));
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
+    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
+    // pressed,
     // cancelling on release.
-    // m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
+    // m_driverController.leftTrigger().toggleOnTrue(new
+    // ShootCommand(m_shooterSubsystem, m_holderSubsystem));
     m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
-    m_driverController.rightTrigger().whileTrue(new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
-        
-    m_driverController.y().onTrue(new AutoOrientCommand(m_driveSubsystem, 180, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));
-    m_driverController.a().onTrue(new AutoOrientCommand(m_driveSubsystem, 0, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));
-    m_driverController.b().onTrue(new AutoOrientCommand(m_driveSubsystem, 90, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));
-    m_driverController.x().onTrue(new AutoOrientCommand(m_driveSubsystem, -90, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));
+    m_driverController.rightTrigger()
+        .whileTrue(new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
+
+    m_driverController.y().onTrue(new AutoOrientCommand(m_driveSubsystem, 180, () -> -m_driverController.getLeftY(),
+        () -> m_driverController.getLeftX()));
+    m_driverController.a().onTrue(new AutoOrientCommand(m_driveSubsystem, 0, () -> -m_driverController.getLeftY(),
+        () -> m_driverController.getLeftX()));
+    m_driverController.b().onTrue(new AutoOrientCommand(m_driveSubsystem, 90, () -> -m_driverController.getLeftY(),
+        () -> m_driverController.getLeftX()));
+    m_driverController.x().onTrue(new AutoOrientCommand(m_driveSubsystem, -90, () -> -m_driverController.getLeftY(),
+        () -> m_driverController.getLeftX()));
 
     m_driverController.povUp().onTrue(new ResetGyro(m_driveSubsystem, 180));
     m_driverController.povDown().onTrue(new ResetGyro(m_driveSubsystem, 0));
     m_driverController.povRight().onTrue(new ResetGyro(m_driveSubsystem, 90));
     m_driverController.povLeft().onTrue(new ResetGyro(m_driveSubsystem, -90));
 
-    //ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
+    // ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
 
     m_joystick.button(1).toggleOnTrue(new RevCommand(m_shooterSubsystem, m_holderSubsystem));
     m_joystick.button(2).whileTrue(new D2Intake(m_shooterSubsystem, m_holderSubsystem, true));
     m_joystick.button(4).whileTrue(new EjectGamePiece(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem));
-    m_joystick.button(5).onTrue(new SetElevatorPosition(m_elevatorSubsystem, Constants.ElevatorConstants.k_minDistance));
-    m_joystick.button(3).onTrue(new SetElevatorPosition(m_elevatorSubsystem, Constants.ElevatorConstants.k_maxDistance));
-    m_joystick.button(7).onTrue(new InstantCommand(() -> {Constants.States.m_shootIntakeSide = !Constants.States.m_shootIntakeSide;}));
+    m_joystick.button(5)
+        .onTrue(new SetElevatorPosition(m_elevatorSubsystem, Constants.ElevatorConstants.k_minDistance));
+    m_joystick.button(3)
+        .onTrue(new SetElevatorPosition(m_elevatorSubsystem, Constants.ElevatorConstants.k_maxDistance));
+    m_joystick.button(7).onTrue(new InstantCommand(() -> {
+      Constants.States.m_shootIntakeSide = !Constants.States.m_shootIntakeSide;
+    }));
     m_joystick.button(8).toggleOnTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
     m_joystick.button(9).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));
     m_joystick.button(10).whileTrue(new EjectSpinCommand(m_driveSubsystem, m_pivotSubsystem, () -> m_joystick.getY()));
-    m_joystick.button(11).onTrue(new StopEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
-    m_joystick.button(6).onTrue(new InstantCommand(() -> {Constants.States.m_autoRotateAim = !Constants.States.m_autoRotateAim;}));
+    m_joystick.button(11)
+        .onTrue(new StopEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
+    m_joystick.button(6).onTrue(new InstantCommand(() -> {
+      Constants.States.m_autoRotateAim = !Constants.States.m_autoRotateAim;
+    }));
     m_joystick.button(12).whileTrue(new RunCommand(() -> m_driveSubsystem.spinAllModules()));
   }
+
   public double getThrottle() {
     return m_joystick.getThrottle();
   }

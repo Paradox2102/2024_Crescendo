@@ -20,7 +20,10 @@ package frc.aiCamera;
 
 import java.util.ArrayList;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.apriltagsCamera.ApriltagsCamera;
 import frc.apriltagsCamera.Logger;
 import frc.apriltagsCamera.Network;
 
@@ -59,6 +62,15 @@ public class AiCamera implements Network.NetworkReceiver {
 			m_uy = uy;
 			m_lx = lx;
 			m_ly = ly;
+		}
+
+		public Translation2d getPosition(ApriltagsCamera aprilCamera, Pose2d robotPose, int width) {
+			double distance = 2800.33 * Math.pow(m_ly, -1.591);
+			double angle = Math.toRadians(robotPose.getRotation().getDegrees() + ((((m_ux + m_lx) / 2) - (width/2)) * 0.1524));
+			double dx = distance * Math.cos(angle);
+			double dy = distance * Math.sin(angle);
+
+			return new Translation2d(robotPose.getX() + dx, robotPose.getY() + dy);
 		}
 	}
 

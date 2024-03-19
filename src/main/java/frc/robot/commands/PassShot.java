@@ -4,9 +4,13 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.gamePieceManipulation.ShootCommand;
+import frc.robot.commands.pivot.SetPivotPos;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
+import frc.robot.subsystems.PivotSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -15,11 +19,16 @@ public class PassShot extends SequentialCommandGroup {
   /** Creates a new PassShot. */
   DriveSubsystem m_driveSubsystem;
   ManipulatorSubsystem m_manipulatorSubsystem;
-  public PassShot(DriveSubsystem driveSubsystem, ManipulatorSubsystem manipulatorSubsystem) {
-    m_driveSubsystem = driveSubsystem;
-    m_manipulatorSubsystem = manipulatorSubsystem;
+
+  public PassShot(DriveSubsystem driveSubsystem, ManipulatorSubsystem shooterSubsystem,
+      ManipulatorSubsystem holderSubsystem, PivotSubsystem pivotSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands();
+    addCommands(
+        new StopEverything(driveSubsystem, shooterSubsystem, holderSubsystem, pivotSubsystem),
+        new ToggleShootSideCommand(true),
+        new ParallelDeadlineGroup(
+            new SetPivotPos(pivotSubsystem, 70)),
+        new ShootCommand(shooterSubsystem, holderSubsystem));
   }
 }

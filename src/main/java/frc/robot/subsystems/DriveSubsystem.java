@@ -6,6 +6,11 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.FollowPathCommand;
+import com.pathplanner.lib.commands.FollowPathHolonomic;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.controllers.PathFollowingController;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
@@ -22,6 +27,7 @@ import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.apriltagsCamera.ApriltagLocation;
 import frc.apriltagsCamera.ApriltagLocations;
@@ -101,7 +107,9 @@ public class DriveSubsystem extends SubsystemBase {
     m_sideCamera = sideCamera;
 
     AutoBuilder.configureHolonomic(
-        this::getPose, this::resetOdometry, this::getChassisSpeeds,
+        this::getPose, 
+        this::resetOdometry, 
+        this::getChassisSpeeds,
         this::driveWithChassisSpeedRobotRelative,
         new HolonomicPathFollowerConfig(
             new PIDConstants(1, 0, 0), new PIDConstants(1, 0, 0),
@@ -115,7 +123,8 @@ public class DriveSubsystem extends SubsystemBase {
           }
           return false;
         },
-        this);
+        this
+    );
 
     // PathPlannerLogging.setLogActivePathCallback((poses) ->
     // m_field.getObject("path").setPoses(poses));
@@ -244,6 +253,24 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public Pose2d getEstimatedFuturePos() { return m_futurePos; }
+
+  public FollowPathCommand geFollowPathCommandToWarmUp() {
+    FollowPathCommand followPathCommand = new FollowPathCommand(
+      PathPlannerPath.fromPathFile("speaker to wing 3"), 
+      this::getPose, 
+      this::getChassisSpeeds, 
+      this::driveWithChassisSpeedRobotRelative, 
+      new PPHolonomicDriveController(
+        new PIDConstants(1, 0, 0), 
+        new PIDConstants(1, 0, 0), 
+        Constants.DriveConstants.k_maxSpeedMetersPerSecond, 
+        .475953574),
+      new ReplanningConfig(), 
+      () -> false,
+      this
+    );
+    return followPathCommand;
+  }
 
   @Override
   public void periodic() {

@@ -45,8 +45,10 @@ import frc.robot.subsystems.ShooterSensors;
 import frc.robot.subsystems.StickSubsystem;
 import frc.triggers.HoldTrigger;
 
-import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.FollowPathCommand;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -82,13 +84,12 @@ public class RobotContainer {
   private final CommandJoystick m_joystick = new CommandJoystick(1);
   //private final CommandJoystick m_testStick = new CommandJoystick(2);
   public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);
-
+  SendableChooser<Command> m_autoSelection = new SendableChooser<>();
 
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
-  private final SendableChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer(Robot robot) {
@@ -117,7 +118,15 @@ public class RobotContainer {
     NamedCommands.registerCommand("source 3 start aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1.623));
     NamedCommands.registerCommand("source/amp 3 aim", new SetPivotOffInputDistance(m_pivotSubsystem, 3.77));
     NamedCommands.registerCommand("auto aim", new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
-    autoChooser = AutoBuilder.buildAutoChooser();
+
+
+    // Auto Chooser
+    m_autoSelection.addOption("Nothing", new InstantCommand());
+    m_autoSelection.addOption("Amp Side 5", new PathPlannerAuto("amp side 5"));
+    m_autoSelection.addOption("Wing 4 Piece PHR", new PathPlannerAuto("wing 4 piece source up"));
+    m_autoSelection.addOption("Wing 4 Piece RHP", new PathPlannerAuto("wing 4 piece amp down"));
+    m_autoSelection.addOption("Source Side 4", new PathPlannerAuto("source side 4"));
+    SmartDashboard.putData(m_autoSelection);
 
     // m_apriltagCamera.setCameraInfo(8.375, 12, 180, ApriltagsCameraType.GS_6mm); // y = 6
     // m_apriltagCamera.setCameraInfo(5.125, 15.5, 0, ApriltagsCameraType.GS_6mm); // y = 9.5
@@ -133,7 +142,6 @@ public class RobotContainer {
     m_apriltagCameraSide.connect("10.21.2.12", 5800);
 
     m_posServer.start();
-    SmartDashboard.putData("Auto To Run",autoChooser);
   }
 
   private boolean getPositionServerButtonState(int button) {
@@ -216,6 +224,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return autoChooser.getSelected();
+    return m_autoSelection.getSelected();
   }
 }

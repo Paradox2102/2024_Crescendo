@@ -8,7 +8,6 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.apriltagsCamera.Logger;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
@@ -19,15 +18,11 @@ public class AimArcadeDrive extends Command {
   private DriveSubsystem m_subsystem;
   private DoubleSupplier m_getX;
   private DoubleSupplier m_getY;
-  private Trigger m_slowMode;
-  private Trigger m_slowMode1;
 
-  public AimArcadeDrive(DriveSubsystem driveSubsystem, DoubleSupplier getX, DoubleSupplier getY, Trigger slowMode, Trigger slowMode1) {
+  public AimArcadeDrive(DriveSubsystem driveSubsystem, DoubleSupplier getX, DoubleSupplier getY) {
     m_subsystem = driveSubsystem;
     m_getX = getX;
     m_getY = getY;
-    m_slowMode = slowMode;
-    m_slowMode1 = slowMode1;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }
@@ -44,10 +39,6 @@ public class AimArcadeDrive extends Command {
     double x = -MathUtil.applyDeadband(m_getX.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
     double y = -MathUtil.applyDeadband(m_getY.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
     double rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getFutureRotationalGoalFromTargetDegrees()), 0);
-    if (m_slowMode.getAsBoolean() || m_slowMode1.getAsBoolean()) {
-      x *= .3;
-      y *= .3;
-    }
     m_subsystem.drive(
       y, 
       x, 

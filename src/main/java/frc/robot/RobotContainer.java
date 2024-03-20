@@ -9,6 +9,7 @@ import frc.apriltagsCamera.ApriltagsCamera;
 import frc.apriltagsCamera.ApriltagsCamera.ApriltagsCameraType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.StopEverything;
+import frc.robot.commands.PassShot;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.ToggleShootSideCommand;
 import frc.robot.commands.apriltags.SetApriltagsDashboard;
@@ -208,7 +209,7 @@ public class RobotContainer {
     m_joystick.button(10).onTrue(new InstantCommand(() -> {Constants.States.m_shootIntakeSide = !Constants.States.m_shootIntakeSide;}));
     m_joystick.button(3).whileTrue(new SetStickPos(m_stickSubsystem, false));
 
-    m_joystick.button(12).toggleOnTrue(new RunCommand(() -> {m_driveSubsystem.spinAllModules();}));
+    m_joystick.button(12).onTrue(new PassShot(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, m_driverController));
 
     //ToggleTrigger m_brakeMode = new ToggleTrigger(m_joystick.button(12));
     //m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode), m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, m_elevatorSubsystem, m_stickSubsystem));

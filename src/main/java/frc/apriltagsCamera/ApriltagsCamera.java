@@ -207,7 +207,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	static final int k_maxCameras = 2;
 	static final int k_maxTags = 16;
 	ApriltagsQueue m_queue = new ApriltagsQueue(); // [][] = new ApriltagsQueue[k_maxCameras][k_maxTags];
-	boolean m_dashboard = false;
+	boolean m_dashboard = true;
 
 	/**
 	 * @brief The ApriltagsCameraRegion specifies a single detected region
@@ -428,10 +428,10 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 					if (m_log) {
 						if (m_logTimer.get() >= k_maxLogTime) {
 							m_log = false;
-							Logger.closeLogFile("ApriltagsCameraLog");
+							Logger.closeLogFile(String.format("ApriltagsCameraLog-%s", m_ip));
 							Logger.log("ApriltagsCamera", 3, "Max log time reached");
 						} else {
-							Logger.log("ApriltagsCameraLog", 1,
+							Logger.log(String.format("ApriltagsCameraLog-%s", m_ip), 1,
 									String.format(",%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%f,%f,%f", String.format("%s-%d-%d", m_ip, cameraNo, m_tag),
 											lastAngle, cameraAngle, calculateAngle, updateAngle,
 											estPos.getRotation().getDegrees(),
@@ -755,7 +755,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	 * @param host - Specifies IP for the host
 	 * @param port - Specifies the port (default is 5800)
 	 */
-	private String m_ip = "?";
+	public String m_ip = "?";
 
 	public void connect(String host, int port) {
 		m_network = new Network();
@@ -776,7 +776,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	private void timeSync() {
 		long time = getTimeMs();
 		if (time > m_syncTime) {
-			Logger.log("ApriltagCameras", -1, "TimeSync()");
+			Logger.log("ApriltagCameras", 1, String.format("timeSync for %s", m_ip));
 
 			m_network.sendMessage(String.format("T1 %d", getTimeMs()));
 
@@ -1013,7 +1013,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				// Logger.log("ApriltagsCameraLog", 1, ",tag,last yaw,cam yaw,calc yaw,update
 				// yaw, est yaw,x,est x,y,est y,adjust");
 
-				Logger.log("ApriltagsCameraLog", 1,
+				Logger.log(String.format("ApriltagsCameraLog-%s", m_ip), 1,
 						String.format(",,,,,,%f,,%f,,%f,,,%f,", estPos.getRotation().getDegrees(), estPos.getX(),
 								estPos.getY(), curTime));
 			}
@@ -1040,11 +1040,11 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				m_logTimer.reset();
 				m_logTimer.start();
 
-				Logger.setLogFile("ApriltagsCameraLog", "camera", true, false);
-				Logger.log("ApriltagsCameraLog", 1,
+				Logger.setLogFile(String.format("ApriltagsCameraLog-%s", m_ip), String.format("camera-%s-", m_ip), true, false);
+				Logger.log(String.format("ApriltagsCameraLog-%s", m_ip), 1,
 						",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust,frame,dist,cur time,cap time");
 			} else {
-				Logger.closeLogFile("ApriltagsCameraLog");
+				Logger.closeLogFile(String.format("ApriltagsCameraLog-%s", m_ip));
 			}
 		}
 	}

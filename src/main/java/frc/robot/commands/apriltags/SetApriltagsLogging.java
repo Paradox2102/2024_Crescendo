@@ -13,13 +13,13 @@ import frc.apriltagsCamera.Logger;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SetApriltagsLogging extends InstantCommand {
   ApriltagsCamera m_camera;
-  ApriltagsCamera m_sideCamera;
+  ApriltagsCamera m_camera2;
   boolean m_log;
 
-  public SetApriltagsLogging(ApriltagsCamera camera, ApriltagsCamera sideCamera, boolean log) {
+  public SetApriltagsLogging(ApriltagsCamera camera, ApriltagsCamera camera2, boolean log) {
     Logger.log("SetApriltagsLogging", 3, "SetApriltagsLogging()");
     m_camera = camera;
-    m_sideCamera = sideCamera;
+    m_camera2 = camera2;
     m_log = log;
   }
 
@@ -33,5 +33,8 @@ public class SetApriltagsLogging extends InstantCommand {
   public void initialize() {
     Logger.log("SetApriltagsLogging", 2, "initialize()");
     m_camera.setLogging(m_log);
+    if (m_camera2 != null) {
+      m_camera2.setLogging(m_log);
+    }
   }
 }

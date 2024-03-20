@@ -785,6 +785,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 	}
 
+	private Object m_lock = new Object();
+
 	private void processCameraFrame(String args) {
 		long a[] = parseLong(args, 10);
 
@@ -812,7 +814,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 					m_averageDelaySum = 0;
 				}
 
-				synchronized (this) {
+				synchronized (m_lock) {
 					if (averageDelay > 0) {
 						m_averageDelay = averageDelay;
 					}
@@ -837,7 +839,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	 *
 	 */
 	public ApriltagsCameraStats getStats() {
-		synchronized (this) {
+		synchronized (m_lock) {
 			return (new ApriltagsCameraStats(m_averageDelay, m_maxDelay, m_minDelay, m_lostFrames - m_lastLostFrame,
 					System.currentTimeMillis() - m_startTime, m_yawError));
 		}
@@ -848,7 +850,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	 *
 	 */
 	public void clearStats() {
-		synchronized (this) {
+		synchronized (m_lock) {
 			m_maxDelay = 0;
 			m_minDelay = Integer.MAX_VALUE;
 			m_lostFrames = 0;
@@ -867,7 +869,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 	private void processCameraEnd(String args) {
 		if (m_nextRegions != null) {
-			synchronized (this) {
+			synchronized (m_lock) {
 				m_nextRegions.m_info.m_regions = m_nextRegions;
 				m_nextRegions = null;
 			}
@@ -885,7 +887,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	 *
 	 */
 	public ApriltagsCameraRegions getRegions(int cameraNo) {
-		synchronized (this) {
+		synchronized (m_lock) {
 			if (cameraNo < m_cameras.size()) {
 				return m_cameras.get(cameraNo).m_regions;
 			}
@@ -983,7 +985,11 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 			int nFrames = 0;
 			double curTime = getTime();
 			for (ApriltagsCameraInfo info : m_cameras) {
-				ApriltagsCameraRegions regions = info.m_regions;
+				ApriltagsCameraRegions regions;
+				
+				synchronized(m_lock) {
+					regions = info.m_regions;
+				}
 
 				if ((regions != null) && (regions.m_frameNo != info.m_lastFrame)) {
 					info.m_lastFrame = regions.m_frameNo;

@@ -191,9 +191,9 @@ public class DriveSubsystem extends SubsystemBase {
     return Math.sqrt((xDist * xDist) + (yDist * yDist));
   }
 
-   public double getFutureRotationalnDistanceFromCornersDegrees() {
+   public double getFutureRotationalDistanceFromCornersDegrees() {
     Boolean isRed = Constants.States.m_alliance == DriverStation.Alliance.Red;
-    ApriltagLocation corner = isRed ? new ApriltagLocation(0, 1.5, 7, 0) : new ApriltagLocation(0, 15, 7, 0);
+    ApriltagLocation corner = isRed ? new ApriltagLocation(0, 15, 7, 0) : new ApriltagLocation(0, 1.5, 7, 0);
     double xDist = m_futurePos.getX() - corner.m_xMeters;
     double yDist = m_futurePos.getY() - corner.m_yMeters;
     return ParadoxField.normalizeAngle(

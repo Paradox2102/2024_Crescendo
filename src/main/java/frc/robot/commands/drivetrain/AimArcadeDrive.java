@@ -38,7 +38,7 @@ public class AimArcadeDrive extends Command {
   public void execute() {
     double x = -MathUtil.applyDeadband(m_getX.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
     double y = -MathUtil.applyDeadband(m_getY.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
-    double rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getFutureRotationalGoalFromTargetDegrees()), 0);
+    double rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getFutureRotationalDistanceFromCornersDegrees()), 0);
     m_subsystem.drive(
       y, 
       x, 

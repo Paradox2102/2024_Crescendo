@@ -4,10 +4,13 @@
 
 package frc.robot.commands.gamePieceManipulation;
 
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.StopEverything;
+import frc.robot.commands.ToggleAutoAim;
 import frc.robot.commands.ToggleShootSideCommand;
 import frc.robot.commands.drivetrain.JukeShotRotateAim;
 import frc.robot.commands.pivot.DefaultPivotCommand;
@@ -24,16 +27,20 @@ public class JukeShot extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new StopEverything(driveSubsystem, shooterSubsystem, holderSubsystem),
-      new WaitCommand(2),
+      new ToggleAutoAim(),
       new ToggleShootSideCommand(false),
+      new StopEverything(driveSubsystem, shooterSubsystem, holderSubsystem),
       new ParallelDeadlineGroup(
         new JukeShotRotateAim(driveSubsystem, rotateLeft), 
         new DefaultPivotCommand(pivotSubsystem, driveSubsystem, true),
         new DefaultManipulatorCommand(holderSubsystem, driveSubsystem, false),
         new DefaultManipulatorCommand(shooterSubsystem, driveSubsystem, true)
       ),
-      new ShootCommand(shooterSubsystem, holderSubsystem),
+      new ParallelDeadlineGroup(
+        new ShootCommand(shooterSubsystem, holderSubsystem), 
+        new DefaultPivotCommand(pivotSubsystem, driveSubsystem, true),
+        new RunCommand(() -> {driveSubsystem.drive(0, 0, 0, true, true, new Translation2d(0, 0));}, driveSubsystem)
+      ),
       new ToggleShootSideCommand(true)
     );
   }

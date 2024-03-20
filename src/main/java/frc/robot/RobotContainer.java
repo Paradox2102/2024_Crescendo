@@ -9,6 +9,7 @@ import frc.apriltagsCamera.ApriltagsCamera;
 import frc.apriltagsCamera.ApriltagsCamera.ApriltagsCameraType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.StopEverything;
+import frc.robot.commands.ToggleAutoAim;
 import frc.robot.commands.PassShot;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.ToggleShootSideCommand;
@@ -185,15 +186,10 @@ public class RobotContainer {
     m_driverController.leftTrigger().toggleOnTrue(new ShootSequence(m_shooterSubsystem, m_holderSubsystem, m_stickSubsystem));
     m_driverController.rightTrigger().whileTrue(new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
         
-    m_driverController.y().onTrue(new AutoOrientCommand(m_driveSubsystem, 180, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));
-    m_driverController.a().onTrue(new AutoOrientCommand(m_driveSubsystem, 0, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));
-    m_driverController.b().onTrue(new AutoOrientCommand(m_driveSubsystem, 90, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));
-    m_driverController.x().onTrue(new AutoOrientCommand(m_driveSubsystem, -90, () -> -m_driverController.getLeftY(), () -> m_driverController.getLeftX()));
+    m_driverController.a().onTrue(new PassShot(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, m_driverController));
 
-    m_driverController.povUp().onTrue(new ResetGyro(m_driveSubsystem, 180));
-    m_driverController.povDown().onTrue(new ResetGyro(m_driveSubsystem, 0));
-    m_driverController.povRight().toggleOnTrue(new JukeShot(m_pivotSubsystem, m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, true));
-    m_driverController.povLeft().toggleOnTrue(new JukeShot(m_pivotSubsystem, m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, false));
+    m_driverController.b().toggleOnTrue(new JukeShot(m_pivotSubsystem, m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, true));
+    m_driverController.x().toggleOnTrue(new JukeShot(m_pivotSubsystem, m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, false));
 
     //ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
 
@@ -205,11 +201,9 @@ public class RobotContainer {
     m_joystick.button(9).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));
     m_joystick.button(10).whileTrue(new EjectSpinCommand(m_driveSubsystem, m_pivotSubsystem, () -> m_joystick.getY()));
     m_joystick.button(11).onTrue(new StopEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
-    m_joystick.button(6).onTrue(new InstantCommand(() -> {Constants.States.m_autoRotateAim = !Constants.States.m_autoRotateAim;}));
+    m_joystick.button(6).onTrue(new ToggleAutoAim());
     m_joystick.button(10).onTrue(new InstantCommand(() -> {Constants.States.m_shootIntakeSide = !Constants.States.m_shootIntakeSide;}));
     m_joystick.button(3).whileTrue(new SetStickPos(m_stickSubsystem, false));
-
-    m_joystick.button(12).onTrue(new PassShot(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, m_driverController));
 
     //ToggleTrigger m_brakeMode = new ToggleTrigger(m_joystick.button(12));
     //m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode), m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, m_elevatorSubsystem, m_stickSubsystem));

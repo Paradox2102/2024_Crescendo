@@ -65,7 +65,7 @@ public class JukeShotRotateAim extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_subsystem.getRotationDistanceFromTargetError()) < 10;
+    return Math.abs(m_subsystem.getRotationDistanceFromTargetError()) < 25;
     // return m_timer.get() > 1;
   }
 }

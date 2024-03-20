@@ -13,13 +13,13 @@ import frc.apriltagsCamera.Logger;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SetApriltagsDashboard extends InstantCommand {
   ApriltagsCamera m_camera;
-  ApriltagsCamera m_sideCamera;
+  ApriltagsCamera m_camera2;
   boolean m_log;
 
-  public SetApriltagsDashboard(ApriltagsCamera camera, ApriltagsCamera sideCamera, boolean log) {
+  public SetApriltagsDashboard(ApriltagsCamera camera, ApriltagsCamera camera2, boolean log) {
     Logger.log("SetApriltagsDashboard", 3, "SetApriltagsDashboard()");
     m_camera = camera;
-    m_sideCamera = sideCamera;
+    m_camera2 = camera2;
     m_log = log;
   }
 
@@ -31,8 +31,10 @@ public class SetApriltagsDashboard extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Logger.log("SetApriltagsDashboard", 2, "initialize()");
+    Logger.log("SetApriltagsDashboard", 2, String.format("initialize: m_ip=%s, m_log=%b",m_camera.m_ip, m_log));
     m_camera.setDashboard(m_log);
-    m_sideCamera.setDashboard(m_log);
+    if (m_camera2 != null) {
+      m_camera2.setDashboard(m_log);
+    }
   }
 }

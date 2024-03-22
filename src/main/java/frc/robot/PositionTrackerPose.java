@@ -142,7 +142,9 @@ public class PositionTrackerPose {
     // pose.getY(), pose.getRotation().getDegrees())); if
     // (!DriverStation.isAutonomous()) {
     frontBackCamera.processRegions(m_poseEstimator);
-    sideCamera.processRegions(m_poseEstimator);
+
+    // sideCamera.processRegions(m_poseEstimator);
+    
     // }
     Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
     if (alliance.isPresent()) {

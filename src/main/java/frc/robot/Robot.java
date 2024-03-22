@@ -81,8 +81,8 @@ public class Robot extends TimedRobot {
     }
     catch (Exception ex) {}
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    m_robotContainer.m_apriltagCamera.setLogging(true);
-    m_robotContainer.m_apriltagCameraSide.setLogging(true);
+    // m_robotContainer.m_apriltagCamera.setLogging(true);
+    // m_robotContainer.m_apriltagCameraSide.setLogging(true);
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -108,9 +108,9 @@ public class Robot extends TimedRobot {
       Constants.States.m_alliance = DriverStation.getAlliance().get();
     }
     catch (Exception ex) {}
-    
-    m_robotContainer.m_apriltagCamera.setLogging(true);
-    m_robotContainer.m_apriltagCameraSide.setLogging(true);
+
+    // m_robotContainer.m_apriltagCamera.setLogging(true);
+    // m_robotContainer.m_apriltagCameraSide.setLogging(true);
     
   }
 

@@ -31,7 +31,7 @@ public class PassShot extends SequentialCommandGroup {
         new ToggleShootSideCommand(true),
         new ParallelDeadlineGroup(
             new SequentialCommandGroup(
-                new SetPivotPos(pivotSubsystem, 70),
+                new SetPivotPos(pivotSubsystem, driveSubsystem.getTranslationalDistanceFromSpeakerMeters() > 12 ? 40 : 70),
                 new WaitCommand(0.5),
                 new ShootCommand(shooterSubsystem, holderSubsystem)
             ),

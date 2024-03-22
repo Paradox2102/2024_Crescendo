@@ -108,6 +108,10 @@ public class Robot extends TimedRobot {
       Constants.States.m_alliance = DriverStation.getAlliance().get();
     }
     catch (Exception ex) {}
+    
+    m_robotContainer.m_apriltagCamera.setLogging(true);
+    m_robotContainer.m_apriltagCameraSide.setLogging(true);
+    
   }
 
   /** This function is called periodically during operator control. */

@@ -366,11 +366,13 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 							// 				adjust, frameNo, d, curTime, time));
 
 
-						Logger.log(getLogName(), 1,
-								String.format(",%s,,%f,,,%f,,%f,,%f,,,,%f,,Invalid Target", String.format("%s-%d-%d", m_ip, cameraNo, m_tag),
-								cameraAngle,
-								estPos.getRotation().getDegrees(), estPos.getX(),
-								estPos.getY(), curTime));
+						if (m_log) {
+							Logger.log(getLogName(), 1,
+									String.format(",%s,,%f,,,%f,,%f,,%f,,,,%f,,Invalid Target", String.format("%s-%d-%d", m_ip, cameraNo, m_tag),
+									cameraAngle,
+									estPos.getRotation().getDegrees(), estPos.getX(),
+									estPos.getY(), curTime));
+						}
 
 						// return;
 					}

@@ -33,6 +33,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer(this);
     FollowPathCommand.warmupCommand().schedule();
+    m_robotContainer.m_apriltagCamera.setLogging(true);
+    m_robotContainer.m_apriltagCameraSide.setLogging(true);
     
   }
 

@@ -64,7 +64,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	// // Default vision standerd devations
 	// public static final Vector<N3> k_visionSD = VecBuilder.fill(0.05, 0.05,
 	// 0.05); // Default vision standerd devations
-	public static final Vector<N3> k_visionSD6mm = VecBuilder.fill(0.01, 0.01, 0.5); // Default vision standerd devations
+	public static final Vector<N3> k_visionSD6mm = VecBuilder.fill(0.05, 0.05, 0.5); // Default vision standerd devations
 
 	// private static final double k_minSDAdjustDistance = 0.5; // Minimum distance
 	// for which we apply the standard
@@ -100,7 +100,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 @SuppressWarnings("unused")		
 		private final double m_maxAngleError; // Max acceptable angle error in degrees
 		private final Vector<N3> m_visionSD;
-		private boolean m_start = true;
+		// private boolean m_start = true;
 
 		ApriltagsCameraConfig(double minSDAdjustDist, double maxSDAdjustDist, double SDAdjustSlope, double maxAngleDist,
 				double maxDist, double maxAngleError, double angleSDAdjust, Vector<N3> visionSD) {
@@ -152,6 +152,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		int m_frameCount = 0;
 		int m_missingCount = 0;
 		int m_lastFrame = -1;
+		int m_targetAquired = 0;
+		static final int k_targetAquiredCount = 5;
 
 		ApriltagsCameraInfo(double xOffsetInches, double yOffsetInches, double cameraAngleDegrees,
 				ApriltagsCameraType type) {
@@ -207,7 +209,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	static final int k_maxCameras = 2;
 	static final int k_maxTags = 16;
 	ApriltagsQueue m_queue = new ApriltagsQueue(); // [][] = new ApriltagsQueue[k_maxCameras][k_maxTags];
-	boolean m_dashboard = true;
+	boolean m_dashboard = false;
 
 	/**
 	 * @brief The ApriltagsCameraRegion specifies a single detected region
@@ -319,10 +321,6 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 					return;
 				}
 
-				// Compute standard deviation parameters to be used based on the distance
-				Vector<N3> visionSD = VecBuilder.fill(config.m_visionSD.get(0, 0), config.m_visionSD.get(1, 0),
-						config.m_visionSD.get(2, 0));
-
 				if (d >= config.m_minSDAdjustDistance) {
 					// if (d > k_maxSDAdjustDistance) {
 					// adjust = 1.0 + k_SDAdjustSlope * (k_maxSDAdjustDistance -
@@ -346,8 +344,40 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 					m_yawError = deltaAngle;
 				}
 
-				if ((deltaAngle < 10) || (d > 150)) {
-					adjust *= (1.0 + Math.abs(deltaAngle) * config.m_angleSDAdjust);
+				if (m_info.m_targetAquired < ApriltagsCameraInfo.k_targetAquiredCount) {
+					if (deltaAngle < 10) {
+						m_info.m_targetAquired++;
+						Logger.log("ApriltagsCamera", 1, String.format("Target aquired for %s-%d: %d", m_ip, cameraNo, m_info.m_targetAquired));
+					}
+					else {
+						m_info.m_targetAquired = 0;
+					}
+				}
+
+				if (m_info.m_targetAquired >= ApriltagsCameraInfo.k_targetAquiredCount) {
+					if (Math.abs(deltaAngle) > 30) {
+						// Logger.log(getLogName(), 1, ",,,,,,,,,,,,,,Invalid Target");
+							// Logger.log(getLogName(), 1,
+							// 		String.format(",%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%f,%f,%f", String.format("%s-%d-%d", m_ip, cameraNo, m_tag),
+							// 				lastAngle, cameraAngle, calculateAngle, updateAngle,
+							// 				estPos.getRotation().getDegrees(),
+							// 				calculatedPos.getX(), estPos.getX(),
+							// 				calculatedPos.getY(), estPos.getY(),
+							// 				adjust, frameNo, d, curTime, time));
+
+
+						Logger.log(getLogName(), 1,
+								String.format(",%s,,%f,,,%f,,%f,,%f,,,,%f,,Invalid Target", String.format("%s-%d-%d", m_ip, cameraNo, m_tag),
+								cameraAngle,
+								estPos.getRotation().getDegrees(), estPos.getX(),
+								estPos.getY(), curTime));
+
+						// return;
+					}
+					// else 
+					{
+						adjust *= (1.0 + Math.abs(deltaAngle) * config.m_angleSDAdjust);
+					}
 				}
 
 				if ((d > config.m_maxAngleDistance)) {
@@ -366,13 +396,18 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				calculateAngle = lastAngle; // For now always use estimated angle for
 				// calculations
 
-				if (config.m_start) {
-					if (deltaAngle < 5.0) {
-						config.m_start = false;
-					}
-					adjust = 1.0;
-				}
-				else if (adjust != 1.0) {
+				// Compute standard deviation parameters to be used based on the distance
+				Vector<N3> visionSD = VecBuilder.fill(config.m_visionSD.get(0, 0), config.m_visionSD.get(1, 0),
+						config.m_visionSD.get(2, 0));
+
+				// if (config.m_start) {
+				// 	if (deltaAngle < 5.0) {
+				// 		config.m_start = false;
+				// 	}
+				// 	adjust = 1.0;
+				// }
+				// else 
+				if (adjust != 1.0) {
 					// Only need to adjust the angle parameter
 					double adjustPos = 1.0 + ((adjust - 1.0) / 2);
 					visionSD.set(0, 0, visionSD.get(0, 0) * adjustPos);
@@ -428,10 +463,10 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 					if (m_log) {
 						if (m_logTimer.get() >= k_maxLogTime) {
 							m_log = false;
-							Logger.closeLogFile(String.format("ApriltagsCameraLog-%s", m_ip));
+							Logger.closeLogFile(getLogName());
 							Logger.log("ApriltagsCamera", 3, "Max log time reached");
 						} else {
-							Logger.log(String.format("ApriltagsCameraLog-%s", m_ip), 1,
+							Logger.log(getLogName(), 1,
 									String.format(",%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%f,%f,%f", String.format("%s-%d-%d", m_ip, cameraNo, m_tag),
 											lastAngle, cameraAngle, calculateAngle, updateAngle,
 											estPos.getRotation().getDegrees(),
@@ -776,7 +811,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	private void timeSync() {
 		long time = getTimeMs();
 		if (time > m_syncTime) {
-			Logger.log("ApriltagCameras", 1, String.format("timeSync for %s", m_ip));
+			// Logger.log("ApriltagCameras", 1, String.format("timeSync for %s", m_ip));
 
 			m_network.sendMessage(String.format("T1 %d", getTimeMs()));
 
@@ -784,8 +819,6 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		}
 
 	}
-
-	private Object m_lock = new Object();
 
 	private void processCameraFrame(String args) {
 		long a[] = parseLong(args, 10);
@@ -833,6 +866,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 			}
 		}
 	}
+
+	Object m_lock = new Object();
 
 	/**
 	 * Returns the current camera performance stats
@@ -963,10 +998,18 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		m_connected = false;
 	}
 
+	public void resetTargetAquired() {
+		for (ApriltagsCameraInfo info : m_cameras) {
+			info.m_targetAquired = 0;
+		}
+	}
+
 	@Override
 	public void connected() {
 		Logger.log("ApriltagsCamera", 1, String.format("%s connected", m_ip));
 		m_connected = true;
+
+		resetTargetAquired();
 
 		m_syncTime = getTimeMs() + k_syncFirst;
 		m_lastMessage = m_syncTime;
@@ -985,11 +1028,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 			int nFrames = 0;
 			double curTime = getTime();
 			for (ApriltagsCameraInfo info : m_cameras) {
-				ApriltagsCameraRegions regions;
-				
-				synchronized(m_lock) {
-					regions = info.m_regions;
-				}
+				ApriltagsCameraRegions regions = info.m_regions;
 
 				if ((regions != null) && (regions.m_frameNo != info.m_lastFrame)) {
 					info.m_lastFrame = regions.m_frameNo;
@@ -1019,11 +1058,15 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				// Logger.log("ApriltagsCameraLog", 1, ",tag,last yaw,cam yaw,calc yaw,update
 				// yaw, est yaw,x,est x,y,est y,adjust");
 
-				Logger.log(String.format("ApriltagsCameraLog-%s", m_ip), 1,
-						String.format(",,,,,,%f,,%f,,%f,,,%f,", estPos.getRotation().getDegrees(), estPos.getX(),
+				Logger.log(getLogName(), 1,
+						String.format(",,,,,,%f,,%f,,%f,,,,%f,", estPos.getRotation().getDegrees(), estPos.getX(),
 								estPos.getY(), curTime));
 			}
 		}
+	}
+
+	String getLogName() {
+		return String.format("ApriltagsCameraLog-%s", m_ip);
 	}
 
 	public static double normalizeAngle(double angle) {
@@ -1046,11 +1089,11 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				m_logTimer.reset();
 				m_logTimer.start();
 
-				Logger.setLogFile(String.format("ApriltagsCameraLog-%s", m_ip), String.format("camera-%s-", m_ip), true, false);
-				Logger.log(String.format("ApriltagsCameraLog-%s", m_ip), 1,
+				Logger.setLogFile(getLogName(), String.format("camera-%s-", m_ip), true, false);
+				Logger.log(getLogName(), 1,
 						",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust,frame,dist,cur time,cap time");
 			} else {
-				Logger.closeLogFile(String.format("ApriltagsCameraLog-%s", m_ip));
+				Logger.closeLogFile(getLogName());
 			}
 		}
 	}

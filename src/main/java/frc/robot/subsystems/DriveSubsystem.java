@@ -229,7 +229,7 @@ public class DriveSubsystem extends SubsystemBase {
               Constants.PivotConstants.k_distancesFront
                       [Constants.PivotConstants.k_distancesFront.length - 1] +
                   1
-        : getTranslationalDistanceFromAmpMeters() < 5;
+        : getTranslationalDistanceFromAmpMeters() < -10; // 5, turned to -10 so it will never aim
   }
 
   // is in zone and has game piece and auto aim not disabled

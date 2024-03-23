@@ -188,11 +188,7 @@ public class RobotContainer {
         
     m_driverController.a().onTrue(new PassShot(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, m_driverController));
 
-    m_driverController.b().toggleOnTrue(new AutoOrientCommand(m_driveSubsystem, 0, () -> 0, () -> 0));
-    m_driverController.x().toggleOnTrue(new AutoOrientCommand(m_driveSubsystem, 180, () -> 0, () -> 0));
-
     //ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
-
     m_joystick.button(1).toggleOnTrue(new RevCommand(m_shooterSubsystem, m_holderSubsystem));
     m_joystick.button(2).whileTrue(new D2Intake(m_shooterSubsystem, m_holderSubsystem, true));
     m_joystick.button(4).whileTrue(new EjectGamePiece(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem));

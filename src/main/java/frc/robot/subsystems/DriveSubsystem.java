@@ -218,7 +218,7 @@ public class DriveSubsystem extends SubsystemBase {
         m_futurePos.getY() - speaker.m_yMeters; // m_futurePos
     // System.out.println(Math.toDegrees(Math.atan2(yDist, xDist)));
     return ParadoxField.normalizeAngle(
-        Math.toDegrees(Math.atan2(yDist, xDist)) + (isRed ? 180 : 0) +
+        Math.toDegrees(Math.atan2(yDist, xDist)) +
         (Constants.States.m_shootIntakeSide ? 0 : 180));
   }
 

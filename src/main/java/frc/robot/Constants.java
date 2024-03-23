@@ -228,12 +228,12 @@ public final class Constants {
         new SwerveModuleState(0, new Rotation2d(3 * Math.PI / 4)),
         new SwerveModuleState(0, new Rotation2d(Math.PI / 4))
     };
-    public static final double k_rotateP = .015;
-    public static final double k_rotateI = .01;//.005;
-    public static final double k_rotateD = .0001;
-    public static final double k_rotateIZone = 70;
+    public static final double k_rotateP = .016;
+    public static final double k_rotateI = .013;//.01;
+    public static final double k_rotateD = .0008;
+    public static final double k_rotateIZone = 20; // 70
     public static final double k_rotateDeadzone = 2;
-    public static final double k_maxRotInput = .7;
+    public static final double k_maxRotInput = .8;
 
     public static final double k_lookAheadTimeSeconds = .2;
 

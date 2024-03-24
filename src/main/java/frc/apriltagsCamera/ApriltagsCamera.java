@@ -64,7 +64,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	// // Default vision standerd devations
 	// public static final Vector<N3> k_visionSD = VecBuilder.fill(0.05, 0.05,
 	// 0.05); // Default vision standerd devations
-	public static final Vector<N3> k_visionSD6mm = VecBuilder.fill(0.05, 0.05, 0.5); // Default vision standerd devations
+	public static final Vector<N3> k_visionSD6mm = VecBuilder.fill(0.01, 0.01, 0.5); // Default vision standerd devations
 
 	// private static final double k_minSDAdjustDistance = 0.5; // Minimum distance
 	// for which we apply the standard
@@ -355,7 +355,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				}
 
 				if (m_info.m_targetAquired >= ApriltagsCameraInfo.k_targetAquiredCount) {
-					if (Math.abs(deltaAngle) > 30) {
+					if (Math.abs(deltaAngle) > 20) {
 						// Logger.log(getLogName(), 1, ",,,,,,,,,,,,,,Invalid Target");
 							// Logger.log(getLogName(), 1,
 							// 		String.format(",%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%f,%f,%f", String.format("%s-%d-%d", m_ip, cameraNo, m_tag),
@@ -376,7 +376,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 						// return;
 					}
-					// else 
+					else 
 					{
 						adjust *= (1.0 + Math.abs(deltaAngle) * config.m_angleSDAdjust);
 					}

@@ -48,7 +48,7 @@ public final class Constants {
       PivotConstants.k_i = 0.00005;
       PivotConstants. k_d = .0005;
       PivotConstants.k_iZone = 10;
-      PivotConstants.k_resetPositionDegrees = 15;
+      PivotConstants.k_resetPositionDegrees = 10;
       PivotConstants.k_offset = .3;
       PivotConstants.k_ampPositionDegrees = 25;
 
@@ -94,22 +94,22 @@ public final class Constants {
         7
       };
       PivotConstants.k_anglesFront = new double[] {
-        17, // 1.3,
-        25.9, // 2,
-        33, // 2.55,
-        40, // 3.1,
-        41, // 3.5,
-        43.27, // 3.75,
-        44, // 4
-        44.5, // 4.25,
-        44.6, // 4.5,
-        45.1, // 4.75,
-        45.2, // 5,
-        45.3, // 5.25,
-        45.8, // 5.5
-        46.3, // 5.8
-        46.4, // 6.25
-        46.1 // 7
+        10, // 1.3,
+        22.9, // 2,
+        29, // 2.55,
+        36.9, // 3.1,
+        37.5, // 3.5,
+        39.8, // 3.75,
+        41, // 4
+        42, // 4.25,
+        43.6, // 4.5,
+        44.1, // 4.75,
+        44.7, // 5,
+        44.8, // 5.25,
+        44.8, // 5.5
+        44.3, // 5.8
+        44.4, // 6.25
+        44.1 // 7
       };
       PivotConstants.k_distancesBack = new double[] {
         1.4,

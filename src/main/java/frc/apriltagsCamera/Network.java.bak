@@ -215,8 +215,6 @@ public class Network
 			}
 		}
 	}
-
-	Profile m_profile = new Profile("Network");
 	
 	private class Receiver implements Runnable
 	{
@@ -243,8 +241,7 @@ public class Network
 						m_printStream = printStream;
 					}	
 
-					// String command = "";
-					StringBuilder command = new StringBuilder();
+					String command = "";
 					
 					Logger.log("Network", 1, String.format("Connected to %s:%d", m_host, m_port));
 					
@@ -253,9 +250,6 @@ public class Network
 					while (true)
 					{
 						int ch = m_inputStream.read();
-						// byte buf[] = m_inputStream.readAllBytes();
-
-						m_profile.start();
 						
 						if (ch < 0)
 						{
@@ -268,22 +262,18 @@ public class Network
 						{
 							if (command.length() >= 1)
 							{
-								m_networkReceiver.processData(command.toString());
+								m_networkReceiver.processData(command);
 							}
 							
-							// command	= "";
-							command.delete(0, command.length());
+							command	= "";
 							
 						}
 						else if (ch >= 0)
 						{
-							// command += (char) ch;
-							command.append((char) ch);
-							m_profile.end();
+							command += (char) ch;
 						}
 						else
 						{
-							m_profile.end();
 							Thread.sleep(5);
 						}
 					}

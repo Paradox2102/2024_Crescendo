@@ -58,9 +58,6 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	private edu.wpi.first.wpilibj.Timer m_logTimer = new edu.wpi.first.wpilibj.Timer();
 	private double m_yawError = 0;
 
-	private Profile m_updatePosition;
-	private Profile m_estimator;
-
 	public static final Vector<N3> k_odometrySD = VecBuilder.fill(0.1, 0.1, 0.1); // Default odometry standard
 																					// deviations
 	// public static final Vector<N3> k_visionSD = VecBuilder.fill(0.1, 0.1, 0.1);
@@ -280,15 +277,12 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		 * Computes position of the robot and updates the PoseEstimator
 		 *
 		 */
-
 		private void updatePosition(
 				int cameraNo,
 				SwerveDrivePoseEstimator poseEstimator,
 				long captureTime,
 				int frameNo,
 				double curTime) {
-
-			m_updatePosition.start();
 
 			if (m_info.m_type.ordinal() > m_config.length) {
 				Logger.log("ApriltagsCamera", 3, "Invalid camera type: " + m_info.m_type);
@@ -485,13 +479,11 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 					}
 
 					if (!m_camerasDisabled) {
-						m_estimator.start();
 						// Add vision measurment using the updateAngle
 						poseEstimator.addVisionMeasurement(
 								new Pose2d(calculatedPos.getX(), calculatedPos.getY(),
 										Rotation2d.fromDegrees(updateAngle)),
 								time, visionSD);
-						m_estimator.end();
 					}
 
 					// if (queue != null) {
@@ -523,8 +515,6 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 			} else {
 				Logger.log("ApriltagsCamera", 1, String.format("updatePosition: Tag %d not found", m_tag));
 			}
-
-			m_updatePosition.end();
 		}
 	}
 
@@ -814,8 +804,6 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 			m_ip = s[3];
 		}
 
-		m_updatePosition = new Profile(String.format("updatePos-%s", m_ip));
-		m_estimator = new Profile(String.format("Estimator-%s", m_ip));
 		m_startTime = System.currentTimeMillis();
 
 		m_network.connect(this, host, port);

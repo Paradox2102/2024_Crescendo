@@ -54,9 +54,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkReceiver {
 	// public Pose2d m_pose2d = new Pose2d(0, 0, new Rotation2d(0));
-	private boolean m_log = false;
+	private static boolean m_log = false;
 	private static double k_maxLogTime = 2.5 * 60; // Length of a match
-	private edu.wpi.first.wpilibj.Timer m_logTimer = new edu.wpi.first.wpilibj.Timer();
+	private static edu.wpi.first.wpilibj.Timer m_logTimer = new edu.wpi.first.wpilibj.Timer();
 	private double m_yawError = 0;
 
 	private Profile m_updatePosition;
@@ -1080,8 +1080,9 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		}
 	}
 
-	String getLogName() {
-		return String.format("ApriltagsCameraLog-%s", m_ip);
+	static String getLogName() {
+		// return String.format("ApriltagsCameraLog-%s", m_ip);
+		return "ApriltagsCameraLog";
 	}
 
 	public static double normalizeAngle(double angle) {
@@ -1094,7 +1095,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		return angle;
 	}
 
-	public void setLogging(boolean log) {
+	static public void setLogging(boolean log) {
 		Logger.log("ApriltagsCamera", 1, String.format("setLogging(%b)", log));
 
 		if (log != m_log) {
@@ -1104,7 +1105,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				m_logTimer.reset();
 				m_logTimer.start();
 
-				Logger.setLogFile(getLogName(), String.format("camera-%s-", m_ip), true, false);
+				// Logger.setLogFile(getLogName(), String.format("camera-%s-", m_ip), true, false);
+				Logger.setLogFile(getLogName(), "cameraLog-", true, false);
 				Logger.log(getLogName(), 1,
 						",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust,frame,dist,cur time,cap time,dist0,angle0,dist1,angle1,dist2,angle2,dist3,angle3");
 			} else {

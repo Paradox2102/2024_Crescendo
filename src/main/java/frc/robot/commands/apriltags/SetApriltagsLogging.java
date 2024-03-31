@@ -32,9 +32,9 @@ public class SetApriltagsLogging extends InstantCommand {
   @Override
   public void initialize() {
     Logger.log("SetApriltagsLogging", 2, "initialize()");
-    m_camera.setLogging(m_log);
-    if (m_camera2 != null) {
-      m_camera2.setLogging(m_log);
-    }
+    ApriltagsCamera.setLogging(m_log);
+    // if (m_camera2 != null) {
+    //   m_camera2.setLogging(m_log);
+    // }
   }
 }

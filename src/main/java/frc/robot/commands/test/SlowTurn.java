@@ -29,7 +29,7 @@ public class SlowTurn extends Command {
   @Override
   public void initialize() {
     Logger.log("SlowTurn", 2, "initialize()");
-    m_camera.setLogging(true);
+    ApriltagsCamera.setLogging(true);
 
     m_subsystem.drive(
       0, 
@@ -51,7 +51,7 @@ public class SlowTurn extends Command {
   public void end(boolean interrupted) {
     Logger.log("SlowTurn", 2, String.format("end(%b)", interrupted));
 
-    m_camera.setLogging(false);
+    ApriltagsCamera.setLogging(false);
   }
 
   // Returns true when the command should end.

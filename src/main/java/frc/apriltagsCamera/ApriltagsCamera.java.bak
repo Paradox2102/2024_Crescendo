@@ -27,6 +27,7 @@ import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -57,6 +58,9 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 	private static double k_maxLogTime = 2.5 * 60; // Length of a match
 	private edu.wpi.first.wpilibj.Timer m_logTimer = new edu.wpi.first.wpilibj.Timer();
 	private double m_yawError = 0;
+
+	private Profile m_updatePosition;
+	private Profile m_estimator;
 
 	public static final Vector<N3> k_odometrySD = VecBuilder.fill(0.1, 0.1, 0.1); // Default odometry standard
 																					// deviations
@@ -277,12 +281,15 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		 * Computes position of the robot and updates the PoseEstimator
 		 *
 		 */
+
 		private void updatePosition(
 				int cameraNo,
 				SwerveDrivePoseEstimator poseEstimator,
 				long captureTime,
 				int frameNo,
 				double curTime) {
+
+			m_updatePosition.start();
 
 			if (m_info.m_type.ordinal() > m_config.length) {
 				Logger.log("ApriltagsCamera", 3, "Invalid camera type: " + m_info.m_type);
@@ -479,11 +486,13 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 					}
 
 					if (!m_camerasDisabled) {
+						m_estimator.start();
 						// Add vision measurment using the updateAngle
 						poseEstimator.addVisionMeasurement(
 								new Pose2d(calculatedPos.getX(), calculatedPos.getY(),
 										Rotation2d.fromDegrees(updateAngle)),
 								time, visionSD);
+						m_estimator.end();
 					}
 
 					// if (queue != null) {
@@ -515,6 +524,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 			} else {
 				Logger.log("ApriltagsCamera", 1, String.format("updatePosition: Tag %d not found", m_tag));
 			}
+
+			m_updatePosition.end();
 		}
 	}
 
@@ -804,6 +815,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 			m_ip = s[3];
 		}
 
+		m_updatePosition = new Profile(String.format("updatePos-%s", m_ip));
+		m_estimator = new Profile(String.format("Estimator-%s", m_ip));
 		m_startTime = System.currentTimeMillis();
 
 		m_network.connect(this, host, port);
@@ -1093,7 +1106,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 				Logger.setLogFile(getLogName(), String.format("camera-%s-", m_ip), true, false);
 				Logger.log(getLogName(), 1,
-						",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust,frame,dist,cur time,cap time");
+						",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust,frame,dist,cur time,cap time,dist0,angle0,dist1,angle1,dist2,angle2,dist3,angle3");
 			} else {
 				Logger.closeLogFile(getLogName());
 			}
@@ -1105,4 +1118,25 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 		m_dashboard = display;
 	}
+
+    public void logUpdate(double time, Rotation2d gyroRotation, SwerveModulePosition[] modules, Pose2d pose) {
+		if(m_log) {
+			Logger.log(getLogName(), 1,
+					String.format(",%s,,,,%f,,%f,,%f,,,,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f",
+					 String.format("%s-%d-%d", m_ip, 0, 0),
+					 	gyroRotation.getDegrees(),
+						pose.getRotation().getDegrees(),
+						pose.getX(),
+						pose.getY(),
+						time, time,
+						modules[0].distanceMeters,
+						modules[0].angle.getDegrees(),
+						modules[1].distanceMeters,
+						modules[1].angle.getDegrees(),
+						modules[2].distanceMeters,
+						modules[2].angle.getDegrees(),
+						modules[3].distanceMeters,
+						modules[3].angle.getDegrees()));
+		}
+    }
 }

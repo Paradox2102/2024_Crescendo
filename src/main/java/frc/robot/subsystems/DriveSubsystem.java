@@ -503,7 +503,15 @@ public class DriveSubsystem extends SubsystemBase {
     m_backRight.setDesiredState(swerveModuleStates[3]);
   }
 
-  public Rotation2d getGyroRotation2d() { return m_gyro.getRotation2d(); }
+  public Rotation2d getGyroRotation2d() {
+    return m_gyro.getRotation2d();
+  }
+  
+  public double getRotationRateDegreesPerSecond() {
+    // getRate returns degrees per second clockwise, so we negate it to get
+    // degrees per second counterclockwise.
+    return -m_gyro.getRate();
+  }
 
   public Pigeon2 getGyro() { return m_gyro; }
 

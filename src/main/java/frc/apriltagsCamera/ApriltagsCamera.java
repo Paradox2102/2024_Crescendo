@@ -1108,7 +1108,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 				// Logger.setLogFile(getLogName(), String.format("camera-%s-", m_ip), true, false);
 				Logger.setLogFile(getLogName(), "cameraLog-", true, false);
 				Logger.log(getLogName(), 1,
-						",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust,frame,dist,cur time,cap time,dist0,angle0,dist1,angle1,dist2,angle2,dist3,angle3");
+						",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust,frame,dist,cur time,cap time,dist0,angle0,dist1,angle1,dist2,angle2,dist3,angle3,rotationRate");
 			} else {
 				Logger.closeLogFile(getLogName());
 			}
@@ -1121,10 +1121,10 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 		m_dashboard = display;
 	}
 
-    public void logUpdate(double time, Rotation2d gyroRotation, SwerveModulePosition[] modules, Pose2d pose) {
+    public void logUpdate(double time, Rotation2d gyroRotation, SwerveModulePosition[] modules, Pose2d pose, double rotationRateDegreesPerSecond) {
 		if(m_log) {
 			Logger.log(getLogName(), 1,
-					String.format(",%s,,,,%f,,%f,,%f,,,,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f",
+					String.format(",%s,,,,%f,,%f,,%f,,,,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f",
 					 String.format("%s-%d-%d", m_ip, 0, 0),
 					 	gyroRotation.getDegrees(),
 						pose.getRotation().getDegrees(),
@@ -1138,7 +1138,8 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 						modules[2].distanceMeters,
 						modules[2].angle.getDegrees(),
 						modules[3].distanceMeters,
-						modules[3].angle.getDegrees()));
+						modules[3].angle.getDegrees(),
+						rotationRateDegreesPerSecond));
 		}
     }
 }

@@ -141,7 +141,8 @@ public class PositionTrackerPose {
     Rotation2d gyroRotation = m_driveSubsystem.getGyroRotation2d();
     SwerveModulePosition[] modules = m_driveSubsystem.getModulePosition();
     Pose2d pose = m_poseEstimator.updateWithTime(time, gyroRotation, modules);
-    frontBackCamera.logUpdate(time, gyroRotation, modules, pose);
+    double rotationRateDegreesPerSecond = m_driveSubsystem.getRotationRateDegreesPerSecond();
+    frontBackCamera.logUpdate(time, gyroRotation, modules, pose, rotationRateDegreesPerSecond);
 
     frontBackCamera.processRegions(m_poseEstimator);
     sideCamera.processRegions(m_poseEstimator);

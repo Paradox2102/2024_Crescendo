@@ -27,6 +27,7 @@ import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -1105,7 +1106,7 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 				Logger.setLogFile(getLogName(), String.format("camera-%s-", m_ip), true, false);
 				Logger.log(getLogName(), 1,
-						",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust,frame,dist,cur time,cap time");
+						",tag,last yaw,cam yaw,calc yaw,update yaw, est yaw,x,est x,y,est y,adjust,frame,dist,cur time,cap time,dist0,angle0,dist1,angle1,dist2,angle2,dist3,angle3");
 			} else {
 				Logger.closeLogFile(getLogName());
 			}
@@ -1117,4 +1118,25 @@ public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkRecei
 
 		m_dashboard = display;
 	}
+
+    public void logUpdate(double time, Rotation2d gyroRotation, SwerveModulePosition[] modules, Pose2d pose) {
+		if(m_log) {
+			Logger.log(getLogName(), 1,
+					String.format(",%s,,,,%f,,%f,,%f,,,,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f",
+					 String.format("%s-%d-%d", m_ip, 0, 0),
+					 	gyroRotation.getDegrees(),
+						pose.getRotation().getDegrees(),
+						pose.getX(),
+						pose.getY(),
+						time, time,
+						modules[0].distanceMeters,
+						modules[0].angle.getDegrees(),
+						modules[1].distanceMeters,
+						modules[1].angle.getDegrees(),
+						modules[2].distanceMeters,
+						modules[2].angle.getDegrees(),
+						modules[3].distanceMeters,
+						modules[3].angle.getDegrees()));
+		}
+    }
 }

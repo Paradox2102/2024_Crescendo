@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.apriltagsCamera.ApriltagLocation;
@@ -136,38 +137,23 @@ public class PositionTrackerPose {
     m_poseEstimator.updateWithTime(ApriltagsCamera.getTime(),
                                    m_driveSubsystem.getGyroRotation2d(),
                                    m_driveSubsystem.getModulePosition());
-    // Pose2d pose = m_poseEstimator.getEstimatedPosition();
-    // Logger.log("PositionTrackerPose", 1, String.format("x=%f,y=%f,a=%f",
-    // 								pose.getX(),
-    // pose.getY(), pose.getRotation().getDegrees())); if
-    // (!DriverStation.isAutonomous()) {
-    frontBackCamera.processRegions(m_poseEstimator);
+    double time = ApriltagsCamera.getTime();
+    Rotation2d gyroRotation = m_driveSubsystem.getGyroRotation2d();
+    SwerveModulePosition[] modules = m_driveSubsystem.getModulePosition();
+    Pose2d pose = m_poseEstimator.updateWithTime(time, gyroRotation, modules);
+    frontBackCamera.logUpdate(time, gyroRotation, modules, pose);
 
-    // sideCamera.processRegions(m_poseEstimator);
+    frontBackCamera.processRegions(m_poseEstimator);
+    sideCamera.processRegions(m_poseEstimator);
     
-    // }
-    Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
-    if (alliance.isPresent()) {
-      // m_posServer.setAllianceColor(alliance.get() ==
-      // DriverStation.Alliance.Red);
-    }
+    //Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
 
     Pose2d pos = m_poseEstimator.getEstimatedPosition();
+
     SmartDashboard.putNumber("xPos", pos.getX());
     SmartDashboard.putNumber("yPos", pos.getY());
     SmartDashboard.putNumber("Robot Angle", pos.getRotation().getDegrees());
     m_posServer.setPosition(pos.getX(), pos.getY(),
                             pos.getRotation().getDegrees());
-
-    // PositionServer.Target target = m_posServer.getTarget();
-
-    // if (target != null) {
-    // 	// Logger.log("PositionTracker", 1, String.format("x=%f,y=%f,h=%f",
-    // target.m_x,
-    // 	// target.m_y, target.m_h));
-    // 	SmartDashboard.putNumber("TargetX", target.m_x);
-    // 	SmartDashboard.putNumber("TargetY", target.m_y);
-    // 	SmartDashboard.putNumber("TargetH", target.m_h);
-    // }
   }
 }

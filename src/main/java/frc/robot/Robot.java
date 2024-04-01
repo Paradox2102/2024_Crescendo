@@ -110,7 +110,7 @@ public class Robot extends TimedRobot {
     }
     catch (Exception ex) {}
 
-    // m_robotContainer.m_apriltagCamera.setLogging(true);
+    ApriltagsCamera.setLogging(true);
     // m_robotContainer.m_apriltagCameraSide.setLogging(true);
     
   }

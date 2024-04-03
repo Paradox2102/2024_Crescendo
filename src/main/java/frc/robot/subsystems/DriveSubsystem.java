@@ -64,11 +64,12 @@ public class DriveSubsystem extends SubsystemBase {
                           Constants.DriveConstants.k_BROffset);
 
   // The gyro sensor
-  private final Pigeon2 m_gyro = new Pigeon2(0);
+  private final GyroInterface m_gyro = new GyroInterface.GyroPidgen(0);
+  // private final GyroInterface m_gyro = new SerialGyro();
 
   // Game Piece Tracking Camera
   Camera m_visionCamera;
-
+  
   private PIDController m_orientPID = new PIDController(
       Constants.DriveConstants.k_rotateP, Constants.DriveConstants.k_rotateI,
       Constants.DriveConstants.k_rotateD);
@@ -513,7 +514,7 @@ public class DriveSubsystem extends SubsystemBase {
     return -m_gyro.getRate();
   }
 
-  public Pigeon2 getGyro() { return m_gyro; }
+  public GyroInterface getGyro() { return m_gyro; }
 
   public PositionTrackerPose getTracker() { return m_tracker; }
 

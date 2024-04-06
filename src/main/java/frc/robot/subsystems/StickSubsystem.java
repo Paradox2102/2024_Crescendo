@@ -81,6 +81,7 @@ public class StickSubsystem extends SubsystemBase {
   }
 
 
+  private double m_lastPower = 0;
   @Override
   public void periodic() {
     double power;
@@ -95,7 +96,11 @@ public class StickSubsystem extends SubsystemBase {
       power = m_power;
       m_stallCycles = 0;
     }
-    m_leftMotor.set(power);
+
+    if (m_lastPower != power) {
+      m_leftMotor.set(power);
+      m_lastPower = power;
+    }
     
     // This method will be called once per scheduler run
     // SmartDashboard.putNumber("Stick Extent", getPositionInRotations());

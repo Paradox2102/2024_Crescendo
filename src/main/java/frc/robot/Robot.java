@@ -82,7 +82,7 @@ public class Robot extends TimedRobot {
     }
     catch (Exception ex) {}
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    // m_robotContainer.m_apriltagCamera.setLogging(true);
+    // ApriltagsCamera.setLogging(true);
     // m_robotContainer.m_apriltagCameraSide.setLogging(true);
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -110,7 +110,7 @@ public class Robot extends TimedRobot {
     }
     catch (Exception ex) {}
 
-    ApriltagsCamera.setLogging(true);
+    // ApriltagsCamera.setLogging(true);
     // m_robotContainer.m_apriltagCameraSide.setLogging(true);
     
   }

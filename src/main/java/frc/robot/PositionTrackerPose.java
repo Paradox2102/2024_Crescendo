@@ -132,6 +132,8 @@ public class PositionTrackerPose {
 
   // }
 
+  private boolean m_front = true;
+
   public void update(ApriltagsCamera frontBackCamera, ApriltagsCamera sideCamera) {
     // logUpdate();
     m_poseEstimator.updateWithTime(ApriltagsCamera.getTime(),
@@ -141,11 +143,17 @@ public class PositionTrackerPose {
     Rotation2d gyroRotation = m_driveSubsystem.getGyroRotation2d();
     SwerveModulePosition[] modules = m_driveSubsystem.getModulePosition();
     Pose2d pose = m_poseEstimator.updateWithTime(time, gyroRotation, modules);
-    double rotationRateDegreesPerSecond = m_driveSubsystem.getRotationRateDegreesPerSecond();
-    frontBackCamera.logUpdate(time, gyroRotation, modules, pose, rotationRateDegreesPerSecond);
+    if(ApriltagsCamera.m_log) {
+      double rotationRateDegreesPerSecond = m_driveSubsystem.getRotationRateDegreesPerSecond();
+      frontBackCamera.logUpdate(time, gyroRotation, modules, pose, rotationRateDegreesPerSecond);
+    }
 
-    frontBackCamera.processRegions(m_poseEstimator);
-    sideCamera.processRegions(m_poseEstimator);
+    if (m_front) {
+      frontBackCamera.processRegions(m_poseEstimator);
+    } else {
+      sideCamera.processRegions(m_poseEstimator);
+    }
+    m_front = !m_front;
     
     //Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
 

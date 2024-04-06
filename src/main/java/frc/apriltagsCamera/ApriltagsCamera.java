@@ -54,7 +54,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ApriltagsCamera implements frc.apriltagsCamera.Network.NetworkReceiver {
 	// public Pose2d m_pose2d = new Pose2d(0, 0, new Rotation2d(0));
-	private static boolean m_log = false;
+	public static boolean m_log = false;
 	private static double k_maxLogTime = 2.5 * 60; // Length of a match
 	private static edu.wpi.first.wpilibj.Timer m_logTimer = new edu.wpi.first.wpilibj.Timer();
 	private double m_yawError = 0;

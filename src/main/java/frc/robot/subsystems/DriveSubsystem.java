@@ -319,7 +319,9 @@ public class DriveSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("FR Encoder Diff", m_frontRight.getMagEncoderPosRadians() - m_frontRight.getMotorPosRadians());
     // SmartDashboard.putNumber("BL Encoder Diff", m_backLeft.getMagEncoderPosRadians() - m_backLeft.getMotorPosRadians());
     // SmartDashboard.putNumber("BR Encoder Diff", m_backRight.getMagEncoderPosRadians() - m_backRight.getMotorPosRadians());
-    m_tracker.update(m_frontBackCamera, m_sideCamera);
+ 
+    // For efficiency. we could pass in the module states here, to avoid calling it twice.  Maybe also currentPos.  - Gavin
+     m_tracker.update(m_frontBackCamera, m_sideCamera);
 
     // Estimate future position of robot
     // *****************************************

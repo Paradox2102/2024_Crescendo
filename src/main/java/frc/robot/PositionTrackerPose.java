@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.apriltagsCamera.ApriltagLocation;
@@ -131,26 +132,30 @@ public class PositionTrackerPose {
 
   // }
 
+  private boolean m_front = true;
+
   public void update(ApriltagsCamera frontBackCamera, ApriltagsCamera sideCamera) {
     // logUpdate();
     m_poseEstimator.updateWithTime(ApriltagsCamera.getTime(),
                                    m_driveSubsystem.getGyroRotation2d(),
                                    m_driveSubsystem.getModulePosition());
-    // Pose2d pose = m_poseEstimator.getEstimatedPosition();
-    // Logger.log("PositionTrackerPose", 1, String.format("x=%f,y=%f,a=%f",
-    // 								pose.getX(),
-    // pose.getY(), pose.getRotation().getDegrees())); if
-    // (!DriverStation.isAutonomous()) {
-    frontBackCamera.processRegions(m_poseEstimator);
-
-    // sideCamera.processRegions(m_poseEstimator);
-    
-    // }
-    Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
-    if (alliance.isPresent()) {
-      // m_posServer.setAllianceColor(alliance.get() ==
-      // DriverStation.Alliance.Red);
+    double time = ApriltagsCamera.getTime();
+    Rotation2d gyroRotation = m_driveSubsystem.getGyroRotation2d();
+    SwerveModulePosition[] modules = m_driveSubsystem.getModulePosition();
+    Pose2d pose = m_poseEstimator.updateWithTime(time, gyroRotation, modules);
+    if(ApriltagsCamera.m_log) {
+      double rotationRateDegreesPerSecond = m_driveSubsystem.getRotationRateDegreesPerSecond();
+      frontBackCamera.logUpdate(time, gyroRotation, modules, pose, rotationRateDegreesPerSecond);
     }
+
+    if (m_front) {
+      frontBackCamera.processRegions(m_poseEstimator);
+    } else {
+      sideCamera.processRegions(m_poseEstimator);
+    }
+    m_front = !m_front;
+    
+    //Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
 
     Pose2d pos = m_poseEstimator.getEstimatedPosition();
     SmartDashboard.putNumber("xPos", pos.getX());

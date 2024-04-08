@@ -83,6 +83,7 @@ public class StickSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    // It would be better to only set the power if it has changed from the last time.
     double power;
     if (!m_extend) {
       if (m_stallCycles >= 50) {

@@ -241,7 +241,8 @@ public class Network
 						m_printStream = printStream;
 					}	
 
-					String command = "";
+					// String command = "";
+					StringBuilder command = new StringBuilder();
 					
 					Logger.log("Network", 1, String.format("Connected to %s:%d", m_host, m_port));
 					
@@ -250,7 +251,8 @@ public class Network
 					while (true)
 					{
 						int ch = m_inputStream.read();
-						
+						// byte buf[] = m_inputStream.readAllBytes();
+
 						if (ch < 0)
 						{
 							Logger.log("Network", 2, "Connection lost");
@@ -262,15 +264,17 @@ public class Network
 						{
 							if (command.length() >= 1)
 							{
-								m_networkReceiver.processData(command);
+								m_networkReceiver.processData(command.toString());
 							}
 							
-							command	= "";
+							// command	= "";
+							command.delete(0, command.length());
 							
 						}
 						else if (ch >= 0)
 						{
-							command += (char) ch;
+							// command += (char) ch;
+							command.append((char) ch);
 						}
 						else
 						{

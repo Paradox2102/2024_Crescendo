@@ -7,6 +7,7 @@ package frc.robot.commands.apriltags;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.apriltagsCamera.ApriltagsCamera;
 import frc.apriltagsCamera.Logger;
+import frc.robot.subsystems.DriveSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -31,6 +32,7 @@ public class SetApriltagsDashboard extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    DriveSubsystem.m_setGyroZero = true;
     Logger.log("SetApriltagsDashboard", 2, String.format("initialize: m_ip=%s, m_log=%b",m_camera.m_ip, m_log));
     m_camera.setDashboard(m_log);
     if (m_camera2 != null) {

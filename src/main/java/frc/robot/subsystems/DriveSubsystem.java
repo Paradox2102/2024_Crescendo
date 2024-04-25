@@ -281,6 +281,9 @@ public class DriveSubsystem extends SubsystemBase {
     return followPathCommand;
   }
 
+  public static boolean m_setGyroZero = true;
+  public static double m_gyroZero = 0;
+
   @Override
   public void periodic() {
     // SmartDashboard.putNumber("Rotate Error", getRotationDistanceFromTargetError());
@@ -325,6 +328,19 @@ public class DriveSubsystem extends SubsystemBase {
     // Estimate future position of robot
     // *****************************************
     Pose2d currentPos = m_tracker.getPose2d();
+
+    double yaw = ApriltagsCamera.normalizeAngle(-m_gyro.getAngle());
+    if (m_setGyroZero) {
+      m_gyroZero = ApriltagsCamera.normalizeAngle(currentPos.getRotation().getDegrees() - yaw);
+      m_setGyroZero = false;
+    }
+    SmartDashboard.putNumber("Gyro offset", ApriltagsCamera.normalizeAngle(currentPos.getRotation().getDegrees() - yaw - m_gyroZero));
+    SmartDashboard.putNumber("Gyro Zero", m_gyroZero);
+    SmartDashboard.putNumber("Gyro", yaw);
+    SmartDashboard.putNumber("Gyro Diff", ApriltagsCamera.normalizeAngle(currentPos.getRotation().getDegrees() - yaw));
+    SmartDashboard.putNumber("Gyro Est Yaw", ApriltagsCamera.normalizeAngle(currentPos.getRotation().getDegrees()));
+    
+
 
     double currentY = currentPos.getY();
     double currentX = currentPos.getX();

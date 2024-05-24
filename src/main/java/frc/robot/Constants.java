@@ -309,7 +309,7 @@ public final class Constants {
   public static class ShooterConstants {
     public static final int k_shooterMotor = 11;
     public static double k_intakeVelocityRPM = 3000;
-    public static final double k_speakerShootVelocityRPM = -5000; // -5750
+    public static final double k_speakerShootVelocityRPM = -5750; //5000
     public static double k_ampShootVelocityRPM = -1950; // -1950
     public static final double k_maxVelocityRPM = 6250; //6000
     
@@ -318,8 +318,8 @@ public final class Constants {
 
     public static final double k_adjustGamePiecePower = -.2;
 
-    public static final int k_frontSensor = 2;
-    public static final int k_backSensor = 1;
+    public static final int k_frontSensor = 1;
+    public static final int k_backSensor = 2;
 
     public static double k_f = 1.1 / k_maxVelocityRPM;
     public static double k_p = 0; //.00025

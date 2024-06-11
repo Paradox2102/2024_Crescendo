@@ -41,8 +41,8 @@ public class ApriltagLocations {
       180),   // Official
       // new ApriltagLocation(15, 182.73 / k_inPerM, (177.10) / k_inPerM,
       //                      130 - 180),
-      new ApriltagLocation(16, 182.73 / k_inPerM, (146.19) / k_inPerM,
-                           240 - 180),
+      //new ApriltagLocation(16, 182.73 / k_inPerM, (146.19) / k_inPerM, 240 - 180),
+      new ApriltagLocation(16, 4.641, 4.498, 240 - 180),
   };
   public static boolean m_blue = false;
   public static double m_fieldLength = 8.21;

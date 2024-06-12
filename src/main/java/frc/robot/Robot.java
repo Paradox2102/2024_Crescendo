@@ -5,12 +5,14 @@
 package frc.robot;
 
 import com.pathplanner.lib.commands.FollowPathCommand;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 
 /**
@@ -21,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  private boolean m_chooserLoaded = false;
 
   private RobotContainer m_robotContainer;
 
@@ -48,6 +51,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    if(!m_chooserLoaded && DriverStation.getAlliance().isPresent()) {
+      m_robotContainer.m_autoSelection.addOption("Nothing", new InstantCommand());
+      m_robotContainer.m_autoSelection.addOption("Amp Side 5", new PathPlannerAuto(DriverStation.getAlliance().get() == DriverStation.Alliance.Red ? "amp side 5 red" : "amp side 5"));
+      m_robotContainer.m_autoSelection.addOption("Wing 4 Piece PHR", new PathPlannerAuto(DriverStation.getAlliance().get() == DriverStation.Alliance.Red ? "PHR red" : "PHR"));
+      m_robotContainer.m_autoSelection.addOption("Wing 4 Piece RHP", new PathPlannerAuto(DriverStation.getAlliance().get() == DriverStation.Alliance.Red ? "RHP red" : "RHP"));
+      m_robotContainer.m_autoSelection.addOption("Source Side 4", new PathPlannerAuto(DriverStation.getAlliance().get() == DriverStation.Alliance.Red ? "source side 4 red" : "source side 4"));
+      m_chooserLoaded = true;
+      SmartDashboard.putData(m_robotContainer.m_autoSelection);
+    }
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic

@@ -1,12 +1,6 @@
 {
   "version": 1.0,
-  "startingPose": {
-    "position": {
-      "x": 1.3186789318946823,
-      "y": 5.489113876089985
-    },
-    "rotation": 180.0
-  },
+  "startingPose": null,
   "command": {
     "type": "sequential",
     "data": {
@@ -50,95 +44,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "speaker to wing 3"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake back"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "deadline",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "wing 3 to speaker source"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "auto aim"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "back feed"
-                      }
-                    },
-                    {
-                      "type": "deadline",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "wing 3 to 2"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake back"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "deadline",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "wing 2 to speaker source"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "auto aim"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "back feed"
-                      }
-                    },
-                    {
-                      "type": "deadline",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "wing 2 to 1"
+                              "pathName": "speaker to wing 1"
                             }
                           },
                           {
@@ -158,6 +64,94 @@
                             "type": "path",
                             "data": {
                               "pathName": "wing 1 to speaker"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "auto aim"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "back feed"
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "wing 1 to 2"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake back"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "wing 2 to speaker amp"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "auto aim"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "back feed"
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "wing 2 to wing 3"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake back"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "wing 3 to speaker amp"
                             }
                           },
                           {

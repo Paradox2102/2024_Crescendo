@@ -56,7 +56,7 @@ public final class Constants {
       DriveConstants.k_FLOffset = 1.81 - (Math.PI / 2);
       DriveConstants.k_FROffset = .04;
       DriveConstants.k_BLOffset = 4.19 + (Math.PI);
-      DriveConstants.k_BROffset = 2.02 + (Math.PI / 2);
+      DriveConstants.k_BROffset = 4.69 + (Math.PI);
       DriveConstants.k_maxSpeedMetersPerSecond = 4.8;
 
       // Shooter
@@ -76,22 +76,22 @@ public final class Constants {
 
       // Interpolation Table
       PivotConstants.k_distancesFront = new double[] {
-        1.3,
-        2,
-        2.55,
-        3.1,
-        3.5,
-        3.75,
-        4,
-        4.25,
-        4.5,
-        4.75,
-        5,
-        5.25,
-        5.5, 
-        5.8,
-        6.25,
-        7
+        1.4,
+        2.1,
+        2.65,
+        3.2,
+        3.6,
+        3.85,
+        4.1,
+        4.35,
+        4.6,
+        4.85,
+        5.1,
+        5.35,
+        5.6, 
+        5.9,
+        6.35,
+        7.1
       };
       PivotConstants.k_anglesFront = new double[] {
         10, // 1.3,
@@ -310,7 +310,7 @@ public final class Constants {
     public static final int k_shooterMotor = 11;
     public static double k_intakeVelocityRPM = 3000;
     public static final double k_speakerShootVelocityRPM = -5750; //5000
-    public static double k_ampShootVelocityRPM = -1950; // -1950
+    public static double k_ampShootVelocityRPM = -2500; // -1950
     public static final double k_maxVelocityRPM = 6250; //6000
     
     public static final double k_speakerFeedPower = 1;

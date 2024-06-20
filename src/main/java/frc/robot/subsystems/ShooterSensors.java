@@ -65,7 +65,7 @@ public class ShooterSensors extends SubsystemBase {
     //   m_backCounter = 0;
     // }
 
-    // SmartDashboard.putBoolean("Has Game Piece", Constants.States.m_hasGamePiece);
+    SmartDashboard.putBoolean("Has Game Piece", Constants.States.m_hasGamePiece);
     // SmartDashboard.putBoolean("Game Piece Stowed", Constants.States.m_isGamePieceStowed);
     // SmartDashboard.putBoolean("Shoot Intake Side", Constants.States.m_shootIntakeSide);
     SmartDashboard.putBoolean("Back Sensor", getBackSensor());

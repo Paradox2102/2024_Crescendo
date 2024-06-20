@@ -51,6 +51,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putBoolean("choose autos", m_chooserLoaded);
+    
     if(!m_chooserLoaded && DriverStation.getAlliance().isPresent()) {
       m_robotContainer.m_autoSelection.addOption("Nothing", new InstantCommand());
       m_robotContainer.m_autoSelection.addOption("Amp Side 5", new PathPlannerAuto(DriverStation.getAlliance().get() == DriverStation.Alliance.Red ? "amp side 5 red" : "amp side 5"));

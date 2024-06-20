@@ -5,7 +5,6 @@
 package frc.robot.commands.pivot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 
@@ -29,14 +28,6 @@ public class DefaultPivotCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!Constants.States.m_speakerMode) {
-      m_subsystem.setPositionDegrees(Constants.PivotConstants.k_ampPositionDegrees);
-    } else if (Constants.States.m_speakerMode && m_driveSubsystem.shouldAim()) {
-      // doesn't need to check aiming zone because getPivotAngleFromRobotPos() does it for you
-      m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromRobotPos(m_predictFuture));
-    } else {
-      m_subsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
-    }
   }
 
   // Called once the command ends or is interrupted.

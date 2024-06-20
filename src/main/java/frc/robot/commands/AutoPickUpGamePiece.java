@@ -15,8 +15,8 @@ import frc.robot.subsystems.PivotSubsystem;
 
 public class AutoPickUpGamePiece extends Command {
   DriveSubsystem m_driveSubsystem;
-  ManipulatorSubsystem m_holderSubsystem;
-  ManipulatorSubsystem m_shooterSubsystem;
+  ManipulatorSubsystem m_backSubsystem;
+  ManipulatorSubsystem m_frontSubsystem;
   PivotSubsystem m_pivotSubsystem;
 
   DoubleSupplier m_x;
@@ -35,25 +35,25 @@ public class AutoPickUpGamePiece extends Command {
   double m_setpoint = 0;
 
   /** Creates a new AutoPickUpGamePiece. */
-  public AutoPickUpGamePiece(DriveSubsystem driveSubsystem, PivotSubsystem pivotSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, DoubleSupplier x, DoubleSupplier y, DoubleSupplier rot) {
+  public AutoPickUpGamePiece(DriveSubsystem driveSubsystem, PivotSubsystem pivotSubsystem, ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem, DoubleSupplier x, DoubleSupplier y, DoubleSupplier rot) {
     m_driveSubsystem = driveSubsystem;
     m_pivotSubsystem = pivotSubsystem;
-    m_shooterSubsystem = shooterSubsystem;
-    m_holderSubsystem = holderSubsystem;
+    m_frontSubsystem = frontSubsystem;
+    m_backSubsystem = backSubsystem;
     m_x = x;
     m_y = y;
     m_rot = rot;
     m_pid.setIZone(k_iZone);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_driveSubsystem, m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem);
+    addRequirements(m_driveSubsystem, m_backSubsystem, m_frontSubsystem, m_pivotSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
-    m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
-    m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
+    m_frontSubsystem.setVelocityRPM(Constants.FrontConstants.k_intakeVelocityRPM);
+    m_backSubsystem.setVelocityRPM(Constants.BackConstants.k_intakeVelocityRPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -87,8 +87,8 @@ public class AutoPickUpGamePiece extends Command {
   @Override
   public void end(boolean interrupted) {
     m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
-    m_shooterSubsystem.stop();
-    m_holderSubsystem.stop();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    m_frontSubsystem.stop();
+    m_backSubsystem.stop();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
   }
 
   // Returns true when the command should end.

@@ -78,8 +78,8 @@ public class RobotContainer {
   final ShooterSensors m_shooterSensors = new ShooterSensors();
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera, m_apriltagCameraSide);
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem(m_driveSubsystem);
-  private final ManipulatorSubsystem m_shooterSubsystem = new ManipulatorSubsystem(m_driveSubsystem, Constants.ShooterConstants.k_shooterMotor);
-  private final ManipulatorSubsystem m_holderSubsystem = new ManipulatorSubsystem(m_driveSubsystem, Constants.HolderConstants.k_holdingMotor);
+  private final ManipulatorSubsystem m_frontSubsystem = new ManipulatorSubsystem(m_driveSubsystem, Constants.FrontConstants.k_frontMotor);
+  private final ManipulatorSubsystem m_backSubsystem = new ManipulatorSubsystem(m_driveSubsystem, Constants.BackConstants.k_backMotor);
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
   private final StickSubsystem m_stickSubsystem = new StickSubsystem();
 
@@ -100,20 +100,20 @@ public class RobotContainer {
     m_ledConfig = new LEDConfig(robot, m_apriltagCamera, m_apriltagCameraSide);
 
     m_driveSubsystem.setTracker(m_tracker);
-    NamedCommands.registerCommand("intake", new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
-    NamedCommands.registerCommand("intake back", new IntakeAndGoToBackShooter(m_shooterSubsystem, m_pivotSubsystem, 1.8));
-    NamedCommands.registerCommand("rev shooter", new RevCommand(m_shooterSubsystem, m_holderSubsystem));
-    NamedCommands.registerCommand("rev back", new RevBackShooter(m_holderSubsystem));
+    NamedCommands.registerCommand("intake", new IntakeCommand(m_backSubsystem, m_frontSubsystem, m_pivotSubsystem));
+    NamedCommands.registerCommand("intake back", new IntakeAndGoToBackShooter(m_frontSubsystem, m_pivotSubsystem, 1.8));
+    NamedCommands.registerCommand("rev shooter", new RevCommand(m_frontSubsystem, m_backSubsystem));
+    NamedCommands.registerCommand("rev back", new RevBackShooter(m_backSubsystem));
     NamedCommands.registerCommand("switch to shoot back", new ToggleShootSideCommand(false));
     NamedCommands.registerCommand("switch to shoot front", new ToggleShootSideCommand(true));
     NamedCommands.registerCommand("start back", new StartBack());
     NamedCommands.registerCommand("start front", new StartFront());
-    NamedCommands.registerCommand("shoot", new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
-    NamedCommands.registerCommand("feedthrough", new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
-    NamedCommands.registerCommand("back feed", new BackFeedCommand(m_shooterSubsystem));
-    NamedCommands.registerCommand("stop everything", new StopEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
-    NamedCommands.registerCommand("reset everything", new ResetSubsystemsCommand(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem));
-    NamedCommands.registerCommand("bulldoze counter", new CountBulldoze(m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
+    NamedCommands.registerCommand("shoot", new ShootCommand(m_frontSubsystem, m_backSubsystem));
+    NamedCommands.registerCommand("feedthrough", new FeedCommand(m_frontSubsystem, m_backSubsystem));
+    NamedCommands.registerCommand("back feed", new BackFeedCommand(m_frontSubsystem));
+    NamedCommands.registerCommand("stop everything", new StopEverything(m_driveSubsystem, m_frontSubsystem, m_backSubsystem, m_pivotSubsystem));
+    NamedCommands.registerCommand("reset everything", new ResetSubsystemsCommand(m_pivotSubsystem, m_frontSubsystem, m_backSubsystem));
+    NamedCommands.registerCommand("bulldoze counter", new CountBulldoze(m_frontSubsystem, m_backSubsystem, m_pivotSubsystem));
     // Aim
     NamedCommands.registerCommand("subwoofer aim", new SetPivotOffInputDistance(m_pivotSubsystem, 1.5));
     NamedCommands.registerCommand("four piece aim", new SetPivotOffInputDistance(m_pivotSubsystem, 2));
@@ -177,32 +177,32 @@ public class RobotContainer {
     ));
 
     m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
-    m_shooterSubsystem.setDefaultCommand(new DefaultManipulatorCommand(m_shooterSubsystem, m_driveSubsystem, true));
-    m_holderSubsystem.setDefaultCommand(new DefaultManipulatorCommand(m_holderSubsystem, m_driveSubsystem, false));
+    m_frontSubsystem.setDefaultCommand(new DefaultManipulatorCommand(m_frontSubsystem, m_driveSubsystem, true));
+    m_backSubsystem.setDefaultCommand(new DefaultManipulatorCommand(m_backSubsystem, m_driveSubsystem, false));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    // m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
-    m_driverController.leftTrigger().toggleOnTrue(new ShootSequence(m_shooterSubsystem, m_holderSubsystem, m_stickSubsystem));
-    m_driverController.rightTrigger().whileTrue(new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem));
+    // m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_backSubsystem));
+    m_driverController.leftTrigger().toggleOnTrue(new ShootSequence(m_frontSubsystem, m_backSubsystem, m_stickSubsystem));
+    m_driverController.rightTrigger().whileTrue(new IntakeCommand(m_backSubsystem, m_frontSubsystem, m_pivotSubsystem));
         
-    m_driverController.a().onTrue(new PassShot(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, m_driverController));
+    m_driverController.a().onTrue(new PassShot(m_driveSubsystem, m_frontSubsystem, m_backSubsystem, m_pivotSubsystem, m_driverController));
 
     //ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
-    m_joystick.button(1).toggleOnTrue(new RevCommand(m_shooterSubsystem, m_holderSubsystem));
-    m_joystick.button(2).whileTrue(new D2Intake(m_shooterSubsystem, m_holderSubsystem, true));
-    m_joystick.button(4).whileTrue(new EjectGamePiece(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem));
+    m_joystick.button(1).toggleOnTrue(new RevCommand(m_frontSubsystem, m_backSubsystem));
+    m_joystick.button(2).whileTrue(new D2Intake(m_frontSubsystem, m_backSubsystem, true));
+    m_joystick.button(4).whileTrue(new EjectGamePiece(m_pivotSubsystem, m_frontSubsystem, m_backSubsystem));
     m_joystick.button(7).onTrue(new InstantCommand(() -> {Constants.States.m_shootIntakeSide = !Constants.States.m_shootIntakeSide;}));
-    m_joystick.button(8).toggleOnTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem));
+    m_joystick.button(8).toggleOnTrue(new FeedCommand(m_frontSubsystem, m_backSubsystem));
     m_joystick.button(9).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));
     m_joystick.button(10).whileTrue(new EjectSpinCommand(m_driveSubsystem, m_pivotSubsystem, () -> m_joystick.getY()));
-    m_joystick.button(11).onTrue(new StopEverything(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem));
+    m_joystick.button(11).onTrue(new StopEverything(m_driveSubsystem, m_frontSubsystem, m_backSubsystem, m_pivotSubsystem));
     m_joystick.button(6).onTrue(new ToggleAutoAim());
     m_joystick.button(10).onTrue(new InstantCommand(() -> {Constants.States.m_shootIntakeSide = !Constants.States.m_shootIntakeSide;}));
     m_joystick.button(3).whileTrue(new SetStickPos(m_stickSubsystem, false));
 
     //ToggleTrigger m_brakeMode = new ToggleTrigger(m_joystick.button(12));
-    //m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode), m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, m_elevatorSubsystem, m_stickSubsystem));
+    //m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode), m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_backSubsystem, m_elevatorSubsystem, m_stickSubsystem));
   }
   public double getThrottle() {
     return m_joystick.getThrottle();

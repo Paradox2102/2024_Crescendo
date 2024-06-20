@@ -8,23 +8,23 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ManipulatorSubsystem;
 
 public class D2Intake extends Command {
-  ManipulatorSubsystem m_shooterSubsystem;
-  ManipulatorSubsystem m_holderSubsystem;
+  ManipulatorSubsystem m_frontSubsystem;
+  ManipulatorSubsystem m_backSubsystem;
   boolean m_intake;
   /** Creates a new D2Intake. */
-  public D2Intake(ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, boolean intake) {
-    m_shooterSubsystem = shooterSubsystem;
-    m_holderSubsystem = holderSubsystem;
+  public D2Intake(ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem, boolean intake) {
+    m_frontSubsystem = frontSubsystem;
+    m_backSubsystem = backSubsystem;
     m_intake = intake;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooterSubsystem, m_holderSubsystem);
+    addRequirements(m_frontSubsystem, m_backSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_shooterSubsystem.setVelocityRPM(2000);
-    m_holderSubsystem.setVelocityRPM(500);
+    m_frontSubsystem.setVelocityRPM(2000);
+    m_backSubsystem.setVelocityRPM(500);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -35,8 +35,8 @@ public class D2Intake extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooterSubsystem.stop();
-    m_holderSubsystem.stop();
+    m_frontSubsystem.stop();
+    m_backSubsystem.stop();
   }
 
   // Returns true when the command should end.

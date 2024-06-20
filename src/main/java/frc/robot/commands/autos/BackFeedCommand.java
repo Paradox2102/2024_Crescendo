@@ -10,15 +10,15 @@ import frc.robot.Constants;
 import frc.robot.subsystems.ManipulatorSubsystem;
 
 public class BackFeedCommand extends Command {
-  ManipulatorSubsystem m_shooterSubsystem;
+  ManipulatorSubsystem m_frontSubsystem;
   Timer m_dwellTimer = new Timer();
 
   /** Creates a new RevCommand. */
-  public BackFeedCommand(ManipulatorSubsystem shooterSubsystem) {
-    m_shooterSubsystem = shooterSubsystem;
+  public BackFeedCommand(ManipulatorSubsystem frontSubsystem) {
+    m_frontSubsystem = frontSubsystem;
     m_dwellTimer.reset();
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooterSubsystem);
+    addRequirements(m_frontSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -26,7 +26,7 @@ public class BackFeedCommand extends Command {
   public void initialize() {
     m_dwellTimer.reset();
     m_dwellTimer.start();
-    m_shooterSubsystem.setPower(Constants.ShooterConstants.k_speakerFeedPower);
+    m_frontSubsystem.setPower(Constants.FrontConstants.k_speakerFeedPower);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -40,7 +40,7 @@ public class BackFeedCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooterSubsystem.stop();
+    m_frontSubsystem.stop();
   }
 
   // Returns true when the command should end.

@@ -23,8 +23,8 @@ public class PassShot extends SequentialCommandGroup {
   DriveSubsystem m_driveSubsystem;
   ManipulatorSubsystem m_manipulatorSubsystem;
 
-  public PassShot(DriveSubsystem driveSubsystem, ManipulatorSubsystem shooterSubsystem,
-      ManipulatorSubsystem holderSubsystem, PivotSubsystem pivotSubsystem, CommandXboxController controller) {
+  public PassShot(DriveSubsystem driveSubsystem, ManipulatorSubsystem frontSubsystem,
+      ManipulatorSubsystem backSubsystem, PivotSubsystem pivotSubsystem, CommandXboxController controller) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -33,7 +33,7 @@ public class PassShot extends SequentialCommandGroup {
             new SequentialCommandGroup(
                 new SetPivotPos(pivotSubsystem, 70),
                 new WaitCommand(0.5),
-                new ShootCommand(shooterSubsystem, holderSubsystem)
+                new ShootCommand(frontSubsystem, backSubsystem)
             ),
             new AimArcadeDrive(driveSubsystem, () -> controller.getLeftX(), () -> controller.getLeftY())
         )

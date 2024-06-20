@@ -59,20 +59,20 @@ public final class Constants {
       DriveConstants.k_BROffset = 2.02 + (Math.PI / 2);
       DriveConstants.k_maxSpeedMetersPerSecond = 4.8;
 
-      // Shooter
-      ShooterConstants.k_f = 1.1 / ShooterConstants.k_maxVelocityRPM;
-      ShooterConstants.k_p = 0.0004; //0.00005
-      ShooterConstants.k_i = 0.0000003; //0.0000001
-      ShooterConstants.k_d = 0;
-      ShooterConstants.k_iZone = 400;
+      // Front
+      FrontConstants.k_f = 1.1 / FrontConstants.k_maxVelocityRPM;
+      FrontConstants.k_p = 0.0004; //0.00005
+      FrontConstants.k_i = 0.0000003; //0.0000001
+      FrontConstants.k_d = 0;
+      FrontConstants.k_iZone = 400;
 
-      // Holder 
-      HolderConstants.k_f = 1.1 /  ShooterConstants.k_maxVelocityRPM;
-      HolderConstants.k_p = .00075;
-      HolderConstants.k_i = .0000001;
-      HolderConstants.k_d = 0;
-      HolderConstants.k_iZone = 200;
-      HolderConstants.k_intakeVelocityRPM = 500;
+      // Back 
+      BackConstants.k_f = 1.1 /  FrontConstants.k_maxVelocityRPM;
+      BackConstants.k_p = .00075;
+      BackConstants.k_i = .0000001;
+      BackConstants.k_d = 0;
+      BackConstants.k_iZone = 200;
+      BackConstants.k_intakeVelocityRPM = 500;
 
       // Interpolation Table
       PivotConstants.k_distancesFront = new double[] {
@@ -306,8 +306,8 @@ public final class Constants {
   }
 
   // Positive is intake. negative is shoot intake side
-  public static class ShooterConstants {
-    public static final int k_shooterMotor = 11;
+  public static class FrontConstants {
+    public static final int k_frontMotor = 11;
     public static double k_intakeVelocityRPM = 3000;
     public static final double k_speakerShootVelocityRPM = -5750; //5000
     public static double k_ampShootVelocityRPM = -1950; // -1950
@@ -332,8 +332,8 @@ public final class Constants {
   }
 
   // Positive is intake. negative is shoot intake side
-  public static class HolderConstants {
-    public static final int k_holdingMotor = 10;
+  public static class BackConstants {
+    public static final int k_backMotor = 10;
     public static double k_intakeVelocityRPM = 1000;
     public static final double k_speakerShootVelocityRPM = 5000; 
     public static final double k_speakerFeedPower = -1;

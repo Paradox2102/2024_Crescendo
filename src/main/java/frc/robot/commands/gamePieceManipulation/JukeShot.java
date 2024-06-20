@@ -23,21 +23,21 @@ import frc.robot.subsystems.PivotSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class JukeShot extends SequentialCommandGroup {
   /** Creates a new JukeShot. */
-  public JukeShot(PivotSubsystem pivotSubsystem, DriveSubsystem driveSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, boolean rotateLeft) {
+  public JukeShot(PivotSubsystem pivotSubsystem, DriveSubsystem driveSubsystem, ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem, boolean rotateLeft) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ToggleAutoAim(),
       new ToggleShootSideCommand(false),
-      new StopEverything(driveSubsystem, shooterSubsystem, holderSubsystem),
+      new StopEverything(driveSubsystem, frontSubsystem, backSubsystem),
       new ParallelDeadlineGroup(
         new JukeShotRotateAim(driveSubsystem, rotateLeft), 
         new DefaultPivotCommand(pivotSubsystem, driveSubsystem, true),
-        new DefaultManipulatorCommand(holderSubsystem, driveSubsystem, false),
-        new DefaultManipulatorCommand(shooterSubsystem, driveSubsystem, true)
+        new DefaultManipulatorCommand(backSubsystem, driveSubsystem, false),
+        new DefaultManipulatorCommand(frontSubsystem, driveSubsystem, true)
       ),
       new ParallelDeadlineGroup(
-        new ShootCommand(shooterSubsystem, holderSubsystem), 
+        new ShootCommand(frontSubsystem, backSubsystem), 
         new DefaultPivotCommand(pivotSubsystem, driveSubsystem, true),
         new RunCommand(() -> {driveSubsystem.drive(0, 0, 0, true, true, new Translation2d(0, 0));}, driveSubsystem)
       ),

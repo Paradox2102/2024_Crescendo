@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     m_robotContainer.m_ledConfig.periodic();
-    // Constants.ShooterConstants.k_ampShootVelocityRPM = -SmartDashboard.getEntry("Amp Velo").getDouble(1950);
+    // Constants.FrontConstants.k_ampShootVelocityRPM = -SmartDashboard.getEntry("Amp Velo").getDouble(1950);
 
     // ApriltagsCameraStats stats = m_robotContainer.m_apriltagCamera.getStats();
     // SmartDashboard.putNumber("cam avg delay", stats.m_averageDelay);

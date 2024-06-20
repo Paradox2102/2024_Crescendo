@@ -19,18 +19,18 @@ public class SetRobotBreakMode extends InstantCommand {
   Trigger m_brake;
   DriveSubsystem m_driveSubsystem;
   PivotSubsystem m_pivotSubsystem;
-  ManipulatorSubsystem m_shooterSubsystem;
-  ManipulatorSubsystem m_holderSubsystem;
+  ManipulatorSubsystem m_frontSubsystem;
+  ManipulatorSubsystem m_backSubsystem;
   ElevatorSubsystem m_elevatorSubsystem;
   StickSubsystem m_stickSubsystem;
 
-  public SetRobotBreakMode(Trigger brake, DriveSubsystem driveSubsystem, PivotSubsystem pivotSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, ElevatorSubsystem elevatorSubsystem, StickSubsystem stickSubsystem) {
+  public SetRobotBreakMode(Trigger brake, DriveSubsystem driveSubsystem, PivotSubsystem pivotSubsystem, ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem, ElevatorSubsystem elevatorSubsystem, StickSubsystem stickSubsystem) {
     m_brake = brake;
 
     m_driveSubsystem = driveSubsystem;
     m_pivotSubsystem = pivotSubsystem;
-    m_shooterSubsystem = shooterSubsystem;
-    m_holderSubsystem = holderSubsystem;
+    m_frontSubsystem = frontSubsystem;
+    m_backSubsystem = backSubsystem;
     m_elevatorSubsystem = elevatorSubsystem;
     m_stickSubsystem = stickSubsystem;
   }
@@ -41,8 +41,8 @@ public class SetRobotBreakMode extends InstantCommand {
     boolean brake = m_brake.getAsBoolean();
     m_driveSubsystem.setBrakeMode(brake);
     m_pivotSubsystem.setBrakeMode(brake);
-    m_shooterSubsystem.setBrakeMode(brake);
-    m_holderSubsystem.setBrakeMode(brake);
+    m_frontSubsystem.setBrakeMode(brake);
+    m_backSubsystem.setBrakeMode(brake);
     m_stickSubsystem.setBrakeMode(brake);
   }
 

@@ -9,15 +9,15 @@ import frc.robot.Constants;
 import frc.robot.subsystems.ManipulatorSubsystem;
 
 public class RevCommand extends Command {
-  ManipulatorSubsystem m_shooterSubsystem;
-  ManipulatorSubsystem m_holderSubsystem;
+  ManipulatorSubsystem m_frontSubsystem;
+  ManipulatorSubsystem m_backSubsystem;
 
   /** Creates a new RevCommand. */
-  public RevCommand(ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem) {
-    m_shooterSubsystem = shooterSubsystem;
-    m_holderSubsystem = holderSubsystem;
+  public RevCommand(ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem) {
+    m_frontSubsystem = frontSubsystem;
+    m_backSubsystem = backSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooterSubsystem, m_holderSubsystem);
+    addRequirements(m_frontSubsystem, m_backSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -25,11 +25,11 @@ public class RevCommand extends Command {
   public void initialize() {
     System.out.println("revCommand initialize");
     if (Constants.States.m_shootIntakeSide) {
-      m_shooterSubsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM : Constants.ShooterConstants.k_ampShootVelocityRPM);
-      m_holderSubsystem.setVelocityRPM(0);
+      m_frontSubsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.FrontConstants.k_speakerShootVelocityRPM : Constants.FrontConstants.k_ampShootVelocityRPM);
+      m_backSubsystem.setVelocityRPM(0);
     } else {
-      m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
-      m_shooterSubsystem.setVelocityRPM(0);
+      m_backSubsystem.setVelocityRPM(Constants.BackConstants.k_speakerShootVelocityRPM);
+      m_frontSubsystem.setVelocityRPM(0);
     }
   }
 

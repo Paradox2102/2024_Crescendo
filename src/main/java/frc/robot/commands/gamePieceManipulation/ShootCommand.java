@@ -10,16 +10,16 @@ import frc.robot.Constants;
 import frc.robot.subsystems.ManipulatorSubsystem;
 
 public class ShootCommand extends Command {
-  ManipulatorSubsystem m_shooterSubsystem;
-  ManipulatorSubsystem m_holderSubsystem;
+  ManipulatorSubsystem m_frontSubsystem;
+  ManipulatorSubsystem m_backSubsystem;
   private Timer m_dwellTimer = new Timer();
 
   /** Creates a new ShootCommand. */
-  public ShootCommand(ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem) {
+  public ShootCommand(ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_shooterSubsystem = shooterSubsystem;
-    m_holderSubsystem = holderSubsystem;
-    addRequirements(m_shooterSubsystem, m_holderSubsystem);
+    m_frontSubsystem = frontSubsystem;
+    m_backSubsystem = backSubsystem;
+    addRequirements(m_frontSubsystem, m_backSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -40,22 +40,22 @@ public class ShootCommand extends Command {
       if (Constants.States.m_speakerMode) {
         if (Constants.States.m_shootIntakeSide) {
           // shooting intake side to speaker
-          m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerShootVelocityRPM);
-          if (m_shooterSubsystem.isReady()) {
-            m_holderSubsystem.setPower(Constants.HolderConstants.k_speakerFeedPower);
+          m_frontSubsystem.setVelocityRPM(Constants.FrontConstants.k_speakerShootVelocityRPM);
+          if (m_frontSubsystem.isReady()) {
+            m_backSubsystem.setPower(Constants.BackConstants.k_speakerFeedPower);
           }
         } else {
-          // shooting holder side to speaker
-          m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
-          if (m_holderSubsystem.isReady()) {
-            m_shooterSubsystem.setPower(Constants.ShooterConstants.k_speakerFeedPower);
+          // shooting Back side to speaker
+          m_backSubsystem.setVelocityRPM(Constants.BackConstants.k_speakerShootVelocityRPM);
+          if (m_backSubsystem.isReady()) {
+            m_frontSubsystem.setPower(Constants.FrontConstants.k_speakerFeedPower);
           }
         }
       } else {
         // shooting intake side to amp
-        m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_ampShootVelocityRPM);
-        if (m_shooterSubsystem.isReady()) {
-          m_holderSubsystem.setPower(Constants.HolderConstants.k_ampFeedPower);
+        m_frontSubsystem.setVelocityRPM(Constants.FrontConstants.k_ampShootVelocityRPM);
+        if (m_frontSubsystem.isReady()) {
+          m_backSubsystem.setPower(Constants.BackConstants.k_ampFeedPower);
         }
       }
     if (Constants.States.m_hasGamePiece) {
@@ -66,8 +66,8 @@ public class ShootCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooterSubsystem.stop();
-    m_holderSubsystem.stop();
+    m_frontSubsystem.stop();
+    m_backSubsystem.stop();
     m_dwellTimer.stop();
   }
 

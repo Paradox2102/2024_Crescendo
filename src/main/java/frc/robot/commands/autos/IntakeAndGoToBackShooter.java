@@ -11,22 +11,22 @@ import frc.robot.subsystems.PivotSubsystem;
 
 public class IntakeAndGoToBackShooter extends Command {
   /** Creates a new IntakeAndGoToBackShooter. */
-  ManipulatorSubsystem m_shooterSubsystem;
+  ManipulatorSubsystem m_frontSubsystem;
   PivotSubsystem m_pivotSubsystem;
   double m_endDistance;
-  public IntakeAndGoToBackShooter(ManipulatorSubsystem shooterSubsystem, PivotSubsystem pivotSubsystem, double endDistance) {
-    m_shooterSubsystem = shooterSubsystem;
+  public IntakeAndGoToBackShooter(ManipulatorSubsystem frontSubsystem, PivotSubsystem pivotSubsystem, double endDistance) {
+    m_frontSubsystem = frontSubsystem;
     m_pivotSubsystem = pivotSubsystem;
     m_endDistance = endDistance;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooterSubsystem, m_pivotSubsystem);
+    addRequirements(m_frontSubsystem, m_pivotSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
-    m_shooterSubsystem.setVelocityRPM(1200);
+    m_frontSubsystem.setVelocityRPM(1200);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,7 +36,7 @@ public class IntakeAndGoToBackShooter extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooterSubsystem.stop();
+    m_frontSubsystem.stop();
     m_pivotSubsystem.setPositionDegrees(m_pivotSubsystem.getPivotAngleFromDistanceFromSpeaker(m_endDistance));
   }
 

@@ -18,12 +18,13 @@ import frc.robot.Constants.PivotConstants;
 
 public class PivotSubsystem extends SubsystemBase {
   private double m_power;
-  // private double m_targetAngleInDegrees = 0;
+  // private double m_targetAngleInDegrees = 0; is this needed?
 
   private static final double k_deadzone = 0;
   private PIDController m_PID;
   private double m_setPoint = Constants.PivotConstants.k_resetPositionDegrees;
 
+  //potentially use a structure with both angles and distances included for less complexity
   private double[] k_frontDistances = Constants.PivotConstants.k_distancesFront;
   private double[] k_backDistances = Constants.PivotConstants.k_distancesBack;
 
@@ -37,10 +38,12 @@ public class PivotSubsystem extends SubsystemBase {
 
   /** Creates a new PivotSubsystem. */
   public PivotSubsystem(DriveSubsystem driveSubsystem) {
-    SmartDashboard.putNumber("Amp Angle", 0);
+    //SmartDashboard.putNumber("Amp Angle", 0);
     m_pivotMotor.restoreFactoryDefaults();
     m_PID = new PIDController(Constants.PivotConstants.k_p, Constants.PivotConstants.k_i, Constants.PivotConstants.k_d);
+    //DoubleSupplier to return distance instead of passing in driveSubsystem
     m_driveSubsystem = driveSubsystem;
+    //check highest current motor hits and make more reasonable limit
     m_pivotMotor.setSmartCurrentLimit(80);
     setBrakeMode(true);
     m_pivotEncoder.setPositionOffset(-0.8);
@@ -53,16 +56,18 @@ public class PivotSubsystem extends SubsystemBase {
     m_pivotMotor.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
   }
 
+  //does not work with PID
   public void setPower(double power) {
     m_power = power;
   }
 
   public void setPositionDegrees(double angle) {
-    // Logger.log("PiviotSubsystem", 1, String.format("setPositionDegrees=%f", angle));
+    // Logger.log("PivotSubsystem", 1, String.format("setPositionDegrees=%f", angle));
     
     m_setPoint = angle;
   }
 
+  //potentially for both this and getPivotAngleFromRobotPos we should use the WPILib linear interpolation classes
   // Autos only, to be removed
   public double getPivotAngleFromDistanceFromSpeaker(double distance) {
     double[] distances = Constants.States.m_shootIntakeSide ? k_frontDistances : k_backDistances;
@@ -97,6 +102,7 @@ public class PivotSubsystem extends SubsystemBase {
     return Constants.PivotConstants.k_resetPositionDegrees;
   }
 
+  //for calibration
   private double getRawAngle() {
     return m_pivotEncoder.getAbsolutePosition();
   }
@@ -114,6 +120,7 @@ public class PivotSubsystem extends SubsystemBase {
     double pid;
     double angle = getAngleInDegrees();
 
+    //what is 40? create constant for that number
     FF = Constants.PivotConstants.k_f * Math.sin(Math.toRadians(angle - 40));
     if(Math.abs(getAngleInDegrees() - m_setPoint) > k_deadzone){
       pid = m_PID.calculate(angle, m_setPoint);

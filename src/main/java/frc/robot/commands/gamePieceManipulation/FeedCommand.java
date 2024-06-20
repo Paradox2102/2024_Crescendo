@@ -10,17 +10,17 @@ import frc.robot.Constants;
 import frc.robot.subsystems.ManipulatorSubsystem;
 
 public class FeedCommand extends Command {
-  ManipulatorSubsystem m_shooterSubsystem;
-  ManipulatorSubsystem m_holderSubsystem;
+  ManipulatorSubsystem m_frontSubsystem;
+  ManipulatorSubsystem m_backSubsystem;
   Timer m_dwellTimer = new Timer();
 
   /** Creates a new RevCommand. */
-  public FeedCommand(ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem) {
-    m_shooterSubsystem = shooterSubsystem;
-    m_holderSubsystem = holderSubsystem;
+  public FeedCommand(ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem) {
+    m_frontSubsystem = frontSubsystem;
+    m_backSubsystem = backSubsystem;
     m_dwellTimer.reset();
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooterSubsystem, m_holderSubsystem);
+    addRequirements(m_frontSubsystem, m_backSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -29,11 +29,11 @@ public class FeedCommand extends Command {
     m_dwellTimer.reset();
     m_dwellTimer.start();
     if (Constants.States.m_shootIntakeSide) {
-      m_shooterSubsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM : Constants.ShooterConstants.k_ampShootVelocityRPM);
-      m_holderSubsystem.setPower(Constants.States.m_speakerMode ? Constants.HolderConstants.k_speakerFeedPower : Constants.HolderConstants.k_ampFeedPower);
+      m_frontSubsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.BackConstants.k_speakerShootVelocityRPM : Constants.FrontConstants.k_ampShootVelocityRPM);
+      m_backSubsystem.setPower(Constants.States.m_speakerMode ? Constants.BackConstants.k_speakerFeedPower : Constants.BackConstants.k_ampFeedPower);
     } else {
-      m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerFeedPower);
-      m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
+      m_frontSubsystem.setVelocityRPM(Constants.FrontConstants.k_speakerFeedPower);
+      m_backSubsystem.setVelocityRPM(Constants.BackConstants.k_speakerShootVelocityRPM);
     }
   }
 
@@ -48,7 +48,7 @@ public class FeedCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // Shooter automatically stops in default manipulator command (not added here so can flow into amp shoot)
+    // front automatically stops in default manipulator command (not added here so can flow into amp shoot)
     m_dwellTimer.stop();
   }
 

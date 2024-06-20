@@ -12,14 +12,14 @@ import frc.robot.subsystems.PivotSubsystem;
 public class EjectGamePiece extends Command {
   /** Creates a new EjectGamePiece. */
   PivotSubsystem m_pivotSubsystem;
-  ManipulatorSubsystem m_shooterSubsystem;
-  ManipulatorSubsystem m_holderSubsystem;
-  public EjectGamePiece(PivotSubsystem pivotSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem) {
+  ManipulatorSubsystem m_frontSubsystem;
+  ManipulatorSubsystem m_backSubsystem;
+  public EjectGamePiece(PivotSubsystem pivotSubsystem, ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem) {
     m_pivotSubsystem = pivotSubsystem;
-    m_shooterSubsystem = shooterSubsystem;
-    m_holderSubsystem = holderSubsystem;
+    m_frontSubsystem = frontSubsystem;
+    m_backSubsystem = backSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem);
+    addRequirements(m_pivotSubsystem, m_frontSubsystem, m_backSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -31,16 +31,16 @@ public class EjectGamePiece extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooterSubsystem.setPower(-1);
-    m_holderSubsystem.setPower(-1);
+    m_frontSubsystem.setPower(-1);
+    m_backSubsystem.setPower(-1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
-    m_shooterSubsystem.stop();
-    m_holderSubsystem.stop();
+    m_frontSubsystem.stop();
+    m_backSubsystem.stop();
   }
 
   // Returns true when the command should end.

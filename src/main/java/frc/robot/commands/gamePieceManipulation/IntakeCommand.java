@@ -10,23 +10,23 @@ import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 
 public class IntakeCommand extends Command {
-  ManipulatorSubsystem m_holderSubsystem;
-  ManipulatorSubsystem m_shooterSubsystem;
+  ManipulatorSubsystem m_backSubsystem;
+  ManipulatorSubsystem m_frontSubsystem;
   PivotSubsystem m_pivotSubsystem;
   /** Creates a new IntakeCommand. */
-  public IntakeCommand(ManipulatorSubsystem holderSubsystem, ManipulatorSubsystem shooterSubsystem, PivotSubsystem pivotSubsystem) {
+  public IntakeCommand(ManipulatorSubsystem backSubsystem, ManipulatorSubsystem frontSubsystem, PivotSubsystem pivotSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_holderSubsystem = holderSubsystem;
-    m_shooterSubsystem = shooterSubsystem;
+    m_backSubsystem = backSubsystem;
+    m_frontSubsystem = frontSubsystem;
     m_pivotSubsystem = pivotSubsystem;
-    addRequirements(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem);
+    addRequirements(m_backSubsystem, m_frontSubsystem, m_pivotSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
-    m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
+    m_backSubsystem.setVelocityRPM(Constants.BackConstants.k_intakeVelocityRPM);
+    m_frontSubsystem.setVelocityRPM(Constants.FrontConstants.k_intakeVelocityRPM);
     m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
     Constants.States.m_intaking = true;
   }
@@ -39,8 +39,8 @@ public class IntakeCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_holderSubsystem.stop();
-    m_shooterSubsystem.stop();
+    m_backSubsystem.stop();
+    m_frontSubsystem.stop();
     m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
     Constants.States.m_intaking = false;
   }

@@ -10,18 +10,18 @@ import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 
 public class TestShooter extends Command {
-  ManipulatorSubsystem m_shooterSubsystem;
-  ManipulatorSubsystem m_holderSubsystem;
+  ManipulatorSubsystem m_frontSubsystem;
+  ManipulatorSubsystem m_backSubsystem;
   PivotSubsystem m_pivotSubsystem;
   boolean m_shoot;
   /** Creates a new TestShooter. */
-  public TestShooter(ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, PivotSubsystem pivotSubsystem, boolean shoot) {
-    m_shooterSubsystem = shooterSubsystem;
-    m_holderSubsystem = holderSubsystem;
+  public TestShooter(ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem, PivotSubsystem pivotSubsystem, boolean shoot) {
+    m_frontSubsystem = frontSubsystem;
+    m_backSubsystem = backSubsystem;
     m_pivotSubsystem = pivotSubsystem;
     m_shoot = shoot;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooterSubsystem, m_holderSubsystem);
+    addRequirements(m_frontSubsystem, m_backSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -29,13 +29,13 @@ public class TestShooter extends Command {
   public void initialize() {
     if (m_shoot) {
       if (Constants.States.m_speakerMode){
-        m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerShootVelocityRPM);
+        m_frontSubsystem.setVelocityRPM(Constants.FrontConstants.k_speakerShootVelocityRPM);
       } else {
-        m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_ampShootVelocityRPM);
+        m_frontSubsystem.setVelocityRPM(Constants.FrontConstants.k_ampShootVelocityRPM);
       }
     } else {
-      m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
-      m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
+      m_frontSubsystem.setVelocityRPM(Constants.FrontConstants.k_intakeVelocityRPM);
+      m_backSubsystem.setVelocityRPM(Constants.BackConstants.k_intakeVelocityRPM);
       m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
     }
   }
@@ -44,10 +44,10 @@ public class TestShooter extends Command {
   @Override
   public void execute() {
     if (m_shoot) {
-      if (Constants.States.m_speakerMode && Math.abs(m_shooterSubsystem.getVelocityRPM() - Constants.ShooterConstants.k_speakerShootVelocityRPM) < Constants.ShooterConstants.k_deadzone) {
-        m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerFeedPower);
-      } else if (Math.abs(m_shooterSubsystem.getVelocityRPM() - Constants.ShooterConstants.k_ampShootVelocityRPM) < Constants.ShooterConstants.k_deadzone) {
-        m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_ampFeedPower);
+      if (Constants.States.m_speakerMode && Math.abs(m_frontSubsystem.getVelocityRPM() - Constants.FrontConstants.k_speakerShootVelocityRPM) < Constants.FrontConstants.k_deadzone) {
+        m_backSubsystem.setVelocityRPM(Constants.BackConstants.k_speakerFeedPower);
+      } else if (Math.abs(m_frontSubsystem.getVelocityRPM() - Constants.FrontConstants.k_ampShootVelocityRPM) < Constants.FrontConstants.k_deadzone) {
+        m_backSubsystem.setVelocityRPM(Constants.BackConstants.k_ampFeedPower);
       }
     }
   }
@@ -55,8 +55,8 @@ public class TestShooter extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooterSubsystem.stop();
-    m_holderSubsystem.stop();
+    m_frontSubsystem.stop();
+    m_backSubsystem.stop();
     m_pivotSubsystem.setPositionDegrees(1);
   }
 

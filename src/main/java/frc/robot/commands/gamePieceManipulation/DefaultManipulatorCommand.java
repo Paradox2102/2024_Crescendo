@@ -13,12 +13,12 @@ public class DefaultManipulatorCommand extends Command {
   /** Creates a new DefaultStowGamePiece. */
   ManipulatorSubsystem m_subsystem;
   DriveSubsystem m_driveSubsytem;
-  boolean m_shooter;
+  boolean m_front;
   private final double k_revRangeMeters = 10;
-  public DefaultManipulatorCommand(ManipulatorSubsystem subsystem, DriveSubsystem driveSubsystem, boolean shooter) {
+  public DefaultManipulatorCommand(ManipulatorSubsystem subsystem, DriveSubsystem driveSubsystem, boolean front) {
     m_subsystem = subsystem;
     m_driveSubsytem = driveSubsystem;
-    m_shooter = shooter;
+    m_front = front;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }
@@ -31,20 +31,20 @@ public class DefaultManipulatorCommand extends Command {
   @Override
   public void execute() {
     if (Constants.States.m_hasGamePiece && !Constants.States.m_isGamePieceStowed) {
-      double adjustPower = m_shooter ? Constants.ShooterConstants.k_adjustGamePiecePower : Constants.HolderConstants.k_adjustGamePiecePower;
+      double adjustPower = m_front ? Constants.FrontConstants.k_adjustGamePiecePower : Constants.BackConstants.k_adjustGamePiecePower;
       m_subsystem.setPower(Constants.States.m_shootIntakeSide ? -adjustPower : adjustPower);
     } else if (Constants.States.m_isGamePieceStowed && m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters() < k_revRangeMeters && Constants.States.m_autoRotateAim) {
-      // Shooter
-      if (m_shooter && Constants.States.m_shootIntakeSide) { // if shooter and shoot intake side rev
-        m_subsystem.setVelocityRPM(Constants.States.m_speakerMode ? m_subsystem.getRevSpeed() : Constants.ShooterConstants.k_ampShootVelocityRPM);
-      } else if (m_shooter) { // else stop cause holder is revving
+      // front
+      if (m_front && Constants.States.m_shootIntakeSide) { // if front and shoot intake side rev
+        m_subsystem.setVelocityRPM(Constants.States.m_speakerMode ? m_subsystem.getRevSpeed() : Constants.FrontConstants.k_ampShootVelocityRPM);
+      } else if (m_front) { // else stop cause back is revving
         m_subsystem.stop();
       }
 
-      // Holder
-      if (!m_shooter && Constants.States.m_shootIntakeSide) { // if holder and shoot intake side stop
+      // back
+      if (!m_front && Constants.States.m_shootIntakeSide) { // if back and shoot intake side stop
         m_subsystem.stop();
-      } else if (!m_shooter) { // else rev
+      } else if (!m_front) { // else rev
         m_subsystem.setVelocityRPM(-m_subsystem.getRevSpeed());
       }
     } else {

@@ -72,7 +72,7 @@ public class LEDSubsystem extends SubsystemBase {
 
   /*
    * This method scales the perceived intensity of a color.
-   * This is a naive implementation as a placeholder for implementing something
+   * This is a naive implementation as a placeback for implementing something
    * better later.
    */
   private Color scaleRgbIntensity(Color color, double scale) {

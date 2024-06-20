@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ShooterSensors extends SubsystemBase {
-  DigitalInput m_frontSensor = new DigitalInput(Constants.ShooterConstants.k_frontSensor);
-  DigitalInput m_backSensor = new DigitalInput(Constants.ShooterConstants.k_backSensor);
+  DigitalInput m_frontSensor = new DigitalInput(Constants.FrontConstants.k_frontSensor);
+  DigitalInput m_backSensor = new DigitalInput(Constants.FrontConstants.k_backSensor);
 
   /** Creates a new ShooterSensors. */
   public ShooterSensors() {}

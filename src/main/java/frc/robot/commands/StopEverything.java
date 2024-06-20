@@ -14,14 +14,14 @@ import frc.robot.subsystems.PivotSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class StopEverything extends InstantCommand {
-  public StopEverything(DriveSubsystem driveSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, PivotSubsystem pivotSubsystem) {
+  public StopEverything(DriveSubsystem driveSubsystem, ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem, PivotSubsystem pivotSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(driveSubsystem, shooterSubsystem, holderSubsystem, pivotSubsystem);
+    addRequirements(driveSubsystem, frontSubsystem, backSubsystem, pivotSubsystem);
   }
 
-  public StopEverything(DriveSubsystem driveSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem) {
+  public StopEverything(DriveSubsystem driveSubsystem, ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(driveSubsystem, shooterSubsystem, holderSubsystem);
+    addRequirements(driveSubsystem, frontSubsystem, backSubsystem);
   }
 
   // Called when the command is initially scheduled.

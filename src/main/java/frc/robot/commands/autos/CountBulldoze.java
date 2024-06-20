@@ -11,17 +11,17 @@ import frc.robot.subsystems.PivotSubsystem;
 
 public class CountBulldoze extends Command {
   boolean m_lastState = false;
-  ManipulatorSubsystem m_shooterSubsytem;
-  ManipulatorSubsystem m_holderSubsystem;
+  ManipulatorSubsystem m_frontSubsystem;
+  ManipulatorSubsystem m_backSubsystem;
   PivotSubsystem m_pivotSubsystem;
   int m_gamePiecesBulldozed = 0;
   /** Creates a new CountBulldoze. */
-  public CountBulldoze(ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, PivotSubsystem pivotSubsystem) {
-    m_shooterSubsytem = shooterSubsystem;
-    m_holderSubsystem = holderSubsystem;
+  public CountBulldoze(ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem, PivotSubsystem pivotSubsystem) {
+    m_frontSubsystem = frontSubsystem;
+    m_backSubsystem = backSubsystem;
     m_pivotSubsystem = pivotSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooterSubsytem, m_holderSubsystem, m_pivotSubsystem);
+    addRequirements(m_frontSubsystem, m_backSubsystem, m_pivotSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -29,9 +29,9 @@ public class CountBulldoze extends Command {
   public void initialize() {
     m_gamePiecesBulldozed = 0;
     m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
-    m_shooterSubsytem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
-    m_holderSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
-    // yes it's ShooterConstants for holder on purpose
+    m_frontSubsystem.setVelocityRPM(Constants.FrontConstants.k_intakeVelocityRPM);
+    m_backSubsystem.setVelocityRPM(Constants.FrontConstants.k_intakeVelocityRPM);
+    // yes it's FrontConstants for back on purpose
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -46,7 +46,7 @@ public class CountBulldoze extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
+    m_backSubsystem.setVelocityRPM(Constants.BackConstants.k_intakeVelocityRPM);
   }
 
   // Returns true when the command should end.

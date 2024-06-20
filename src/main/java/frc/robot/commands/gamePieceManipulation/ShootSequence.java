@@ -15,12 +15,12 @@ import frc.robot.subsystems.StickSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShootSequence extends SequentialCommandGroup {
   /** Creates a new ShootSequence. */
-  public ShootSequence(ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, StickSubsystem stickSubsystem) {
+  public ShootSequence(ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem, StickSubsystem stickSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ParallelDeadlineGroup(
-        new ShootCommand(shooterSubsystem, holderSubsystem),
+        new ShootCommand(frontSubsystem, backSubsystem),
         new SetStickPos(stickSubsystem, true)
       )
     );

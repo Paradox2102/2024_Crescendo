@@ -13,20 +13,20 @@ import frc.robot.subsystems.PivotSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ResetSubsystemsCommand extends InstantCommand {
   PivotSubsystem m_pivotSubsystem;
-  ManipulatorSubsystem m_shooterSubsystem;
-  ManipulatorSubsystem m_holderSubsystem;
-  public ResetSubsystemsCommand(PivotSubsystem pivotSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem) {
+  ManipulatorSubsystem m_frontSubsystem;
+  ManipulatorSubsystem m_backSubsystem;
+  public ResetSubsystemsCommand(PivotSubsystem pivotSubsystem, ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_pivotSubsystem = pivotSubsystem;
-    m_shooterSubsystem = shooterSubsystem;
-    m_holderSubsystem = holderSubsystem;
+    m_frontSubsystem = frontSubsystem;
+    m_backSubsystem = backSubsystem;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_pivotSubsystem.setPositionDegrees(5);
-    m_shooterSubsystem.stop();
-    m_holderSubsystem.stop();
+    m_frontSubsystem.stop();
+    m_backSubsystem.stop();
   }
 }

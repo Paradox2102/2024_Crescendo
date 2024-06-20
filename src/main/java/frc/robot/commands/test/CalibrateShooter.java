@@ -9,19 +9,19 @@ import frc.robot.Constants;
 import frc.robot.subsystems.ManipulatorSubsystem;
 
 public class CalibrateShooter extends Command {
-  private ManipulatorSubsystem m_holderSubsystem;
+  private ManipulatorSubsystem m_backSubsystem;
   /** Creates a new CalibrateShooter. */
-  public CalibrateShooter(ManipulatorSubsystem holderSubsystem) {
-    m_holderSubsystem = holderSubsystem;
-    addRequirements(m_holderSubsystem);
+  public CalibrateShooter(ManipulatorSubsystem backSubsystem) {
+    m_backSubsystem = backSubsystem;
+    addRequirements(m_backSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //m_holderSubsystem.setPower(.5);
-    m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
+    //m_backSubsystem.setPower(.5);
+    m_backSubsystem.setVelocityRPM(Constants.BackConstants.k_speakerShootVelocityRPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -32,7 +32,7 @@ public class CalibrateShooter extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_holderSubsystem.stop();
+    m_backSubsystem.stop();
     System.out.println("CalibrateShooter end");
   }
 

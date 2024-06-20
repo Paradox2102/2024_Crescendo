@@ -5,7 +5,6 @@
 package frc.robot.commands.gamePieceManipulation;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
 
@@ -14,7 +13,7 @@ public class DefaultManipulatorCommand extends Command {
   ManipulatorSubsystem m_subsystem;
   DriveSubsystem m_driveSubsytem;
   boolean m_shooter;
-  private final double k_revRangeMeters = 10;
+
   public DefaultManipulatorCommand(ManipulatorSubsystem subsystem, DriveSubsystem driveSubsystem, boolean shooter) {
     m_subsystem = subsystem;
     m_driveSubsytem = driveSubsystem;
@@ -30,26 +29,6 @@ public class DefaultManipulatorCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Constants.States.m_hasGamePiece && !Constants.States.m_isGamePieceStowed) {
-      double adjustPower = m_shooter ? Constants.ShooterConstants.k_adjustGamePiecePower : Constants.HolderConstants.k_adjustGamePiecePower;
-      m_subsystem.setPower(Constants.States.m_shootIntakeSide ? -adjustPower : adjustPower);
-    } else if (Constants.States.m_isGamePieceStowed && m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters() < k_revRangeMeters && Constants.States.m_autoRotateAim) {
-      // Shooter
-      if (m_shooter && Constants.States.m_shootIntakeSide) { // if shooter and shoot intake side rev
-        m_subsystem.setVelocityRPM(Constants.States.m_speakerMode ? m_subsystem.getRevSpeed() : Constants.ShooterConstants.k_ampShootVelocityRPM);
-      } else if (m_shooter) { // else stop cause holder is revving
-        m_subsystem.stop();
-      }
-
-      // Holder
-      if (!m_shooter && Constants.States.m_shootIntakeSide) { // if holder and shoot intake side stop
-        m_subsystem.stop();
-      } else if (!m_shooter) { // else rev
-        m_subsystem.setVelocityRPM(-m_subsystem.getRevSpeed());
-      }
-    } else {
-      m_subsystem.stop();
-    }
   }
 
   // Called once the command ends or is interrupted.

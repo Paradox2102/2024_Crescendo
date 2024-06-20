@@ -5,7 +5,6 @@
 package frc.robot.commands.gamePieceManipulation;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 
@@ -25,10 +24,6 @@ public class IntakeCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
-    m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
-    m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
-    Constants.States.m_intaking = true;
   }
 
   
@@ -39,15 +34,11 @@ public class IntakeCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_holderSubsystem.stop();
-    m_shooterSubsystem.stop();
-    m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
-    Constants.States.m_intaking = false;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Constants.States.m_isGamePieceStowed;
+    return false;
   }
 }

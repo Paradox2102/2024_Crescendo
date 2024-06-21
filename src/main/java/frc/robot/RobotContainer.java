@@ -78,8 +78,8 @@ public class RobotContainer {
   final ShooterSensors m_shooterSensors = new ShooterSensors();
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera, m_apriltagCameraSide);
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem(m_driveSubsystem);
-  private final ManipulatorSubsystem m_shooterSubsystem = new ManipulatorSubsystem(m_driveSubsystem, Constants.ShooterConstants.k_shooterMotor);
-  private final ManipulatorSubsystem m_holderSubsystem = new ManipulatorSubsystem(m_driveSubsystem, Constants.HolderConstants.k_holdingMotor);
+  private final ManipulatorSubsystem m_shooterSubsystem = new ManipulatorSubsystem(m_driveSubsystem, true);
+  private final ManipulatorSubsystem m_holderSubsystem = new ManipulatorSubsystem(m_driveSubsystem, false);
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
   private final StickSubsystem m_stickSubsystem = new StickSubsystem();
 

@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -20,40 +22,26 @@ public class ManipulatorSubsystem extends SubsystemBase {
   private RelativeEncoder m_encoder;
   private final SparkPIDController m_PID;
   boolean m_front;
-  //do we want to adjust speed based on distance?
-  DriveSubsystem m_driveSubsystem;
+  DoubleSupplier m_distanceFromSpeaker;
 
   private double m_velocity = 0;
   /** Creates a new FrontSubsystem. */
-  //config class in constants to control which side, or pass in m_front instead of the id
-  public ManipulatorSubsystem(DriveSubsystem driveSubsystem, int id) {
-    m_front = id == Constants.FrontConstants.k_frontMotor;
+  public ManipulatorSubsystem(boolean front, DoubleSupplier distance) {
+    m_front = front;
     //SmartDashboard.putNumber("Amp Velo", 0);
-    m_motor = new CANSparkFlex(id, MotorType.kBrushless);
+    m_motor = new CANSparkFlex(m_front ? Constants.FrontConstants.k_frontMotor : Constants.BackConstants.k_backMotor, MotorType.kBrushless);
     m_motor.restoreFactoryDefaults();
     m_encoder = m_motor.getEncoder();
     m_PID = m_motor.getPIDController();
-    m_driveSubsystem = driveSubsystem;
-    //probably need two sets of constants based on which side we are shooting out of, all of this is very messy
-    if (m_front) {
-      m_PID.setFF(Constants.FrontConstants.k_f);
-      m_PID.setP(Constants.FrontConstants.k_p);
-      m_PID.setI(Constants.FrontConstants.k_i);
-      m_PID.setD(Constants.FrontConstants.k_d);
-      m_PID.setIZone(Constants.FrontConstants.k_iZone);
-      m_motor.setInverted(Constants.States.m_isCompetition);
-    } else {
-      m_PID.setFF(Constants.BackConstants.k_f);
-      m_PID.setP(Constants.BackConstants.k_p);
-      m_PID.setI(Constants.BackConstants.k_i);
-      m_PID.setD(Constants.BackConstants.k_d);
-      m_PID.setIZone(Constants.BackConstants.k_iZone);
-      m_motor.setInverted(!Constants.States.m_isCompetition);
-    }
+    m_distanceFromSpeaker = distance;
+    m_PID.setFF(m_front ? Constants.FrontConstants.k_f : Constants.BackConstants.k_f);
+    m_PID.setP(m_front ? Constants.FrontConstants.k_p : Constants.BackConstants.k_p);
+    m_PID.setI(m_front ? Constants.FrontConstants.k_i : Constants.BackConstants.k_i);
+    m_PID.setD(m_front ? Constants.FrontConstants.k_d : Constants.BackConstants.k_d);
     setBrakeMode(true);
     m_motor.setSmartCurrentLimit(80);
     setName(m_front ? "FrontSubsystem" : "BackSubsystem");
-    //m_motor.setInverted(Constants.States.m_isCompetition ? !m_front : m_front);
+    m_motor.setInverted(Constants.States.m_isCompetition ? !m_front : m_front);
     m_motor.burnFlash();
   }
 
@@ -83,9 +71,8 @@ public class ManipulatorSubsystem extends SubsystemBase {
   }
 
   public double getRevSpeed() {
-    double distanceFromSpeaker = m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters();
     for (int i = 0; i < Constants.FrontConstants.k_revDistances.length; i++) {
-      if (distanceFromSpeaker <= Constants.FrontConstants.k_revDistances[i]) {
+      if (m_distanceFromSpeaker.getAsDouble() <= Constants.FrontConstants.k_revDistances[i]) {
         return Constants.FrontConstants.k_revSpeeds[i];
       }
     }

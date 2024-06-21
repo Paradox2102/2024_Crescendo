@@ -7,10 +7,10 @@ package frc.robot.commands.test;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ManipulatorSubsystem;
 
-public class Testback extends Command {
-  /** Creates a new Testback. */
+public class TestHolder extends Command {
+  /** Creates a new TestHolder. */
   ManipulatorSubsystem m_backSubsystem;
-  public Testback(ManipulatorSubsystem backSubsystem) {
+  public TestHolder(ManipulatorSubsystem backSubsystem) {
     m_backSubsystem = backSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
   }

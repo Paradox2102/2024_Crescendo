@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -34,15 +36,15 @@ public class PivotSubsystem extends SubsystemBase {
   private CANSparkFlex m_pivotMotor = new CANSparkFlex(Constants.PivotConstants.k_pivotMotor, MotorType.kBrushless);
   DutyCycleEncoder m_pivotEncoder = new DutyCycleEncoder(0);
 
-  private DriveSubsystem m_driveSubsystem;
+  private DoubleSupplier m_distanceFromSpeaker;
 
   /** Creates a new PivotSubsystem. */
-  public PivotSubsystem(DriveSubsystem driveSubsystem) {
+  public PivotSubsystem(DoubleSupplier distance) {
     //SmartDashboard.putNumber("Amp Angle", 0);
     m_pivotMotor.restoreFactoryDefaults();
     m_PID = new PIDController(Constants.PivotConstants.k_p, Constants.PivotConstants.k_i, Constants.PivotConstants.k_d);
     //DoubleSupplier to return distance instead of passing in driveSubsystem
-    m_driveSubsystem = driveSubsystem;
+    m_distanceFromSpeaker = distance;
     //check highest current motor hits and make more reasonable limit
     m_pivotMotor.setSmartCurrentLimit(80);
     setBrakeMode(true);
@@ -88,7 +90,7 @@ public class PivotSubsystem extends SubsystemBase {
   public double getPivotAngleFromRobotPos(boolean predictFuture) {
     double[] distances = Constants.States.m_shootIntakeSide ? k_frontDistances : k_backDistances;
     double[] angles = Constants.States.m_shootIntakeSide ? k_anglesFront : k_anglesBack;
-    double distance = predictFuture ? m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters() : m_driveSubsystem.getTranslationalDistanceFromSpeakerMeters();
+    double distance = m_distanceFromSpeaker.getAsDouble();
     if (distance > distances[distances.length - 1] || distance < distances[0]){
       return Constants.PivotConstants.k_resetPositionDegrees;
     }

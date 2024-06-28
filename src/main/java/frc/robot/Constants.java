@@ -269,6 +269,7 @@ public final class Constants {
     public static double k_resetPositionDegrees = 23;
     public static double k_ampPositionDegrees = 23;
 
+    
     public static double[] k_distancesFront = {
       1.6,
       2.3,
@@ -299,6 +300,7 @@ public final class Constants {
       26.2, // 5.5
       28.2 // 6.1
     };
+
 
     public static double[] k_distancesBack = {};
 

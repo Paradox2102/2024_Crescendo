@@ -4,67 +4,110 @@
 
 package frc.robot.subsystems;
 
-
 import com.revrobotics.CANSparkFlex;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class PivotSubsystem extends SubsystemBase {
-  DriveSubsystem m_driveSubsystem;
-  CANSparkFlex m_pivotMotor = new CANSparkFlex(Constants.PivotConstants.k_pivotMotor, MotorType.kBrushless);
-  DutyCycleEncoder m_pivotEncoder = new DutyCycleEncoder(0);
-  //PID
-//private pid controller
+  private static DriveSubsystem m_driveSubsystem;
+  private static final CANSparkFlex m_pivotMotor = new CANSparkFlex(Constants.PivotConstants.k_pivotMotor,
+      MotorType.kBrushless);
+  private static final DutyCycleEncoder m_pivotEncoder = new DutyCycleEncoder(0);
+
+  // private PID controller
+  private final static double k_p = 0;
+  private final static double k_i = 0;
+  private final static double k_d = 0;
+  private final static double k_f = 0;
+
+  private static final PIDController m_pid = new PIDController(k_p, k_i, k_d);
+
+  // finding position
+  private final static double k_zeroPosition = 0;
+  private final static double k_ticksToDegrees = 5.0 / 40;
+
+  private double m_angle = 0;
+
+  private boolean m_manual = false;
 
   /** Creates a new PivotSubsystem. */
   public PivotSubsystem(DriveSubsystem driveSubsystem) {
     m_driveSubsystem = driveSubsystem;
   }
 
-  //description: stalls the motor (they don't move if there is no power is used)
-  //approach: if power is used than it is on coast mode else its on brake mode
+  // description: stalls the motor (they don't move if motor shouldn't move)
   public void setBrakeMode(boolean brake) {
+    m_pivotMotor.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
   }
-  //description: sets the power
-  //approach: m_pivotMotor(power);
+
+  // description: sets the power
   public void setPower(double power) {
+    m_manual = true;
     m_pivotMotor.set(power);
   }
-  //description: sets the power to degrees
-  //approach: use PID (new f depending on angle) to 
+
+  // description: sets the power to degrees
+  // approach: use PID Controller to set the point
   public void setPositionDegrees(double angle) {
+    m_manual = false;
+    m_angle = angle;
+    m_pid.setSetpoint(angle);
   }
-  //description: returns angle necessary to shoot at speaker from current position
-  /*approach: get the current position on the field, 
-  *use a for loop to find the two (rows - 1st column) that the current position is between or on
-  *use the two rows (2nd colum) and returns double for angle
-  */
-  //a 2D array that (1st column - position on field) (2nd colum - corresponding angle)
+
+  // description: returns angle necessary to shoot at speaker from current
+  // position
+  /*
+   * approach: get the current position on the field,
+   * use a for loop to find the two (rows - 1st column) that the current position
+   * is between or on
+   * use the two rows (2nd colum) and returns double for angle
+   */
+  // a 2D array that (1st column - position on field) (2nd colum - corresponding
+  // angle)
   // Autos only, to be removed
   public double getPivotAngleFromDistanceFromSpeaker(double distance) {
-    return 0;
-  }
-  //description: returns double of angle needed to shoot at speaker in future position on the field
-   /*approach: by using the current speed (from drivesystem) & find the future position (based on how long robot takes to set angle)
-  *use a for loop to find the two rows (1st column) that the future position is between or on
-  *use the two rows (2nd colum) to used (math - idk) and return double for angle
-  */
-  //a 2D array that (1st column - position on field) (2nd colum - corresponding angle)
-  public double getPivotAngleFromRobotPos(boolean predictFuture) {
-    return 0;
-  }
-  //description: returns a double of current angle in degrees
-  //approach: get absoulute encoder multiply with math (sin?)
-  public double getAngleInDegrees() {
 
     return 0;
+  }
+
+  // description: returns double of angle needed to shoot at speaker in future
+  // position on the field
+  /*
+   * approach: by using the current speed (from drivesystem) & find the future
+   * position (based on how long robot takes to set angle)
+   * use a for loop to find the two rows (1st column) that the future position is
+   * between or on
+   * use the two rows (2nd colum) to used (math - linear) and return double for
+   * angle
+   */
+  // a 2D array that (1st column - position on field) (2nd colum - corresponding
+  // angle)
+  public double getPivotAngleFromRobotPos(boolean predictFuture) {
+    // double m_futurePos = m_driveSubsystem.getEstimatedFuturePos().getX();
+
+    return 0;
+  }
+
+  // description: returns a double of current angle in degrees
+  // aproach: subtract the current position w/ supposed starting position ->
+  // convert difference into degrees
+  public double getAngleInDegrees() {
+    return (m_pivotEncoder.get() - k_zeroPosition) * k_ticksToDegrees;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    if (!m_manual) {
+      double power = 0;
+      power = m_pid.calculate(getAngleInDegrees()) - k_f * Math.sin(Math.toRadians(m_angle));
+      m_pivotMotor.set(power);
+    }
   }
+
 }

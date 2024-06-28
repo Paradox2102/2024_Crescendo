@@ -20,7 +20,7 @@ public class FeedCommand extends Command {
   public FeedCommand(ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem) {
     m_shooterSubsystem = shooterSubsystem;
     m_holderSubsystem = holderSubsystem;
-m_dwellTimer.reset();
+    m_dwellTimer.reset();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooterSubsystem, m_holderSubsystem);
   }
@@ -30,20 +30,22 @@ m_dwellTimer.reset();
   public void initialize() {
     m_dwellTimer.reset();
     m_dwellTimer.start();
-    if (Constants.States.m_shootIntakeSide){
-      m_shooterSubsystem.setVelocityRPM(Constants.States.m_speakerMode?Constants.ShooterConstants.k_speakerShootVelocityRPM:Constants.ShooterConstants.k_ampShootVelocityRPM);
-m_holderSubsystem.setVelocityRPM(Constants.States.m_speakerMode?Constants.HolderConstants.k_speakerFeedPower:Constants.HolderConstants.k_ampFeedPower);
-    }else{
-       m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerFeedPower);
+    if (Constants.States.m_shootIntakeSide) {
+      m_shooterSubsystem
+          .setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM
+              : Constants.ShooterConstants.k_ampShootVelocityRPM);
+      m_holderSubsystem.setPower(Constants.States.m_speakerMode ? Constants.HolderConstants.k_speakerFeedPower
+          : Constants.HolderConstants.k_ampFeedPower);
+    } else {
+      m_shooterSubsystem.setPower(Constants.ShooterConstants.k_speakerFeedPower);
       m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
-     
     }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Constants.States.m_hasGamePiece){
+    if (Constants.States.m_hasGamePiece) {
       m_dwellTimer.reset();
     }
 
@@ -52,13 +54,14 @@ m_holderSubsystem.setVelocityRPM(Constants.States.m_speakerMode?Constants.Holder
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // Shooter automatically stops in default manipulator command (not added here so can flow into amp shoot)
+    // Shooter automatically stops in default manipulator command (not added here so
+    // can flow into amp shoot)
     m_dwellTimer.reset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_dwellTimer.get()>.5;
+    return m_dwellTimer.get() > .5;
   }
 }

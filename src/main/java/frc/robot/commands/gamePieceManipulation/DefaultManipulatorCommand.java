@@ -17,13 +17,13 @@ public class DefaultManipulatorCommand extends Command {
   //sucks the game piece into the storage position. If the front sensor is broken then the game piece is not in the correct position, but if the back one is broken and the front is not then the piece is correctly stowed.
   ManipulatorSubsystem m_subsystem;
   DriveSubsystem m_driveSubsytem;
-  boolean m_shooter;
+  boolean m_isFront;
   private final double k_revRangeMeters = 10;
 
-  public DefaultManipulatorCommand(ManipulatorSubsystem subsystem, DriveSubsystem driveSubsystem, boolean shooter) {
+  public DefaultManipulatorCommand(ManipulatorSubsystem subsystem, DriveSubsystem driveSubsystem, boolean isFront) {
     m_subsystem = subsystem;
     m_driveSubsytem = driveSubsystem;
-    m_shooter = shooter;
+    m_isFront = isFront;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }
@@ -38,17 +38,17 @@ public class DefaultManipulatorCommand extends Command {
   @Override
   public void execute() {
     if (Constants.States.m_hasGamePiece&&!Constants.States.m_isGamePieceStowed){
-double adjustPower = m_shooter? Constants.ShooterConstants.k_adjustGamePiecePower:Constants.HolderConstants.k_adjustGamePiecePower;
+double adjustPower = m_isFront? Constants.ShooterConstants.k_adjustGamePiecePower:Constants.HolderConstants.k_adjustGamePiecePower;
 m_subsystem.setPower(Constants.States.m_shootIntakeSide?-adjustPower:adjustPower);
     }else if(Constants.States.m_isGamePieceStowed&&m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters()<k_revRangeMeters && Constants.States.m_autoRotateAim){
-      //Shooter
-      if(m_shooter){
+      //Front
+      if(m_isFront){
         if(Constants.States.m_shootIntakeSide){
           m_subsystem.setVelocityRPM(Constants.States.m_speakerMode? m_subsystem.getRevSpeed():Constants.ShooterConstants.k_ampShootVelocityRPM);
         }else{
           m_subsystem.stop();
         }
-      }else{//holder
+      }else{//Back
       if(Constants.States.m_shootIntakeSide){
         m_subsystem.stop();
       }else{

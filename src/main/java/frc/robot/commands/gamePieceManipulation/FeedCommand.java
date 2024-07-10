@@ -30,16 +30,17 @@ public class FeedCommand extends Command {
   public void initialize() {
     m_dwellTimer.reset();
     m_dwellTimer.start();
-    if (Constants.States.m_shootIntakeSide) {
-      m_shooterSubsystem
-          .setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM
-              : Constants.ShooterConstants.k_ampShootVelocityRPM);
-      m_holderSubsystem.setPower(Constants.States.m_speakerMode ? Constants.HolderConstants.k_speakerFeedPower
-          : Constants.HolderConstants.k_ampFeedPower);
-    } else {
-      m_shooterSubsystem.setPower(Constants.ShooterConstants.k_speakerFeedPower);
-      m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
-    }
+    // if (Constants.States.m_shootIntakeSide) {
+    //   m_shooterSubsystem
+    //       .setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM
+    //           : Constants.ShooterConstants.k_ampShootVelocityRPM);
+    //   m_holderSubsystem.setPower(Constants.States.m_speakerMode ? Constants.HolderConstants.k_speakerFeedPower
+    //       : Constants.HolderConstants.k_ampFeedPower);
+    // } else {
+    //   m_shooterSubsystem.setPower(Constants.ShooterConstants.k_speakerFeedPower);
+    //   m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
+    // }
+    // TODO - must fix
   }
 
   // Called every time the scheduler runs while the command is scheduled.

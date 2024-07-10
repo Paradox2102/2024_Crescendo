@@ -4,14 +4,12 @@
 
 package frc.robot.commands.gamePieceManipulation;
 
-import java.util.concurrent.CyclicBarrier;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.revrobotics.AbsoluteEncoder;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
+import frc.robot.subsystems.ShooterSensors;
 import frc.robot.Constants;
 
 @SuppressWarnings("unused")
@@ -22,7 +20,8 @@ public class DefaultManipulatorCommand extends Command {
   // broken and the front is not then the piece is correctly stowed.
   ManipulatorSubsystem m_subsystem;
   DriveSubsystem m_driveSubsytem;
-  boolean m_isFront;
+  ShooterSensors m_shooterSensors;
+
   private final double k_revRangeMeters = 10;
   private State m_state;
 
@@ -32,11 +31,11 @@ public class DefaultManipulatorCommand extends Command {
     holding
   };
 
-  public DefaultManipulatorCommand(ManipulatorSubsystem subsystem, DriveSubsystem driveSubsystem, boolean isFront) {
+  public DefaultManipulatorCommand(ManipulatorSubsystem subsystem, DriveSubsystem driveSubsystem,
+      ShooterSensors shooterSensors) {
     m_subsystem = subsystem;
     m_driveSubsytem = driveSubsystem;
-    m_isFront = isFront;
-
+    m_shooterSensors = shooterSensors;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }
@@ -52,28 +51,69 @@ public class DefaultManipulatorCommand extends Command {
   public void execute() {
     switch (m_state) {
       case empty:
-handleEmptyState();
+        handleEmptyState();
         break;
 
       case intaking:
-handleIntakingState();
+        handleIntakingState();
         break;
 
       case holding:
-handleHoldingState();
+        handleHoldingState();
         break;
     }
 
   }
-void handleEmptyState(){
 
-}
-void handleIntakingState(){
+  void handleEmptyState() {
+    m_subsystem.setFrontPower(0);
+    m_subsystem.setBackPower(0);
+    if (m_shooterSensors.getBackSensor() && !m_shooterSensors.getFrontSensor()) {
+      m_state = State.holding;
+    } else if (m_shooterSensors.getFrontSensor()) {
+      m_state = State.intaking;
+    }
 
-}
-void handleHoldingState(){
-  
-}
+  }
+
+  void handleIntakingState() {
+    m_subsystem.setFrontPower(Constants.ShooterConstants.k_adjustGamePiecePower);
+    m_subsystem.setBackPower(Constants.HolderConstants.k_adjustGamePiecePower);
+    if (m_shooterSensors.getBackSensor() && !m_shooterSensors.getFrontSensor()) {
+      m_state = State.holding;
+    } else if (!m_shooterSensors.getBackSensor() && !m_shooterSensors.getFrontSensor()) {
+      m_state = State.empty;
+    }
+  }
+
+  void handleHoldingState() {
+    if (m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters() < k_revRangeMeters
+        && Constants.States.m_autoRotateAim) {
+
+      if (Constants.States.m_shootIntakeSide) {
+        m_subsystem.setFrontVelocityRPM(Constants.States.m_speakerMode ? m_subsystem.getRevSpeed()
+            : Constants.ShooterConstants.k_ampShootVelocityRPM);
+        m_subsystem.stopBack();
+      } else {
+        m_subsystem.stopFront();
+        m_subsystem.setBackVelocityRPM(-m_subsystem.getRevSpeed());
+      }
+
+    }else{
+      m_subsystem.stopFront();
+      m_subsystem.stopBack();
+    }
+    // tests if state should still be holding
+    if (!(m_shooterSensors.getBackSensor() && !m_shooterSensors.getFrontSensor())) {
+      if (m_shooterSensors.getFrontSensor()) {
+        m_state = State.intaking;
+      } else {
+        m_state = State.empty;
+      }
+    }
+
+  }
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {

@@ -17,11 +17,11 @@ public class ShooterSensors extends SubsystemBase {
   public ShooterSensors() {}
 
   public boolean getFrontSensor() {
-    return !m_frontSensor.get();
+    return Constants.States.m_shootIntakeSide ? !m_frontSensor.get() : !m_backSensor.get();
   }
 
   public boolean getBackSensor() {
-    return !m_backSensor.get();
+    return Constants.States.m_shootIntakeSide? !m_backSensor.get():!m_frontSensor.get();
   }
 
   // public boolean getFrontSensorWithTime() {

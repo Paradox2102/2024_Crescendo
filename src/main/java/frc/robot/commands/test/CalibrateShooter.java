@@ -21,7 +21,7 @@ public class CalibrateShooter extends Command {
   @Override
   public void initialize() {
     //m_holderSubsystem.setPower(.5);
-    m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
+   // m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -32,7 +32,7 @@ public class CalibrateShooter extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_holderSubsystem.stop();
+   // m_holderSubsystem.stop();
     System.out.println("CalibrateShooter end");
   }
 

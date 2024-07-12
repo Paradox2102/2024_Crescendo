@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -22,16 +23,17 @@ public class PivotSubsystem extends SubsystemBase {
   // private PID controller
   private final static double k_p = 0;
   private final static double k_i = 0;
-  private final static double k_d = 0;
-  private final static double k_f = 0;
+  private final static double k_d = 0; 
+  private final static double k_f = -0.05;
 
   private static final PIDController m_pid = new PIDController(k_p, k_i, k_d);
 
   // finding position
-  private final static double k_zeroPosition = 0;
-  private final static double k_ticksToDegrees = 5.0 / 40;
+  private final static double k_zeroPosition = 0.441; 
+  private final static double k_ticksToDegrees = 29.7 / 0.088;
+  private final static double k_balanceAngle = 40;
 
-  private double m_angle = 0;
+  private double m_setPoint = 0; 
 
   private boolean m_manual = false;
 
@@ -55,7 +57,7 @@ public class PivotSubsystem extends SubsystemBase {
   // approach: use PID Controller to set the point
   public void setPositionDegrees(double angle) {
     m_manual = false;
-    m_angle = angle;
+    m_setPoint = angle;
     m_pid.setSetpoint(angle);
   }
 
@@ -102,12 +104,14 @@ public class PivotSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Pivot Raw Ticks", m_pivotEncoder.get());
+    SmartDashboard.putNumber("Pivot Degrees", getAngleInDegrees());
+
+    //feet forward
+    double feetForward = Math.sin(Math.toRadians(m_setPoint - k_balanceAngle)) * k_f;
+
     // This method will be called once per scheduler run
-    if (!m_manual) {
-      double power = 0;
-      power = m_pid.calculate(getAngleInDegrees()) - k_f * Math.sin(Math.toRadians(m_angle));
-      m_pivotMotor.set(power);
-    }
+    m_pivotMotor.set(feetForward);
   }
 
 }

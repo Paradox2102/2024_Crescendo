@@ -16,6 +16,7 @@ import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.ShooterSensors;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -31,9 +32,9 @@ public class JukeShot extends SequentialCommandGroup {
       new StopEverything(driveSubsystem, shooterSubsystem, holderSubsystem),
       new ParallelDeadlineGroup(
         new JukeShotRotateAim(driveSubsystem, rotateLeft), 
-        new DefaultPivotCommand(pivotSubsystem, driveSubsystem, true),
-        new DefaultManipulatorCommand(holderSubsystem, driveSubsystem, false),
-        new DefaultManipulatorCommand(shooterSubsystem, driveSubsystem, true)
+        new DefaultPivotCommand(pivotSubsystem, driveSubsystem, true)
+        
+        // new DefaultManipulatorCommand(shooterSubsystem, driveSubsystem, shooterSensors)
       ),
       new ParallelDeadlineGroup(
         new ShootCommand(shooterSubsystem, holderSubsystem), 

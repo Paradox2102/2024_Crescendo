@@ -23,8 +23,8 @@ public class D2Intake extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_shooterSubsystem.setVelocityRPM(2000);
-    m_holderSubsystem.setVelocityRPM(500);
+    // m_shooterSubsystem.setVelocityRPM(2000);
+    // m_holderSubsystem.setVelocityRPM(500);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -35,8 +35,8 @@ public class D2Intake extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooterSubsystem.stop();
-    m_holderSubsystem.stop();
+    // m_shooterSubsystem.stop();
+    // m_holderSubsystem.stop();
   }
 
   // Returns true when the command should end.

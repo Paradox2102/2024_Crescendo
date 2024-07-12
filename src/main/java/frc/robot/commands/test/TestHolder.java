@@ -18,7 +18,7 @@ public class TestHolder extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_holderSubsystem.setPower(0.25);
+    // m_holderSubsystem.setPower(0.25);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -28,7 +28,7 @@ public class TestHolder extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_holderSubsystem.setPower(0);
+    // m_holderSubsystem.setPower(0);
   }
 
   // Returns true when the command should end.

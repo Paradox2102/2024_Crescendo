@@ -66,22 +66,22 @@ public class DefaultManipulatorCommand extends Command {
   }
 
   void handleEmptyState() {
-    m_subsystem.setFrontPower(0);
-    m_subsystem.setBackPower(0);
-    if (m_shooterSensors.getBackSensor() && !m_shooterSensors.getFrontSensor()) {
+    m_subsystem.setShooterPower(0);
+    m_subsystem.setHolderPower(0);
+    if (m_shooterSensors.getHolderSensor() && !m_shooterSensors.getShooterSensor()) {
       m_state = State.holding;
-    } else if (m_shooterSensors.getFrontSensor()) {
+    } else if (m_shooterSensors.getShooterSensor()) {
       m_state = State.intaking;
     }
 
   }
 
   void handleIntakingState() {
-    m_subsystem.setFrontPower(Constants.ShooterConstants.k_adjustGamePiecePower);
-    m_subsystem.setBackPower(Constants.HolderConstants.k_adjustGamePiecePower);
-    if (m_shooterSensors.getBackSensor() && !m_shooterSensors.getFrontSensor()) {
+    m_subsystem.setShooterPower(Constants.ShooterConstants.k_adjustGamePiecePower);
+    m_subsystem.setHolderPower(Constants.HolderConstants.k_adjustGamePiecePower);
+    if (m_shooterSensors.getHolderSensor() && !m_shooterSensors.getShooterSensor()) {
       m_state = State.holding;
-    } else if (!m_shooterSensors.getBackSensor() && !m_shooterSensors.getFrontSensor()) {
+    } else if (!m_shooterSensors.getHolderSensor() && !m_shooterSensors.getShooterSensor()) {
       m_state = State.empty;
     }
   }
@@ -91,21 +91,20 @@ public class DefaultManipulatorCommand extends Command {
         && Constants.States.m_autoRotateAim) {
 
       if (Constants.States.m_shootIntakeSide) {
-        m_subsystem.setFrontVelocityRPM(Constants.States.m_speakerMode ? m_subsystem.getRevSpeed()
+        m_subsystem.setShooterVelocityRPM(Constants.States.m_speakerMode ? m_subsystem.getRevSpeed()
             : Constants.ShooterConstants.k_ampShootVelocityRPM);
-        m_subsystem.stopBack();
       } else {
-        m_subsystem.stopFront();
-        m_subsystem.setBackVelocityRPM(-m_subsystem.getRevSpeed());
+        m_subsystem.setShooterVelocityRPM(-m_subsystem.getRevSpeed());
       }
+       m_subsystem.stopHolder();
 
-    }else{
-      m_subsystem.stopFront();
-      m_subsystem.stopBack();
+    } else {
+      m_subsystem.stopShooter();
+      m_subsystem.stopHolder();
     }
     // tests if state should still be holding
-    if (!(m_shooterSensors.getBackSensor() && !m_shooterSensors.getFrontSensor())) {
-      if (m_shooterSensors.getFrontSensor()) {
+    if (!(m_shooterSensors.getHolderSensor() && !m_shooterSensors.getShooterSensor())) {
+      if (m_shooterSensors.getShooterSensor()) {
         m_state = State.intaking;
       } else {
         m_state = State.empty;

@@ -24,9 +24,9 @@ public class BackFeedCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_dwellTimer.reset();
-    m_dwellTimer.start();
-    m_shooterSubsystem.setPower(Constants.ShooterConstants.k_speakerFeedPower);
+    // m_dwellTimer.reset();
+    // m_dwellTimer.start();
+    // m_shooterSubsystem.setPower(Constants.ShooterConstants.k_speakerFeedPower);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -40,7 +40,7 @@ public class BackFeedCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooterSubsystem.stop();
+    // m_shooterSubsystem.stop();
   }
 
   // Returns true when the command should end.

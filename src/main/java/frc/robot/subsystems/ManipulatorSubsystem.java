@@ -22,34 +22,32 @@ public class ManipulatorSubsystem extends SubsystemBase {
   CANSparkFlex m_backMotor;
   private RelativeEncoder m_frontEncoder;
   private RelativeEncoder m_backEncoder;
- 
+
   private final SparkPIDController m_frontPID;
   private final SparkPIDController m_backPID;
-  private double m_frontVelocity = 0;
-  private double m_backVelocity = 0;
+  private double m_shooterVelocity = 0;
+  private double m_holderVelocity = 0;
   private InterpolatingDoubleTreeMap m_revSpeeds = new InterpolatingDoubleTreeMap();
 
-  /** Creates a new FrontSubsystem. */
+  /** Creates a new ManipulatorSubsystem. */
   public ManipulatorSubsystem(DriveSubsystem driveSubsystem) {
-    
-  
+
     SmartDashboard.putNumber("AmpVelo", 0);
-    
+
     m_backMotor = new CANSparkFlex(Constants.HolderConstants.k_backMotor, MotorType.kBrushless);
     m_backMotor.restoreFactoryDefaults();
     m_backEncoder = m_backMotor.getEncoder();
     m_backPID = m_backMotor.getPIDController();
     m_backMotor.setSmartCurrentLimit(70);
-    setBrakeMode(true);
+    
     m_backPID.setFF(Constants.HolderConstants.k_f);
     m_backPID.setP(Constants.HolderConstants.k_p);
     m_backPID.setI(Constants.HolderConstants.k_i);
     m_backPID.setIZone(Constants.HolderConstants.k_iZone);
     m_backPID.setD(Constants.HolderConstants.k_d);
 
-    
     m_backMotor.setInverted(!Constants.States.m_isCompetition);
-    
+
     m_driveSubsystem = driveSubsystem;
     m_frontMotor = new CANSparkFlex(Constants.ShooterConstants.k_frontMotor, MotorType.kBrushless);
     m_frontMotor.restoreFactoryDefaults();
@@ -58,9 +56,9 @@ public class ManipulatorSubsystem extends SubsystemBase {
     m_frontMotor.setSmartCurrentLimit(70);
     setBrakeMode(true);
     m_frontPID.setFF(Constants.ShooterConstants.k_f);
-    m_frontPID.setP(Constants.ShooterConstants.k_p );
+    m_frontPID.setP(Constants.ShooterConstants.k_p);
     m_frontPID.setI(Constants.ShooterConstants.k_i);
-    m_frontPID.setIZone( Constants.ShooterConstants.k_iZone );
+    m_frontPID.setIZone(Constants.ShooterConstants.k_iZone);
     m_frontPID.setD(Constants.ShooterConstants.k_d);
     m_frontMotor.setInverted(Constants.States.m_isCompetition);
     m_frontMotor.burnFlash();
@@ -68,28 +66,26 @@ public class ManipulatorSubsystem extends SubsystemBase {
 
   // are the shooter rollers spinning at target RPM and ready to accurately shoot
   // the gamepiece
-  // finished
   public boolean isReady() {
-    return Math.abs(getFrontVelocityRPM()) >= Math.abs(m_frontVelocity)
-        - Constants.ShooterConstants.k_deadzone&&Math.abs(getBackVelocityRPM()) >= Math.abs(m_backVelocity)
-        - Constants.HolderConstants.k_deadzone;
+    return Math.abs(getShooterVelocityRPM()) >= Math.abs(m_shooterVelocity)
+        - Constants.ShooterConstants.k_deadzone
+        && Math.abs(getHolderVelocityRPM()) >= Math.abs(m_holderVelocity)
+            - Constants.HolderConstants.k_deadzone;
   }
 
   // sets the power of the rollers
-  // finished
-  public void setFrontPower(double power) {
+  public void setShooterPower(double power) {
     if (Constants.States.m_shootIntakeSide) {
       m_frontPID.setReference(power, ControlType.kDutyCycle);
-    }
-    else {
+    } else {
       m_backPID.setReference(power, ControlType.kDutyCycle);
     }
   }
-  public void setBackPower(double power) {
-    if(Constants.States.m_shootIntakeSide){
-          m_backPID.setReference(power, ControlType.kDutyCycle);
 
-    }else{
+  public void setHolderPower(double power) {
+    if (Constants.States.m_shootIntakeSide) {
+      m_backPID.setReference(power, ControlType.kDutyCycle);
+    } else {
       m_frontPID.setReference(power, ControlType.kDutyCycle);
     }
   }
@@ -103,33 +99,52 @@ public class ManipulatorSubsystem extends SubsystemBase {
 
   // sets the RPM speed of the shooting motors
   // TODO - fix automatic swapping of the front and back
-  public void setFrontVelocityRPM(double velocity) {
-    m_frontVelocity = velocity;
-    m_frontPID.setReference(velocity, ControlType.kVelocity);
-    SmartDashboard.putNumber(getName() + " Speed", Math.abs(m_frontVelocity));
+  public void setShooterVelocityRPM(double velocity) {
+    m_shooterVelocity = velocity;
+    if (Constants.States.m_shootIntakeSide) {
+      m_frontPID.setReference(velocity, ControlType.kVelocity);
+    } else {
+      m_backPID.setReference(velocity, ControlType.kVelocity);
+    }
+
+    SmartDashboard.putNumber(getName() + " Speed", Math.abs(m_shooterVelocity));
   }
-  public void setBackVelocityRPM(double velocity) {
-    m_backVelocity = velocity;
-    m_backPID.setReference(velocity, ControlType.kVelocity);
-    SmartDashboard.putNumber(getName() + " Speed", Math.abs(m_backVelocity));
+
+  public void setHolderVelocityRPM(double velocity) {
+    m_holderVelocity = velocity;
+    if (Constants.States.m_shootIntakeSide) {
+      m_backPID.setReference(velocity, ControlType.kVelocity);
+
+    } else {
+      m_frontPID.setReference(velocity, ControlType.kVelocity);
+    }
+    SmartDashboard.putNumber(getName() + " Speed", Math.abs(m_holderVelocity));
   }
 
   // reads the speed of the shooting rollers in RPM
-  // finished
-  public double getFrontVelocityRPM() {
-    return m_frontEncoder.getVelocity();
+  public double getShooterVelocityRPM() {
+    if (Constants.States.m_shootIntakeSide) {
+      return m_frontEncoder.getVelocity();
+    } else {
+      return m_backEncoder.getVelocity();
+    }
   }
-   public double getBackVelocityRPM() {
-    return m_backEncoder.getVelocity();
+
+  public double getHolderVelocityRPM() {
+    if (Constants.States.m_shootIntakeSide) {
+      return m_backEncoder.getVelocity();
+    } else {
+      return m_frontEncoder.getVelocity();
+    }
   }
 
   // stops the motors
-  // finished
-  public void stopFront() {
-    setFrontPower(0);
+  public void stopShooter() {
+    setShooterPower(0);
   }
-   public void stopBack() {
-    setBackPower(0);
+
+  public void stopHolder() {
+    setHolderPower(0);
   }
 
   // returns the target RPM speed

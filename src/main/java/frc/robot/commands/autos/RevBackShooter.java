@@ -20,7 +20,7 @@ public class RevBackShooter extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // m_subsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
+    m_subsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -30,7 +30,7 @@ public class RevBackShooter extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // m_subsystem.stop();
+    m_subsystem.stop();
   }
 
   // Returns true when the command should end.

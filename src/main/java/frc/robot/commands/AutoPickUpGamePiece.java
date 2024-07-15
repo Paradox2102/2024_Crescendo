@@ -52,48 +52,48 @@ public class AutoPickUpGamePiece extends Command {
   @Override
   public void initialize() {
     m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
-  //   m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
-  //   m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
-  // }
+    m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
+    m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
-  // @Override
-  // public void execute() {
-  //   // double distanceFromTarget = m_driveSubsystem.getRotationalDistanceFromGamePiece();
-  //   // double rot;
-  //   // boolean seeGamePiece;
-  //   // if (distanceFromTarget == 99999999) {
-  //   //   rot = m_rot.getAsDouble();
-  //   //   seeGamePiece = false;
-  //   // } else {
-  //   //   seeGamePiece = true;
-  //   //   double target = m_driveSubsystem.getTargetCenter();
-  //   //   rot = (k_f * -Math.signum(320-target)) - m_pid.calculate(target, 320);
-  //   //   rot = Math.abs(target-320) <= k_deadzone ? 0 : rot;
-  //   // }
-  //   // double x = m_x.getAsDouble();
-  //   // double y = m_y.getAsDouble();
-  //   // if (!seeGamePiece) {
-  //   //   m_driveSubsystem.drive(x, y, -rot, true, true, Constants.DriveConstants.k_rotatePoint);
-  //   // } else {
-  //   //   x = Math.abs(x);
-  //   //   y = Math.abs(y);
-  //   //   double input = x > y ? x : y;
-  //   //   m_driveSubsystem.drive(input, 0, -rot, false, true, Constants.DriveConstants.k_rotatePoint);
-  //   // }
-  // }
+  @Override
+  public void execute() {
+    double distanceFromTarget = m_driveSubsystem.getRotationalDistanceFromGamePiece();
+    double rot;
+    boolean seeGamePiece;
+    if (distanceFromTarget == 99999999) {
+      rot = m_rot.getAsDouble();
+      seeGamePiece = false;
+    } else {
+      seeGamePiece = true;
+      double target = m_driveSubsystem.getTargetCenter();
+      rot = (k_f * -Math.signum(320-target)) - m_pid.calculate(target, 320);
+      rot = Math.abs(target-320) <= k_deadzone ? 0 : rot;
+    }
+    double x = m_x.getAsDouble();
+    double y = m_y.getAsDouble();
+    if (!seeGamePiece) {
+      m_driveSubsystem.drive(x, y, -rot, true, true, Constants.DriveConstants.k_rotatePoint);
+    } else {
+      x = Math.abs(x);
+      y = Math.abs(y);
+      double input = x > y ? x : y;
+      m_driveSubsystem.drive(input, 0, -rot, false, true, Constants.DriveConstants.k_rotatePoint);
+    }
+  }
 
   // Called once the command ends or is interrupted.
-  // @Override
-  // public void end(boolean interrupted) {
-  //   // m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
-  //   // m_shooterSubsystem.stop();
-  //   // m_holderSubsystem.stop();                              
-  // }
+  @Override
+  public void end(boolean interrupted) {
+    m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
+    m_shooterSubsystem.stop();
+    m_holderSubsystem.stop();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+  }
 
   // Returns true when the command should end.
-  // @Override
-  // public boolean isFinished() {
-  //   return false;
-  // }
-  }}
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
+}

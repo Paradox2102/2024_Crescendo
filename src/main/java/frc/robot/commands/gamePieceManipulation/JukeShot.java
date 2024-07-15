@@ -23,7 +23,7 @@ import frc.robot.subsystems.ShooterSensors;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class JukeShot extends SequentialCommandGroup {
   /** Creates a new JukeShot. */
-  public JukeShot(PivotSubsystem pivotSubsystem, DriveSubsystem driveSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, boolean rotateLeft) {
+  public JukeShot(PivotSubsystem pivotSubsystem, DriveSubsystem driveSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, ShooterSensors shooterSensors, boolean rotateLeft) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -32,9 +32,9 @@ public class JukeShot extends SequentialCommandGroup {
       new StopEverything(driveSubsystem, shooterSubsystem, holderSubsystem),
       new ParallelDeadlineGroup(
         new JukeShotRotateAim(driveSubsystem, rotateLeft), 
-        new DefaultPivotCommand(pivotSubsystem, driveSubsystem, true)
-        
-        // new DefaultManipulatorCommand(shooterSubsystem, driveSubsystem, shooterSensors)
+        new DefaultPivotCommand(pivotSubsystem, driveSubsystem, true),
+        new DefaultManipulatorCommand(holderSubsystem, driveSubsystem, shooterSensors, false),
+        new DefaultManipulatorCommand(shooterSubsystem, driveSubsystem, shooterSensors, true)
       ),
       new ParallelDeadlineGroup(
         new ShootCommand(shooterSubsystem, holderSubsystem), 

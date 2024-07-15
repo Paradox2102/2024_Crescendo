@@ -29,8 +29,8 @@ public class CountBulldoze extends Command {
   public void initialize() {
     m_gamePiecesBulldozed = 0;
     m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
-    // m_shooterSubsytem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
-    // m_holderSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
+    m_shooterSubsytem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
+    m_holderSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
     // yes it's ShooterConstants for holder on purpose
   }
 
@@ -46,7 +46,7 @@ public class CountBulldoze extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
+    m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
   }
 
   // Returns true when the command should end.

@@ -27,36 +27,36 @@ public class TestShooter extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // if (m_shoot) {
-    //   if (Constants.States.m_speakerMode){
-    //     m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerShootVelocityRPM);
-    //   } else {
-    //     m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_ampShootVelocityRPM);
-    //   }
-    // } else {
-    //   m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
-    //   m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
-    //   m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
-    // }
+    if (m_shoot) {
+      if (Constants.States.m_speakerMode){
+        m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_speakerShootVelocityRPM);
+      } else {
+        m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_ampShootVelocityRPM);
+      }
+    } else {
+      m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
+      m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
+      m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if (m_shoot) {
-    //   if (Constants.States.m_speakerMode && Math.abs(m_shooterSubsystem.getVelocityRPM() - Constants.ShooterConstants.k_speakerShootVelocityRPM) < Constants.ShooterConstants.k_deadzone) {
-    //     m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerFeedPower);
-    //   } else if (Math.abs(m_shooterSubsystem.getVelocityRPM() - Constants.ShooterConstants.k_ampShootVelocityRPM) < Constants.ShooterConstants.k_deadzone) {
-    //     m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_ampFeedPower);
-    //   }
-    // }
+    if (m_shoot) {
+      if (Constants.States.m_speakerMode && Math.abs(m_shooterSubsystem.getVelocityRPM() - Constants.ShooterConstants.k_speakerShootVelocityRPM) < Constants.ShooterConstants.k_deadzone) {
+        m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerFeedPower);
+      } else if (Math.abs(m_shooterSubsystem.getVelocityRPM() - Constants.ShooterConstants.k_ampShootVelocityRPM) < Constants.ShooterConstants.k_deadzone) {
+        m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_ampFeedPower);
+      }
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // m_shooterSubsystem.stop();
-    // m_holderSubsystem.stop();
+    m_shooterSubsystem.stop();
+    m_holderSubsystem.stop();
     m_pivotSubsystem.setPositionDegrees(1);
   }
 

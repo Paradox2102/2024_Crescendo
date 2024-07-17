@@ -2,6 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot.subsystems;
+
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -94,6 +95,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
     }
     return m_revSpeeds.get(distance);
   }
+
   @Override
   public void periodic() {
   }

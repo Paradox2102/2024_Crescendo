@@ -38,6 +38,8 @@ import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.SetPivotOffInputDistance;
 import frc.robot.commands.stick.SetStickPos;
 import frc.robot.commands.test.D2Intake;
+import frc.robot.commands.test.SetPowerPivotCommand;
+import frc.robot.commands.test.TestPivotCommandBMR;
 import frc.robot.led.LEDConfig;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -84,7 +86,7 @@ public class RobotContainer {
   private final StickSubsystem m_stickSubsystem = new StickSubsystem();
 
   private final CommandJoystick m_joystick = new CommandJoystick(1);
-  //private final CommandJoystick m_testStick = new CommandJoystick(2);
+  private final CommandJoystick m_testStick = new CommandJoystick(2);
   public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);
   SendableChooser<Command> m_autoSelection = new SendableChooser<>();
 
@@ -203,6 +205,9 @@ public class RobotContainer {
 
     //ToggleTrigger m_brakeMode = new ToggleTrigger(m_joystick.button(12));
     //m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode), m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem, m_elevatorSubsystem, m_stickSubsystem));
+
+    m_testStick.button(1).whileTrue(new TestPivotCommandBMR(m_pivotSubsystem, 70));
+    m_testStick.button(2).whileTrue(new SetPowerPivotCommand(m_pivotSubsystem, 0.25));
   }
   public double getThrottle() {
     return m_joystick.getThrottle();

@@ -21,19 +21,19 @@ public class PivotSubsystem extends SubsystemBase {
   private static final DutyCycleEncoder m_pivotEncoder = new DutyCycleEncoder(0);
 
   // private PID controller
-  private final static double k_p = 0;
+  private final static double k_p = 0.025;
   private final static double k_i = 0;
-  private final static double k_d = 0; 
+  private final static double k_d = 0.0005;
   private final static double k_f = -0.05;
 
   private static final PIDController m_pid = new PIDController(k_p, k_i, k_d);
 
   // finding position
-  private final static double k_zeroPosition = 0.441; 
+  private final static double k_zeroPosition = 0.441;
   private final static double k_ticksToDegrees = 29.7 / 0.088;
   private final static double k_balanceAngle = 40;
 
-  private double m_setPoint = 0; 
+  private double m_setPoint = 0;
 
   private boolean m_manual = false;
 
@@ -106,12 +106,20 @@ public class PivotSubsystem extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Pivot Raw Ticks", m_pivotEncoder.get());
     SmartDashboard.putNumber("Pivot Degrees", getAngleInDegrees());
+    SmartDashboard.putNumber("Pivot ERROR", getAngleInDegrees() - m_setPoint);
+    SmartDashboard.putNumber("Pivot set point", m_setPoint);
 
-    //feet forward
-    double feetForward = Math.sin(Math.toRadians(m_setPoint - k_balanceAngle)) * k_f;
 
-    // This method will be called once per scheduler run
-    m_pivotMotor.set(feetForward);
+    // feet forward
+    if (!m_manual) {
+      double feetForward = Math.sin(Math.toRadians(m_setPoint - k_balanceAngle)) * k_f;
+
+      feetForward += m_pid.calculate(getAngleInDegrees());
+
+      SmartDashboard.putNumber("Pivot Power", feetForward);
+      // This method will be called once per scheduler run
+      m_pivotMotor.set(feetForward);
+    }
   }
 
 }

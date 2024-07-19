@@ -72,9 +72,9 @@ public class DefaultManipulatorCommand extends Command {
 
         case intaking:
           if (Constants.States.m_shootIntakeSide) {
-            m_subsystem.setPower(Constants.HolderConstants.k_adjustGamePiecePower);
-          } else {
             m_subsystem.setPower(-Constants.HolderConstants.k_adjustGamePiecePower);
+          } else {
+            m_subsystem.setPower(Constants.HolderConstants.k_adjustGamePiecePower);
           }
           break;
 
@@ -95,9 +95,9 @@ public class DefaultManipulatorCommand extends Command {
 
         case intaking:
           if (Constants.States.m_shootIntakeSide) {
-            m_subsystem.setPower(Constants.ShooterConstants.k_adjustGamePiecePower);
-          } else {
             m_subsystem.setPower(-Constants.ShooterConstants.k_adjustGamePiecePower);
+          } else {
+            m_subsystem.setPower(Constants.ShooterConstants.k_adjustGamePiecePower);
           }
           break;
 

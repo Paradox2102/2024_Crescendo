@@ -42,7 +42,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
     m_PID.setD(m_isFront ? Constants.ShooterConstants.k_d : Constants.HolderConstants.k_d);
 
     setName(m_isFront ? "ShooterSubsystem" : "HolderSubsystem");
-    m_motor.setInverted(m_isFront ? Constants.States.m_isCompetition : !Constants.States.m_isCompetition);
+    m_motor.setInverted(m_isFront ? !Constants.States.m_isCompetition : Constants.States.m_isCompetition);
     m_motor.burnFlash();
   }
 

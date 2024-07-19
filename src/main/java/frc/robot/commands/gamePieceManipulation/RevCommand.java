@@ -43,6 +43,7 @@ public class RevCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     System.out.println("rev command end");
+    m_shooterSubsystem.stop();
   }
 
   // Returns true when the command should end.

@@ -32,7 +32,6 @@ import frc.robot.commands.gamePieceManipulation.IntakeCommand;
 import frc.robot.commands.gamePieceManipulation.JukeShot;
 import frc.robot.commands.gamePieceManipulation.ResetSubsystemsCommand;
 import frc.robot.commands.gamePieceManipulation.RevCommand;
-import frc.robot.commands.gamePieceManipulation.ShootCommand;
 import frc.robot.commands.gamePieceManipulation.ShootSequence;
 import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.SetPivotOffInputDistance;
@@ -116,7 +115,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("switch to shoot front", new ToggleShootSideCommand(true));
     NamedCommands.registerCommand("start back", new StartBack());
     NamedCommands.registerCommand("start front", new StartFront());
-    NamedCommands.registerCommand("shoot", new ShootCommand(m_shooterSubsystem, m_holderSubsystem));
+    NamedCommands.registerCommand("shoot", new FeedCommand(m_shooterSubsystem, m_holderSubsystem, m_shooterSensors));
     NamedCommands.registerCommand("feedthrough",
         new FeedCommand(m_shooterSubsystem, m_holderSubsystem, m_shooterSensors));
     NamedCommands.registerCommand("back feed", new BackFeedCommand(m_shooterSubsystem));
@@ -192,13 +191,13 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     HoldTrigger m_slowMode = new HoldTrigger(m_driverController.rightBumper());
     HoldTrigger m_slowMode1 = new HoldTrigger(m_driverController.leftBumper());
-    m_driveSubsystem.setDefaultCommand(new ArcadeDrive(
-        m_driveSubsystem,
-        () -> m_driverController.getLeftX(),
-        () -> m_driverController.getLeftY(),
-        () -> m_driverController.getRightX(),
-        new Trigger(m_slowMode),
-        new Trigger(m_slowMode1)));
+    // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(
+    //     m_driveSubsystem,
+    //     () -> m_driverController.getLeftX(),
+    //     () -> m_driverController.getLeftY(),
+    //     () -> m_driverController.getRightX(),
+    //     new Trigger(m_slowMode),
+    //     new Trigger(m_slowMode1)));
 
     m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
     m_shooterSubsystem
@@ -212,12 +211,12 @@ public class RobotContainer {
     // m_driverController.leftTrigger().toggleOnTrue(new
     // ShootCommand(m_shooterSubsystem, m_holderSubsystem));
     m_driverController.leftTrigger()
-        .toggleOnTrue(new ShootSequence(m_shooterSubsystem, m_holderSubsystem, m_stickSubsystem));
+        .toggleOnTrue(new ShootSequence(m_shooterSubsystem, m_holderSubsystem, m_stickSubsystem, m_shooterSensors));
     m_driverController.rightTrigger()
         .whileTrue(new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem, m_shooterSensors));
 
     m_driverController.a().onTrue(
-        new PassShot(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_pivotSubsystem, m_driverController));
+        new PassShot(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_shooterSensors, m_pivotSubsystem, m_driverController));
 
     // ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
     m_joystick.button(1).toggleOnTrue(new RevCommand(m_shooterSubsystem, m_holderSubsystem));

@@ -309,7 +309,7 @@ public final class Constants {
   public static class ShooterConstants {
     public static final int k_frontMotor = 11;
     public static double k_intakeVelocityRPM = 3000;
-    public static final double k_speakerShootVelocityRPM = -5750; //5000
+    public static final double k_speakerShootVelocityRPM = -4000; //5000
     public static double k_ampShootVelocityRPM = -1950; // -1950
     public static final double k_maxVelocityRPM = 6250; //6000
     
@@ -335,7 +335,7 @@ public final class Constants {
   public static class HolderConstants {
     public static final int k_backMotor = 10;
     public static double k_intakeVelocityRPM = 1000;
-    public static final double k_speakerShootVelocityRPM = 5000; 
+    public static final double k_speakerShootVelocityRPM = 4000; //5000
     public static final double k_speakerFeedPower = -1;
     public static final double k_ampFeedPower = -0.35; // -500
 

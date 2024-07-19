@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.ShooterSensors;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FeedCommand extends Command {
   ManipulatorSubsystem m_shooterSubsystem;
@@ -36,20 +37,29 @@ public class FeedCommand extends Command {
       m_shooterSubsystem
           .setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM
               : Constants.ShooterConstants.k_ampShootVelocityRPM);
-      m_holderSubsystem.setPower(Constants.States.m_speakerMode ? Constants.HolderConstants.k_speakerFeedPower
-          : Constants.HolderConstants.k_ampFeedPower);
+
     } else {
-      m_shooterSubsystem.setPower(Constants.ShooterConstants.k_speakerFeedPower);
-      m_holderSubsystem.setPower(Constants.HolderConstants.k_speakerShootVelocityRPM);
+
+      m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
     }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if (Constants.States.m_shootIntakeSide) {
+      if (m_shooterSubsystem.isReady()) {
+        m_holderSubsystem.setPower(Constants.States.m_speakerMode ? Constants.HolderConstants.k_speakerFeedPower
+            : Constants.HolderConstants.k_ampFeedPower);
+      }
+    } else if (m_holderSubsystem.isReady()) {
+      m_shooterSubsystem.setPower(Constants.ShooterConstants.k_speakerFeedPower);
+    }
     if (m_shooterSensors.getHolderSensor() || m_shooterSensors.getShooterSensor()) {
       m_dwellTimer.reset();
     }
+    SmartDashboard.putNumber("Speed", m_shooterSubsystem.getVelocityRPM());
+    SmartDashboard.putNumber("Target speed", Constants.ShooterConstants.k_speakerShootVelocityRPM);
   }
 
   // Called once the command ends or is interrupted.

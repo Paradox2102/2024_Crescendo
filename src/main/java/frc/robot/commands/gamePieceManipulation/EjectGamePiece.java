@@ -28,14 +28,15 @@ public class EjectGamePiece extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_pivotSubsystem.setPositionDegrees(70);
+    //m_pivotSubsystem.setPositionDegrees(70);
+    m_holderSubsystem.setPower(-1);
+    m_shooterSubsystem.setPower(-1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_holderSubsystem.setPower(-1);
-    m_shooterSubsystem.setPower(-1);
+
   }
 
   // Called once the command ends or is interrupted.

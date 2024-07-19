@@ -9,11 +9,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.drivetrain.AimArcadeDrive;
-import frc.robot.commands.gamePieceManipulation.ShootCommand;
+import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.pivot.SetPivotPos;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.ShooterSensors;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -24,7 +25,7 @@ public class PassShot extends SequentialCommandGroup {
   ManipulatorSubsystem m_manipulatorSubsystem;
 
   public PassShot(DriveSubsystem driveSubsystem, ManipulatorSubsystem shooterSubsystem,
-      ManipulatorSubsystem holderSubsystem, PivotSubsystem pivotSubsystem, CommandXboxController controller) {
+      ManipulatorSubsystem holderSubsystem, ShooterSensors shooterSensors, PivotSubsystem pivotSubsystem, CommandXboxController controller) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -33,7 +34,7 @@ public class PassShot extends SequentialCommandGroup {
             new SequentialCommandGroup(
                 new SetPivotPos(pivotSubsystem, 70),
                 new WaitCommand(0.5),
-                new ShootCommand(shooterSubsystem, holderSubsystem)
+                new FeedCommand(shooterSubsystem, holderSubsystem, shooterSensors)
             ),
             new AimArcadeDrive(driveSubsystem, () -> controller.getLeftX(), () -> controller.getLeftY())
         )

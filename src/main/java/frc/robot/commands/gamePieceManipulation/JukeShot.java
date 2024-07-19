@@ -37,7 +37,7 @@ public class JukeShot extends SequentialCommandGroup {
         new DefaultManipulatorCommand(shooterSubsystem, driveSubsystem, shooterSensors, true)
       ),
       new ParallelDeadlineGroup(
-        new ShootCommand(shooterSubsystem, holderSubsystem), 
+        new FeedCommand(shooterSubsystem, holderSubsystem, shooterSensors), 
         new DefaultPivotCommand(pivotSubsystem, driveSubsystem, true),
         new RunCommand(() -> {driveSubsystem.drive(0, 0, 0, true, true, new Translation2d(0, 0));}, driveSubsystem)
       ),

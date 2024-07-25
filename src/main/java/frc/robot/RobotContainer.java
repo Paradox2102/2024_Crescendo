@@ -60,7 +60,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
+import frc.aiCamera.AiCamera;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -74,7 +74,7 @@ public class RobotContainer {
   PositionServer m_posServer = new PositionServer(m_apriltagCamera);
   Constants m_constants = new Constants();
   LEDConfig m_ledConfig;
-
+  private final AiCamera m_aiCamera = new AiCamera(); 
   final ShooterSensors m_shooterSensors = new ShooterSensors();
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera, m_apriltagCameraSide);
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem(() -> m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters());
@@ -136,13 +136,13 @@ public class RobotContainer {
     m_apriltagCamera.setCameraInfo(Constants.DriveConstants.k_cameraFrontX, Constants.DriveConstants.k_cameraFrontY, 180, ApriltagsCameraType.GS_6mm); // y = 6
     // Back
     m_apriltagCamera.setCameraInfo(Constants.DriveConstants.k_cameraBackX, Constants.DriveConstants.k_cameraBackY, 0, ApriltagsCameraType.GS_6mm); // y = 9.5
-    m_apriltagCamera.connect("10.21.2.11", 5800);
+    // m_apriltagCamera.connect("10.21.2.11", 5800);
     
 
     m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraRightX, Constants.DriveConstants.k_cameraRightY, -90, ApriltagsCameraType.GS_6mm); 
     m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraLeftX, Constants.DriveConstants.k_cameraLeftY, 88, ApriltagsCameraType.GS_6mm); 
-    m_apriltagCameraSide.connect("10.21.2.12", 5800);
-
+    // m_apriltagCameraSide.connect("10.21.2.12", 5800);
+    m_aiCamera.connect("10.21.2.10", 5800);
     m_posServer.start();
   }
 

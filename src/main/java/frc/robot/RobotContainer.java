@@ -10,6 +10,7 @@ import frc.apriltagsCamera.ApriltagsCamera.ApriltagsCameraType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.StopEverything;
 import frc.robot.commands.ToggleAutoAim;
+import frc.robot.commands.ManualPivotCommand;
 import frc.robot.commands.PassShot;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.ToggleShootSideCommand;
@@ -35,7 +36,10 @@ import frc.robot.commands.gamePieceManipulation.RevCommand;
 import frc.robot.commands.gamePieceManipulation.ShootCommand;
 import frc.robot.commands.gamePieceManipulation.ShootSequence;
 import frc.robot.commands.pivot.DefaultPivotCommand;
+import frc.robot.commands.pivot.ResetPivot;
 import frc.robot.commands.pivot.SetPivotOffInputDistance;
+import frc.robot.commands.pivot.SetPivotOffRobotLocation;
+import frc.robot.commands.pivot.SetPivotPos;
 import frc.robot.commands.stick.SetStickPos;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.commands.test.SetPowerPivotCommand;
@@ -208,7 +212,14 @@ public class RobotContainer {
 
     m_testStick.button(1).whileTrue(new TestPivotCommandBMR(m_pivotSubsystem, 70));
     m_testStick.button(2).whileTrue(new SetPowerPivotCommand(m_pivotSubsystem, 0.25));
+    //new buttons
+    m_testStick.button(3).onTrue(new ResetPivot(m_pivotSubsystem));
+    m_testStick.button(4).onTrue(new SetPivotOffInputDistance(m_pivotSubsystem, 5));
+    m_testStick.button(5).onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem));
+    m_testStick.button(6).onTrue(new SetPivotPos(m_pivotSubsystem, 60));
+    m_testStick.button(7).whileTrue(new ManualPivotCommand(m_pivotSubsystem, 0.3));
   }
+
   public double getThrottle() {
     return m_joystick.getThrottle();
   }

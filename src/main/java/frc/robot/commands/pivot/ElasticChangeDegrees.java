@@ -4,17 +4,20 @@
 
 package frc.robot.commands.pivot;
 
+
+import java.io.ObjectInputStream.GetField;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.Constants;
 import frc.robot.subsystems.PivotSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ResetPivot extends InstantCommand {
+public class ElasticChangeDegrees extends InstantCommand {
   PivotSubsystem m_subsystem;
-  public ResetPivot(PivotSubsystem pivotSubsystem) {
-    m_subsystem = pivotSubsystem;
+  public ElasticChangeDegrees(PivotSubsystem subsystem) {
+    m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }
@@ -22,6 +25,7 @@ public class ResetPivot extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
+    SmartDashboard.putNumber("Change Degrees", 0);
+    m_subsystem.setPositionDegrees(SmartDashboard.getNumber("Change Degrees", 0));
   }
 }

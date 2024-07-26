@@ -119,7 +119,7 @@ public class PivotSubsystem extends SubsystemBase {
       SmartDashboard.putNumber("Pivot Power", feetForward);
       // This method will be called once per scheduler run
       m_pivotMotor.set(feetForward);
-    }
+    } 
   }
 
 }

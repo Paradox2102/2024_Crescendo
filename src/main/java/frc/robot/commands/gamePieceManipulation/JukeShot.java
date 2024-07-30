@@ -8,7 +8,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.StopEverything;
 import frc.robot.commands.ToggleAutoAim;
 import frc.robot.commands.ToggleShootSideCommand;
@@ -17,13 +16,14 @@ import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.ShooterSensors;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class JukeShot extends SequentialCommandGroup {
   /** Creates a new JukeShot. */
-  public JukeShot(PivotSubsystem pivotSubsystem, DriveSubsystem driveSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, boolean rotateLeft) {
+  public JukeShot(PivotSubsystem pivotSubsystem, DriveSubsystem driveSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, ShooterSensors shooterSensors, boolean rotateLeft) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -33,11 +33,11 @@ public class JukeShot extends SequentialCommandGroup {
       new ParallelDeadlineGroup(
         new JukeShotRotateAim(driveSubsystem, rotateLeft), 
         new DefaultPivotCommand(pivotSubsystem, driveSubsystem, true),
-        new DefaultManipulatorCommand(holderSubsystem, driveSubsystem, false),
-        new DefaultManipulatorCommand(shooterSubsystem, driveSubsystem, true)
+        new DefaultManipulatorCommand(holderSubsystem, driveSubsystem, shooterSensors, false),
+        new DefaultManipulatorCommand(shooterSubsystem, driveSubsystem, shooterSensors, true)
       ),
       new ParallelDeadlineGroup(
-        new ShootCommand(shooterSubsystem, holderSubsystem), 
+        new FeedCommand(shooterSubsystem, holderSubsystem, shooterSensors), 
         new DefaultPivotCommand(pivotSubsystem, driveSubsystem, true),
         new RunCommand(() -> {driveSubsystem.drive(0, 0, 0, true, true, new Translation2d(0, 0));}, driveSubsystem)
       ),

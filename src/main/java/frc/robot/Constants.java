@@ -12,7 +12,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -77,13 +76,13 @@ public final class Constants {
 
       // Shooter
       ShooterConstants.k_f = 1.1 / ShooterConstants.k_maxVelocityRPM;
-      ShooterConstants.k_p = 0.0004; // 0.00005
-      ShooterConstants.k_i = 0.0000003; // 0.0000001
+      ShooterConstants.k_p = 0.0004; //0.00005
+      ShooterConstants.k_i = 0.0000003; //0.0000001
       ShooterConstants.k_d = 0;
       ShooterConstants.k_iZone = 400;
 
-      // Holder
-      HolderConstants.k_f = 1.1 / ShooterConstants.k_maxVelocityRPM;
+      // Holder 
+      HolderConstants.k_f = 1.1 /  ShooterConstants.k_maxVelocityRPM;
       HolderConstants.k_p = .00075;
       HolderConstants.k_i = .0000001;
       HolderConstants.k_d = 0;
@@ -266,7 +265,7 @@ public final class Constants {
         new SwerveModuleState(0, new Rotation2d(Math.PI / 4))
     };
     public static final double k_rotateP = .016;
-    public static final double k_rotateI = .013;// .01;
+    public static final double k_rotateI = .013;//.01;
     public static final double k_rotateD = .0008;
     public static final double k_rotateIZone = 20; // 70
     public static final double k_rotateDeadzone = 2;
@@ -355,12 +354,12 @@ public final class Constants {
 
   // Positive is intake. negative is shoot intake side
   public static class ShooterConstants {
-    public static final int k_shooterMotor = 11;
+    public static final int k_frontMotor = 11;
     public static double k_intakeVelocityRPM = 3000;
-    public static final double k_speakerShootVelocityRPM = -5750; // 5000
+    public static final double k_speakerShootVelocityRPM = -4000; //5000
     public static double k_ampShootVelocityRPM = -1950; // -1950
-    public static final double k_maxVelocityRPM = 6250; // 6000
-
+    public static final double k_maxVelocityRPM = 6250; //6000
+    
     public static final double k_speakerFeedPower = 1;
     public static final double k_deadzone = 25;
 
@@ -370,21 +369,20 @@ public final class Constants {
     public static final int k_backSensor = 2;
 
     public static double k_f = 1.1 / k_maxVelocityRPM;
-    public static double k_p = 0; // .00025
-    public static double k_i = 0; // .00052
+    public static double k_p = 0; //.00025
+    public static double k_i = 0; //.00052
     public static double k_d = 0;
     public static double k_iZone = 0;
 
-    public static final double[] k_revDistances = { 5.8, 6.5, 8, 10, 12 };
-    public static final double[] k_revSpeeds = { -5000, -6000, -6000, -4000, -2000 }; // {-5000, -5500, -5750, -4000,
-                                                                                      // -2000}
+    public static final double[] k_revDistances = {5.8, 6.5, 8, 10, 12};
+    public static final double[] k_revSpeeds = {-5000, -6000, -6000, -4000, -2000}; //{-5000, -5500, -5750, -4000, -2000}
   }
 
   // Positive is intake. negative is shoot intake side
   public static class HolderConstants {
-    public static final int k_holdingMotor = 10;
+    public static final int k_backMotor = 10;
     public static double k_intakeVelocityRPM = 1000;
-    public static final double k_speakerShootVelocityRPM = 5000;
+    public static final double k_speakerShootVelocityRPM = 4000; //5000
     public static final double k_speakerFeedPower = -1;
     public static final double k_ampFeedPower = -0.35; // -500
 
@@ -392,23 +390,23 @@ public final class Constants {
     public static final double k_adjustGamePiecePower = -.2;
 
     public static double k_f = 1.0 / 5350;
-    public static double k_p = 0.00004; // 0.00004
-    public static double k_i = 0.0015; // 0.0015
+    public static double k_p = 0.00004; //0.00004
+    public static double k_i = 0.0015; //0.0015
     public static double k_d = 0; // 0
     public static double k_iZone = 50; // 50
   }
 
   public static class ElevatorConstants {
     public static final int k_elevatorMotor = 12;
-    public static final double k_ticksToInches = -25.0 / 113.559;
+    public static final double k_ticksToInches = -25.0/113.559;
 
-    // manual command
+//manual command
     public static final double k_driveDeadband = 0;
     public static final double k_minDistance = 0;
     public static final double k_maxDistance = 17;
 
     public static final double k_zeroPoint = -1.814;
-    // PID (kinda) tuning
+//PID (kinda) tuning
     // public static final double k_P = 0.002;
     public static final double k_f = 0.9;
   }

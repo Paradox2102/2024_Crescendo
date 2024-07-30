@@ -5,16 +5,19 @@
 package frc.robot.commands.gamePieceManipulation;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.Constants;
 
 public class EjectGamePiece extends Command {
   /** Creates a new EjectGamePiece. */
+  /* Gets rid of the game piece and ejects it away from the robot */
   PivotSubsystem m_pivotSubsystem;
   ManipulatorSubsystem m_shooterSubsystem;
   ManipulatorSubsystem m_holderSubsystem;
-  public EjectGamePiece(PivotSubsystem pivotSubsystem, ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem) {
+
+  public EjectGamePiece(PivotSubsystem pivotSubsystem, ManipulatorSubsystem shooterSubsystem,
+      ManipulatorSubsystem holderSubsystem) {
     m_pivotSubsystem = pivotSubsystem;
     m_shooterSubsystem = shooterSubsystem;
     m_holderSubsystem = holderSubsystem;
@@ -25,22 +28,23 @@ public class EjectGamePiece extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_pivotSubsystem.setPositionDegrees(70);
+    //m_pivotSubsystem.setPositionDegrees(70);
+    m_holderSubsystem.setPower(-1);
+    m_shooterSubsystem.setPower(-1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooterSubsystem.setPower(-1);
-    m_holderSubsystem.setPower(-1);
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
     m_shooterSubsystem.stop();
     m_holderSubsystem.stop();
+    m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
   }
 
   // Returns true when the command should end.

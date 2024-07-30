@@ -5,6 +5,7 @@
 package frc.robot.commands.gamePieceManipulation;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.Constants;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 
@@ -25,8 +26,8 @@ public class ResetSubsystemsCommand extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_pivotSubsystem.setPositionDegrees(5);
-    m_shooterSubsystem.stop();
-    m_holderSubsystem.stop();
+    m_shooterSubsystem.setPower(0);
+    m_holderSubsystem.setPower(0);
+    m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees); //5 degrees
   }
 }

@@ -8,39 +8,44 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.ShooterSensors;
 
 public class IntakeCommand extends Command {
   ManipulatorSubsystem m_holderSubsystem;
   ManipulatorSubsystem m_shooterSubsystem;
   PivotSubsystem m_pivotSubsystem;
+  ShooterSensors m_shooterSensors;
+
   /** Creates a new IntakeCommand. */
-  public IntakeCommand(ManipulatorSubsystem holderSubsystem, ManipulatorSubsystem shooterSubsystem, PivotSubsystem pivotSubsystem) {
+  public IntakeCommand(ManipulatorSubsystem holderSubsystem, ManipulatorSubsystem shooterSubsystem,
+      PivotSubsystem pivotSubsystem, ShooterSensors shooterSensors) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_holderSubsystem = holderSubsystem;
     m_shooterSubsystem = shooterSubsystem;
     m_pivotSubsystem = pivotSubsystem;
+    m_shooterSensors = shooterSensors;
     addRequirements(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  // m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
-    // m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
-    m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
     Constants.States.m_intaking = true;
+    m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_intakePositionDegrees);
+    m_shooterSubsystem.setVelocityRPM(Constants.ShooterConstants.k_intakeVelocityRPM);
+    m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_intakeVelocityRPM);
   }
 
-  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_holderSubsystem.stop();
-    m_shooterSubsystem.stop();
+    m_holderSubsystem.setPower(0);
+    m_shooterSubsystem.setPower(0);
     m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
     Constants.States.m_intaking = false;
   }
@@ -48,6 +53,6 @@ public class IntakeCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Constants.States.m_isGamePieceStowed;
+    return m_shooterSensors.getHolderSensor() && !m_shooterSensors.getShooterSensor();
   }
 }

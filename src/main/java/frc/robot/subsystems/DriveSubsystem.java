@@ -173,6 +173,7 @@ public class DriveSubsystem extends SubsystemBase {
     // - Gavin
     double xDist = robot.getX() - speaker.m_xMeters;
     double yDist = robot.getY() - speaker.m_yMeters;
+    SmartDashboard.putNumber("translationalDistFromSpkrMeters",Math.sqrt((xDist * xDist) + (yDist * yDist)));
     return Math.sqrt((xDist * xDist) + (yDist * yDist));
   }
 

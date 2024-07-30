@@ -16,12 +16,12 @@ public class ShooterSensors extends SubsystemBase {
   /** Creates a new ShooterSensors. */
   public ShooterSensors() {}
 
-  public boolean getFrontSensor() {
-    return !m_frontSensor.get();
+  public boolean getShooterSensor() {
+    return Constants.States.m_shootIntakeSide ? !m_frontSensor.get() : !m_backSensor.get();
   }
 
-  public boolean getBackSensor() {
-    return !m_backSensor.get();
+  public boolean getHolderSensor() {
+    return Constants.States.m_shootIntakeSide? !m_backSensor.get():!m_frontSensor.get();
   }
 
   // public boolean getFrontSensorWithTime() {
@@ -34,13 +34,13 @@ public class ShooterSensors extends SubsystemBase {
 
   public boolean hasGamePiece() {
     // return getFrontSensorWithTime() || getBackSensorWithTime();
-    return getFrontSensor() || getBackSensor();
+    return getShooterSensor() || getHolderSensor();
   }
 
   public boolean isGamePieceStowed() {
     // If we are shooting intake side, check back sensors and not front sensors, if not, the opposite.
     // return Constants.States.m_shootIntakeSide ? (getBackSensorWithTime() && !getFrontSensorWithTime()) : (getFrontSensorWithTime() && !getBackSensorWithTime());
-    return Constants.States.m_shootIntakeSide ? (getBackSensor() && !getFrontSensor()) : (getFrontSensor() && !getBackSensor());
+    return Constants.States.m_shootIntakeSide ? (getHolderSensor() && !getShooterSensor()) : (getShooterSensor() && !getHolderSensor());
   }
 
   @Override
@@ -68,7 +68,7 @@ public class ShooterSensors extends SubsystemBase {
     // SmartDashboard.putBoolean("Has Game Piece", Constants.States.m_hasGamePiece);
     // SmartDashboard.putBoolean("Game Piece Stowed", Constants.States.m_isGamePieceStowed);
     // SmartDashboard.putBoolean("Shoot Intake Side", Constants.States.m_shootIntakeSide);
-    SmartDashboard.putBoolean("Back Sensor", getBackSensor());
-    SmartDashboard.putBoolean("Front Sensor", getFrontSensor());
+    SmartDashboard.putBoolean("Back Sensor", m_backSensor.get());
+    SmartDashboard.putBoolean("Front Sensor", m_frontSensor.get());
   }
 }

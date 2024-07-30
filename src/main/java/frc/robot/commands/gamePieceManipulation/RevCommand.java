@@ -5,8 +5,8 @@
 package frc.robot.commands.gamePieceManipulation;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.ManipulatorSubsystem;
+import frc.robot.Constants;
 
 public class RevCommand extends Command {
   ManipulatorSubsystem m_shooterSubsystem;
@@ -23,24 +23,27 @@ public class RevCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("revCommand initialize");
     if (Constants.States.m_shootIntakeSide) {
-      m_shooterSubsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM : Constants.ShooterConstants.k_ampShootVelocityRPM);
-      m_holderSubsystem.setVelocityRPM(0);
+      m_shooterSubsystem
+          .setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM
+              : Constants.ShooterConstants.k_ampShootVelocityRPM);
+      m_holderSubsystem.stop();
     } else {
+      m_shooterSubsystem.stop();
       m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
-      m_shooterSubsystem.setVelocityRPM(0);
     }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     System.out.println("rev command end");
+    m_shooterSubsystem.stop();
   }
 
   // Returns true when the command should end.

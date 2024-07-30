@@ -13,118 +13,113 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.ParadoxField;
-import frc.robot.Constants.PivotConstants;
 
 public class PivotSubsystem extends SubsystemBase {
-  private double m_power;
-  // private double m_targetAngleInDegrees = 0;
+  private static DriveSubsystem m_driveSubsystem;
+  private static final CANSparkFlex m_pivotMotor = new CANSparkFlex(Constants.PivotConstants.k_pivotMotor,
+      MotorType.kBrushless);
+  private static final DutyCycleEncoder m_pivotEncoder = new DutyCycleEncoder(0);
 
-  private static final double k_deadzone = 0;
-  private PIDController m_PID;
-  private double m_setPoint = Constants.PivotConstants.k_resetPositionDegrees;
+  // private PID controller
+  private final static double k_p = 0.025;
+  private final static double k_i = 0;
+  private final static double k_d = 0.0005;
+  private final static double k_f = -0.05;
 
-  private double[] k_frontDistances = Constants.PivotConstants.k_distancesFront;
-  private double[] k_backDistances = Constants.PivotConstants.k_distancesBack;
+  private static final PIDController m_pid = new PIDController(k_p, k_i, k_d);
 
-  private double[] k_anglesFront = Constants.PivotConstants.k_anglesFront;
-  private double[] k_anglesBack = Constants.PivotConstants.k_anglesBack;
+  // finding position
+  private final static double k_zeroPosition = 0.441;
+  private final static double k_ticksToDegrees = 29.7 / 0.088;
+  private final static double k_balanceAngle = 40;
 
-  private CANSparkFlex m_pivotMotor = new CANSparkFlex(Constants.PivotConstants.k_pivotMotor, MotorType.kBrushless);
-  DutyCycleEncoder m_pivotEncoder = new DutyCycleEncoder(0);
+  private double m_setPoint = 0;
 
-  private DriveSubsystem m_driveSubsystem;
+  private boolean m_manual = false;
 
   /** Creates a new PivotSubsystem. */
   public PivotSubsystem(DriveSubsystem driveSubsystem) {
-    SmartDashboard.putNumber("Amp Angle", 0);
-    m_pivotMotor.restoreFactoryDefaults();
-    m_PID = new PIDController(Constants.PivotConstants.k_p, Constants.PivotConstants.k_i, Constants.PivotConstants.k_d);
     m_driveSubsystem = driveSubsystem;
-    m_pivotMotor.setSmartCurrentLimit(80);
-    setBrakeMode(true);
-    m_pivotEncoder.setPositionOffset(-0.8);
-    m_PID.setIZone(Constants.PivotConstants.k_iZone);
-    m_pivotMotor.setInverted(Constants.PivotConstants.k_isInverted);
-    m_pivotMotor.burnFlash();
   }
 
+  // description: stalls the motor (they don't move if motor shouldn't move)
   public void setBrakeMode(boolean brake) {
     m_pivotMotor.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
   }
 
+  // description: sets the power
   public void setPower(double power) {
-    m_power = power;
+    m_manual = true;
+    m_pivotMotor.set(power);
   }
 
+  // description: sets the power to degrees
+  // approach: use PID Controller to set the point
   public void setPositionDegrees(double angle) {
-    // Logger.log("PiviotSubsystem", 1, String.format("setPositionDegrees=%f", angle));
-    
+    m_manual = false;
     m_setPoint = angle;
+    m_pid.setSetpoint(angle);
   }
 
+  // description: returns angle necessary to shoot at speaker from current
+  // position
+  /*
+   * approach: get the current position on the field,
+   * use a for loop to find the two (rows - 1st column) that the current position
+   * is between or on
+   * use the two rows (2nd colum) and returns double for angle
+   */
+  // a 2D array that (1st column - position on field) (2nd colum - corresponding
+  // angle)
   // Autos only, to be removed
   public double getPivotAngleFromDistanceFromSpeaker(double distance) {
-    double[] distances = Constants.States.m_shootIntakeSide ? k_frontDistances : k_backDistances;
-    double[] angles = Constants.States.m_shootIntakeSide ? k_anglesFront : k_anglesBack;
-    if (distance > distances[distances.length - 1] || distance < distances[0]){
-      return 0;
-    }
-    for (int i = 0; i < distances.length; i++) {
-      if (distance > distances[i] && distance <= distances[i+1]) {
-        double roc = (angles[i+1] - angles[i]) / (distances[i+1] - distances[i]);
-        double dist = distance -distances[i];
-        return (angles[i] + dist * roc) + PivotConstants.k_offset; 
-      }
-    }
+
     return 0;
   }
 
+  // description: returns double of angle needed to shoot at speaker in future
+  // position on the field
+  /*
+   * approach: by using the current speed (from drivesystem) & find the future
+   * position (based on how long robot takes to set angle)
+   * use a for loop to find the two rows (1st column) that the future position is
+   * between or on
+   * use the two rows (2nd colum) to used (math - linear) and return double for
+   * angle
+   */
+  // a 2D array that (1st column - position on field) (2nd colum - corresponding
+  // angle)
   public double getPivotAngleFromRobotPos(boolean predictFuture) {
-    double[] distances = Constants.States.m_shootIntakeSide ? k_frontDistances : k_backDistances;
-    double[] angles = Constants.States.m_shootIntakeSide ? k_anglesFront : k_anglesBack;
-    double distance = predictFuture ? m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters() : m_driveSubsystem.getTranslationalDistanceFromSpeakerMeters();
-    if (distance > distances[distances.length - 1] || distance < distances[0]){
-      return Constants.PivotConstants.k_resetPositionDegrees;
-    }
-    for (int i = 0; i < distances.length; i++) {
-      if (distance > distances[i] && distance < distances[i+1]) {
-        double roc = (angles[i+1] - angles[i]) / (distances[i+1] - distances[i]);
-        double dist = distance - distances[i];
-        return angles[i] + dist * roc; 
-      }
-    }
-    return Constants.PivotConstants.k_resetPositionDegrees;
+    // double m_futurePos = m_driveSubsystem.getEstimatedFuturePos().getX();
+
+    return 0;
   }
 
-  private double getRawAngle() {
-    return m_pivotEncoder.getAbsolutePosition();
-  }
-
+  // description: returns a double of current angle in degrees
+  // aproach: subtract the current position w/ supposed starting position ->
+  // convert difference into degrees
   public double getAngleInDegrees() {
-    return ParadoxField.normalizeAngle(m_pivotEncoder.getAbsolutePosition() *  Constants.PivotConstants.k_pivotTicksToDegrees - Constants.PivotConstants.k_pivotZeroAngle);
+    return (m_pivotEncoder.get() - k_zeroPosition) * k_ticksToDegrees;
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    // SmartDashboard.putNumber("Pivot Raw Encoder Value", getRawAngle());
-    SmartDashboard.putNumber("Pivot Angle in Degrees", getAngleInDegrees());
-    double FF;
-    double pid;
-    double angle = getAngleInDegrees();
+    SmartDashboard.putNumber("Pivot Raw Ticks", m_pivotEncoder.get());
+    SmartDashboard.putNumber("Pivot Degrees", getAngleInDegrees());
+    SmartDashboard.putNumber("Pivot ERROR", getAngleInDegrees() - m_setPoint);
+    SmartDashboard.putNumber("Pivot set point", m_setPoint);
 
-    FF = Constants.PivotConstants.k_f * Math.sin(Math.toRadians(angle - 40));
-    if(Math.abs(getAngleInDegrees() - m_setPoint) > k_deadzone){
-      pid = m_PID.calculate(angle, m_setPoint);
-    } else {
-      pid = 0;
-    }
-    m_power = FF + pid;
-    // SmartDashboard.putNumber("Pivot Power", m_power);
-    // SmartDashboard.putNumber("Pivot Calculated Error", Math.abs(getAngleInDegrees() - m_setPoint));
-    SmartDashboard.putNumber("Pivot Set Point", m_setPoint);
-    //Constants.PivotConstants.k_ampPositionDegrees = SmartDashboard.getEntry("Amp Angle").getDouble(0);
-    m_pivotMotor.set(m_power);
+
+    // feet forward
+    if (!m_manual) {
+      double feetForward = Math.sin(Math.toRadians(m_setPoint - k_balanceAngle)) * k_f;
+
+      feetForward += m_pid.calculate(getAngleInDegrees());
+
+      SmartDashboard.putNumber("Pivot Power", feetForward);
+      // This method will be called once per scheduler run
+      m_pivotMotor.set(feetForward);
+    } 
   }
+
 }

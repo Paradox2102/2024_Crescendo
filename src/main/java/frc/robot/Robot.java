@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
     FollowPathCommand.warmupCommand().schedule();
     m_robotContainer.m_apriltagCamera.setLogging(true);
     m_robotContainer.m_apriltagCameraSide.setLogging(true);
+
     
   }
 

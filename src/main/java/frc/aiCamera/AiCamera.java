@@ -20,9 +20,13 @@ package frc.aiCamera;
 
 import java.util.ArrayList;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.apriltagsCamera.Logger;
 import frc.apriltagsCamera.Network;
+//import frc.apriltagsCamera.PositionServer;
+import frc.robot.PositionTrackerPose;
 
 /**
  * 
@@ -46,6 +50,9 @@ public class AiCamera implements Network.NetworkReceiver {
 	private AiRegions m_regions = null;
 	private AiRegions m_nextRegions = null;
 	private Object m_lock = new Object();
+	public final PositionTrackerPose m_tracker;
+	public double m_Robot_x;
+	public double m_Robot_y;
 	// private Timer m_watchdogTimer = new Timer();
 
 	public class AiRegion {
@@ -102,7 +109,8 @@ public class AiCamera implements Network.NetworkReceiver {
 		}
 	}
 
-	public AiCamera() {
+	public AiCamera(PositionTrackerPose tracker) {
+		m_tracker = tracker;
 		// m_watchdogTimer.schedule(new TimerTask() {
 
 		// 	@Override
@@ -120,6 +128,15 @@ public class AiCamera implements Network.NetworkReceiver {
 		// 	}
 		// }, 200, 200);
 	}
+
+	public double FindNotePosition(){
+		double m_Robot_x = m_tracker.getPose2d().getTranslation().getX();
+		double m_Robot_y = m_tracker.getPose2d().getTranslation().getY();
+		return m_Robot_x;
+	}
+
+
+
 
 	public AiRegions getRegions() {
 		synchronized (m_lock) {

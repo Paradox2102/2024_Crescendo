@@ -74,7 +74,7 @@ public class RobotContainer {
   PositionServer m_posServer = new PositionServer(m_apriltagCamera);
   Constants m_constants = new Constants();
   LEDConfig m_ledConfig;
-  private final AiCamera m_aiCamera = new AiCamera(); 
+  
   final ShooterSensors m_shooterSensors = new ShooterSensors();
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera, m_apriltagCameraSide);
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem(() -> m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters());
@@ -86,6 +86,7 @@ public class RobotContainer {
   private final CommandJoystick m_joystick = new CommandJoystick(1);
   //private final CommandJoystick m_testStick = new CommandJoystick(2);
   public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);
+  private final AiCamera m_aiCamera = new AiCamera(m_tracker); 
   SendableChooser<Command> m_autoSelection = new SendableChooser<>();
 
 
@@ -142,6 +143,7 @@ public class RobotContainer {
     m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraRightX, Constants.DriveConstants.k_cameraRightY, -90, ApriltagsCameraType.GS_6mm); 
     m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraLeftX, Constants.DriveConstants.k_cameraLeftY, 88, ApriltagsCameraType.GS_6mm); 
     // m_apriltagCameraSide.connect("10.21.2.12", 5800);
+    System.out.println("robotposition: "+m_aiCamera.FindNotePosition());
     m_aiCamera.connect("10.21.2.10", 5800);
     m_posServer.start();
   }

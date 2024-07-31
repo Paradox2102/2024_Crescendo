@@ -35,6 +35,9 @@ import frc.robot.commands.gamePieceManipulation.ResetSubsystemsCommand;
 import frc.robot.commands.gamePieceManipulation.RevCommand;
 import frc.robot.commands.gamePieceManipulation.ShootSequence;
 import frc.robot.commands.pivot.DefaultPivotCommand;
+import frc.robot.commands.pivot.ElasticChangeDegree;
+import frc.robot.commands.pivot.ElasticChangeDegrees;
+import frc.robot.commands.pivot.ElasticChangeVelocity;
 import frc.robot.commands.pivot.ResetPivot;
 import frc.robot.commands.pivot.SetPivotOffInputDistance;
 import frc.robot.commands.pivot.SetPivotOffRobotLocation;
@@ -246,7 +249,7 @@ public class RobotContainer {
     // m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode),
     // m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem,
     // m_elevatorSubsystem, m_stickSubsystem));
-    m_testStick.button(8).whileTrue(new TestPivotCommandBMR(m_pivotSubsystem, 70));
+    // m_testStick.button(8).whileTrue(new TestPivotCommandBMR(m_pivotSubsystem, 70));
     m_testStick.button(2).whileTrue(new SetPowerPivotCommand(m_pivotSubsystem, 0.25));
     //new buttons
     m_testStick.button(3).onTrue(new ResetPivot(m_pivotSubsystem));
@@ -254,6 +257,10 @@ public class RobotContainer {
     m_testStick.button(5).onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem));
     m_testStick.button(6).onTrue(new SetPivotPos(m_pivotSubsystem, 60));
     m_testStick.button(7).whileTrue(new ManualPivotCommand(m_pivotSubsystem, 0.3));
+    m_testStick.button(8).toggleOnTrue(new ElasticChangeDegree(m_pivotSubsystem));
+    SmartDashboard.putNumber("Get Degrees", Constants.PivotConstants.k_resetPositionDegrees);
+    m_testStick.button(9).toggleOnTrue(new ElasticChangeVelocity(m_shooterSubsystem));
+    SmartDashboard.putNumber("Get Velocity", Constants.ShooterConstants.k_speakerShootVelocityRPM);
   }
 
   public double getThrottle() {

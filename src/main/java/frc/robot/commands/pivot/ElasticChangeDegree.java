@@ -4,22 +4,17 @@
 
 package frc.robot.commands.pivot;
 
-
-import java.io.ObjectInputStream.GetField;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.apriltagsCamera.Logger;
 import frc.robot.Constants;
 import frc.robot.subsystems.PivotSubsystem;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ElasticChangeDegrees extends InstantCommand {
- private final PivotSubsystem m_subsystem;
+public class ElasticChangeDegree extends Command {
+  private final PivotSubsystem m_subsystem;
 
-  public ElasticChangeDegrees(PivotSubsystem subsystem) {
+  /** Creates a new ElasticChangeDegree. */
+  public ElasticChangeDegree(PivotSubsystem subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
@@ -29,8 +24,25 @@ public class ElasticChangeDegrees extends InstantCommand {
   @Override
   public void initialize() {
     Logger.log("ElasticChangeDegrees", 1, "initialize");
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
     double degree = SmartDashboard.getNumber("Get Degrees", Constants.PivotConstants.k_resetPositionDegrees);
     SmartDashboard.putNumber("Currrent Degrees", degree);
     m_subsystem.setPositionDegrees(degree);
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+    Logger.log("ElasticChangeDegree", 1, "end");
+  }
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
   }
 }

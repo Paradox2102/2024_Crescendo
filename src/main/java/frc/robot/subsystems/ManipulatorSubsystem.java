@@ -22,7 +22,11 @@ public class ManipulatorSubsystem extends SubsystemBase {
   private final SparkPIDController m_PID;
   private double m_velocity = 0;
   private InterpolatingDoubleTreeMap m_revSpeeds = new InterpolatingDoubleTreeMap();
-
+ private double k_maxVelocityFront = 5250;
+ private double k_fFront = 1.01/k_maxVelocityFront;
+ private double k_pFront = 0.00025;
+ private double k_iFront = 0.0000025;
+ private double k_iZoneFront=100;
   /** Creates a new FrontSubsystem. */
   public ManipulatorSubsystem(DriveSubsystem driveSubsystem, Boolean isFront) {
     m_isFront = isFront;
@@ -35,11 +39,11 @@ public class ManipulatorSubsystem extends SubsystemBase {
     m_PID = m_motor.getPIDController();
     m_motor.setSmartCurrentLimit(70);
     setBrakeMode(true);
-    m_PID.setFF(m_isFront ? Constants.ShooterConstants.k_f : Constants.HolderConstants.k_f);
-    m_PID.setP(m_isFront ? Constants.ShooterConstants.k_p : Constants.HolderConstants.k_p);
-    m_PID.setI(m_isFront ? Constants.ShooterConstants.k_i : Constants.HolderConstants.k_i);
-    m_PID.setIZone(m_isFront ? Constants.ShooterConstants.k_iZone : Constants.HolderConstants.k_iZone);
-    m_PID.setD(m_isFront ? Constants.ShooterConstants.k_d : Constants.HolderConstants.k_d);
+    m_PID.setFF(m_isFront ? k_fFront : Constants.HolderConstants.k_f);
+    m_PID.setP(m_isFront ? k_pFront : Constants.HolderConstants.k_p);
+    m_PID.setI(m_isFront ?k_iFront : Constants.HolderConstants.k_i);
+     m_PID.setIZone(m_isFront ? k_iZoneFront: Constants.HolderConstants.k_iZone);
+    // m_PID.setD(m_isFront ? Constants.ShooterConstants.k_d : Constants.HolderConstants.k_d);
 
     setName(m_isFront ? "ShooterSubsystem" : "HolderSubsystem");
     m_motor.setInverted(m_isFront ? !Constants.States.m_isCompetition : Constants.States.m_isCompetition);

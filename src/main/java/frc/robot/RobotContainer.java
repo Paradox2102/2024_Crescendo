@@ -26,6 +26,7 @@ import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.AutoOrientCommand;
 import frc.robot.commands.drivetrain.EjectSpinCommand;
 import frc.robot.commands.elevator.ManualElevatorCommand;
+import frc.robot.commands.gamePieceManipulation.CalibrateShooterCommand;
 import frc.robot.commands.gamePieceManipulation.DefaultManipulatorCommand;
 import frc.robot.commands.gamePieceManipulation.EjectGamePiece;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
@@ -242,12 +243,13 @@ public class RobotContainer {
     }));
     m_joystick.button(3).whileTrue(new SetStickPos(m_stickSubsystem, false));
     m_testStick.button(1).onTrue(new SwapIntakeSideCommand());
+    m_testStick.button(2).whileTrue(new CalibrateShooterCommand(m_shooterSubsystem));
     // ToggleTrigger m_brakeMode = new ToggleTrigger(m_joystick.button(12));
     // m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode),
     // m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem,
     // m_elevatorSubsystem, m_stickSubsystem));
     m_testStick.button(8).whileTrue(new TestPivotCommandBMR(m_pivotSubsystem, 70));
-    m_testStick.button(2).whileTrue(new SetPowerPivotCommand(m_pivotSubsystem, 0.25));
+    //m_testStick.button(2).whileTrue(new SetPowerPivotCommand(m_pivotSubsystem, 0.25));
     //new buttons
     m_testStick.button(3).onTrue(new ResetPivot(m_pivotSubsystem));
     m_testStick.button(4).onTrue(new SetPivotOffInputDistance(m_pivotSubsystem, 5));

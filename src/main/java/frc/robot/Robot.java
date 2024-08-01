@@ -8,9 +8,9 @@ import com.pathplanner.lib.commands.FollowPathCommand;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.apriltagsCamera.ApriltagsCamera;
 
 
 /**
@@ -34,8 +34,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer(this);
     FollowPathCommand.warmupCommand().schedule();
-    m_robotContainer.m_apriltagCamera.setLogging(true);
-    m_robotContainer.m_apriltagCameraSide.setLogging(true);
+    ApriltagsCamera.setLogging(true);
+    ApriltagsCamera.setLogging(true);
 
     
   }
@@ -66,8 +66,8 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    m_robotContainer.m_apriltagCamera.setLogging(false);
-    m_robotContainer.m_apriltagCameraSide.setLogging(false);
+    ApriltagsCamera.setLogging(false);
+    ApriltagsCamera.setLogging(false);
   }
 
   @Override

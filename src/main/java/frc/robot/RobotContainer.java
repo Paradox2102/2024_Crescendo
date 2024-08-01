@@ -143,7 +143,7 @@ public class RobotContainer {
     m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraRightX, Constants.DriveConstants.k_cameraRightY, -90, ApriltagsCameraType.GS_6mm); 
     m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraLeftX, Constants.DriveConstants.k_cameraLeftY, 88, ApriltagsCameraType.GS_6mm); 
     // m_apriltagCameraSide.connect("10.21.2.12", 5800);
-    System.out.println("robotposition: "+m_aiCamera.FindNotePosition());
+    System.out.println("robotposition: "+m_aiCamera.FindNotePositions());
     m_aiCamera.connect("10.21.2.10", 5800);
     m_posServer.start();
   }

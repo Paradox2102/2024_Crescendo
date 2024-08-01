@@ -18,6 +18,7 @@
 
 package frc.aiCamera;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -129,10 +130,11 @@ public class AiCamera implements Network.NetworkReceiver {
 		// }, 200, 200);
 	}
 
-	public double FindNotePosition(){
+	public void FindNotePositions(double transx,double transy, double transz){
 		double m_Robot_x = m_tracker.getPose2d().getTranslation().getX();
 		double m_Robot_y = m_tracker.getPose2d().getTranslation().getY();
-		return m_Robot_x;
+		
+		// return m_nextRegions.getLargestRegion();
 	}
 
 
@@ -295,6 +297,7 @@ public class AiCamera implements Network.NetworkReceiver {
 			if (m_nextRegions != null) {
 				m_nextRegions.m_regions.add(new AiRegion(a[0], a[1], a[2], a[3],a[4],a[5],a[6]));
 			}
+			
 		}
 	}
 

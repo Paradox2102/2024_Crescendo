@@ -109,17 +109,17 @@ public class PivotSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Pivot ERROR", getAngleInDegrees() - m_setPoint);
     SmartDashboard.putNumber("Pivot set point", m_setPoint);
 
-
     // feet forward
     if (!m_manual) {
-      double feetForward = Math.sin(Math.toRadians(m_setPoint - k_balanceAngle)) * k_f;
+      double feedForward = Math.sin(Math.toRadians(m_setPoint - k_balanceAngle)) * k_f;
 
-      feetForward += m_pid.calculate(getAngleInDegrees());
+      feedForward += m_pid.calculate(getAngleInDegrees());
 
-      SmartDashboard.putNumber("Pivot Power", feetForward);
+      SmartDashboard.putNumber("Pivot Power", feedForward);
+      SmartDashboard.putNumber("PivotSetPoint", m_setPoint);
       // This method will be called once per scheduler run
-      m_pivotMotor.set(feetForward);
-    } 
+      m_pivotMotor.set(feedForward);
+    }
   }
 
 }

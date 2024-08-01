@@ -12,7 +12,6 @@ import frc.robot.commands.StopEverything;
 import frc.robot.commands.ToggleAutoAim;
 import frc.robot.commands.ManualPivotCommand;
 import frc.robot.commands.PassShot;
-import frc.robot.commands.ResetGyro;
 import frc.robot.commands.ToggleShootSideCommand;
 import frc.robot.commands.apriltags.SetApriltagsDashboard;
 import frc.robot.commands.apriltags.SetApriltagsLogging;
@@ -22,8 +21,6 @@ import frc.robot.commands.autos.IntakeAndGoToBackShooter;
 import frc.robot.commands.autos.RevBackShooter;
 import frc.robot.commands.autos.StartBack;
 import frc.robot.commands.autos.StartFront;
-import frc.robot.commands.drivetrain.ArcadeDrive;
-import frc.robot.commands.drivetrain.AutoOrientCommand;
 import frc.robot.commands.drivetrain.EjectSpinCommand;
 import frc.robot.commands.elevator.ManualElevatorCommand;
 import frc.robot.commands.gamePieceManipulation.CalibrateShooterCommand;
@@ -31,11 +28,12 @@ import frc.robot.commands.gamePieceManipulation.DefaultManipulatorCommand;
 import frc.robot.commands.gamePieceManipulation.EjectGamePiece;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
-import frc.robot.commands.gamePieceManipulation.JukeShot;
 import frc.robot.commands.gamePieceManipulation.ResetSubsystemsCommand;
 import frc.robot.commands.gamePieceManipulation.RevCommand;
 import frc.robot.commands.gamePieceManipulation.ShootSequence;
 import frc.robot.commands.pivot.DefaultPivotCommand;
+import frc.robot.commands.pivot.ElasticChangeDegree;
+import frc.robot.commands.pivot.ElasticChangeVelocity;
 import frc.robot.commands.pivot.ResetPivot;
 import frc.robot.commands.pivot.SetPivotOffInputDistance;
 import frc.robot.commands.pivot.SetPivotOffRobotLocation;
@@ -44,7 +42,6 @@ import frc.robot.commands.stick.SetStickPos;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.commands.test.SwapIntakeSideCommand;
 import frc.robot.commands.test.SetPowerPivotCommand;
-import frc.robot.commands.test.TestPivotCommandBMR;
 import frc.robot.led.LEDConfig;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -52,18 +49,15 @@ import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSensors;
 import frc.robot.subsystems.StickSubsystem;
-import frc.triggers.HoldTrigger;
+// import frc.triggers.HoldTrigger;
 
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -196,8 +190,8 @@ public class RobotContainer {
     new Trigger(() -> getPositionServerButtonState(4))
         .onTrue(new SetApriltagsDashboard(m_apriltagCamera, m_apriltagCameraSide, false));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    HoldTrigger m_slowMode = new HoldTrigger(m_driverController.rightBumper());
-    HoldTrigger m_slowMode1 = new HoldTrigger(m_driverController.leftBumper());
+    // HoldTrigger m_slowMode = new HoldTrigger(m_driverController.rightBumper());
+    // HoldTrigger m_slowMode1 = new HoldTrigger(m_driverController.leftBumper());
     // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(
     //     m_driveSubsystem,
     //     () -> m_driverController.getLeftX(),
@@ -248,14 +242,18 @@ public class RobotContainer {
     // m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode),
     // m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem,
     // m_elevatorSubsystem, m_stickSubsystem));
-    m_testStick.button(8).whileTrue(new TestPivotCommandBMR(m_pivotSubsystem, 70));
-    //m_testStick.button(2).whileTrue(new SetPowerPivotCommand(m_pivotSubsystem, 0.25));
+    // m_testStick.button(8).whileTrue(new TestPivotCommandBMR(m_pivotSubsystem, 70));
+    m_testStick.button(1).whileTrue(new SetPowerPivotCommand(m_pivotSubsystem, 0.25));
     //new buttons
-    m_testStick.button(3).onTrue(new ResetPivot(m_pivotSubsystem));
-    m_testStick.button(4).onTrue(new SetPivotOffInputDistance(m_pivotSubsystem, 5));
-    m_testStick.button(5).onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem));
-    m_testStick.button(6).onTrue(new SetPivotPos(m_pivotSubsystem, 60));
-    m_testStick.button(7).whileTrue(new ManualPivotCommand(m_pivotSubsystem, 0.3));
+    m_testStick.button(2).onTrue(new ResetPivot(m_pivotSubsystem));
+    m_testStick.button(3).onTrue(new SetPivotOffInputDistance(m_pivotSubsystem, 5));
+    m_testStick.button(4).onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem));
+    m_testStick.button(5).onTrue(new SetPivotPos(m_pivotSubsystem, 60));
+    m_testStick.button(6).whileTrue(new ManualPivotCommand(m_pivotSubsystem, 0.3));
+    m_testStick.button(7).toggleOnTrue(new ElasticChangeDegree(m_pivotSubsystem));
+    SmartDashboard.putNumber("Get Degrees", Constants.PivotConstants.k_resetPositionDegrees);
+    m_testStick.button(8).toggleOnTrue(new ElasticChangeVelocity(m_shooterSubsystem));
+    SmartDashboard.putNumber("Get Velocity", Constants.ShooterConstants.k_speakerShootVelocityRPM);
   }
 
   public double getThrottle() {

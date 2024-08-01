@@ -2,19 +2,20 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.gamePieceManipulation;
-
-import edu.wpi.first.wpilibj2.command.Command;
+package frc.robot.commands.pivot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.ManipulatorSubsystem;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.apriltagsCamera.Logger;
+import frc.robot.Constants;
+import frc.robot.subsystems.PivotSubsystem;
 
-public class CalibrateShooterCommand extends Command {
-  private ManipulatorSubsystem m_subsystem;
+public class ElasticChangeDegree extends Command {
+  private final PivotSubsystem m_subsystem;
 
-  /** Creates a new CalibrateShooterCommand. */
-  public CalibrateShooterCommand(ManipulatorSubsystem shooterSubsystem) {
-    m_subsystem = shooterSubsystem;
+  /** Creates a new ElasticChangeDegree. */
+  public ElasticChangeDegree(PivotSubsystem subsystem) {
+    m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }
@@ -22,19 +23,21 @@ public class CalibrateShooterCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setVelocityRPM(4000);
+    Logger.log("ElasticChangeDegrees", 1, "initialize");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("manipulator velocity", m_subsystem.getVelocityRPM());
+    double degree = SmartDashboard.getNumber("Get Degrees", Constants.PivotConstants.k_resetPositionDegrees);
+    SmartDashboard.putNumber("Currrent Degrees", degree);
+    m_subsystem.setPositionDegrees(degree);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_subsystem.setPower(0);
+    Logger.log("ElasticChangeDegree", 1, "end");
   }
 
   // Returns true when the command should end.

@@ -21,6 +21,7 @@ import frc.robot.commands.autos.IntakeAndGoToBackShooter;
 import frc.robot.commands.autos.RevBackShooter;
 import frc.robot.commands.autos.StartBack;
 import frc.robot.commands.autos.StartFront;
+import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.EjectSpinCommand;
 import frc.robot.commands.elevator.ManualElevatorCommand;
 import frc.robot.commands.gamePieceManipulation.CalibrateShooterCommand;
@@ -50,6 +51,7 @@ import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSensors;
 import frc.robot.subsystems.StickSubsystem;
 // import frc.triggers.HoldTrigger;
+import frc.triggers.HoldTrigger;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -190,8 +192,8 @@ public class RobotContainer {
     new Trigger(() -> getPositionServerButtonState(4))
         .onTrue(new SetApriltagsDashboard(m_apriltagCamera, m_apriltagCameraSide, false));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    // HoldTrigger m_slowMode = new HoldTrigger(m_driverController.rightBumper());
-    // HoldTrigger m_slowMode1 = new HoldTrigger(m_driverController.leftBumper());
+    HoldTrigger m_slowMode = new HoldTrigger(m_driverController.rightBumper());
+    HoldTrigger m_slowMode1 = new HoldTrigger(m_driverController.leftBumper());
     // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(
     //     m_driveSubsystem,
     //     () -> m_driverController.getLeftX(),
@@ -250,7 +252,7 @@ public class RobotContainer {
     m_testStick.button(4).onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem));
     m_testStick.button(5).onTrue(new SetPivotPos(m_pivotSubsystem, 60));
     m_testStick.button(6).whileTrue(new ManualPivotCommand(m_pivotSubsystem, 0.3));
-    m_testStick.button(7).toggleOnTrue(new ElasticChangeDegree(m_pivotSubsystem));
+    m_testStick.button(9).toggleOnTrue(new ElasticChangeDegree(m_pivotSubsystem));
     SmartDashboard.putNumber("Get Degrees", Constants.PivotConstants.k_resetPositionDegrees);
     m_testStick.button(8).toggleOnTrue(new ElasticChangeVelocity(m_shooterSubsystem));
     SmartDashboard.putNumber("Get Velocity", Constants.ShooterConstants.k_speakerShootVelocityRPM);

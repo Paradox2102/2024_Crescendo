@@ -31,6 +31,7 @@ public class ElasticChangeVelocity extends Command {
   public void execute() {
     double velo = SmartDashboard.getNumber("Get Velocity", Constants.ShooterConstants.k_speakerShootVelocityRPM);
     SmartDashboard.putNumber("Current Velocity", velo);
+    Constants.ShooterConstants.k_speakerShootVelocityRPM = velo;
     m_subsystem.setVelocityRPM(velo);
   }
 

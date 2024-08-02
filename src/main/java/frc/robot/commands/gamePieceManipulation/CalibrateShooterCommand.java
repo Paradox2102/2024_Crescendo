@@ -23,7 +23,8 @@ public class CalibrateShooterCommand extends Command {
   @Override
   public void initialize() {
     m_subsystem.setVelocityRPM(4000);
-  }
+  // m_subsystem.setPower(1);
+}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

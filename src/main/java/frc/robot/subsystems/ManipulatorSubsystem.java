@@ -22,7 +22,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
   private final SparkPIDController m_PID;
   private double m_velocity = 0;
   private InterpolatingDoubleTreeMap m_revSpeeds = new InterpolatingDoubleTreeMap();
- private double k_maxVelocityFront = 5250;
+ private double k_maxVelocityFront = 5700;
  private double k_fFront = 1.01/k_maxVelocityFront;
  private double k_pFront = 0.00025;
  private double k_iFront = 0.0000025;
@@ -43,7 +43,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
     m_PID.setP(m_isFront ? k_pFront : Constants.HolderConstants.k_p);
     m_PID.setI(m_isFront ?k_iFront : Constants.HolderConstants.k_i);
      m_PID.setIZone(m_isFront ? k_iZoneFront: Constants.HolderConstants.k_iZone);
-    // m_PID.setD(m_isFront ? Constants.ShooterConstants.k_d : Constants.HolderConstants.k_d);
+    // // m_PID.setD(m_isFront ? Constants.ShooterConstants.k_d : Constants.HolderConstants.k_d);
 
     setName(m_isFront ? "ShooterSubsystem" : "HolderSubsystem");
     m_motor.setInverted(m_isFront ? !Constants.States.m_isCompetition : Constants.States.m_isCompetition);
@@ -102,5 +102,6 @@ public class ManipulatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber(getName()+" velocity RPM", getVelocityRPM());
   }
 }

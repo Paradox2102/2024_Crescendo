@@ -202,6 +202,7 @@ public class RobotContainer {
     m_joystick.button(6).onTrue(new ToggleAutoAim());
     m_joystick.button(10).onTrue(new InstantCommand(() -> {Constants.States.m_shootIntakeSide = !Constants.States.m_shootIntakeSide;}));
     m_joystick.button(3).whileTrue(new SetStickPos(m_stickSubsystem, false));
+    m_joystick.button(12).toggleOnTrue(new SetStickPos(m_stickSubsystem, false));
 
     //ToggleTrigger m_brakeMode = new ToggleTrigger(m_joystick.button(12));
     //m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode), m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_backSubsystem, m_elevatorSubsystem, m_stickSubsystem));

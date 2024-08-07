@@ -20,15 +20,17 @@ package frc.aiCamera;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.apriltagsCamera.Logger;
 import frc.apriltagsCamera.Network;
+import frc.robot.ParadoxField;
 //import frc.apriltagsCamera.PositionServer;
 import frc.robot.PositionTrackerPose;
-
+import edu.wpi.first.math.geometry.Rotation2d;
 /**
  * 
  * @author John Gaby
@@ -66,7 +68,8 @@ public class AiCamera implements Network.NetworkReceiver {
 		public double m_translation_y;
 		public double m_translation_z;
 
-		public AiRegion(double ux, double uy, double lx, double ly,double translation_x,double translation_y,double translation_z) {
+		public AiRegion(double ux, double uy, double lx, double ly, double translation_x, double translation_y,
+				double translation_z) {
 			m_ux = ux;
 			m_uy = uy;
 			m_lx = lx;
@@ -99,8 +102,7 @@ public class AiCamera implements Network.NetworkReceiver {
 			for (AiRegion r : m_regions) {
 				double area = Math.abs((r.m_lx - r.m_ux) * (r.m_ly - r.m_uy));
 
-				if (area > largest)
-				{
+				if (area > largest) {
 					region = r;
 					largest = area;
 				}
@@ -114,31 +116,58 @@ public class AiCamera implements Network.NetworkReceiver {
 		m_tracker = tracker;
 		// m_watchdogTimer.schedule(new TimerTask() {
 
-		// 	@Override
-		// 	public void run() {
-		// 		if (m_connected) {
-		// 			Logger.log("ApriltagsCamera", 1, "WatchDog");
+		// @Override
+		// public void run() {
+		// if (m_connected) {
+		// Logger.log("ApriltagsCamera", 1, "WatchDog");
 
-		// 			m_network.sendMessage("k");
+		// m_network.sendMessage("k");
 
-		// 			// if (m_lastMessage + k_timeout < System.currentTimeMillis()) {
-		// 			// 	Logger.log("ApriltagsCamera", 3, "Network timeout");
-		// 			// 	m_network.closeConnection();
-		// 			// }
-		// 		}
-		// 	}
+		// // if (m_lastMessage + k_timeout < System.currentTimeMillis()) {
+		// // Logger.log("ApriltagsCamera", 3, "Network timeout");
+		// // m_network.closeConnection();
+		// // }
+		// }
+		// }
 		// }, 200, 200);
 	}
 
-	public void FindNotePositions(double transx,double transy, double transz){
+	public Pose2d FindNotePositions() {
 		double m_Robot_x = m_tracker.getPose2d().getTranslation().getX();
 		double m_Robot_y = m_tracker.getPose2d().getTranslation().getY();
-		
-		// return m_nextRegions.getLargestRegion();
+		double x_distance;
+		double y_distance;
+		double xr; // xr is x position of note
+		double yr; // yr is y position of note
+		double alpha;// the degrees the robot needs to turn
+		double beta;// robot angle - alpha
+		double cx;
+		double cy;
+		double distance_from_camera_to_center = 9; // distance from camera to center of robot in inches
+		AiRegion largest_region = m_nextRegions.getLargestRegion();
+		double transx = largest_region.m_translation_x;
+		double transy = largest_region.m_translation_y;
+		double transz = largest_region.m_translation_z;
+		double robot_angle = ParadoxField.normalizeAngle(m_tracker.getPose2d().getRotation().getDegrees());
+		alpha = Math.atan2(transx, transz);
+		beta = robot_angle - alpha;
+		cx = distance_from_camera_to_center*Math.cos(robot_angle);
+		cy = distance_from_camera_to_center*Math.sin(robot_angle);
+		y_distance = Math.sin(beta) * (transz * transz + transx * transx);
+		x_distance = Math.cos(beta) * y_distance + distance_from_camera_to_center;// TODO: factor in camera position on
+		xr = m_Robot_x+x_distance+cx;
+		yr = m_Robot_y+y_distance+cy;
+		// List<Double> list  = new ArrayList<Double>();
+		// list.add(xr);
+		// list.add(yr);
+		return new Pose2d(xr, yr, Rotation2d.fromDegrees(alpha));
+
+																			// robot by adding distance from
+																					// camera to robot center
+		// x_distance = m_tracker.getPose2d().getRotation().getCos()*transz;
+		// TODO: return xr and yr of largest note here
+
 	}
-
-
-
 
 	public AiRegions getRegions() {
 		synchronized (m_lock) {
@@ -258,14 +287,14 @@ public class AiCamera implements Network.NetworkReceiver {
 	}
 
 	// private void timeSync() {
-	// 	long time = getTimeMs();
-	// 	if (time > m_syncTime) {
-	// 		Logger.log("ApriltagCameras", -1, "TimeSync()");
+	// long time = getTimeMs();
+	// if (time > m_syncTime) {
+	// Logger.log("ApriltagCameras", -1, "TimeSync()");
 
-	// 		m_network.sendMessage(String.format("T1 %d", getTimeMs()));
+	// m_network.sendMessage(String.format("T1 %d", getTimeMs()));
 
-	// 		m_syncTime = time + k_syncRetry;
-	// 	}
+	// m_syncTime = time + k_syncRetry;
+	// }
 
 	// }
 
@@ -275,7 +304,7 @@ public class AiCamera implements Network.NetworkReceiver {
 		// System.out.println(String.format("%d %s", System.currentTimeMillis(), args));
 
 		if (a != null) {
-			// Logger.log("AiCamera", 1, String.format("F %d %d %d", a[0], a[1], a[2]));	
+			// Logger.log("AiCamera", 1, String.format("F %d %d %d", a[0], a[1], a[2]));
 			m_nextRegions = new AiRegions(a[0], a[1], a[2]);
 		}
 	}
@@ -284,7 +313,8 @@ public class AiCamera implements Network.NetworkReceiver {
 		double a[] = parseDouble(args, 7);
 
 		if (a != null) {
-			// Logger.log("AiCamera", 1, String.format("R %f %f %f %f", a[0], a[1], a[2], a[3]));	
+			// Logger.log("AiCamera", 1, String.format("R %f %f %f %f", a[0], a[1], a[2],
+			// a[3]));
 			SmartDashboard.putNumber("AI ul X", a[0]);
 			SmartDashboard.putNumber("AI ul Y", a[1]);
 			SmartDashboard.putNumber("AI lr X", a[2]);
@@ -295,9 +325,9 @@ public class AiCamera implements Network.NetworkReceiver {
 			SmartDashboard.putNumber("AI trans Z", a[6]);
 
 			if (m_nextRegions != null) {
-				m_nextRegions.m_regions.add(new AiRegion(a[0], a[1], a[2], a[3],a[4],a[5],a[6]));
+				m_nextRegions.m_regions.add(new AiRegion(a[0], a[1], a[2], a[3], a[4], a[5], a[6]));
 			}
-			
+
 		}
 	}
 

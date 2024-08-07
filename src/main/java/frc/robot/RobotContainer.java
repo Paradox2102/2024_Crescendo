@@ -21,6 +21,7 @@ import frc.robot.commands.autos.IntakeAndGoToBackShooter;
 import frc.robot.commands.autos.RevBackShooter;
 import frc.robot.commands.autos.StartBack;
 import frc.robot.commands.autos.StartFront;
+import frc.robot.commands.drivetrain.AlignWheelsCommand;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.EjectSpinCommand;
 import frc.robot.commands.elevator.ManualElevatorCommand;
@@ -256,6 +257,7 @@ public class RobotContainer {
     SmartDashboard.putNumber("Get Degrees", Constants.PivotConstants.k_resetPositionDegrees);
     m_testStick.button(8).toggleOnTrue(new ElasticChangeVelocity(m_shooterSubsystem));
     SmartDashboard.putNumber("Get Velocity", Constants.ShooterConstants.k_speakerShootVelocityRPM);
+    m_testStick.button(10).onTrue(new AlignWheelsCommand(m_driveSubsystem));
   }
 
   public double getThrottle() {

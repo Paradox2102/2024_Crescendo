@@ -91,19 +91,25 @@ public final class Constants {
 
       // Interpolation Table
       ShooterCalibration[] k_front = new ShooterCalibration[] {
-        //TODO - recheck
-          new ShooterCalibration(1.35, 15, 4000),
+
+          new ShooterCalibration(1.36, 13, 4000),
           new ShooterCalibration(1.54, 15, 4000),
-          new ShooterCalibration(1.77, 18, 4000),
-          new ShooterCalibration(2.06, 20, 4000),
-          new ShooterCalibration(2.43, 30, 4600),
-          new ShooterCalibration(2.76, 31, 4600),
-           //end recheck
+          new ShooterCalibration(1.78, 17, 4000),
+          new ShooterCalibration(2.01, 19.5, 4000),
+          new ShooterCalibration(2.44, 27, 4400),
+          new ShooterCalibration(2.78, 29.5, 4400),
            new ShooterCalibration(3.08, 32, 4600),
           new ShooterCalibration(3.37, 34.5, 4700),
           new ShooterCalibration(3.48, 35, 4700),
           new ShooterCalibration(3.78, 36.5, 4800),
-          new ShooterCalibration(4.05, 38, 4900)
+          new ShooterCalibration(4.05, 38, 4900),
+          new ShooterCalibration(4.15, 39.7, 5000),
+          new ShooterCalibration(4.32, 39.7, 5000),
+          new ShooterCalibration(4.6, 40.5, 5000),
+          new ShooterCalibration(4.95, 40.5, 5000),
+          new ShooterCalibration(5.4, 41.2, 5200),
+          new ShooterCalibration(5.8, 41.4, 5300),
+          new ShooterCalibration(6.4, 42.0, 5400)
       };
 
       PivotConstants.k_distancesFront = new double[] {

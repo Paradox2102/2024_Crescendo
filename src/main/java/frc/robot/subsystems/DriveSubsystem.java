@@ -554,6 +554,13 @@ public class DriveSubsystem extends SubsystemBase {
         new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
   }
 
+public void setAngleToZero(){
+m_frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
+m_frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
+m_backLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
+m_backRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(70)));
+}
+
   public void spinAllModules(){
     m_frontLeft.spin();
     //m_frontRight.spin();

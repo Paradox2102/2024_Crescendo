@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.apriltagsCamera.PositionServer;
 import frc.apriltagsCamera.ApriltagsCamera;
+import frc.apriltagsCamera.Logger;
 import frc.apriltagsCamera.ApriltagsCamera.ApriltagsCameraType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.StopEverything;
@@ -64,6 +65,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.aiCamera.AiCamera;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -94,6 +96,7 @@ public class RobotContainer {
 
   private final CommandJoystick m_testStick = new CommandJoystick(2);
   public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);
+  private final AiCamera m_aiCamera = new AiCamera(m_tracker); 
   SendableChooser<Command> m_autoSelection = new SendableChooser<>();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -161,6 +164,9 @@ public class RobotContainer {
     m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraLeftX, Constants.DriveConstants.k_cameraLeftY,
         88, ApriltagsCameraType.GS_6mm);
     m_apriltagCameraSide.connect("10.21.2.12", 5800);
+
+    Logger.log("RobotContainer", 1, "robotposition: "+m_aiCamera.FindNotePositions());
+    m_aiCamera.connect("10.21.2.10", 5800);
 
     m_posServer.start();
   }

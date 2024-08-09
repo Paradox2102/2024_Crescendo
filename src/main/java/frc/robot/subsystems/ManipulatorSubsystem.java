@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot.subsystems;
 
+import java.time.chrono.ThaiBuddhistChronology;
+
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -13,6 +15,8 @@ import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ShooterCalibration;
+
 
 public class ManipulatorSubsystem extends SubsystemBase {
   DriveSubsystem m_driveSubsystem;
@@ -22,11 +26,12 @@ public class ManipulatorSubsystem extends SubsystemBase {
   private final SparkPIDController m_PID;
   private double m_velocity = 0;
   private InterpolatingDoubleTreeMap m_revSpeeds = new InterpolatingDoubleTreeMap();
- private double k_maxVelocityFront = 5700;
- private double k_fFront = 1.01/k_maxVelocityFront;
- private double k_pFront = 0.00025;
- private double k_iFront = 0.0000025;
- private double k_iZoneFront=100;
+  private double k_maxVelocityFront = 5700;
+  private double k_fFront = 1.01 / k_maxVelocityFront;
+  private double k_pFront = 0.00025;
+  private double k_iFront = 0.0000025;
+  private double k_iZoneFront = 100;
+
   /** Creates a new FrontSubsystem. */
   public ManipulatorSubsystem(DriveSubsystem driveSubsystem, Boolean isFront) {
     m_isFront = isFront;
@@ -41,9 +46,10 @@ public class ManipulatorSubsystem extends SubsystemBase {
     setBrakeMode(true);
     m_PID.setFF(m_isFront ? k_fFront : Constants.HolderConstants.k_f);
     m_PID.setP(m_isFront ? k_pFront : Constants.HolderConstants.k_p);
-    m_PID.setI(m_isFront ?k_iFront : Constants.HolderConstants.k_i);
-     m_PID.setIZone(m_isFront ? k_iZoneFront: Constants.HolderConstants.k_iZone);
-    // // m_PID.setD(m_isFront ? Constants.ShooterConstants.k_d : Constants.HolderConstants.k_d);
+    m_PID.setI(m_isFront ? k_iFront : Constants.HolderConstants.k_i);
+    m_PID.setIZone(m_isFront ? k_iZoneFront : Constants.HolderConstants.k_iZone);
+    // // m_PID.setD(m_isFront ? Constants.ShooterConstants.k_d :
+    // Constants.HolderConstants.k_d);
 
     setName(m_isFront ? "ShooterSubsystem" : "HolderSubsystem");
     m_motor.setInverted(m_isFront ? !Constants.States.m_isCompetition : Constants.States.m_isCompetition);
@@ -93,15 +99,12 @@ public class ManipulatorSubsystem extends SubsystemBase {
   // returns the target RPM speed
   // finished
   public double getRevSpeed() {
-    double distance = m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters();
-    for (int i = 0; i < Constants.ShooterConstants.k_revDistances.length; i++) {
-      m_revSpeeds.put(Constants.ShooterConstants.k_revDistances[i], Constants.ShooterConstants.k_revSpeeds[i]);
-    }
-    return m_revSpeeds.get(distance);
+    return Constants.getShooterCalib(Constants.k_front,
+        m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters(), true);
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber(getName()+" velocity RPM", getVelocityRPM());
+    SmartDashboard.putNumber(getName() + " velocity RPM", getVelocityRPM());
   }
 }

@@ -5,6 +5,7 @@
 package frc.robot;
 
 import java.io.File;
+import java.util.function.ToDoubleFunction;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -12,6 +13,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -27,10 +29,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 
 public final class Constants {
-  public class ShooterCalibration {
+  public static class ShooterCalibration {
     private final double distance;
     private final double angle;
     private final double speed;
+    private static InterpolatingDoubleTreeMap k_shooterSpeed = new InterpolatingDoubleTreeMap();
 
     public ShooterCalibration(double d, double a, double s) {
       distance = d;
@@ -39,6 +42,49 @@ public final class Constants {
       // Use addRequirements() here to declare subsystem dependencies.
     }
 
+  }
+
+  public static ShooterCalibration[] k_front = new ShooterCalibration[] {
+      new ShooterCalibration(1.36, 13, 4000),
+      new ShooterCalibration(1.54, 15, 4000),
+      new ShooterCalibration(1.78, 17, 4000),
+      new ShooterCalibration(2.01, 19.5, 4000),
+      new ShooterCalibration(2.44, 27, 4400),
+      new ShooterCalibration(2.78, 29.5, 4400),
+      new ShooterCalibration(3.08, 32, 4600),
+      new ShooterCalibration(3.37, 34.5, 4700),
+      new ShooterCalibration(3.48, 35, 4700),
+      new ShooterCalibration(3.78, 36.5, 4800),
+      new ShooterCalibration(4.05, 38, 4900),
+      new ShooterCalibration(4.15, 39.7, 5000),
+      new ShooterCalibration(4.32, 39.7, 5000),
+      new ShooterCalibration(4.6, 40.5, 5000),
+      new ShooterCalibration(4.95, 40.5, 5000),
+      new ShooterCalibration(5.4, 41.2, 5200),
+      new ShooterCalibration(5.8, 41.4, 5300),
+      new ShooterCalibration(6.4, 42.0, 5400)
+  };
+
+  public static double getShooterCalib(ShooterCalibration[] data, double distance, boolean returnSpeed) {
+    // if returnSpeed is true, returns the speed, otherwise returns the angle
+    for (int i = 1; i < data.length - 1; i++) {
+      if ((distance >= data[i - 1].distance) && (distance < data[i].distance)) {
+        double deltaD = distance - data[i - 1].distance;
+        double D = data[i].distance - data[i - 1].distance;
+        if (returnSpeed) {
+          // speed
+          double S = data[i].speed - data[i - 1].speed;
+          double deltaS = (deltaD * (S / D));
+          return data[i - 1].speed + deltaS;
+        } else {
+          // angle
+          double A = data[i].angle - data[i - 1].angle;
+          double deltaA = (deltaD * (A / D));
+          return data[i - 1].angle + deltaA;
+        }
+      }
+    }
+    return (0);
   }
 
   public Constants() {
@@ -76,13 +122,13 @@ public final class Constants {
 
       // Shooter
       ShooterConstants.k_f = 1.1 / ShooterConstants.k_maxVelocityRPM;
-      ShooterConstants.k_p = 0.0004; //0.00005
-      ShooterConstants.k_i = 0.0000003; //0.0000001
+      ShooterConstants.k_p = 0.0004; // 0.00005
+      ShooterConstants.k_i = 0.0000003; // 0.0000001
       ShooterConstants.k_d = 0;
       ShooterConstants.k_iZone = 400;
 
-      // Holder 
-      HolderConstants.k_f = 1.1 /  ShooterConstants.k_maxVelocityRPM;
+      // Holder
+      HolderConstants.k_f = 1.1 / ShooterConstants.k_maxVelocityRPM;
       HolderConstants.k_p = .00075;
       HolderConstants.k_i = .0000001;
       HolderConstants.k_d = 0;
@@ -90,27 +136,6 @@ public final class Constants {
       HolderConstants.k_intakeVelocityRPM = 500;
 
       // Interpolation Table
-      ShooterCalibration[] k_front = new ShooterCalibration[] {
-
-          new ShooterCalibration(1.36, 13, 4000),
-          new ShooterCalibration(1.54, 15, 4000),
-          new ShooterCalibration(1.78, 17, 4000),
-          new ShooterCalibration(2.01, 19.5, 4000),
-          new ShooterCalibration(2.44, 27, 4400),
-          new ShooterCalibration(2.78, 29.5, 4400),
-           new ShooterCalibration(3.08, 32, 4600),
-          new ShooterCalibration(3.37, 34.5, 4700),
-          new ShooterCalibration(3.48, 35, 4700),
-          new ShooterCalibration(3.78, 36.5, 4800),
-          new ShooterCalibration(4.05, 38, 4900),
-          new ShooterCalibration(4.15, 39.7, 5000),
-          new ShooterCalibration(4.32, 39.7, 5000),
-          new ShooterCalibration(4.6, 40.5, 5000),
-          new ShooterCalibration(4.95, 40.5, 5000),
-          new ShooterCalibration(5.4, 41.2, 5200),
-          new ShooterCalibration(5.8, 41.4, 5300),
-          new ShooterCalibration(6.4, 42.0, 5400)
-      };
 
       PivotConstants.k_distancesFront = new double[] {
           1.3,

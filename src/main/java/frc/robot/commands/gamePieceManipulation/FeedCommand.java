@@ -31,8 +31,6 @@ public class FeedCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //TODO - remove this line after testing
-    Constants.States.m_speakerMode = true;
 
     m_dwellTimer.reset();
     m_dwellTimer.start();

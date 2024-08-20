@@ -169,8 +169,8 @@ public class RobotContainer {
                 88, ApriltagsCameraType.GS_6mm);
         m_apriltagCameraSide.connect("10.21.2.12", 5800);
 
-        Logger.log("RobotContainer", 1, "robotposition: " + m_aiCamera.FindNotePositions());
-        m_aiCamera.connect("10.21.2.10", 5800);
+        // Logger.log("RobotContainer", 1, "robotposition: " + m_aiCamera.FindNotePositions());
+        // m_aiCamera.connect("10.21.2.10", 5800);
 
         m_posServer.start();
     }

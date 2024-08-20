@@ -5,7 +5,6 @@
 package frc.robot;
 
 import java.io.File;
-import java.util.function.ToDoubleFunction;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;

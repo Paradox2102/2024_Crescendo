@@ -286,16 +286,16 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // SmartDashboard.putNumber("Rotate Error", getRotationDistanceFromTargetError());
     // // Update the odometry in the periodic block
-    // SmartDashboard.putNumber("Turn FR",
-    //                          (m_frontRight.getAngleRadians())); /// Math.PI);
-    // SmartDashboard.putNumber(
-    //     "Turn FL",
-    //     m_frontLeft.getAngleRadians()); // - (Math.PI / 2)) / Math.PI);
-    // SmartDashboard.putNumber(
-    //     "Turn BR",
-    //     m_backRight.getAngleRadians()); // + (Math.PI / 2)) / Math.PI);
-    // SmartDashboard.putNumber(
-    //     "Turn BL", m_backLeft.getAngleRadians()); // + (Math.PI)) / Math.PI);
+    SmartDashboard.putNumber("Turn FR",
+                             (m_frontRight.getMotorPosRadians())); /// Math.PI);
+    SmartDashboard.putNumber(
+        "Turn FL",
+        m_frontLeft.getMotorPosRadians()); // - (Math.PI / 2)) / Math.PI);
+    SmartDashboard.putNumber(
+        "Turn BR",
+        m_backRight.getMotorPosRadians()); // + (Math.PI / 2)) / Math.PI);
+    SmartDashboard.putNumber(
+        "Turn BL", m_backLeft.getMotorPosRadians()); // + (Math.PI)) / Math.PI);
     // SmartDashboard.putNumber("Pose Est X",
     // (m_tracker.getPose2dFRC().getTranslation().getX()));
     // SmartDashboard.putNumber("Pose Est Y",
@@ -558,7 +558,7 @@ public void setAngleToZero(){
 m_frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
 m_frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
 m_backLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
-m_backRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(70)));
+m_backRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
 }
 
   public void spinAllModules(){

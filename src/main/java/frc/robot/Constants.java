@@ -235,10 +235,10 @@ public final class Constants {
 
     public static final double k_driveRadius = .475953574;
 
-    public static double k_FLOffset = 3.14 - (Math.PI / 2); // 4.8
-    public static double k_FROffset = 3.14; // 5.33
-    public static double k_BLOffset = 3.14 + (Math.PI); // 0.16
-    public static double k_BROffset = 3.14 + (Math.PI / 2); // 4.87
+    public static double k_FLOffset = 2.42 - (Math.PI / 2); // 4.8
+    public static double k_FROffset = 1.61; // 5.33
+    public static double k_BLOffset = 1.38 + (Math.PI); // 0.16
+    public static double k_BROffset = 4.27 + (Math.PI / 2); // 4.87
 
     public static final int k_drivingMotorPinionTeeth = 14;
 

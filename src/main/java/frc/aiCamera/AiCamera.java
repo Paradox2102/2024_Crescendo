@@ -21,7 +21,7 @@ package frc.aiCamera;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,7 +30,7 @@ import frc.apriltagsCamera.Network;
 import frc.robot.ParadoxField;
 //import frc.apriltagsCamera.PositionServer;
 import frc.robot.PositionTrackerPose;
-import edu.wpi.first.math.geometry.Rotation2d;
+
 /**
  * 
  * @author John Gaby
@@ -143,24 +143,31 @@ public class AiCamera implements Network.NetworkReceiver {
 		double beta;// robot angle - alpha
 		double cx;
 		double cy;
-		double distance_from_camera_to_center = 9; // distance from camera to center of robot in inches
+
+		double distance_from_camera_to_center = 9/39.37; // distance from camera to center of robot in inches
 		AiRegion largest_region = m_nextRegions.getLargestRegion();
-		double transx = largest_region.m_translation_x;
-		double transy = largest_region.m_translation_y;
-		double transz = largest_region.m_translation_z;
-		double robot_angle = ParadoxField.normalizeAngle(m_tracker.getPose2d().getRotation().getDegrees());
-		alpha = Math.atan2(transx, transz);
-		beta = robot_angle - alpha;
-		cx = distance_from_camera_to_center*Math.cos(robot_angle);
-		cy = distance_from_camera_to_center*Math.sin(robot_angle);
-		y_distance = Math.sin(beta) * (transz * transz + transx * transx);
-		x_distance = Math.cos(beta) * y_distance + distance_from_camera_to_center;// TODO: factor in camera position on
-		xr = m_Robot_x+x_distance+cx;
-		yr = m_Robot_y+y_distance+cy;
-		// List<Double> list  = new ArrayList<Double>();
-		// list.add(xr);
-		// list.add(yr);
-		return new Pose2d(xr, yr, Rotation2d.fromDegrees(alpha));
+		if(largest_region!=null){
+			double transx = largest_region.m_translation_x/39.37;
+			double transy = largest_region.m_translation_y/39.37;
+			double transz = largest_region.m_translation_z/39.37; // dividing by 39.37 converts inches to meters
+			// THESE DISTANCES WERE MADE IN THE EAST, DOWN, NORTH COORDINATE SYSTEM. THEY ARE CONVERTED TO NWU COORDINATE SYSTEM BY CHANGING TRANSZ TO X AND CHANGE TRANS X TO Y
+			double x = transz;
+			double y = transx;
+			double robot_angle = ParadoxField.normalizeAngle(m_tracker.getPose2d().getRotation().getDegrees());
+			
+			alpha = new Rotation2d(x,y).getDegrees();//Math.atan2(transx, transz);
+			beta = robot_angle - alpha;
+			cx = distance_from_camera_to_center*Math.cos(robot_angle);
+			cy = distance_from_camera_to_center*Math.sin(robot_angle);
+			y_distance = Math.sin(Math.toRadians(beta)) * x * x + y * y;
+			x_distance = Math.cos(Math.toRadians(beta)) * y_distance + distance_from_camera_to_center;
+			xr = m_Robot_x+x_distance+cx;
+			yr = m_Robot_y+y_distance+cy;
+			return new Pose2d(xr, yr, Rotation2d.fromDegrees(alpha));
+		}
+		else{
+			return null;
+		}
 
 																			// robot by adding distance from
 																					// camera to robot center

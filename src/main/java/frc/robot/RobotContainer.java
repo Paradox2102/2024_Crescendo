@@ -260,7 +260,7 @@ public class RobotContainer {
         // ToggleTrigger m_brakeMode = new ToggleTrigger(m_joystick.button(12));
         // m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode),
         // m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem,
-        // m_elevatorSubsystem, m_stickSubsystem));
+        // m_elevatorSubsystem, m_stickSubsystem)); 
         // m_testStick.button(8).whileTrue(new TestPivotCommandBMR(m_pivotSubsystem,
         // 70));
         m_testStick.button(1).whileTrue(new SetPowerPivotCommand(m_pivotSubsystem, 0.25));

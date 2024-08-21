@@ -6,11 +6,14 @@ package frc.robot;
 
 import com.pathplanner.lib.commands.FollowPathCommand;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.apriltagsCamera.ApriltagsCamera;
+import frc.aiCamera.*;
 
 
 /**
@@ -33,9 +36,12 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer(this);
+
     FollowPathCommand.warmupCommand().schedule();
     ApriltagsCamera.setLogging(true);
     ApriltagsCamera.setLogging(true);
+    
+    
 
     
   }
@@ -55,12 +61,15 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     m_robotContainer.m_ledConfig.periodic();
+
     // Constants.ShooterConstants.k_ampShootVelocityRPM = -SmartDashboard.getEntry("Amp Velo").getDouble(1950);
 
     // ApriltagsCameraStats stats = m_robotContainer.m_apriltagCamera.getStats();
     // SmartDashboard.putNumber("cam avg delay", stats.m_averageDelay);
     // SmartDashboard.putNumber("cam min delay", stats.m_minDelay);
-    // SmartDashboard.putNumber("cam max delay", stats.m_maxDelay);
+    Pose2d note_positions = m_robotContainer.m_aiCamera.FindNotePositions();
+    SmartDashboard.putNumber("note xr",note_positions.getX());
+    SmartDashboard.putNumber("note yr", note_positions.getY());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

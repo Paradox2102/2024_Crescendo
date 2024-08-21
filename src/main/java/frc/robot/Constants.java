@@ -34,10 +34,12 @@ public final class Constants {
     private final double speed;
     private static InterpolatingDoubleTreeMap k_shooterSpeed = new InterpolatingDoubleTreeMap();
 
-    public ShooterCalibration(double d, double a, double s) {
-      distance = d;
-      angle = a;
-      speed = s;
+    private static final double k_distanceOffsetInMeters = 0.5;
+
+    public ShooterCalibration(double distance, double angle, double speed) {
+      this.distance = distance;
+      this.angle = angle;
+      this.speed = speed;
       // Use addRequirements() here to declare subsystem dependencies.
     }
 
@@ -113,10 +115,10 @@ public final class Constants {
       PivotConstants.k_ampPositionDegrees = 25;
 
       // Drive
-      DriveConstants.k_FLOffset = 2.42 - (Math.PI / 2);
-      DriveConstants.k_FROffset = 1.61;
-      DriveConstants.k_BLOffset = 1.38 + (Math.PI);
-      DriveConstants.k_BROffset = 4.27 + (Math.PI / 2);
+      DriveConstants.k_FLOffset = 2.77 - (Math.PI / 2);
+      DriveConstants.k_FROffset = 0.01;
+      DriveConstants.k_BLOffset = 4.2 + (Math.PI);
+      DriveConstants.k_BROffset = 0.01 + (Math.PI / 2);
       DriveConstants.k_maxSpeedMetersPerSecond = 4.8;
 
       // Shooter
@@ -174,9 +176,10 @@ public final class Constants {
       };
 
       ShooterCalibration[] k_back = new ShooterCalibration[] {
-          new ShooterCalibration(1.4, 117, 0.0),
-          new ShooterCalibration(1.75, 112, 0),
-          new ShooterCalibration(2, 110, 0),
+          new ShooterCalibration(1.4
+          , 117, 0.0),
+          new ShooterCalibration(1.75 , 112, 0),
+          new ShooterCalibration(2 , 110, 0),
           new ShooterCalibration(2.25, 107, 0),
           new ShooterCalibration(2.5, 105, 0),
           new ShooterCalibration(2.75, 101, 0),
@@ -235,10 +238,10 @@ public final class Constants {
 
     public static final double k_driveRadius = .475953574;
 
-    public static double k_FLOffset = 2.42 - (Math.PI / 2); // 4.8
-    public static double k_FROffset = 1.61; // 5.33
-    public static double k_BLOffset = 1.38 + (Math.PI); // 0.16
-    public static double k_BROffset = 4.27 + (Math.PI / 2); // 4.87
+    public static double k_FLOffset = 2.77 - (Math.PI / 2); // 4.8
+    public static double k_FROffset = 0.01; // 5.33
+    public static double k_BLOffset = 4.2 + (Math.PI); // 0.16
+    public static double k_BROffset = 0.01 + (Math.PI / 2); // 4.87
 
     public static final int k_drivingMotorPinionTeeth = 14;
 

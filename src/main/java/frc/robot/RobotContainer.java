@@ -205,13 +205,13 @@ public class RobotContainer {
         // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
         HoldTrigger m_slowMode = new HoldTrigger(m_driverController.rightBumper());
         HoldTrigger m_slowMode1 = new HoldTrigger(m_driverController.leftBumper());
-        // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(
-        // m_driveSubsystem,
-        // () -> m_driverController.getLeftX(),
-        // () -> m_driverController.getLeftY(),
-        // () -> m_driverController.getRightX(),
-        // new Trigger(m_slowMode),
-        // new Trigger(m_slowMode1)));
+        m_driveSubsystem.setDefaultCommand(new ArcadeDrive(
+        m_driveSubsystem,
+        () -> m_driverController.getLeftX(),
+        () -> m_driverController.getLeftY(),
+        () -> m_driverController.getRightX(),
+        new Trigger(m_slowMode),
+        new Trigger(m_slowMode1)));
 
         m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
         m_shooterSubsystem

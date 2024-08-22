@@ -40,7 +40,6 @@ public class FeedCommand extends Command {
               : Constants.ShooterConstants.k_ampShootVelocityRPM);
 
     } else {
-
       m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
     }
   }

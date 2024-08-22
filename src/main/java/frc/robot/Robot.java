@@ -69,12 +69,12 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("cam min delay", stats.m_minDelay);
     Pose2d note_positions = m_robotContainer.m_aiCamera.FindNotePositions();
     if(note_positions!=null){
+      SmartDashboard.putBoolean("can see note", true);
       SmartDashboard.putNumber("note xr",note_positions.getX());
       SmartDashboard.putNumber("note yr", note_positions.getY());
     }
     else{
-      SmartDashboard.putBoolean("note xr",false);
-      SmartDashboard.putBoolean("note yr", false);
+      SmartDashboard.putBoolean("can see note",false);
     }
 
   }
@@ -134,7 +134,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    Constants.States.m_speakerMode = m_robotContainer.getThrottle() < 0;
+    //Constants.States.m_speakerMode = m_robotContainer.getThrottle() < 0;
   }
 
   @Override

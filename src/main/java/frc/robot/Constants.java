@@ -104,7 +104,7 @@ public final class Constants {
       // Pivot
       PivotConstants.k_pivotZeroAngle = 157.7;
       PivotConstants.k_isInverted = true;
-      PivotConstants.k_intakePositionDegrees = 120;
+      PivotConstants.k_intakePositionDegrees = 130;
       PivotConstants.k_f = .015;
       PivotConstants.k_p = .032;
       PivotConstants.k_i = 0.00005;
@@ -238,10 +238,10 @@ public final class Constants {
 
     public static final double k_driveRadius = .475953574;
 
-    public static double k_FLOffset = 2.77 - (Math.PI / 2); // 4.8
-    public static double k_FROffset = 0.01; // 5.33
-    public static double k_BLOffset = 4.2 + (Math.PI); // 0.16
-    public static double k_BROffset = 0.01 + (Math.PI / 2); // 4.87
+    public static double k_FLOffset = 2.77; // 4.8
+    public static double k_FROffset = 0.01 + (Math.PI / 2); // 5.33
+    public static double k_BLOffset = 4.2 - (Math.PI / 2); // 0.16
+    public static double k_BROffset = 0.01 + (Math.PI); // 4.87
 
     public static final int k_drivingMotorPinionTeeth = 14;
 

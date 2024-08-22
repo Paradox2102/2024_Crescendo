@@ -73,7 +73,7 @@ public class PivotSubsystem extends SubsystemBase {
   // angle)
   // Autos only, to be removed
   public double getPivotAngleFromDistanceFromSpeaker(double distance) {
-
+    
     return 0;
   }
 
@@ -91,7 +91,7 @@ public class PivotSubsystem extends SubsystemBase {
   // angle)
   public double getPivotAngleFromRobotPos(boolean predictFuture) {
     // double m_futurePos = m_driveSubsystem.getEstimatedFuturePos().getX();
-
+    
     return 0;
   }
 

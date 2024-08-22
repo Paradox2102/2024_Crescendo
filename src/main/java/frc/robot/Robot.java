@@ -68,8 +68,15 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("cam avg delay", stats.m_averageDelay);
     // SmartDashboard.putNumber("cam min delay", stats.m_minDelay);
     Pose2d note_positions = m_robotContainer.m_aiCamera.FindNotePositions();
-    SmartDashboard.putNumber("note xr",note_positions.getX());
-    SmartDashboard.putNumber("note yr", note_positions.getY());
+    if(note_positions!=null){
+      SmartDashboard.putNumber("note xr",note_positions.getX());
+      SmartDashboard.putNumber("note yr", note_positions.getY());
+    }
+    else{
+      SmartDashboard.putBoolean("note xr",false);
+      SmartDashboard.putBoolean("note yr", false);
+    }
+
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

@@ -143,7 +143,7 @@ public class AiCamera implements Network.NetworkReceiver {
 		double beta;// robot angle - alpha
 		double cx;
 		double cy;
-
+		
 		double distance_from_camera_to_center = 9/39.37; // distance from camera to center of robot in inches
 		AiRegion largest_region = m_nextRegions.getLargestRegion();
 		if(largest_region!=null){

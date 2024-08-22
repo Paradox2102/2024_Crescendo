@@ -67,9 +67,9 @@ public class Robot extends TimedRobot {
     // ApriltagsCameraStats stats = m_robotContainer.m_apriltagCamera.getStats();
     // SmartDashboard.putNumber("cam avg delay", stats.m_averageDelay);
     // SmartDashboard.putNumber("cam min delay", stats.m_minDelay);
-    Pose2d note_positions = m_robotContainer.m_aiCamera.FindNotePositions();
-    SmartDashboard.putNumber("note xr",note_positions.getX());
-    SmartDashboard.putNumber("note yr", note_positions.getY());
+    // Pose2d note_positions = m_robotContainer.m_aiCamera.FindNotePositions();
+    // SmartDashboard.putNumber("note xr",note_positions.getX());
+    // SmartDashboard.putNumber("note yr", note_positions.getY());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -127,7 +127,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    Constants.States.m_speakerMode = m_robotContainer.getThrottle() < 0;
+    //Constants.States.m_speakerMode = m_robotContainer.getThrottle() < 0;
   }
 
   @Override

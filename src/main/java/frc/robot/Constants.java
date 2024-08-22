@@ -34,10 +34,10 @@ public final class Constants {
     private final double speed;
     private static InterpolatingDoubleTreeMap k_shooterSpeed = new InterpolatingDoubleTreeMap();
 
-    private static final double k_distanceOffsetInMeters = 0.5;
+    public static final double k_distanceOffsetInMeters = 0.5;
 
     public ShooterCalibration(double distance, double angle, double speed) {
-      this.distance = distance;
+      this.distance = distance - k_distanceOffsetInMeters;
       this.angle = angle;
       this.speed = speed;
       // Use addRequirements() here to declare subsystem dependencies.

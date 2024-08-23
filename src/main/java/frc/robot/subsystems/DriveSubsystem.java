@@ -288,16 +288,16 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // SmartDashboard.putNumber("Rotate Error", getRotationDistanceFromTargetError());
     // // Update the odometry in the periodic block
-    // SmartDashboard.putNumber("Turn FR",
-    //                          (m_frontRight.getAngleRadians())); /// Math.PI);
-    // SmartDashboard.putNumber(
-    //     "Turn FL",
-    //     m_frontLeft.getAngleRadians()); // - (Math.PI / 2)) / Math.PI);
-    // SmartDashboard.putNumber(
-    //     "Turn BR",
-    //     m_backRight.getAngleRadians()); // + (Math.PI / 2)) / Math.PI);
-    // SmartDashboard.putNumber(
-    //     "Turn BL", m_backLeft.getAngleRadians()); // + (Math.PI)) / Math.PI);
+    SmartDashboard.putNumber("Turn FR",
+                             (m_frontRight.getMagEncoderPosRadians())); /// Math.PI);
+    SmartDashboard.putNumber(
+        "Turn FL",
+        m_frontLeft.getMagEncoderPosRadians()); // - (Math.PI / 2)) / Math.PI);
+    SmartDashboard.putNumber(
+        "Turn BR",
+        m_backRight.getMagEncoderPosRadians()); // + (Math.PI / 2)) / Math.PI);
+    SmartDashboard.putNumber(
+        "Turn BL", m_backLeft.getMagEncoderPosRadians()); // + (Math.PI)) / Math.PI);
     // SmartDashboard.putNumber("Pose Est X",
     // (m_tracker.getPose2dFRC().getTranslation().getX()));
     // SmartDashboard.putNumber("Pose Est Y",

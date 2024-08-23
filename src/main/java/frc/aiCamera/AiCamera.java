@@ -163,6 +163,7 @@ public class AiCamera implements Network.NetworkReceiver {
 			x_distance = Math.cos(Math.toRadians(beta)) * y_distance + distance_from_camera_to_center;
 			xr = m_Robot_x+x_distance+cx;
 			yr = m_Robot_y+y_distance+cy;
+			
 			return new Pose2d(xr, yr, Rotation2d.fromDegrees(alpha));
 		}
 		else{

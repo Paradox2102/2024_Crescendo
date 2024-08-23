@@ -181,12 +181,16 @@ public class RobotContainer {
 
     public void updateAICamera(){
         Pose2d note_positions = m_aiCamera.FindNotePositions();
+        double distance_to_note;
         if(note_positions!=null){
+                distance_to_note = Math.sqrt(note_positions.getX()*note_positions.getX() + note_positions.getY()*note_positions.getY());
                 m_driveSubsystem.getField().getObject("note").setPose(note_positions);
                 SmartDashboard.putBoolean("note can be seen", true);
                 SmartDashboard.putNumber("note xr",note_positions.getX());
                 SmartDashboard.putNumber("note yr", note_positions.getY());
                 SmartDashboard.putNumber("note Rotation2d degrees alpha", note_positions.getRotation().getDegrees());
+                SmartDashboard.putNumber("note distance from robot",distance_to_note);
+
         }
         else{
                 SmartDashboard.putBoolean("note can be seen",false);

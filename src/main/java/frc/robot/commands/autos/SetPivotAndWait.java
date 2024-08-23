@@ -19,6 +19,6 @@ public class SetPivotAndWait extends SequentialCommandGroup {
     m_pivotSubsystem = pivotSubsystem;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new SetPivotOffRobotLocation(m_pivotSubsystem), new WaitCommand(.25));
+    addCommands();
   }
 }

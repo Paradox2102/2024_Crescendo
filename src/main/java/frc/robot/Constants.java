@@ -42,7 +42,15 @@ public final class Constants {
       this.speed = speed;
       // Use addRequirements() here to declare subsystem dependencies.
     }
-
+    public double getDistance() {
+      return distance;
+    }
+    public double getAngle(){
+      return angle;
+    }
+    public double getSpeed(){
+      return speed;
+    }
   }
 
   public static ShooterCalibration[] k_front = new ShooterCalibration[] {

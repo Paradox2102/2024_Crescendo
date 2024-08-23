@@ -9,10 +9,12 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ShooterCalibration;
 
 public class PivotSubsystem extends SubsystemBase {
   private static DriveSubsystem m_driveSubsystem;
@@ -33,6 +35,7 @@ public class PivotSubsystem extends SubsystemBase {
   private final static double k_ticksToDegrees = 29.7 / 0.088;
   private final static double k_balanceAngle = 40;
 
+  private InterpolatingDoubleTreeMap m_interpolation;
   private double m_setPoint = 0;
 
   private boolean m_manual = false;
@@ -73,8 +76,7 @@ public class PivotSubsystem extends SubsystemBase {
   // angle)
   // Autos only, to be removed
   public double getPivotAngleFromDistanceFromSpeaker(double distance) {
-    
-    return 0;
+  return Constants.getShooterCalib(Constants.k_front,m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters(),false);
   }
 
   // description: returns double of angle needed to shoot at speaker in future
@@ -91,7 +93,7 @@ public class PivotSubsystem extends SubsystemBase {
   // angle)
   public double getPivotAngleFromRobotPos(boolean predictFuture) {
     // double m_futurePos = m_driveSubsystem.getEstimatedFuturePos().getX();
-    
+
     return 0;
   }
 

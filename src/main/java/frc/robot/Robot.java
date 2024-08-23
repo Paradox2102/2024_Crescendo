@@ -63,19 +63,11 @@ public class Robot extends TimedRobot {
     m_robotContainer.m_ledConfig.periodic();
 
     // Constants.ShooterConstants.k_ampShootVelocityRPM = -SmartDashboard.getEntry("Amp Velo").getDouble(1950);
-
+    m_robotContainer.updateAICamera();
     // ApriltagsCameraStats stats = m_robotContainer.m_apriltagCamera.getStats();
     // SmartDashboard.putNumber("cam avg delay", stats.m_averageDelay);
     // SmartDashboard.putNumber("cam min delay", stats.m_minDelay);
-    Pose2d note_positions = m_robotContainer.m_aiCamera.FindNotePositions();
-    if(note_positions!=null){
-      SmartDashboard.putBoolean("can see note", true);
-      SmartDashboard.putNumber("note xr",note_positions.getX());
-      SmartDashboard.putNumber("note yr", note_positions.getY());
-    }
-    else{
-      SmartDashboard.putBoolean("can see note",false);
-    }
+    
 
   }
 

@@ -58,6 +58,7 @@ import frc.triggers.HoldTrigger;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -96,7 +97,9 @@ public class RobotContainer {
 
     private final CommandJoystick m_testStick = new CommandJoystick(2);
     public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);
+
     public final AiCamera m_aiCamera = new AiCamera(m_tracker);
+
     SendableChooser<Command> m_autoSelection = new SendableChooser<>();
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -175,9 +178,24 @@ public class RobotContainer {
         m_posServer.start();
     }
 
-    private boolean getPositionServerButtonState(int button) {
+
+    public void updateAICamera(){
+        Pose2d note_positions = m_aiCamera.FindNotePositions();
+        if(note_positions!=null){
+                m_driveSubsystem.getField().getObject("note").setPose(note_positions);
+                SmartDashboard.putBoolean("note can be seen", true);
+                SmartDashboard.putNumber("note xr",note_positions.getX());
+                SmartDashboard.putNumber("note yr", note_positions.getY());
+                SmartDashboard.putNumber("note Rotation2d degrees alpha", note_positions.getRotation().getDegrees());
+        }
+        else{
+                SmartDashboard.putBoolean("note can be seen",false);
+        }
+
+        }
+        private boolean getPositionServerButtonState(int button) {
         return m_posServer.getButtonState(button);
-    }
+        }
 
     /**
      * Use this method to define your trigger->command mappings. Triggers can be

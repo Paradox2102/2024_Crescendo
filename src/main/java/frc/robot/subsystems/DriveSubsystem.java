@@ -39,6 +39,7 @@ import java.util.function.BooleanSupplier;
 
 public class DriveSubsystem extends SubsystemBase {
   private final Field2d m_field = new Field2d();
+
   // Create MaxSwerveModules
   private final MaxSwerveModule m_frontLeft =
       new MaxSwerveModule(Constants.DriveConstants.k_FLDriveMotor,
@@ -326,6 +327,7 @@ public class DriveSubsystem extends SubsystemBase {
     // Estimate future position of robot
     // *****************************************
     Pose2d currentPos = m_tracker.getPose2d();
+    m_field.setRobotPose(currentPos);
 
     double yaw = ApriltagsCamera.normalizeAngle(-m_gyro.getAngle());
     if (m_setGyroZero) {

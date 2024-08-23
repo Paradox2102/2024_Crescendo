@@ -289,7 +289,7 @@ public class RobotContainer {
         // new buttons
         m_testStick.button(2).onTrue(new ResetPivot(m_pivotSubsystem));
         m_testStick.button(3).onTrue(new SetPivotOffInputDistance(m_pivotSubsystem, 5));
-        m_testStick.button(4).onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem));
+        //m_testStick.button(4).onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem, m_driveSubsystem));
         m_testStick.button(5).onTrue(new SetPivotPos(m_pivotSubsystem, 60));
         m_testStick.button(6).whileTrue(new ManualPivotCommand(m_pivotSubsystem, 0.3));
         m_testStick.button(9).toggleOnTrue(new ElasticChangeDegree(m_pivotSubsystem));
@@ -297,6 +297,7 @@ public class RobotContainer {
         m_testStick.button(8).toggleOnTrue(new ElasticChangeVelocity(m_shooterSubsystem));
         SmartDashboard.putNumber("Get Velocity", Constants.ShooterConstants.k_speakerShootVelocityRPM);
         m_testStick.button(10).onTrue(new AlignWheelsCommand(m_driveSubsystem));
+        m_testStick.button(11).onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem, m_driveSubsystem));
     }
 
     public double getThrottle() {

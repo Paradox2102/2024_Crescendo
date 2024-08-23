@@ -152,18 +152,18 @@ public class AiCamera implements Network.NetworkReceiver {
 			double transz = largest_region.m_translation_z/39.37; // dividing by 39.37 converts inches to meters
 			// THESE DISTANCES WERE MADE IN THE EAST, DOWN, NORTH COORDINATE SYSTEM. THEY ARE CONVERTED TO NWU COORDINATE SYSTEM BY CHANGING TRANSZ TO X AND CHANGE TRANS X TO Y
 			double x = transz;
-			double y = transx;
+			double y = -1*transx;
 			double robot_angle = ParadoxField.normalizeAngle(m_tracker.getPose2d().getRotation().getDegrees());
 			
 			alpha = new Rotation2d(x,y).getDegrees();//Math.atan2(transx, transz);
 			beta = robot_angle - alpha;
 			cx = distance_from_camera_to_center*Math.cos(robot_angle);
 			cy = distance_from_camera_to_center*Math.sin(robot_angle);
-			y_distance = Math.sin(Math.toRadians(beta)) * x * x + y * y;
-			x_distance = Math.cos(Math.toRadians(beta)) * y_distance + distance_from_camera_to_center;
+			y_distance = Math.sin(Math.toRadians(beta)) * Math.sqrt(x * x + y * y);
+			x_distance = Math.cos(Math.toRadians(beta)) * Math.sqrt(x * x + y * y);
 			xr = m_Robot_x+x_distance+cx;
 			yr = m_Robot_y+y_distance+cy;
-			
+
 			return new Pose2d(xr, yr, Rotation2d.fromDegrees(alpha));
 		}
 		else{

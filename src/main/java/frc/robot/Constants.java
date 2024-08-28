@@ -34,7 +34,7 @@ public final class Constants {
     private final double speed;
     private static InterpolatingDoubleTreeMap k_shooterSpeed = new InterpolatingDoubleTreeMap();
 
-    public static final double k_distanceOffsetInMeters = 0.5;
+    public static final double k_distanceOffsetInMeters = -.5;
 
     public ShooterCalibration(double distance, double angle, double speed) {
       this.distance = distance - k_distanceOffsetInMeters;
@@ -76,6 +76,8 @@ public final class Constants {
 
   public static double getShooterCalib(ShooterCalibration[] data, double distance, boolean returnSpeed) {
     // if returnSpeed is true, returns the speed, otherwise returns the angle
+    System.out.println("wahoiesfdsjfjdsjfjsdfjsdjfjsdjfsjfjdsjfsdjfjdsf");
+    System.out.println(distance);
     for (int i = 1; i < data.length - 1; i++) {
       if ((distance >= data[i - 1].distance) && (distance < data[i].distance)) {
         double deltaD = distance - data[i - 1].distance;
@@ -403,7 +405,7 @@ public final class Constants {
   public static class ShooterConstants {
     public static final int k_frontMotor = 11;
     public static double k_intakeVelocityRPM = 3000;
-    public static double k_speakerShootVelocityRPM = -4000; // 5000
+    public static double k_speakerShootVelocityRPM = -5000; // 5000
     public static double k_ampShootVelocityRPM = -1950; // -1950
     public static final double k_maxVelocityRPM = 6250; // 6000
 
@@ -430,7 +432,7 @@ public final class Constants {
   public static class HolderConstants {
     public static final int k_backMotor = 10;
     public static double k_intakeVelocityRPM = 1000;
-    public static final double k_speakerShootVelocityRPM = 4000; // 5000
+    public static final double k_speakerShootVelocityRPM = 5000; // 5000
     public static final double k_speakerFeedPower = -1;
     public static final double k_ampFeedPower = -0.35; // -500
 

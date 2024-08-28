@@ -46,13 +46,15 @@ public class FeedCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Constants.States.m_shootIntakeSide) {
+    if (Constants.States.m_shootIntakeSide) {//shooting forward
       if (m_shooterSubsystem.isReady()) {
         m_holderSubsystem.setPower(Constants.States.m_speakerMode ? Constants.HolderConstants.k_speakerFeedPower
             : Constants.HolderConstants.k_ampFeedPower);
             m_dwellTimer.start();
+      }else{
+        m_dwellTimer.reset();
       }
-    } else if (m_holderSubsystem.isReady()) {
+    } else if (m_holderSubsystem.isReady()) {//shooting backward
       m_shooterSubsystem.setPower(Constants.ShooterConstants.k_speakerFeedPower);
     }
     if (m_shooterSensors.getHolderSensor() || m_shooterSensors.getShooterSensor()) {

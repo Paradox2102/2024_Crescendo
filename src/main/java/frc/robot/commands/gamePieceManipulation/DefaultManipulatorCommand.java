@@ -38,6 +38,7 @@ public class DefaultManipulatorCommand extends Command {
     m_driveSubsytem = driveSubsystem;
     m_shooterSensors = shooterSensors;
     m_front = front;
+    setName(m_subsystem.getName());
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }
@@ -54,7 +55,7 @@ public class DefaultManipulatorCommand extends Command {
     // tests which state should apply to the current situation
     if (m_shooterSensors.getShooterSensor()) {
       m_state = State.intaking;
-    } else if (m_shooterSensors.getHolderSensor() && !m_shooterSensors.getShooterSensor()) {
+    } else if (m_shooterSensors.getHolderSensor()) {
       m_state = State.holding;
     } else {
       m_state = State.empty;

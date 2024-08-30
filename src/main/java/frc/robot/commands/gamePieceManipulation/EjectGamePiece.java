@@ -28,6 +28,7 @@ public class EjectGamePiece extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //TODO - look at and fix the pivot then uncomment
     //m_pivotSubsystem.setPositionDegrees(70);
     m_holderSubsystem.setPower(-1);
     m_shooterSubsystem.setPower(-1);

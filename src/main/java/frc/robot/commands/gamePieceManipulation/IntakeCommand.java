@@ -54,6 +54,7 @@ public class IntakeCommand extends Command {
   @Override
   public boolean isFinished() {
     return false;
+    //TODO - fix the sensor
     // return m_shooterSensors.getHolderSensor() && !m_shooterSensors.getShooterSensor();
   }
 }

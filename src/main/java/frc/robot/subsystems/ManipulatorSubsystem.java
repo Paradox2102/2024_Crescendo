@@ -80,7 +80,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
   public void setVelocityRPM(double velocity) {
     m_velocity = velocity;
     m_PID.setReference(velocity, ControlType.kVelocity);
-    SmartDashboard.putNumber(getName() + " Speed", Math.abs(m_velocity));
+    SmartDashboard.putNumber(getName() + " Speed", m_velocity);
   }
 
   // reads the speed of the shooting rollers in RPM

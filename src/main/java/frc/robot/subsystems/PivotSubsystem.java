@@ -29,6 +29,7 @@ public class PivotSubsystem extends SubsystemBase {
   private final static double k_f = -0.05;
 
   private static final PIDController m_pid = new PIDController(k_p, k_i, k_d);
+  //profile pid control? Work with gavin
 
   // finding position
   private final static double k_zeroPosition = 0.441;
@@ -93,7 +94,7 @@ public class PivotSubsystem extends SubsystemBase {
   // angle)
   public double getPivotAngleFromRobotPos(boolean predictFuture) {
     // double m_futurePos = m_driveSubsystem.getEstimatedFuturePos().getX();
-
+    //TODO - make it work
     return 0;
   }
 
@@ -113,9 +114,11 @@ public class PivotSubsystem extends SubsystemBase {
 
     // feet forward
     if (!m_manual) {
-      double feedForward = Math.sin(Math.toRadians(m_setPoint - k_balanceAngle)) * k_f;
-
-      feedForward += m_pid.calculate(getAngleInDegrees());
+      // double feedForward = Math.sin(Math.toRadians(m_setPoint - k_balanceAngle)) * k_f;
+      double currentAngle = getAngleInDegrees();
+      double feedForward = Math.sin(Math.toRadians(currentAngle - k_balanceAngle)) * k_f;
+      //might fix floor slamming problem
+      feedForward += m_pid.calculate(currentAngle);
 
       SmartDashboard.putNumber("Pivot Power", feedForward);
       SmartDashboard.putNumber("PivotSetPoint", m_setPoint);

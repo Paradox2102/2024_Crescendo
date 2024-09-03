@@ -143,7 +143,8 @@ public class AiCamera implements Network.NetworkReceiver {
 		double beta;// robot angle - alpha
 		double cx;
 		double cy;
-		double distance_from_camera_to_center = 9/39.37; // distance from camera to center of robot in inches
+		double total_distance; // distance from cam to note
+		double distance_from_camera_to_center = 9*.0254; // distance from camera to center of robot in inches converted to meters
 		if(m_nextRegions!=null){
 			AiRegion largest_region = m_nextRegions.getLargestRegion();
 			if(largest_region!=null){
@@ -161,9 +162,10 @@ public class AiCamera implements Network.NetworkReceiver {
 				cy = distance_from_camera_to_center*Math.sin(robot_angle);
 				y_distance = Math.sin(Math.toRadians(beta)) * Math.sqrt(x * x + y * y);
 				x_distance = Math.cos(Math.toRadians(beta)) * Math.sqrt(x * x + y * y);
+				total_distance = Math.sqrt(x_distance*x_distance+y_distance*y_distance);
+				SmartDashboard.putNumber("note distance from robot",total_distance);
 				xr = m_Robot_x+x_distance+cx;
 				yr = m_Robot_y+y_distance+cy;
-
 				return new Pose2d(xr, yr, Rotation2d.fromDegrees(alpha));
 			}
 		}
@@ -327,9 +329,9 @@ public class AiCamera implements Network.NetworkReceiver {
 			SmartDashboard.putNumber("AI lr X", a[2]);
 			SmartDashboard.putNumber("AI lr Y", a[3]);
 
-			SmartDashboard.putNumber("AI trans X", a[4]);
-			SmartDashboard.putNumber("AI trans Y", a[5]);
-			SmartDashboard.putNumber("AI trans Z", a[6]);
+			SmartDashboard.putNumber("AI trans X", a[4]*.0254);
+			SmartDashboard.putNumber("AI trans Y", a[5]*.0254);
+			SmartDashboard.putNumber("AI trans Z", a[6]*.0254);
 
 			if (m_nextRegions != null) {
 				m_nextRegions.m_regions.add(new AiRegion(a[0], a[1], a[2], a[3], a[4], a[5], a[6]));

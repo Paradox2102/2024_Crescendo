@@ -409,7 +409,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @param pose The pose to which to set the odometry.
    */
   public void resetOdometry(Pose2d pose) {
-    m_tracker.setXYAngle(pose.getX(), pose.getY(), m_gyro.getAngle());
+    m_tracker.setPose(pose,m_gyro.getRotation2d());
   }
 
   /**
@@ -604,8 +604,8 @@ m_backRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)))
 
   /** Zeroes the heading of the robot. */
   public void setHeading(double angle) {
-    m_tracker.setXYAngle(m_tracker.getPose2d().getX(),
-                         m_tracker.getPose2d().getY(), angle);
+    Pose2d pose = m_tracker.getPose2d();
+    m_tracker.setPose(new Pose2d(pose.getX(),pose.getY(),Rotation2d.fromDegrees(angle)),m_gyro.getRotation2d());
   }
 
   /**

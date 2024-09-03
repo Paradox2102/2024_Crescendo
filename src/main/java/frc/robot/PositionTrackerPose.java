@@ -52,20 +52,15 @@ public class PositionTrackerPose {
 
   public Pose2d getPose2d() { return m_poseEstimator.getEstimatedPosition(); }
 
-  // BUG: The third parameter to resetPosition should use the estimated position
-  // angle, not the gyro angle.  This function should take a Pose2d (estimated
-  // position) and a Rotation2d (gyro angle) and use them to reset the position.
-  // Alternatively, it could take just a Pose2d because we already have access
-  // to the drive subsystem. These wrapper types are supposed to make this kind
-  // of bug less likely, but constantly converting into and out of them defeats
-  // the purpose.  -Gavin
-  public void setXYAngle(double x, double y, double angleInDegrees) {
+  public void setPose(Pose2d robotPose, Rotation2d gyroAngle) {
+
     Logger.log("PositionTracker", 1,
-               String.format("x=%f, y=%f, angle=%f", x, y, angleInDegrees));
+               String.format("robot pose = %s, gyro angle = %s",robotPose,gyroAngle));
     m_poseEstimator.resetPosition(
-        Rotation2d.fromDegrees(angleInDegrees),
+        gyroAngle,
         m_driveSubsystem.getModulePosition(),
-        new Pose2d(x, y, Rotation2d.fromDegrees(angleInDegrees)));
+        robotPose
+    );
     System.out.println("pose2d " + getPose2d());
   }
 
@@ -136,9 +131,7 @@ public class PositionTrackerPose {
 
   public void update(ApriltagsCamera frontBackCamera, ApriltagsCamera sideCamera) {
     // logUpdate();
-    m_poseEstimator.updateWithTime(ApriltagsCamera.getTime(),
-                                   m_driveSubsystem.getGyroRotation2d(),
-                                   m_driveSubsystem.getModulePosition());
+  
     double time = ApriltagsCamera.getTime();
     Rotation2d gyroRotation = m_driveSubsystem.getGyroRotation2d();
     SwerveModulePosition[] modules = m_driveSubsystem.getModulePosition();

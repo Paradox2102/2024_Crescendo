@@ -162,7 +162,7 @@ public class RobotContainer {
         m_apriltagCamera.setCameraInfo(Constants.DriveConstants.k_cameraBackX, Constants.DriveConstants.k_cameraBackY,
                 0,
                 ApriltagsCameraType.GS_6mm); // y = 9.5
-        m_apriltagCamera.connect("10.21.2.11", 5800);
+        m_apriltagCamera.connect("10.21.2.12", 5800);
 
         m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraRightX,
                 Constants.DriveConstants.k_cameraRightY,
@@ -170,7 +170,7 @@ public class RobotContainer {
         m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraLeftX,
                 Constants.DriveConstants.k_cameraLeftY,
                 88, ApriltagsCameraType.GS_6mm);
-        m_apriltagCameraSide.connect("10.21.2.12", 5800);
+        //m_apriltagCameraSide.connect("10.21.2.12", 5800);
 
 
         m_aiCamera.connect("10.21.2.10", 5800);

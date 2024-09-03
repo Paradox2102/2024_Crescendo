@@ -144,7 +144,7 @@ public class AiCamera implements Network.NetworkReceiver {
 		double cx;
 		double cy;
 		double total_distance; // distance from cam to note
-		double distance_from_camera_to_center = 9*.0254; // distance from camera to center of robot in inches converted to meters
+		double distance_from_camera_to_center = -9*.0254; // distance from camera to center of robot in inches converted to meters
 		if(m_nextRegions!=null){
 			AiRegion largest_region = m_nextRegions.getLargestRegion();
 			if(largest_region!=null){
@@ -154,7 +154,7 @@ public class AiCamera implements Network.NetworkReceiver {
 				// THESE DISTANCES WERE MADE IN THE EAST, DOWN, NORTH COORDINATE SYSTEM. THEY ARE CONVERTED TO NWU COORDINATE SYSTEM BY CHANGING TRANSZ TO X AND CHANGE TRANS X TO Y
 				double x = transz;
 				double y = -1*transx;
-				double robot_angle = ParadoxField.normalizeAngle(m_tracker.getPose2d().getRotation().getDegrees());
+				double robot_angle = ParadoxField.normalizeAngle(m_tracker.getPose2d().getRotation().getDegrees()-180);
 				
 				alpha = new Rotation2d(x,y).getDegrees()*-1;//Math.atan2(transx, transz);
 				beta = robot_angle - alpha;

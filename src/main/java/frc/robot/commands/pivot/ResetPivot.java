@@ -5,6 +5,7 @@
 package frc.robot.commands.pivot;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.apriltagsCamera.Logger;
 import frc.robot.Constants;
 import frc.robot.subsystems.PivotSubsystem;
 
@@ -22,6 +23,7 @@ public class ResetPivot extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    Logger.log("reset pivot", 2, "initialize");
     m_subsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
   }
 }

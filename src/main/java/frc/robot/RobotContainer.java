@@ -276,7 +276,7 @@ public class RobotContainer {
         }));
         m_joystick.button(3).whileTrue(new SetStickPos(m_stickSubsystem, false));
         m_testStick.button(1).onTrue(new SwapIntakeSideCommand());
-        m_testStick.button(2).whileTrue(new CalibrateShooterCommand(m_shooterSubsystem));
+        // m_testStick.button(2).whileTrue(new CalibrateShooterCommand(m_shooterSubsystem));
         // ToggleTrigger m_brakeMode = new ToggleTrigger(m_joystick.button(12));
         // m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode),
         // m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_holderSubsystem,
@@ -286,6 +286,7 @@ public class RobotContainer {
         m_testStick.button(1).whileTrue(new SetPowerPivotCommand(m_pivotSubsystem, 0.25));
         // new buttons
         m_testStick.button(2).onTrue(new ResetPivot(m_pivotSubsystem));
+        
         m_testStick.button(3).onTrue(new SetPivotOffInputDistance(m_pivotSubsystem, 5));
         //m_testStick.button(4).onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem, m_driveSubsystem));
         m_testStick.button(5).onTrue(new SetPivotPos(m_pivotSubsystem, 60));
@@ -301,6 +302,7 @@ public class RobotContainer {
     public double getThrottle() {
         return m_joystick.getThrottle();
     }
+
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

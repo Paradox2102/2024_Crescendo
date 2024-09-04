@@ -362,7 +362,7 @@ public class AiCamera implements Network.NetworkReceiver {
 	// ! @cond PRIVATE
 	@Override
 	public void processData(String data) {
-		Logger.log("ApriltagCamera", 1, String.format("Data: %s", data));
+		// Logger.log("ApriltagCamera", 1, String.format("Data: %s", data));
 
 		switch (data.charAt(0)) {
 			case 'F':

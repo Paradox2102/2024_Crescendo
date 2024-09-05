@@ -37,7 +37,7 @@ public class StickSubsystem extends SubsystemBase {
   boolean m_extend = false;
 
   //NEVER CHANGE
-  private static final int k_currentLimit = 10;
+  private static final int k_currentLimit = 20;
   
   /** Creates a new StickSubsystem. */
   public StickSubsystem() {

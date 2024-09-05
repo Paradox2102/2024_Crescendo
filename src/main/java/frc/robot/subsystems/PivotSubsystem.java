@@ -94,8 +94,13 @@ public class PivotSubsystem extends SubsystemBase {
   // angle)
   public double getPivotAngleFromRobotPos(boolean predictFuture) {
     // double m_futurePos = m_driveSubsystem.getEstimatedFuturePos().getX();
-    //TODO - make it work
-    return 0;
+    // double m_currentSpeed = m_driveSubsystem.get;
+
+    // for (int i = 0; i < Constants.k_front.length; i++) {
+    //   double currenDist = Constants.k_front[i].getDistance();
+    //   for
+    // }
+  return 0;
   }
 
   // description: returns a double of current angle in degrees

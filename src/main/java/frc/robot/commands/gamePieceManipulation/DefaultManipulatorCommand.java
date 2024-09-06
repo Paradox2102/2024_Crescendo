@@ -103,8 +103,9 @@ public class DefaultManipulatorCommand extends Command {
           break;
 
         case holding:
-          if (m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters() < k_revRangeMeters
-              && Constants.States.m_autoRotateAim) {
+          // if (m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters() < k_revRangeMeters
+          //     && Constants.States.m_autoRotateAim) {
+            if(false){
             if (Constants.States.m_shootIntakeSide) {
               m_subsystem.setVelocityRPM(Constants.States.m_speakerMode ? m_subsystem.getRevSpeed()
                   : Constants.ShooterConstants.k_ampShootVelocityRPM);

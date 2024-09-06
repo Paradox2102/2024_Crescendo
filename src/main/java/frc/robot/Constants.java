@@ -34,7 +34,7 @@ public final class Constants {
     private final double speed;
     private static InterpolatingDoubleTreeMap k_shooterSpeed = new InterpolatingDoubleTreeMap();
 
-    public static final double k_distanceOffsetInMeters = -.5;
+    public static final double k_distanceOffsetInMeters = 0;
 
     public ShooterCalibration(double distance, double angle, double speed) {
       this.distance = distance - k_distanceOffsetInMeters;
@@ -351,7 +351,7 @@ public final class Constants {
     public static double k_offset = 0;
 
     // Positions
-    public static double k_intakePositionDegrees = 112;
+    public static double k_intakePositionDegrees = 92;//112
     public static double k_resetPositionDegrees = 23;
     public static double k_ampPositionDegrees = 23;
 

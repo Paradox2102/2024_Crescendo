@@ -13,6 +13,7 @@ import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.apriltagsCamera.Logger;
 import frc.robot.Constants;
 import frc.robot.Constants.ShooterCalibration;
 
@@ -43,6 +44,10 @@ public class PivotSubsystem extends SubsystemBase {
 
   /** Creates a new PivotSubsystem. */
   public PivotSubsystem(DriveSubsystem driveSubsystem) {
+    m_pivotMotor.restoreFactoryDefaults();
+    m_pivotMotor.setSmartCurrentLimit(80);
+    m_pivotMotor.setInverted(Constants.PivotConstants.k_isInverted);
+    m_pivotMotor.burnFlash();
     m_driveSubsystem = driveSubsystem;
   }
 
@@ -54,6 +59,7 @@ public class PivotSubsystem extends SubsystemBase {
   // description: sets the power
   public void setPower(double power) {
     m_manual = true;
+    Logger.log("pivotSubsystem", 3, "m_manual = true");
     m_pivotMotor.set(power);
   }
 
@@ -63,6 +69,7 @@ public class PivotSubsystem extends SubsystemBase {
     m_manual = false;
     m_setPoint = angle;
     m_pid.setSetpoint(angle);
+    Logger.log(getName(), 3, "setPositionDegrees");
   }
 
   // description: returns angle necessary to shoot at speaker from current

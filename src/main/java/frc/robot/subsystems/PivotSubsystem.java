@@ -13,6 +13,7 @@ import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.apriltagsCamera.Logger;
 import frc.robot.Constants;
 import frc.robot.Constants.ShooterCalibration;
 
@@ -29,7 +30,7 @@ public class PivotSubsystem extends SubsystemBase {
   private final static double k_f = -0.05;
 
   private static final PIDController m_pid = new PIDController(k_p, k_i, k_d);
-  //profile pid control? Work with gavin
+  // profile pid control? Work with gavin
 
   // finding position
   private final static double k_zeroPosition = 0.441;
@@ -43,6 +44,10 @@ public class PivotSubsystem extends SubsystemBase {
 
   /** Creates a new PivotSubsystem. */
   public PivotSubsystem(DriveSubsystem driveSubsystem) {
+    m_pivotMotor.restoreFactoryDefaults();
+    m_pivotMotor.setSmartCurrentLimit(80);
+    m_pivotMotor.setInverted(Constants.PivotConstants.k_isInverted);
+    m_pivotMotor.burnFlash();
     m_driveSubsystem = driveSubsystem;
   }
 
@@ -57,6 +62,7 @@ public class PivotSubsystem extends SubsystemBase {
   // description: sets the power
   public void setPower(double power) {
     m_manual = true;
+    Logger.log("pivotSubsystem", 3, "m_manual = true");
     m_pivotMotor.set(power);
   }
 
@@ -66,6 +72,7 @@ public class PivotSubsystem extends SubsystemBase {
     m_manual = false;
     m_setPoint = angle;
     m_pid.setSetpoint(angle);
+    Logger.log(getName(), 3, "setPositionDegrees");
   }
 
   // description: returns angle necessary to shoot at speaker from current
@@ -80,7 +87,7 @@ public class PivotSubsystem extends SubsystemBase {
   // angle)
   // Autos only, to be removed
   public double getPivotAngleFromDistanceFromSpeaker(double distance) {
-  return Constants.getShooterCalib(Constants.k_front,m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters(),false);
+    return Constants.getShooterCalib(Constants.k_front,distance, false);
   }
 
   // description: returns double of angle needed to shoot at speaker in future
@@ -96,9 +103,7 @@ public class PivotSubsystem extends SubsystemBase {
   // a 2D array that (1st column - position on field) (2nd colum - corresponding
   // angle)
   public double getPivotAngleFromRobotPos(boolean predictFuture) {
-    // double m_futurePos = m_driveSubsystem.getEstimatedFuturePos().getX();
-    //TODO - make it work
-    return 0;
+    return getPivotAngleFromDistanceFromSpeaker(m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters());
   }
 
   // description: returns a double of current angle in degrees
@@ -117,10 +122,11 @@ public class PivotSubsystem extends SubsystemBase {
 
     // feet forward
     if (!m_manual) {
-      // double feedForward = Math.sin(Math.toRadians(m_setPoint - k_balanceAngle)) * k_f;
+      // double feedForward = Math.sin(Math.toRadians(m_setPoint - k_balanceAngle)) *
+      // k_f;
       double currentAngle = getAngleInDegrees();
       double feedForward = Math.sin(Math.toRadians(currentAngle - k_balanceAngle)) * k_f;
-      //might fix floor slamming problem
+      // might fix floor slamming problem
       feedForward += m_pid.calculate(currentAngle);
 
       SmartDashboard.putNumber("Pivot Power", feedForward);

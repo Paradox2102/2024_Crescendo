@@ -34,7 +34,7 @@ public final class Constants {
     private final double speed;
     private static InterpolatingDoubleTreeMap k_shooterSpeed = new InterpolatingDoubleTreeMap();
 
-    public static final double k_distanceOffsetInMeters = -.5;
+    public static final double k_distanceOffsetInMeters = 0;
 
     public ShooterCalibration(double distance, double angle, double speed) {
       this.distance = distance - k_distanceOffsetInMeters;
@@ -76,9 +76,9 @@ public final class Constants {
 
   public static double getShooterCalib(ShooterCalibration[] data, double distance, boolean returnSpeed) {
     // if returnSpeed is true, returns the speed, otherwise returns the angle
-    System.out.println("wahoiesfdsjfjdsjfjsdfjsdjfjsdjfsjfjdsjfsdjfjdsf");
+    // System.out.println("wahoiesfdsjfjdsjfjsdfjsdjfjsdjfsjfjdsjfsdjfjdsf");
     System.out.println(distance);
-    for (int i = 1; i < data.length - 1; i++) {
+    for (int i = 1; i < data.length; i++) {
       if ((distance >= data[i - 1].distance) && (distance < data[i].distance)) {
         double deltaD = distance - data[i - 1].distance;
         double D = data[i].distance - data[i - 1].distance;
@@ -95,7 +95,7 @@ public final class Constants {
         }
       }
     }
-    return (0);
+    return Constants.PivotConstants.k_resetPositionDegrees;
   }
 
   public Constants() {
@@ -351,7 +351,7 @@ public final class Constants {
     public static double k_offset = 0;
 
     // Positions
-    public static double k_intakePositionDegrees = 112;
+    public static double k_intakePositionDegrees = 92;//112
     public static double k_resetPositionDegrees = 23;
     public static double k_ampPositionDegrees = 23;
 

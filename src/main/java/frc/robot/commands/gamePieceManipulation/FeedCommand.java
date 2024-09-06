@@ -35,7 +35,7 @@ public class FeedCommand extends Command {
     m_dwellTimer.reset();
     if (Constants.States.m_shootIntakeSide) {
       m_shooterSubsystem
-          .setVelocityRPM(Constants.States.m_speakerMode ? Constants.ShooterConstants.k_speakerShootVelocityRPM
+          .setVelocityRPM(Constants.States.m_speakerMode ? -m_shooterSubsystem.getRevSpeed()
               : Constants.ShooterConstants.k_ampShootVelocityRPM);
 
     } else {
@@ -52,7 +52,7 @@ public class FeedCommand extends Command {
             : Constants.HolderConstants.k_ampFeedPower);
             m_dwellTimer.start();
       }else{
-        m_dwellTimer.reset();
+
       }
     } else if (m_holderSubsystem.isReady()) {//shooting backward
       m_shooterSubsystem.setPower(Constants.ShooterConstants.k_speakerFeedPower);
@@ -76,6 +76,6 @@ public class FeedCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_dwellTimer.get()>1.0;
+    return m_dwellTimer.get()>0.5;
   }
 }

@@ -31,8 +31,17 @@ public class DefaultPivotCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // TODO - add the functions from the original file
-  }
+    if(Constants.States.m_isGamePieceStowed){
+    // if (!Constants.States.m_speakerMode) {
+    //   m_subsystem.setPositionDegrees(Constants.PivotConstants.k_ampPositionDegrees);
+    // } else if (Constants.States.m_speakerMode && m_driveSubsystem.shouldAim()) {
+      // doesn't need to check aiming zone because getPivotAngleFromRobotPos() does it for you
+    //   m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromRobotPos(m_predictFuture));
+    // } else {
+      m_subsystem.setPositionDegrees(Constants.getShooterCalib(Constants.k_front,
+      m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters(), false));
+    // }
+  }}
 
   // Called once the command ends or is interrupted.
   @Override

@@ -58,6 +58,7 @@ import frc.triggers.HoldTrigger;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import java.util.Vector;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -180,14 +181,21 @@ public class RobotContainer {
 
 
     public void updateAICamera(){
-        Pose2d note_positions = m_aiCamera.FindNotePositions();
-        double distance_to_note;
-        if(note_positions!=null){
-                m_driveSubsystem.getField().getObject("note").setPose(note_positions);
+        boolean isHome = m_pivotSubsystem.isHome();
+
+        if(!isHome){
+                return; //seeing if the pivot point is in its default position
+        }
+        
+        Vector<Pose2d> note_positions = m_aiCamera.FindNotePositions();
+        
+        if(note_positions!=null && !note_positions.isEmpty()){
+                Pose2d pose = note_positions.get(0);
+                m_driveSubsystem.getField().getObject("note").setPose(pose);
                 SmartDashboard.putBoolean("note can be seen", true);
-                SmartDashboard.putNumber("note xr",note_positions.getX());
-                SmartDashboard.putNumber("note yr", note_positions.getY());
-                SmartDashboard.putNumber("note Rotation2d degrees alpha", note_positions.getRotation().getDegrees());
+                SmartDashboard.putNumber("note xr",pose.getX());
+                SmartDashboard.putNumber("note yr", pose.getY());
+                SmartDashboard.putNumber("note Rotation2d degrees alpha", pose.getRotation().getDegrees());
 
         }
         else{
@@ -195,6 +203,7 @@ public class RobotContainer {
         }
 
         }
+
         private boolean getPositionServerButtonState(int button) {
         return m_posServer.getButtonState(button);
         }

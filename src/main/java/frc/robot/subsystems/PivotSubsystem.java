@@ -50,6 +50,9 @@ public class PivotSubsystem extends SubsystemBase {
   public void setBrakeMode(boolean brake) {
     m_pivotMotor.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
   }
+  public boolean isHome(){
+    return Math.abs(getAngleInDegrees())<3;
+  }
 
   // description: sets the power
   public void setPower(double power) {

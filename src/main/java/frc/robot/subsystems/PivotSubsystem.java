@@ -29,7 +29,7 @@ public class PivotSubsystem extends SubsystemBase {
   private final static double k_f = -0.05;
 
   private static final PIDController m_pid = new PIDController(k_p, k_i, k_d);
-  //profile pid control? Work with gavin
+  // profile pid control? Work with gavin
 
   // finding position
   private final static double k_zeroPosition = 0.441;
@@ -77,7 +77,7 @@ public class PivotSubsystem extends SubsystemBase {
   // angle)
   // Autos only, to be removed
   public double getPivotAngleFromDistanceFromSpeaker(double distance) {
-  return Constants.getShooterCalib(Constants.k_front,m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters(),false);
+    return Constants.getShooterCalib(Constants.k_front,distance, false);
   }
 
   // description: returns double of angle needed to shoot at speaker in future
@@ -93,14 +93,7 @@ public class PivotSubsystem extends SubsystemBase {
   // a 2D array that (1st column - position on field) (2nd colum - corresponding
   // angle)
   public double getPivotAngleFromRobotPos(boolean predictFuture) {
-    // double m_futurePos = m_driveSubsystem.getEstimatedFuturePos().getX();
-    // double m_currentSpeed = m_driveSubsystem.get;
-
-    // for (int i = 0; i < Constants.k_front.length; i++) {
-    //   double currenDist = Constants.k_front[i].getDistance();
-    //   for
-    // }
-  return 0;
+    return getPivotAngleFromDistanceFromSpeaker(m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters());
   }
 
   // description: returns a double of current angle in degrees
@@ -119,10 +112,11 @@ public class PivotSubsystem extends SubsystemBase {
 
     // feet forward
     if (!m_manual) {
-      // double feedForward = Math.sin(Math.toRadians(m_setPoint - k_balanceAngle)) * k_f;
+      // double feedForward = Math.sin(Math.toRadians(m_setPoint - k_balanceAngle)) *
+      // k_f;
       double currentAngle = getAngleInDegrees();
       double feedForward = Math.sin(Math.toRadians(currentAngle - k_balanceAngle)) * k_f;
-      //might fix floor slamming problem
+      // might fix floor slamming problem
       feedForward += m_pid.calculate(currentAngle);
 
       SmartDashboard.putNumber("Pivot Power", feedForward);

@@ -3,16 +3,10 @@
   "robotLength": 0.83,
   "holonomicMode": true,
   "pathFolders": [
-    "shoot grab shoot",
-    "mobility",
-    "move to shoot",
-    "shoot to piece",
-    "start to piece"
+    "old stuff"
   ],
   "autoFolders": [
-    "Leave Autos & 1 Pieces",
-    "3 Pieces",
-    "Wing Autos"
+    "reference autos"
   ],
   "defaultMaxVel": 4.8,
   "defaultMaxAccel": 3.0,

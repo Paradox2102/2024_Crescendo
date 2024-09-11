@@ -25,15 +25,16 @@ public class SetStickPos extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (m_runningShootSequence && Constants.States.m_speakerMode) {}
-    else {
+    if (m_runningShootSequence && Constants.States.m_speakerMode) {
+    } else {
       m_subsystem.setPose(true);
     }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   // Called once the command ends or is interrupted.
   @Override

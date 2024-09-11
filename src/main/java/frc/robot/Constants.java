@@ -73,6 +73,11 @@ public final class Constants {
       new ShooterCalibration(5.8, 41.4, 5300),
       new ShooterCalibration(6.4, 42.0, 5400)
   };
+  
+  public static ShooterCalibration[] k_passShot = new ShooterCalibration[] {
+      new ShooterCalibration(0, 0, 0),
+      
+  };
 
   public static double getShooterCalib(ShooterCalibration[] data, double distance, boolean returnSpeed) {
     // if returnSpeed is true, returns the speed, otherwise returns the angle
@@ -122,7 +127,7 @@ public final class Constants {
       PivotConstants.k_iZone = 10;
       PivotConstants.k_resetPositionDegrees = 10;
       PivotConstants.k_offset = .3;
-      PivotConstants.k_ampPositionDegrees = 25;
+      PivotConstants.k_ampPositionDegrees = 20;
 
       // Drive
       DriveConstants.k_FLOffset = 3.93 - (Math.PI / 2);
@@ -353,7 +358,7 @@ public final class Constants {
     // Positions
     public static double k_intakePositionDegrees = 92;//112
     public static double k_resetPositionDegrees = 23;
-    public static double k_ampPositionDegrees = 23;
+    public static double k_ampPositionDegrees = 20;
 
     public static double[] k_distancesFront = {
         1.6,

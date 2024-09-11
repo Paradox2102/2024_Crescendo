@@ -10,19 +10,19 @@ import frc.robot.commands.stick.SetStickPos;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.ShooterSensors;
 import frc.robot.subsystems.StickSubsystem;
+
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShootSequence extends SequentialCommandGroup {
   /** Creates a new ShootSequence. */
-  public ShootSequence(ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem, StickSubsystem stickSubsystem, ShooterSensors shooterSensors) {
+  public ShootSequence(ManipulatorSubsystem shooterSubsystem, ManipulatorSubsystem holderSubsystem,
+      StickSubsystem stickSubsystem, ShooterSensors shooterSensors) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ParallelDeadlineGroup(
-        new FeedCommand(shooterSubsystem, holderSubsystem, shooterSensors),
-        new SetStickPos(stickSubsystem, true)
-      )
-    );
+        new ParallelDeadlineGroup(
+            new FeedCommand(shooterSubsystem, holderSubsystem, shooterSensors),
+            new SetStickPos(stickSubsystem, true)));
   }
 }

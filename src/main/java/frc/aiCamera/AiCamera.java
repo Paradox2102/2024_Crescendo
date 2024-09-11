@@ -20,7 +20,11 @@ package frc.aiCamera;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Vector;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -94,7 +98,23 @@ public class AiCamera implements Network.NetworkReceiver {
 			m_height = height;
 			m_time = System.currentTimeMillis() - m_startTime;
 		}
-
+		public ArrayList<AiRegion> getAllRegionsSorted(){
+			Collections.sort(m_regions,new Comparator<AiRegion>(){
+				@Override
+				public int compare(AiRegion lhs, AiRegion rhs){
+					double area1 = Math.abs((lhs.m_lx - lhs.m_ux) * (lhs.m_ly - lhs.m_uy));
+					double area2 = Math.abs((rhs.m_lx - rhs.m_ux) * (rhs.m_ly - rhs.m_uy));
+					if(area1>area2){
+						return -1;
+					}
+					if(area1==area2){
+						return 0;
+					}
+					return 1;
+				}
+			});
+			return m_regions;
+		}
 		public AiRegion getLargestRegion() {
 			AiRegion region = null;
 			double largest = 0;
@@ -132,7 +152,8 @@ public class AiCamera implements Network.NetworkReceiver {
 		// }, 200, 200);
 	}
 
-	public Pose2d FindNotePositions() {
+	public Vector <Pose2d> FindNotePositions() {
+		Vector <Pose2d> poses = new Vector<>();
 		double m_Robot_x = m_tracker.getPose2d().getTranslation().getX();
 		double m_Robot_y = m_tracker.getPose2d().getTranslation().getY();
 		double x_distance;
@@ -145,12 +166,15 @@ public class AiCamera implements Network.NetworkReceiver {
 		double cy;
 		double total_distance; // distance from cam to note
 		double distance_from_camera_to_center = -9*.0254; // distance from camera to center of robot in inches converted to meters
-		if(m_nextRegions!=null){
-			AiRegion largest_region = m_nextRegions.getLargestRegion();
-			if(largest_region!=null){
-				double transx = largest_region.m_translation_x/39.37;
-				double transy = largest_region.m_translation_y/39.37;
-				double transz = largest_region.m_translation_z/39.37; // dividing by 39.37 converts inches to meters
+		AiRegions regions = getRegions();
+		if(regions!=null){
+			// AiRegion largest_region = m_nextRegions.getLargestRegion();
+
+			ArrayList<AiRegion> allRegions = regions.getAllRegionsSorted(); 
+			for(AiRegion region:allRegions){
+				double transx = region.m_translation_x/39.37;
+				double transy = region.m_translation_y/39.37;
+				double transz = region.m_translation_z/39.37; // dividing by 39.37 converts inches to meters
 				// THESE DISTANCES WERE MADE IN THE EAST, DOWN, NORTH COORDINATE SYSTEM. THEY ARE CONVERTED TO NWU COORDINATE SYSTEM BY CHANGING TRANSZ TO X AND CHANGE TRANS X TO Y
 				double x = transz;
 				double y = -1*transx;
@@ -166,8 +190,10 @@ public class AiCamera implements Network.NetworkReceiver {
 				SmartDashboard.putNumber("note distance from robot",total_distance);
 				xr = m_Robot_x+x_distance+cx;
 				yr = m_Robot_y+y_distance+cy;
-				return new Pose2d(xr, yr, Rotation2d.fromDegrees(alpha));
+				poses.add(new Pose2d(xr, yr, Rotation2d.fromDegrees(alpha)));
+				
 			}
+			return poses;
 		}
 		return null;
 

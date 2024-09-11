@@ -58,6 +58,7 @@ import frc.triggers.HoldTrigger;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import java.util.Vector;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -183,16 +184,16 @@ public class RobotContainer {
                 m_posServer.start();
         }
 
-        public void updateAICamera() {
-                Pose2d note_positions = m_aiCamera.FindNotePositions();
-                double distance_to_note;
-                if (note_positions != null) {
-                        m_driveSubsystem.getField().getObject("note").setPose(note_positions);
-                        SmartDashboard.putBoolean("note can be seen", true);
-                        SmartDashboard.putNumber("note xr", note_positions.getX());
-                        SmartDashboard.putNumber("note yr", note_positions.getY());
-                        SmartDashboard.putNumber("note Rotation2d degrees alpha",
-                                        note_positions.getRotation().getDegrees());
+
+    public void updateAICamera(){
+        Pose2d note_positions = m_aiCamera.FindNotePositions();
+        double distance_to_note;
+        if(note_positions!=null){
+                m_driveSubsystem.getField().getObject("note").setPose(note_positions);
+                SmartDashboard.putBoolean("note can be seen", true);
+                SmartDashboard.putNumber("note xr",note_positions.getX());
+                SmartDashboard.putNumber("note yr", note_positions.getY());
+                SmartDashboard.putNumber("note Rotation2d degrees alpha", note_positions.getRotation().getDegrees());
 
                 } else {
                         SmartDashboard.putBoolean("note can be seen", false);

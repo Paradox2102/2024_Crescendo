@@ -1,0 +1,39 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 2.712894356908553,
+      "y": 4.07539893464585
+    },
+    "rotation": -178.63607246860386
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": []
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

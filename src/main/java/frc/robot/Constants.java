@@ -42,13 +42,16 @@ public final class Constants {
       this.speed = speed;
       // Use addRequirements() here to declare subsystem dependencies.
     }
+
     public double getDistance() {
       return distance;
     }
-    public double getAngle(){
+
+    public double getAngle() {
       return angle;
     }
-    public double getSpeed(){
+
+    public double getSpeed() {
       return speed;
     }
   }
@@ -73,10 +76,10 @@ public final class Constants {
       new ShooterCalibration(5.8, 41.4, 5300),
       new ShooterCalibration(6.4, 42.0, 5400)
   };
-  
+
   public static ShooterCalibration[] k_passShot = new ShooterCalibration[] {
-      new ShooterCalibration(0, 0, 0),
-      
+      new ShooterCalibration(0.9, 0, 500),
+
   };
 
   public static double getShooterCalib(ShooterCalibration[] data, double distance, boolean returnSpeed) {
@@ -191,10 +194,9 @@ public final class Constants {
       };
 
       ShooterCalibration[] k_back = new ShooterCalibration[] {
-          new ShooterCalibration(1.4
-          , 117, 0.0),
-          new ShooterCalibration(1.75 , 112, 0),
-          new ShooterCalibration(2 , 110, 0),
+          new ShooterCalibration(1.4, 117, 0.0),
+          new ShooterCalibration(1.75, 112, 0),
+          new ShooterCalibration(2, 110, 0),
           new ShooterCalibration(2.25, 107, 0),
           new ShooterCalibration(2.5, 105, 0),
           new ShooterCalibration(2.75, 101, 0),
@@ -356,7 +358,7 @@ public final class Constants {
     public static double k_offset = 0;
 
     // Positions
-    public static double k_intakePositionDegrees = 92;//112
+    public static double k_intakePositionDegrees = 92;// 112
     public static double k_resetPositionDegrees = 23;
     public static double k_ampPositionDegrees = 20;
 

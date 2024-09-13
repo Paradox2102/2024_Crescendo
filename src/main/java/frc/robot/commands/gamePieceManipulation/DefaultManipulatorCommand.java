@@ -5,11 +5,12 @@
 package frc.robot.commands.gamePieceManipulation;
 
 import com.revrobotics.AbsoluteEncoder;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.ShooterSensors;
+import frc.apriltagsCamera.Logger;
 import frc.robot.Constants;
 
 @SuppressWarnings("unused")
@@ -22,10 +23,10 @@ public class DefaultManipulatorCommand extends Command {
   DriveSubsystem m_driveSubsytem;
   ShooterSensors m_shooterSensors;
   Boolean m_front;
-
+  private boolean k_manualFeeding = true;
   private final double k_revRangeMeters = 2;// 10
   private State m_state;
-
+public boolean sensorFault = false;
   private enum State {
     empty,
     intaking,
@@ -46,18 +47,53 @@ public class DefaultManipulatorCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_state = State.empty;
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    // tests which state should apply to the current situation
     if (m_shooterSensors.getShooterSensor()) {
       m_state = State.intaking;
     } else if (m_shooterSensors.getHolderSensor()) {
       m_state = State.holding;
     } else {
+      m_state = State.empty;
+    }
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+    sensorFault=false;
+    // k_manualFeeding = SmartDashboard.getBoolean("Manual feeding", false);
+
+    // tests which state should apply to the current situation
+    if (m_shooterSensors.getShooterSensor()) {
+      m_state = State.intaking;
+    } else if (m_shooterSensors.getHolderSensor()) {
+      if (m_state != State.holding && k_manualFeeding) {// stops the intaking rollers
+        m_subsystem.setPower(0);
+      }
+      if (m_state == State.empty && Constants.States.m_shootIntakeSide) {// unusual state shift
+        sensorFault=true;
+        for (var i = 0; i < 10; i++) {
+          Logger.log("manipulatorSubsystem", 5,
+              "CHECK FRONT SENSOR - an unusual sensor reading change occured that suggests that the front sensor is reading a false unblocked");
+        }
+      }
+      m_state = State.holding;
+    } else {
+      if (m_state == State.intaking) {// unusual state shift
+        if(Constants.States.m_shootIntakeSide){
+          for (var i = 0; i < 10; i++) {
+            sensorFault=true;
+          Logger.log("manipulatorSubsystem", 5,
+              "CHECK BACK SENSOR - an unusual sensor reading change occured that suggests that the back sensor is giving a false unblocked");
+        }
+        }else{
+         for (var i = 0; i < 10; i++) {
+          sensorFault=true;
+          Logger.log("manipulatorSubsystem", 5,
+              "CHECK FRONT SENSOR - an unusual sensor reading change occured that suggests that the front sensor is giving a false unblocked");
+        } 
+        }
+        
+      }
       m_state = State.empty;
     }
 
@@ -68,7 +104,12 @@ public class DefaultManipulatorCommand extends Command {
       // Otherwise turn this motor off
       switch (m_state) {
         case empty:
-          m_subsystem.setPower(0);
+          if (k_manualFeeding) {
+            m_subsystem.setVelocityRPM(500);
+          } else {
+            m_subsystem.setPower(0);
+          }
+
           break;
 
         case intaking:
@@ -91,7 +132,12 @@ public class DefaultManipulatorCommand extends Command {
       // Otherwise turn this motor off
       switch (m_state) {
         case empty:
-          m_subsystem.setPower(0);
+          if (k_manualFeeding) {
+            m_subsystem.setVelocityRPM(500);
+          } else {
+            m_subsystem.setPower(0);
+          }
+
           break;
 
         case intaking:
@@ -103,9 +149,10 @@ public class DefaultManipulatorCommand extends Command {
           break;
 
         case holding:
-          // if (m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters() < k_revRangeMeters
-          //     && Constants.States.m_autoRotateAim) {
-            if(false){
+          // if (m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters() <
+          // k_revRangeMeters
+          // && Constants.States.m_autoRotateAim) {
+          if (false) {
             if (Constants.States.m_shootIntakeSide) {
               m_subsystem.setVelocityRPM(Constants.States.m_speakerMode ? m_subsystem.getRevSpeed()
                   : Constants.ShooterConstants.k_ampShootVelocityRPM);

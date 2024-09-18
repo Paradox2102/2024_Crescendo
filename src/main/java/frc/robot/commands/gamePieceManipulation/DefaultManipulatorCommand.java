@@ -12,6 +12,7 @@ import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.ShooterSensors;
 import frc.apriltagsCamera.Logger;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.Timer;
 
 @SuppressWarnings("unused")
 public class DefaultManipulatorCommand extends Command {
@@ -24,9 +25,11 @@ public class DefaultManipulatorCommand extends Command {
   ShooterSensors m_shooterSensors;
   Boolean m_front;
   private boolean k_manualFeeding = true;
+  private Timer m_feedTimer = new Timer();
   private final double k_revRangeMeters = 2;// 10
   private State m_state;
-public boolean sensorFault = false;
+  public boolean sensorFault = false;
+
   private enum State {
     empty,
     intaking,
@@ -47,6 +50,7 @@ public boolean sensorFault = false;
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_feedTimer.reset();
     if (m_shooterSensors.getShooterSensor()) {
       m_state = State.intaking;
     } else if (m_shooterSensors.getHolderSensor()) {
@@ -59,7 +63,7 @@ public boolean sensorFault = false;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    sensorFault=false;
+    sensorFault = false;
     // k_manualFeeding = SmartDashboard.getBoolean("Manual feeding", false);
 
     // tests which state should apply to the current situation
@@ -70,7 +74,7 @@ public boolean sensorFault = false;
         m_subsystem.setPower(0);
       }
       if (m_state == State.empty && Constants.States.m_shootIntakeSide) {// unusual state shift
-        sensorFault=true;
+        sensorFault = true;
         for (var i = 0; i < 10; i++) {
           Logger.log("manipulatorSubsystem", 5,
               "CHECK FRONT SENSOR - an unusual sensor reading change occured that suggests that the front sensor is reading a false unblocked");
@@ -79,20 +83,20 @@ public boolean sensorFault = false;
       m_state = State.holding;
     } else {
       if (m_state == State.intaking) {// unusual state shift
-        if(Constants.States.m_shootIntakeSide){
+        if (Constants.States.m_shootIntakeSide) {
           for (var i = 0; i < 10; i++) {
-            sensorFault=true;
-          Logger.log("manipulatorSubsystem", 5,
-              "CHECK BACK SENSOR - an unusual sensor reading change occured that suggests that the back sensor is giving a false unblocked");
+            sensorFault = true;
+            Logger.log("manipulatorSubsystem", 5,
+                "CHECK BACK SENSOR - an unusual sensor reading change occured that suggests that the back sensor is giving a false unblocked");
+          }
+        } else {
+          for (var i = 0; i < 10; i++) {
+            sensorFault = true;
+            Logger.log("manipulatorSubsystem", 5,
+                "CHECK FRONT SENSOR - an unusual sensor reading change occured that suggests that the front sensor is giving a false unblocked");
+          }
         }
-        }else{
-         for (var i = 0; i < 10; i++) {
-          sensorFault=true;
-          Logger.log("manipulatorSubsystem", 5,
-              "CHECK FRONT SENSOR - an unusual sensor reading change occured that suggests that the front sensor is giving a false unblocked");
-        } 
-        }
-        
+
       }
       m_state = State.empty;
     }
@@ -104,8 +108,19 @@ public boolean sensorFault = false;
       // Otherwise turn this motor off
       switch (m_state) {
         case empty:
-          if (k_manualFeeding) {
-            m_subsystem.setVelocityRPM(500);
+          if (k_manualFeeding && !Constants.States.m_shootIntakeSide) {
+            m_feedTimer.start();
+            if (m_feedTimer.get() < 0.5) {
+              if (m_subsystem.getVelocityRPM() < 20) {
+                m_feedTimer.reset();
+                m_subsystem.setPower(0.01);
+              }
+            } else if (m_feedTimer.get() < 1.5) {
+              m_subsystem.setVelocityRPM(100);
+            } else {
+              m_subsystem.setVelocityRPM(500);
+            }
+
           } else {
             m_subsystem.setPower(0);
           }
@@ -114,6 +129,8 @@ public boolean sensorFault = false;
 
         case intaking:
           if (Constants.States.m_shootIntakeSide) {
+            m_feedTimer.stop();
+            m_feedTimer.reset();
             m_subsystem.setPower(-Constants.HolderConstants.k_adjustGamePiecePower);
           } else {
             m_subsystem.setPower(Constants.HolderConstants.k_adjustGamePiecePower);
@@ -121,6 +138,8 @@ public boolean sensorFault = false;
           break;
 
         case holding:
+          m_feedTimer.stop();
+          m_feedTimer.reset();
           m_subsystem.setPower(0);
           break;
       }
@@ -132,8 +151,19 @@ public boolean sensorFault = false;
       // Otherwise turn this motor off
       switch (m_state) {
         case empty:
-          if (k_manualFeeding) {
-            m_subsystem.setVelocityRPM(500);
+          if (k_manualFeeding && Constants.States.m_shootIntakeSide) {
+            m_feedTimer.start();
+            if (m_feedTimer.get() < 0.5) {
+              if (m_subsystem.getVelocityRPM() < 20) {
+                m_feedTimer.reset();
+                m_subsystem.setPower(0.01);
+              }
+            } else if (m_feedTimer.get() < 1.5) {
+              m_subsystem.setVelocityRPM(100);
+            } else {
+              m_subsystem.setVelocityRPM(500);
+            }
+
           } else {
             m_subsystem.setPower(0);
           }

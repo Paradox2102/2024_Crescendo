@@ -56,7 +56,7 @@ public final class Constants {
     }
   }
 
-  public static ShooterCalibration[] k_front = new ShooterCalibration[] {
+  public static ShooterCalibration[] k_front = new ShooterCalibration[] {//speeds need to be inverted, already implemented in code
       new ShooterCalibration(1.36, 13, 4000),
       new ShooterCalibration(1.54, 15, 4000),
       new ShooterCalibration(1.78, 17, 4000),
@@ -78,8 +78,9 @@ public final class Constants {
   };
 
   public static ShooterCalibration[] k_passShot = new ShooterCalibration[] {
-      new ShooterCalibration(0.9, 0, 500),
-
+      new ShooterCalibration(1.5, 50, -1000),
+      new ShooterCalibration(2.5, 40, -1800),
+      new ShooterCalibration(3.3, 30, -2400),
   };
 
   public static double getShooterCalib(ShooterCalibration[] data, double distance, boolean returnSpeed) {

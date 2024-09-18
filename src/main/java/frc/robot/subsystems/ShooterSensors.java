@@ -16,6 +16,7 @@ public class ShooterSensors extends SubsystemBase {
   /** Creates a new ShooterSensors. */
   public ShooterSensors() {}
 
+
   public boolean getShooterSensor() {
     return Constants.States.m_shootIntakeSide ? !m_frontSensor.get() : !m_backSensor.get();
   }
@@ -41,6 +42,10 @@ public class ShooterSensors extends SubsystemBase {
     // If we are shooting intake side, check back sensors and not front sensors, if not, the opposite.
     // return Constants.States.m_shootIntakeSide ? (getBackSensorWithTime() && !getFrontSensorWithTime()) : (getFrontSensorWithTime() && !getBackSensorWithTime());
     return Constants.States.m_shootIntakeSide ? (getHolderSensor() && !getShooterSensor()) : (getShooterSensor() && !getHolderSensor());
+
+
+
+
   }
 
   @Override
@@ -68,7 +73,5 @@ public class ShooterSensors extends SubsystemBase {
     // SmartDashboard.putBoolean("Has Game Piece", Constants.States.m_hasGamePiece);
     // SmartDashboard.putBoolean("Game Piece Stowed", Constants.States.m_isGamePieceStowed);
     // SmartDashboard.putBoolean("Shoot Intake Side", Constants.States.m_shootIntakeSide);
-    SmartDashboard.putBoolean("Back Sensor", m_backSensor.get());
-    SmartDashboard.putBoolean("Front Sensor", m_frontSensor.get());
-  }
+}
 }

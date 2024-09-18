@@ -86,7 +86,7 @@ public class PivotSubsystem extends SubsystemBase {
   // a 2D array that (1st column - position on field) (2nd colum - corresponding
   // angle)
   // Autos only, to be removed
-  public double getPivotAngleFromDistanceFromSpeaker(double distance) {
+  public double getPivotAngleFromDistance(double distance) {
     return Constants.getShooterCalib(Constants.k_front,distance, false);
   }
 
@@ -103,7 +103,7 @@ public class PivotSubsystem extends SubsystemBase {
   // a 2D array that (1st column - position on field) (2nd colum - corresponding
   // angle)
   public double getPivotAngleFromRobotPos(boolean predictFuture) {
-    return getPivotAngleFromDistanceFromSpeaker(m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters());
+    return getPivotAngleFromDistance(m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters());
   }
 
   // description: returns a double of current angle in degrees

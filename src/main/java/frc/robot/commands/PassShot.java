@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.drivetrain.AimArcadeDrive;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
+import frc.robot.commands.pivot.PassingAim;
 import frc.robot.commands.pivot.SetPivotPos;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
@@ -32,8 +33,7 @@ public class PassShot extends SequentialCommandGroup {
         new ToggleShootSideCommand(true),
         new ParallelDeadlineGroup(
             new SequentialCommandGroup(
-                new SetPivotPos(pivotSubsystem, 70),
-                new WaitCommand(0.5),
+                new PassingAim(pivotSubsystem, shooterSubsystem, driveSubsystem),
                 new FeedCommand(shooterSubsystem, holderSubsystem, shooterSensors)
             ),
             new AimArcadeDrive(driveSubsystem, () -> controller.getLeftX(), () -> controller.getLeftY())

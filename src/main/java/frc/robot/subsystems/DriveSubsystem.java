@@ -175,6 +175,18 @@ public class DriveSubsystem extends SubsystemBase {
     return Math.sqrt((xDist * xDist) + (yDist * yDist));
   }
 
+    public double getTranslationalDistanceFromCornerMeters() {
+    ApriltagLocation corner = getAmpLocationMeters();
+    Pose2d robot = m_tracker.getPose2d();
+    // This might be simpler as:
+    // return speaker.toPosed2d().minus(robot).getNorm();
+    // - Gavin
+    double xDist = robot.getX() - corner.m_xMeters;
+    double yDist = robot.getY() - corner.m_yMeters;
+    SmartDashboard.putNumber("translationalDistFromSpkrMeters",Math.sqrt((xDist * xDist) + (yDist * yDist)));
+    return Math.sqrt((xDist * xDist) + (yDist * yDist));
+  }
+
   public double getTranslationalDistanceFromAmpMeters() {
     ApriltagLocation amp = getAmpLocationMeters();
     Pose2d robot = m_tracker.getPose2d();

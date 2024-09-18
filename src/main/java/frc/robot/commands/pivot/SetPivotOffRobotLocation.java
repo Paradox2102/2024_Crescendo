@@ -24,7 +24,7 @@ public class SetPivotOffRobotLocation extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    double angle = m_subsystem.getPivotAngleFromDistanceFromSpeaker(m_driveSubsystem.getTranslationalDistanceFromSpeakerMeters());
+    double angle = m_subsystem.getPivotAngleFromDistance(m_driveSubsystem.getTranslationalDistanceFromSpeakerMeters());
     m_subsystem.setPositionDegrees(angle);
     // System.out.println("ksdufkdsfkjdshfkdsfhkdsjhfds");
     // System.out.println(angle);

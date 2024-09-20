@@ -35,8 +35,9 @@ public class PassShot extends SequentialCommandGroup {
             new SequentialCommandGroup(
                 new PassingAim(pivotSubsystem, shooterSubsystem, driveSubsystem),
                 new FeedCommand(shooterSubsystem, holderSubsystem, shooterSensors)
-            ),
-            new AimArcadeDrive(driveSubsystem, () -> controller.getLeftX(), () -> controller.getLeftY())
+            )//,
+//TODO - uncomment this and fix the error (PassingAim and AimArcadeDrive can't be in a parallel deadline group because they both require driveSubsystem)
+            //new AimArcadeDrive(driveSubsystem, () -> controller.getLeftX(), () -> controller.getLeftY())
         )
     );
   }

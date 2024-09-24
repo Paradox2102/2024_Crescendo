@@ -295,6 +295,7 @@ public class RobotContainer {
                         Constants.States.m_shootIntakeSide = !Constants.States.m_shootIntakeSide;
                 }));
                 m_joystick.button(3).whileTrue(new SetStickPos(m_stickSubsystem, false));
+                m_joystick.button(5).toggleOnTrue(new SetPivotOffRobotLocation(m_pivotSubsystem, m_driveSubsystem));
                 m_testStick.button(1).onTrue(new SwapIntakeSideCommand());
                 // m_testStick.button(2).whileTrue(new
                 // CalibrateShooterCommand(m_shooterSubsystem));
@@ -322,7 +323,6 @@ public class RobotContainer {
                 m_testStick.button(11).onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem, m_driveSubsystem));
                 m_testStick.button(12)
                                 .toggleOnTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem, m_shooterSensors));
-
         }
 
         public double getThrottle() {

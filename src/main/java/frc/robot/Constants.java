@@ -96,7 +96,7 @@ public final class Constants {
   };
 
   public static double getShooterCalib(ShooterCalibration[] data, double distance, boolean returnSpeed) {
-    // if returnSpeed is true, returns the speed, otherwise returns the angle
+    // if returnSpeed is true, returns the speed, otherwise returns the pivot angle
     // System.out.println("wahoiesfdsjfjdsjfjsdfjsdjfjsdjfsjfjdsjfsdjfjdsf");
     System.out.println(distance);
     for (int i = 1; i < data.length; i++) {

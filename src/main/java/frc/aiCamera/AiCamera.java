@@ -51,8 +51,12 @@ import frc.robot.PositionTrackerPose;
  *
  */
 public class AiCamera implements Network.NetworkReceiver {
+	// private AiRegions[] lastSeenNotes = {};
+	private Vector<GamePiece> m_old_gamePieces = new Vector<GamePiece>(); // gamepieces before filtering
+	private int m_oldFrameNum;
 	private Network m_network = null;
 	private boolean m_connected = false;
+	private int latencyMS = 70; //latency in milliseconds
 	private long m_startTime = 0;
 	private AiRegions m_regions = null;
 	private AiRegions m_nextRegions = null;
@@ -60,6 +64,12 @@ public class AiCamera implements Network.NetworkReceiver {
 	public final PositionTrackerPose m_tracker;
 	public double m_Robot_x;
 	public double m_Robot_y;
+	private double m_filterDistanceThreshold = 12; // the distance in which old notes are erased from new notes. This
+													// prevents the robot from storing old note positions in memory
+
+	public final long k_timeThresh = 3000; // 3000 milliseconds as a time threshold to when detected notes should be
+											// removed from elastic
+
 	// private Timer m_watchdogTimer = new Timer();
 
 	public class AiRegion {
@@ -83,6 +93,20 @@ public class AiCamera implements Network.NetworkReceiver {
 			m_translation_y = translation_y;
 			m_translation_z = translation_z;
 		}
+
+	}
+
+	public class GamePiece {
+		public double m_translation_x;
+		public double m_translation_y;
+		public long m_time;
+
+		public GamePiece(double translation_x, double translation_y, long time) {
+			m_translation_x = translation_x;
+			m_translation_y = translation_y;
+			m_time = time;
+		}
+
 	}
 
 	public class AiRegions {
@@ -98,16 +122,17 @@ public class AiCamera implements Network.NetworkReceiver {
 			m_height = height;
 			m_time = System.currentTimeMillis() - m_startTime;
 		}
-		public ArrayList<AiRegion> getAllRegionsSorted(){
-			Collections.sort(m_regions,new Comparator<AiRegion>(){
+
+		public ArrayList<AiRegion> getAllRegionsSorted() {
+			Collections.sort(m_regions, new Comparator<AiRegion>() {
 				@Override
-				public int compare(AiRegion lhs, AiRegion rhs){
+				public int compare(AiRegion lhs, AiRegion rhs) {
 					double area1 = Math.abs((lhs.m_lx - lhs.m_ux) * (lhs.m_ly - lhs.m_uy));
 					double area2 = Math.abs((rhs.m_lx - rhs.m_ux) * (rhs.m_ly - rhs.m_uy));
-					if(area1>area2){
+					if (area1 > area2) {
 						return -1;
 					}
-					if(area1==area2){
+					if (area1 == area2) {
 						return 0;
 					}
 					return 1;
@@ -115,21 +140,22 @@ public class AiCamera implements Network.NetworkReceiver {
 			});
 			return m_regions;
 		}
-		public AiRegion getLargestRegion() {
-			AiRegion region = null;
-			double largest = 0;
 
-			for (AiRegion r : m_regions) {
-				double area = Math.abs((r.m_lx - r.m_ux) * (r.m_ly - r.m_uy));
+		// public AiRegion getLargestRegion() {
+		// AiRegion region = null;
+		// double largest = 0;
 
-				if (area > largest) {
-					region = r;
-					largest = area;
-				}
-			}
+		// for (AiRegion r : m_regions) {
+		// double area = Math.abs((r.m_lx - r.m_ux) * (r.m_ly - r.m_uy));
 
-			return region;
-		}
+		// if (area > largest) {
+		// region = r;
+		// largest = area;
+		// }
+		// }
+
+		// return region;
+		// }
 	}
 
 	public AiCamera(PositionTrackerPose tracker) {
@@ -154,6 +180,12 @@ public class AiCamera implements Network.NetworkReceiver {
 
 	public Vector <Pose2d> FindNotePositions() {
 		Vector <Pose2d> poses = new Vector<>();
+		long cur_time = System.currentTimeMillis() - m_startTime;
+		m_old_gamePieces.removeIf(piece -> ((piece.m_time*-1 +cur_time)>k_timeThresh)); //first filter
+
+		// m_old_gamePieces.removeIf(piece -> (piece.m_translation_x)); //first filter
+
+			
 		double m_Robot_x = m_tracker.getPose2d().getTranslation().getX();
 		double m_Robot_y = m_tracker.getPose2d().getTranslation().getY();
 		double x_distance;
@@ -167,7 +199,8 @@ public class AiCamera implements Network.NetworkReceiver {
 		double total_distance; // distance from cam to note
 		double distance_from_camera_to_center = -9*.0254; // distance from camera to center of robot in inches converted to meters
 		AiRegions regions = getRegions();
-		if(regions!=null){
+		if(regions!=null && m_oldFrameNum<regions.m_frameNo){
+			m_oldFrameNum = regions.m_frameNo;
 			// AiRegion largest_region = m_nextRegions.getLargestRegion();
 
 			ArrayList<AiRegion> allRegions = regions.getAllRegionsSorted(); 
@@ -193,7 +226,34 @@ public class AiCamera implements Network.NetworkReceiver {
 				poses.add(new Pose2d(xr, yr, Rotation2d.fromDegrees(alpha)));
 				
 			}
-			return poses;
+			Vector<GamePiece> newGamePieces = new Vector<GamePiece>();
+			for(GamePiece old_piece : m_old_gamePieces){
+				boolean passCondition = true; //pass condition to add old note to new notes list. It only passes if it's more than m_filterDistanceThreshold inches of the new notes
+			
+				for(Pose2d new_piece : poses){
+	
+					//calcuating distance between old note and new note
+					if(Math.sqrt(old_piece.m_translation_x*old_piece.m_translation_x+old_piece.m_translation_y*old_piece.m_translation_y)<m_filterDistanceThreshold){ // checking if old piece is in x vicinity of new game piece.
+						passCondition = false;
+						break;
+					}
+				}
+				if(passCondition){
+					newGamePieces.add(old_piece); 
+				}
+				
+
+			}
+			for(Pose2d pose:poses){
+				newGamePieces.add(new GamePiece(pose.getX(),pose.getY(),regions.m_time)); 
+			}
+
+			m_old_gamePieces = newGamePieces;
+			Vector <Pose2d> newPoses = new Vector<>();
+			for(GamePiece piece : m_old_gamePieces){
+				newPoses.add(new Pose2d(piece.m_translation_x,piece.m_translation_y,new Rotation2d()));
+			}
+			return newPoses;
 		}
 		return null;
 
@@ -355,9 +415,9 @@ public class AiCamera implements Network.NetworkReceiver {
 			SmartDashboard.putNumber("AI lr X", a[2]);
 			SmartDashboard.putNumber("AI lr Y", a[3]);
 
-			SmartDashboard.putNumber("AI trans X", a[4]*.0254);
-			SmartDashboard.putNumber("AI trans Y", a[5]*.0254);
-			SmartDashboard.putNumber("AI trans Z", a[6]*.0254);
+			SmartDashboard.putNumber("AI trans X", a[4] * .0254);
+			SmartDashboard.putNumber("AI trans Y", a[5] * .0254);
+			SmartDashboard.putNumber("AI trans Z", a[6] * .0254);
 
 			if (m_nextRegions != null) {
 				m_nextRegions.m_regions.add(new AiRegion(a[0], a[1], a[2], a[3], a[4], a[5], a[6]));

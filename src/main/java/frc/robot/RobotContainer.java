@@ -60,6 +60,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import java.util.Vector;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -93,7 +94,8 @@ public class RobotContainer {
     private final ManipulatorSubsystem m_holderSubsystem = new ManipulatorSubsystem(m_driveSubsystem, false);
     private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
     private final StickSubsystem m_stickSubsystem = new StickSubsystem();
-
+    private int m_numLastSeenNotes = 0;
+    private final Pose2d k_offScreenPose = new Pose2d(-100,-100,new Rotation2d());
     private final CommandJoystick m_joystick = new CommandJoystick(1);
 
     private final CommandJoystick m_testStick = new CommandJoystick(2);
@@ -190,12 +192,23 @@ public class RobotContainer {
         Vector<Pose2d> note_positions = m_aiCamera.FindNotePositions();
         
         if(note_positions!=null && !note_positions.isEmpty()){
-                Pose2d pose = note_positions.get(0);
-                m_driveSubsystem.getField().getObject("note").setPose(pose);
+                int list_count = note_positions.size();
+        
+                for(int index=0;index<note_positions.size();index++){
+                         m_driveSubsystem.getField().getObject("note "+index).setPose(note_positions.get(index));
+                        // SmartDashboard.putNumber("note " + index+ "xr",note_positions.get(index).getX());
+                        // SmartDashboard.putNumber("note " +index+"yr", note_positions.get(index).getY());
+                }
+                for(int index =list_count;index<m_numLastSeenNotes;index++){
+                        m_driveSubsystem.getField().getObject("note "+index).setPose(k_offScreenPose);
+                }
+                
+                m_numLastSeenNotes = list_count;
                 SmartDashboard.putBoolean("note can be seen", true);
-                SmartDashboard.putNumber("note xr",pose.getX());
-                SmartDashboard.putNumber("note yr", pose.getY());
-                SmartDashboard.putNumber("note Rotation2d degrees alpha", pose.getRotation().getDegrees());
+                SmartDashboard.putNumber("# of notes in memory", list_count);
+                // SmartDashboard.putNumber("note xr",pose.getX());
+                // SmartDashboard.putNumber("note yr", pose.getY());
+                // SmartDashboard.putNumber("note Rotation2d degrees alpha", pose.getRotation().getDegrees());
 
         }
         else{

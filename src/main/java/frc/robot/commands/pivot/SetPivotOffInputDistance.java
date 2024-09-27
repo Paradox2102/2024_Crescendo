@@ -23,6 +23,6 @@ public class SetPivotOffInputDistance extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromDistanceFromSpeaker(m_distance));
+    m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromDistance(m_distance));
   }
 }

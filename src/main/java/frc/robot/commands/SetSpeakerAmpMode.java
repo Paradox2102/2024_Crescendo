@@ -12,6 +12,7 @@ import frc.robot.Constants;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SetSpeakerAmpMode extends InstantCommand {
   boolean m_speakerMode;
+
   public SetSpeakerAmpMode(boolean speakerMode) {
     m_speakerMode = speakerMode;
     // Use addRequirements() here to declare subsystem dependencies.

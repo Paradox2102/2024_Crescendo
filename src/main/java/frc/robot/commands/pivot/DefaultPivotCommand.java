@@ -14,6 +14,7 @@ public class DefaultPivotCommand extends Command {
   PivotSubsystem m_subsystem;
   boolean m_predictFuture;
   DriveSubsystem m_driveSubsystem;
+
   public DefaultPivotCommand(PivotSubsystem pivotSubsystem, DriveSubsystem driveSubsystem, boolean predictFuture) {
     m_predictFuture = predictFuture;
     m_subsystem = pivotSubsystem;
@@ -31,21 +32,25 @@ public class DefaultPivotCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Constants.States.m_isGamePieceStowed){
-    // if (!Constants.States.m_speakerMode) {
-    //   m_subsystem.setPositionDegrees(Constants.PivotConstants.k_ampPositionDegrees);
-    // } else if (Constants.States.m_speakerMode && m_driveSubsystem.shouldAim()) {
-      // doesn't need to check aiming zone because getPivotAngleFromRobotPos() does it for you
-    //   m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromRobotPos(m_predictFuture));
-    // } else {
-      m_subsystem.setPositionDegrees(Constants.getShooterCalib(Constants.k_front,
-      m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters(), false));
-    // }
-  }}
+    if (Constants.States.m_isGamePieceStowed) {
+      if (!Constants.States.m_speakerMode) {
+        m_subsystem.setPositionDegrees(Constants.PivotConstants.k_ampPositionDegrees);
+      }
+      // else if (Constants.States.m_speakerMode && m_driveSubsystem.shouldAim()) {
+      // doesn't need to check aiming zone because getPivotAngleFromRobotPos() does it
+      // for you
+      // m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromRobotPos(m_predictFuture));
+      else {
+        m_subsystem.setPositionDegrees(Constants.getShooterCalib(Constants.k_front,
+            m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters(), false));
+      }
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override

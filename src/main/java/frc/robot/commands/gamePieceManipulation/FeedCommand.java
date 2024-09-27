@@ -34,9 +34,9 @@ public class FeedCommand extends Command {
 
     m_dwellTimer.reset();
     if (Constants.States.m_shootIntakeSide) {
-      m_shooterSubsystem
-          .setVelocityRPM(Constants.States.m_speakerMode ? -m_shooterSubsystem.getRevSpeed()
-              : Constants.ShooterConstants.k_ampShootVelocityRPM);
+      //TODO - uncomment this before bringing to competition
+      // m_shooterSubsystem.setVelocityRPM(Constants.States.m_speakerMode ? -m_shooterSubsystem.getRevSpeed()
+      //     : Constants.ShooterConstants.k_ampShootVelocityRPM);
 
     } else {
       m_holderSubsystem.setVelocityRPM(Constants.HolderConstants.k_speakerShootVelocityRPM);
@@ -46,15 +46,15 @@ public class FeedCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Constants.States.m_shootIntakeSide) {//shooting forward
+    if (Constants.States.m_shootIntakeSide) {// shooting forward
       if (m_shooterSubsystem.isReady()) {
         m_holderSubsystem.setPower(Constants.States.m_speakerMode ? Constants.HolderConstants.k_speakerFeedPower
             : Constants.HolderConstants.k_ampFeedPower);
-            m_dwellTimer.start();
-      }else{
+        m_dwellTimer.start();
+      } else {
 
       }
-    } else if (m_holderSubsystem.isReady()) {//shooting backward
+    } else if (m_holderSubsystem.isReady()) {// shooting backward
       m_shooterSubsystem.setPower(Constants.ShooterConstants.k_speakerFeedPower);
     }
     if (m_shooterSensors.getHolderSensor() || m_shooterSensors.getShooterSensor()) {
@@ -76,6 +76,6 @@ public class FeedCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_dwellTimer.get()>0.5;
+    return m_dwellTimer.get() > 0.5;
   }
 }

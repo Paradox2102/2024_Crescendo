@@ -102,6 +102,10 @@ public class ManipulatorSubsystem extends SubsystemBase {
         m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters(), true);
   }
 
+  public double getPassSpeed() {
+    return Constants.getShooterCalib(Constants.k_passShot, m_driveSubsystem.getTranslationalDistanceFromCornerMeters(), true);
+  }
+
   @Override
   public void periodic() {
     SmartDashboard.putNumber(getName() + " velocity RPM", getVelocityRPM());

@@ -42,18 +42,22 @@ public final class Constants {
       this.speed = speed;
       // Use addRequirements() here to declare subsystem dependencies.
     }
+
     public double getDistance() {
       return distance;
     }
-    public double getAngle(){
+
+    public double getAngle() {
       return angle;
     }
-    public double getSpeed(){
+
+    public double getSpeed() {
       return speed;
     }
   }
 
-  public static ShooterCalibration[] k_front = new ShooterCalibration[] {
+  public static ShooterCalibration[] k_front = new ShooterCalibration[] { // speeds need to be inverted, already
+                                                                          // implemented in code
       new ShooterCalibration(1.36, 13, 4000),
       new ShooterCalibration(1.54, 15, 4000),
       new ShooterCalibration(1.78, 17, 4000),
@@ -74,8 +78,25 @@ public final class Constants {
       new ShooterCalibration(6.4, 42.0, 5400)
   };
 
+  public static ShooterCalibration[] k_passShot = new ShooterCalibration[] { // not shooting above the stage
+      new ShooterCalibration(1.5, 50, -1000),
+      new ShooterCalibration(2.5, 40, -1800),
+      new ShooterCalibration(3.3, 30, -2400),
+      new ShooterCalibration(4.1, 30, -2600),
+      new ShooterCalibration(4.9, 40, -2700),
+      new ShooterCalibration(5.5, 40, -3100),
+      new ShooterCalibration(6.5, 40, -3500),
+      new ShooterCalibration(7.0, 40, -3700),
+      new ShooterCalibration(7.01, 15, -4000),
+      new ShooterCalibration(8.0, 20, -4200),
+      new ShooterCalibration(9.0, 24, -4300),
+      new ShooterCalibration(10.0, 24, -4430),
+      new ShooterCalibration(11.0, 28, -4450),
+      new ShooterCalibration(12.0, 28, -4750)
+  };
+
   public static double getShooterCalib(ShooterCalibration[] data, double distance, boolean returnSpeed) {
-    // if returnSpeed is true, returns the speed, otherwise returns the angle
+    // if returnSpeed is true, returns the speed, otherwise returns the pivot angle
     // System.out.println("wahoiesfdsjfjdsjfjsdfjsdjfjsdjfsjfjdsjfsdjfjdsf");
     System.out.println(distance);
     for (int i = 1; i < data.length; i++) {
@@ -122,7 +143,7 @@ public final class Constants {
       PivotConstants.k_iZone = 10;
       PivotConstants.k_resetPositionDegrees = 10;
       PivotConstants.k_offset = .3;
-      PivotConstants.k_ampPositionDegrees = 25;
+      PivotConstants.k_ampPositionDegrees = 20;
 
       // Drive
       DriveConstants.k_FLOffset = 3.93 - (Math.PI / 2);
@@ -186,10 +207,9 @@ public final class Constants {
       };
 
       ShooterCalibration[] k_back = new ShooterCalibration[] {
-          new ShooterCalibration(1.4
-          , 117, 0.0),
-          new ShooterCalibration(1.75 , 112, 0),
-          new ShooterCalibration(2 , 110, 0),
+          new ShooterCalibration(1.4, 117, 0.0),
+          new ShooterCalibration(1.75, 112, 0),
+          new ShooterCalibration(2, 110, 0),
           new ShooterCalibration(2.25, 107, 0),
           new ShooterCalibration(2.5, 105, 0),
           new ShooterCalibration(2.75, 101, 0),
@@ -351,9 +371,9 @@ public final class Constants {
     public static double k_offset = 0;
 
     // Positions
-    public static double k_intakePositionDegrees = 92;//112
+    public static double k_intakePositionDegrees = 92;// 112
     public static double k_resetPositionDegrees = 23;
-    public static double k_ampPositionDegrees = 23;
+    public static double k_ampPositionDegrees = 20;
 
     public static double[] k_distancesFront = {
         1.6,

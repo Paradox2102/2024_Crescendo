@@ -59,8 +59,12 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import java.util.Vector;
+
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -79,7 +83,7 @@ import frc.aiCamera.AiCamera;
  * the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
-public class RobotContainer {
+public class RobotContainer implements Sendable {
         // The robot's subsystems and commands are defined here...
         ApriltagsCamera m_apriltagCamera = new ApriltagsCamera();
         ApriltagsCamera m_apriltagCameraSide = new ApriltagsCamera();
@@ -87,16 +91,17 @@ public class RobotContainer {
         Constants m_constants = new Constants();
         LEDConfig m_ledConfig;
 
-    final ShooterSensors m_shooterSensors = new ShooterSensors();
-    final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera, m_apriltagCameraSide);
-    private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem(m_driveSubsystem);
-    private final ManipulatorSubsystem m_shooterSubsystem = new ManipulatorSubsystem(m_driveSubsystem, true);
-    private final ManipulatorSubsystem m_holderSubsystem = new ManipulatorSubsystem(m_driveSubsystem, false);
-    private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
-    private final StickSubsystem m_stickSubsystem = new StickSubsystem();
-    private int m_numLastSeenNotes = 0;
-    private final Pose2d k_offScreenPose = new Pose2d(-100,-100,new Rotation2d());
-    private final CommandJoystick m_joystick = new CommandJoystick(1);
+        final ShooterSensors m_shooterSensors = new ShooterSensors();
+        final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera, m_apriltagCameraSide);
+        private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem(m_driveSubsystem);
+        private final ManipulatorSubsystem m_shooterSubsystem = new ManipulatorSubsystem(m_driveSubsystem, true);
+        private final ManipulatorSubsystem m_holderSubsystem = new ManipulatorSubsystem(m_driveSubsystem, false);
+        private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
+        private final StickSubsystem m_stickSubsystem = new StickSubsystem();
+        private int m_numLastSeenNotes = 0;
+        private boolean m_noteCanBeSeen = false;
+        private final Pose2d k_offScreenPose = new Pose2d(-100, -100, new Rotation2d());
+        private final CommandJoystick m_joystick = new CommandJoystick(1);
 
         private final CommandJoystick m_testStick = new CommandJoystick(2);
         public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);
@@ -116,7 +121,7 @@ public class RobotContainer {
                 // Configure the trigger bindings
                 configureBindings();
                 m_ledConfig = new LEDConfig(robot, m_apriltagCamera, m_apriltagCameraSide);
-
+                SmartDashboard.putData(this);
                 m_driveSubsystem.setTracker(m_tracker);
                 NamedCommands.registerCommand("intake",
                                 new IntakeCommand(m_holderSubsystem, m_shooterSubsystem, m_pivotSubsystem,
@@ -197,31 +202,43 @@ public class RobotContainer {
 
                 if (note_positions != null && !note_positions.isEmpty()) {
                         int list_count = note_positions.size();
-        
-                for(int index=0;index<note_positions.size();index++){
-                         m_driveSubsystem.getField().getObject("note "+index).setPose(note_positions.get(index));
-                        // SmartDashboard.putNumber("note " + index+ "xr",note_positions.get(index).getX());
-                        // SmartDashboard.putNumber("note " +index+"yr", note_positions.get(index).getY());
-                }
-                for(int index =list_count;index<m_numLastSeenNotes;index++){
-                                m_driveSubsystem.getField().getObject("note "+index).setPose(k_offScreenPose);
-                }
-                
-                m_numLastSeenNotes = list_count;
+                        m_noteCanBeSeen = true;
+                        for (int index = 0; index < note_positions.size(); index++) {
+                                m_driveSubsystem.getField().getObject("note " + index)
+                                                .setPose(note_positions.get(index));
+                                // SmartDashboard.putNumber("note " + index+
+                                // "xr",note_positions.get(index).getX());
+                                // SmartDashboard.putNumber("note " +index+"yr",
+                                // note_positions.get(index).getY());
+                        }
+                        for (int index = list_count; index < m_numLastSeenNotes; index++) {
+                                m_driveSubsystem.getField().getObject("note " + index).setPose(k_offScreenPose);
+                        }
+
+                        m_numLastSeenNotes = list_count;
                         SmartDashboard.putBoolean("note can be seen", true);
                         SmartDashboard.putNumber("# of notes in memory", list_count);
-                // SmartDashboard.putNumber("note xr", pose.getX());
+                        // SmartDashboard.putNumber("note xr", pose.getX());
                         // SmartDashboard.putNumber("note yr", pose.getY());
-                        // SmartDashboard.putNumber("note Rotation2d degrees alpha", pose.getRotation().getDegrees());
+                        // SmartDashboard.putNumber("note Rotation2d degrees alpha",
+                        // pose.getRotation().getDegrees());
 
                 } else {
+                        m_noteCanBeSeen = false;
                         SmartDashboard.putBoolean("note can be seen", false);
+                        SmartDashboard.putNumber("# of notes in memory", 0);
+
                 }
 
         }
 
         private boolean getPositionServerButtonState(int button) {
                 return m_posServer.getButtonState(button);
+        }
+        @Override 
+        public void initSendable(SendableBuilder builder){
+                builder.addBooleanProperty("canSeeNote", new Trigger(()->m_noteCanBeSeen).debounce(.1,DebounceType.kFalling), null);
+
         }
 
         /**

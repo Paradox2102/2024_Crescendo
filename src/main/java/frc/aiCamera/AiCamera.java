@@ -64,7 +64,7 @@ public class AiCamera implements Network.NetworkReceiver {
 	public final PositionTrackerPose m_tracker;
 	public double m_Robot_x;
 	public double m_Robot_y;
-	private double m_filterDistanceThreshold = 12; // the distance in which old notes are erased from new notes. This
+	private double m_filterDistanceThreshold = 12*.0254; // the distance in which old notes are erased from new notes. This
 													// prevents the robot from storing old note positions in memory
 
 	public final long k_timeThresh = 3000; // 3000 milliseconds as a time threshold to when detected notes should be
@@ -181,8 +181,9 @@ public class AiCamera implements Network.NetworkReceiver {
 	public Vector <Pose2d> FindNotePositions() {
 		Vector <Pose2d> poses = new Vector<>();
 		long cur_time = System.currentTimeMillis() - m_startTime;
-		m_old_gamePieces.removeIf(piece -> ((piece.m_time*-1 +cur_time)>k_timeThresh)); //first filter
-
+		int oldpiecesSize = m_old_gamePieces.size();
+		m_old_gamePieces.removeIf(piece -> ((cur_time-piece.m_time)>k_timeThresh)); //first filter
+		// System.out.println("old pieces size: "+oldpiecesSize+" newPieces size: "+m_old_gamePieces.size());
 		// m_old_gamePieces.removeIf(piece -> (piece.m_translation_x)); //first filter
 
 			
@@ -233,7 +234,7 @@ public class AiCamera implements Network.NetworkReceiver {
 				for(Pose2d new_piece : poses){
 	
 					//calcuating distance between old note and new note
-					if(Math.sqrt(old_piece.m_translation_x*old_piece.m_translation_x+old_piece.m_translation_y*old_piece.m_translation_y)<m_filterDistanceThreshold){ // checking if old piece is in x vicinity of new game piece.
+					if(new_piece.getTranslation().getDistance(new Translation2d(old_piece.m_translation_x,old_piece.m_translation_y))<m_filterDistanceThreshold){ // checking if old piece is in x vicinity of new game piece.
 						passCondition = false;
 						break;
 					}
@@ -245,10 +246,17 @@ public class AiCamera implements Network.NetworkReceiver {
 
 			}
 			for(Pose2d pose:poses){
-				newGamePieces.add(new GamePiece(pose.getX(),pose.getY(),regions.m_time)); 
+				newGamePieces.add(new GamePiece(pose.getX(),pose.getY(),cur_time)); 
 			}
 
 			m_old_gamePieces = newGamePieces;
+			Vector <Pose2d> newPoses = new Vector<>();
+			for(GamePiece piece : m_old_gamePieces){
+				newPoses.add(new Pose2d(piece.m_translation_x,piece.m_translation_y,new Rotation2d()));
+			}
+			return newPoses;
+		}
+		else if(!(m_old_gamePieces.isEmpty())){
 			Vector <Pose2d> newPoses = new Vector<>();
 			for(GamePiece piece : m_old_gamePieces){
 				newPoses.add(new Pose2d(piece.m_translation_x,piece.m_translation_y,new Rotation2d()));

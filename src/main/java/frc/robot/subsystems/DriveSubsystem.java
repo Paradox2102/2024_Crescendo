@@ -620,11 +620,11 @@ m_backRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)))
     m_tracker.setPose(new Pose2d(pose.getX(),pose.getY(),Rotation2d.fromDegrees(angle)),m_gyro.getRotation2d());
   }
 
-  /**
-   * Returns the heading of the robot.
-   *
-   * @return the robot's heading in degrees, from -180 to 180
-   */
+  // /**
+  //  * Returns the heading of the robot.
+  //  *
+  //  * @return the robot's heading in degrees, from -180 to 180
+  //  */
   public double getHeadingInDegrees() {
     double angle = m_tracker.getPose2d().getRotation().getDegrees();
     return ParadoxField.normalizeAngle(angle);

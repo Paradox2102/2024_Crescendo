@@ -152,12 +152,12 @@ public final class Constants {
       DriveConstants.k_BROffset = 1.01 + (Math.PI / 2);
       DriveConstants.k_maxSpeedMetersPerSecond = 4.8;
 
-      // Shooter
-      ShooterConstants.k_f = 1.1 / ShooterConstants.k_maxVelocityRPM;
-      ShooterConstants.k_p = 0.0004; // 0.00005
-      ShooterConstants.k_i = 0.0000003; // 0.0000001
-      ShooterConstants.k_d = 0;
-      ShooterConstants.k_iZone = 400;
+      // Front
+      FrontConstants.k_f = 1.1 / FrontConstants.k_maxVelocityRPM;
+      FrontConstants.k_p = 0.0004; //0.00005
+      FrontConstants.k_i = 0.0000003; //0.0000001
+      FrontConstants.k_d = 0;
+      FrontConstants.k_iZone = 400;
 
       // Holder
       HolderConstants.k_f = 1.1 / ShooterConstants.k_maxVelocityRPM;

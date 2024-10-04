@@ -146,16 +146,16 @@ public final class Constants {
       PivotConstants.k_ampPositionDegrees = 20;
 
       // Drive
-      DriveConstants.k_FLOffset = 3.93 - (Math.PI / 2);
-      DriveConstants.k_FROffset = 2.03;
-      DriveConstants.k_BLOffset = 3.16 + (Math.PI);
-      DriveConstants.k_BROffset = 1.01 + (Math.PI / 2);
+      DriveConstants.k_FLOffset = 0 - (Math.PI / 2);
+      DriveConstants.k_FROffset = 0;
+      DriveConstants.k_BLOffset = 6.25 + (Math.PI);
+      DriveConstants.k_BROffset = 6.25 + (Math.PI / 2);
       DriveConstants.k_maxSpeedMetersPerSecond = 4.8;
 
-      // Shooter
+      // Front
       ShooterConstants.k_f = 1.1 / ShooterConstants.k_maxVelocityRPM;
-      ShooterConstants.k_p = 0.0004; // 0.00005
-      ShooterConstants.k_i = 0.0000003; // 0.0000001
+      ShooterConstants.k_p = 0.0004; //0.00005
+      ShooterConstants.k_i = 0.0000003; //0.0000001
       ShooterConstants.k_d = 0;
       ShooterConstants.k_iZone = 400;
 

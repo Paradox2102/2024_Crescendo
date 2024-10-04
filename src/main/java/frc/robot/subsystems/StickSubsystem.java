@@ -59,6 +59,12 @@ public class StickSubsystem extends SubsystemBase {
     return m_leftEncoder.getPosition();
   }
 
+  public void setCurrentLimit(int limit) {
+    m_leftMotor.setSmartCurrentLimit(limit);
+    m_rightMotor.setSmartCurrentLimit(limit);
+
+  }
+
   public void setBrakeMode(boolean brake) {
     m_leftMotor.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
     m_rightMotor.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);

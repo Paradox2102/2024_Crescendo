@@ -6,9 +6,10 @@
     "old stuff"
   ],
   "autoFolders": [
+    "New Folder",
     "reference autos"
   ],
-  "defaultMaxVel": 4.8,
+  "defaultMaxVel": 2.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,

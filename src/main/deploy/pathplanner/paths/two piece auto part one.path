@@ -3,48 +3,54 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.712894356908553,
-        "y": 3.236919727994748
+        "x": 1.943718987153074,
+        "y": 5.99910122897169
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3173793663501825,
-        "y": 2.3984405213466022
+        "x": 2.878640246591658,
+        "y": 7.058824949003817
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.241007265862514,
-        "y": 0.779980657348488
+        "x": 8.29950581516365,
+        "y": 5.791356380812524
       },
       "prevControl": {
-        "x": 7.604993517180217,
-        "y": 0.8329818030655336
+        "x": 9.33322780811919,
+        "y": 5.445641409658516
       },
       "nextControl": {
-        "x": 8.358004364461337,
-        "y": 0.770230899133111
+        "x": 5.355078833673109,
+        "y": 6.776081960714991
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.2978798499164705,
-        "y": 3.080923596526529
+        "x": 1.943718987153074,
+        "y": 5.99910122897169
       },
       "prevControl": {
-        "x": 4.077860507264958,
-        "y": 2.027949709107549
+        "x": 2.7506156436814293,
+        "y": 6.174513545608288
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 164.24882633654698,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -54,14 +60,14 @@
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 146.30993247386598,
+    "velocity": 0.0,
+    "rotation": -174.5426449068429,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 139.47489650632656,
+    "rotation": -178.30183040738729,
     "velocity": 0
   },
   "useDefaultConstraints": true

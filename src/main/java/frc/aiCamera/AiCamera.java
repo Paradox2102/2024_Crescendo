@@ -205,6 +205,7 @@ public class AiCamera implements Network.NetworkReceiver {
 			// AiRegion largest_region = m_nextRegions.getLargestRegion();
 
 			ArrayList<AiRegion> allRegions = regions.getAllRegionsSorted(); 
+			SmartDashboard.putNumber("Num of AI Regions",allRegions.size());
 			for(AiRegion region:allRegions){
 				double transx = region.m_translation_x/39.37;
 				double transy = region.m_translation_y/39.37;

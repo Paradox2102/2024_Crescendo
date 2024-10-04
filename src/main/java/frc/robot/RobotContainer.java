@@ -161,7 +161,7 @@ public class RobotContainer implements Sendable {
                 // m_autoSelection.addOption("Wing 4 Piece PHR", new PathPlannerAuto("wing 4 piece source up"));
                 // m_autoSelection.addOption("Wing 4 Piece RHP", new PathPlannerAuto("wing 4 piece amp down"));
                 // m_autoSelection.addOption("Path 4 Auto", new PathPlannerAuto("path 4 auto"));
-                // m_autoSelection.addOption("New skibidi auto", new PathPlannerAuto("New Skibidi Auto"));
+                m_autoSelection.addOption("New skibidi auto", new PathPlannerAuto("New Skibidi Auto"));
                 m_autoSelection.addOption("2 piece skibidi auto", new PathPlannerAuto("2 piece skibidi auto"));
                 // m_autoSelection.addOption("Source Side 4", new PathPlannerAuto("source side 4"));
 
@@ -169,6 +169,7 @@ public class RobotContainer implements Sendable {
 
                 // m_apriltagCamera.setCameraInfo(8.375, 12, 180, ApriltagsCameraType.GS_6mm);
                 // // y = 6
+                
                 // m_apriltagCamera.setCameraInfo(5.125, 15.5, 0, ApriltagsCameraType.GS_6mm);
                 // // y = 9.5
                 // Front

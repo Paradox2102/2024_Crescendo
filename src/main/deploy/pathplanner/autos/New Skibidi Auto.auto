@@ -1,45 +1,14 @@
 {
   "version": 1.0,
-  "startingPose": {
-    "position": {
-      "x": 1.7671678098700627,
-      "y": 5.56
-    },
-    "rotation": 179.42
-  },
+  "startingPose": null,
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Test Path"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "rev back"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "auto aim"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shoot"
+            "pathName": "Test Path"
           }
         }
       ]

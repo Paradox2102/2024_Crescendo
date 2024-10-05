@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.6694499850273132,
+      "y": 7.340753555297852
+    },
+    "rotation": 178.21010033203135
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "start front"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "amp 3 rush start"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": true
+}

@@ -46,28 +46,28 @@ public final class Constants {
       PivotConstants.k_f = .015;
       PivotConstants.k_p = .032;
       PivotConstants.k_i = 0.00005;
-      PivotConstants. k_d = .0005;
+      PivotConstants.k_d = .0005;
       PivotConstants.k_iZone = 10;
       PivotConstants.k_resetPositionDegrees = 10;
       PivotConstants.k_offset = .3;
       PivotConstants.k_ampPositionDegrees = 25;
 
       // Drive
-      DriveConstants.k_FLOffset = 3.93 - (Math.PI / 2);
-      DriveConstants.k_FROffset = 2.03;
-      DriveConstants.k_BLOffset = 3.16 + (Math.PI);
-      DriveConstants.k_BROffset = 1.01 + (Math.PI / 2);
+      DriveConstants.k_FLOffset = 0 - (Math.PI / 2);
+      DriveConstants.k_FROffset = 0;
+      DriveConstants.k_BLOffset = 6.25 + (Math.PI);
+      DriveConstants.k_BROffset = 6.25 + (Math.PI / 2);
       DriveConstants.k_maxSpeedMetersPerSecond = 4.8;
 
       // Front
       FrontConstants.k_f = 1.1 / FrontConstants.k_maxVelocityRPM;
-      FrontConstants.k_p = 0.0004; //0.00005
-      FrontConstants.k_i = 0.0000003; //0.0000001
+      FrontConstants.k_p = 0.0004; // 0.00005
+      FrontConstants.k_i = 0.0000003; // 0.0000001
       FrontConstants.k_d = 0;
       FrontConstants.k_iZone = 400;
 
-      // Back 
-      BackConstants.k_f = 1.1 /  FrontConstants.k_maxVelocityRPM;
+      // Back
+      BackConstants.k_f = 1.1 / FrontConstants.k_maxVelocityRPM;
       BackConstants.k_p = .00075;
       BackConstants.k_i = .0000001;
       BackConstants.k_d = 0;
@@ -76,65 +76,65 @@ public final class Constants {
 
       // Interpolation Table
       PivotConstants.k_distancesFront = new double[] {
-        1.3,
-        2,
-        2.55,
-        3.1,
-        3.5,
-        3.75,
-        4,
-        4.25,
-        4.5,
-        4.75,
-        5,
-        5.25,
-        5.5, 
-        5.8,
-        6.25,
-        7
+          1.3,
+          2,
+          2.55,
+          3.1,
+          3.5,
+          3.75,
+          4,
+          4.25,
+          4.5,
+          4.75,
+          5,
+          5.25,
+          5.5,
+          5.8,
+          6.25,
+          7
       };
       PivotConstants.k_anglesFront = new double[] {
-        10, // 1.3,
-        22.9, // 2,
-        29, // 2.55,
-        36.9, // 3.1,
-        37.5, // 3.5,
-        39.8, // 3.75,
-        41, // 4
-        42, // 4.25,
-        43.6, // 4.5,
-        44.1, // 4.75,
-        44.7, // 5,
-        44.8, // 5.25,
-        44.8, // 5.5
-        44.3, // 5.8
-        44.4, // 6.25
-        44.1 // 7
+          10, // 1.3,
+          22.9, // 2,
+          29, // 2.55,
+          36.9, // 3.1,
+          37.5, // 3.5,
+          39.8, // 3.75,
+          41, // 4
+          42, // 4.25,
+          43.6, // 4.5,
+          44.1, // 4.75,
+          44.7, // 5,
+          44.8, // 5.25,
+          44.8, // 5.5
+          44.3, // 5.8
+          44.4, // 6.25
+          44.1 // 7
       };
       PivotConstants.k_distancesBack = new double[] {
-        1.4,
-        1.75,
-        2,
-        2.25,
-        2.5,
-        2.75,
-        3,
-        3.5,
-        4,
-        8
+          1.4,
+          1.75,
+          2,
+          2.25,
+          2.5,
+          2.75,
+          3,
+          3.5,
+          4,
+          8
 
       };
       PivotConstants.k_anglesBack = new double[] {
-        117, //1.5
-        112, //1.75
-        110, //2
-        107, //2.25
-        105, //2.5
-        101, //2.75
-        99, //3
-        96, // 3.5
-        95, // 4
-        70 // 8
+          117, // 1.5
+          112, // 1.75
+          110, // 2
+          107, // 2.25
+          105, // 2.5
+          101, // 2.75
+          99, // 3
+          96, // 3.5
+          95, // 4
+          70 // 8
       };
 
     } else {
@@ -142,6 +142,7 @@ public final class Constants {
       States.m_isCompetition = false;
     }
   }
+
   public static boolean m_allianceRed = true;
 
   public static class OperatorConstants {
@@ -229,7 +230,7 @@ public final class Constants {
         new SwerveModuleState(0, new Rotation2d(Math.PI / 4))
     };
     public static final double k_rotateP = .016;
-    public static final double k_rotateI = .013;//.01;
+    public static final double k_rotateI = .013;// .01;
     public static final double k_rotateD = .0008;
     public static final double k_rotateIZone = 20; // 70
     public static final double k_rotateDeadzone = 2;
@@ -270,34 +271,34 @@ public final class Constants {
     public static double k_ampPositionDegrees = 23;
 
     public static double[] k_distancesFront = {
-      1.6,
-      2.3,
-      2.7,
-      3,
-      3.3,
-      3.5,
-      3.8,
-      4,
-      4.5,
-      5,
-      5.5,
-      6.1
+        1.6,
+        2.3,
+        2.7,
+        3,
+        3.3,
+        3.5,
+        3.8,
+        4,
+        4.5,
+        5,
+        5.5,
+        6.1
     };
 
     public static double[] k_anglesFront = {
-      0, // 1.6
-      15, // 2
-      16.3, // 2.3
-      16.7, // 2.7
-      22.7, // 3
-      24.5, // 3.3
-      25.6, // 3.5
-      26.8, // 3.8
-      26.8, // 4
-      26.8, // 4.5
-      27.1, // 5
-      26.2, // 5.5
-      28.2 // 6.1
+        0, // 1.6
+        15, // 2
+        16.3, // 2.3
+        16.7, // 2.7
+        22.7, // 3
+        24.5, // 3.3
+        25.6, // 3.5
+        26.8, // 3.8
+        26.8, // 4
+        26.8, // 4.5
+        27.1, // 5
+        26.2, // 5.5
+        28.2 // 6.1
     };
 
     public static double[] k_distancesBack = {};
@@ -309,10 +310,10 @@ public final class Constants {
   public static class FrontConstants {
     public static final int k_frontMotor = 11;
     public static double k_intakeVelocityRPM = 3000;
-    public static final double k_speakerShootVelocityRPM = -5750; //5000
+    public static final double k_speakerShootVelocityRPM = -5750; // 5000
     public static double k_ampShootVelocityRPM = -1950; // -1950
-    public static final double k_maxVelocityRPM = 6250; //6000
-    
+    public static final double k_maxVelocityRPM = 6250; // 6000
+
     public static final double k_speakerFeedPower = 1;
     public static final double k_deadzone = 25;
 
@@ -322,20 +323,21 @@ public final class Constants {
     public static final int k_backSensor = 2;
 
     public static double k_f = 1.1 / k_maxVelocityRPM;
-    public static double k_p = 0; //.00025
-    public static double k_i = 0; //.00052
+    public static double k_p = 0; // .00025
+    public static double k_i = 0; // .00052
     public static double k_d = 0;
     public static double k_iZone = 0;
 
-    public static final double[] k_revDistances = {5.8, 6.5, 8, 10, 12};
-    public static final double[] k_revSpeeds = {-5000, -6000, -6000, -4000, -2000}; //{-5000, -5500, -5750, -4000, -2000}
+    public static final double[] k_revDistances = { 5.8, 6.5, 8, 10, 12 };
+    public static final double[] k_revSpeeds = { -5000, -6000, -6000, -4000, -2000 }; // {-5000, -5500, -5750, -4000,
+                                                                                      // -2000}
   }
 
   // Positive is intake. negative is shoot intake side
   public static class BackConstants {
     public static final int k_backMotor = 10;
     public static double k_intakeVelocityRPM = 1000;
-    public static final double k_speakerShootVelocityRPM = 5000; 
+    public static final double k_speakerShootVelocityRPM = 5000;
     public static final double k_speakerFeedPower = -1;
     public static final double k_ampFeedPower = -0.35; // -500
 
@@ -343,23 +345,23 @@ public final class Constants {
     public static final double k_adjustGamePiecePower = -.2;
 
     public static double k_f = 1.0 / 5350;
-    public static double k_p = 0.00004; //0.00004
-    public static double k_i = 0.0015; //0.0015
+    public static double k_p = 0.00004; // 0.00004
+    public static double k_i = 0.0015; // 0.0015
     public static double k_d = 0; // 0
     public static double k_iZone = 50; // 50
   }
 
   public static class ElevatorConstants {
     public static final int k_elevatorMotor = 12;
-    public static final double k_ticksToInches = -25.0/113.559;
+    public static final double k_ticksToInches = -25.0 / 113.559;
 
-//manual command
+    // manual command
     public static final double k_driveDeadband = 0;
     public static final double k_minDistance = 0;
     public static final double k_maxDistance = 17;
 
     public static final double k_zeroPoint = -1.814;
-//PID (kinda) tuning
+    // PID (kinda) tuning
     // public static final double k_P = 0.002;
     public static final double k_f = 0.9;
   }

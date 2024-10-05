@@ -14,9 +14,9 @@
     "3 Pieces",
     "Wing Autos"
   ],
-  "defaultMaxVel": 4.8,
-  "defaultMaxAccel": 3.0,
-  "defaultMaxAngVel": 540.0,
-  "defaultMaxAngAccel": 720.0,
+  "defaultMaxVel": 3.707,
+  "defaultMaxAccel": 8.478,
+  "defaultMaxAngVel": 514.17,
+  "defaultMaxAngAccel": 2421.434,
   "maxModuleSpeed": 4.5
 }

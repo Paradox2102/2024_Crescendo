@@ -160,7 +160,7 @@ public class RobotContainer implements Sendable {
                 // m_autoSelection.addOption("Amp Side 5", new PathPlannerAuto("amp side 5"));
                 // m_autoSelection.addOption("Wing 4 Piece PHR", new PathPlannerAuto("wing 4 piece source up"));
                 // m_autoSelection.addOption("Wing 4 Piece RHP", new PathPlannerAuto("wing 4 piece amp down"));
-                // m_autoSelection.addOption("Path 4 Auto", new PathPlannerAuto("path 4 auto"));
+                m_autoSelection.addOption("Path 1 MR Auto", new PathPlannerAuto("Path 1 MR Auto"));
                 m_autoSelection.addOption("New skibidi auto", new PathPlannerAuto("New Skibidi Auto"));
                 m_autoSelection.addOption("2 piece skibidi auto", new PathPlannerAuto("2 piece skibidi auto"));
                 // m_autoSelection.addOption("Source Side 4", new PathPlannerAuto("source side 4"));

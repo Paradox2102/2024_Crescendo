@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6694499850273132,
-      "y": 7.340753555297852
+      "x": 1.4669729471206665,
+      "y": 2.6553516387939453
     },
-    "rotation": 178.21010033203135
+    "rotation": 179.99469134034814
   },
   "command": {
     "type": "sequential",
@@ -20,7 +20,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "amp 3 rush start"
+            "pathName": "source 4 rush"
           }
         }
       ]

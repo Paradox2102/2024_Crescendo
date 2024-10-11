@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.6694499850273132,
+      "y": 7.340753555297852
+    },
+    "rotation": 179.99469134034814
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "start front"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "amp 4 rush start"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "amp 4 rush end"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": true
+}

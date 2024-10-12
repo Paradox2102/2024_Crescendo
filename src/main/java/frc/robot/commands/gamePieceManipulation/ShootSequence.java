@@ -28,7 +28,7 @@ public class ShootSequence extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ConditionalCommand(
-        // new DriveToPosition(driveSubsystem, new Pose2d(10, 10, new Rotation2d())), 
+        // new DriveToPosition(driveSubsystem, new Pose2d(4, 6, Rotation2d.fromDegrees(90))), 
         new InstantCommand(),
         new InstantCommand(() -> {Constants.States.m_slowMode = true;}), 
         () -> !Constants.States.m_speakerMode

@@ -31,7 +31,7 @@ public class DefaultPivotCommand extends Command {
   public void execute() {
     if (!Constants.States.m_speakerMode) {
       m_subsystem.setPositionDegrees(Constants.PivotConstants.k_ampPositionDegrees);
-    } else if (Constants.States.m_speakerMode && m_driveSubsystem.shouldAim()) {
+    } else if (Constants.States.m_speakerMode && m_driveSubsystem.shouldAimSpeaker()) {
       // doesn't need to check aiming zone because getPivotAngleFromRobotPos() does it for you
       m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromRobotPos(m_predictFuture) + 5);
     } else {

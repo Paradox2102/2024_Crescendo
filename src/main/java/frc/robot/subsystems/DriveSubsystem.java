@@ -212,14 +212,27 @@ public class DriveSubsystem extends SubsystemBase {
     // This might be simpler as:
     // speaker.toPose2d().minus(m_futurePos).getTranslation().getAngle();
     // - Gavin
-    double xDist =
+    double xDist;
+    double yDist;
+    if (isInAimingZone()) {
+       xDist =
         m_futurePos.getX() - speaker.m_xMeters; // m_futurePos
-    double yDist =
-        m_futurePos.getY() - speaker.m_yMeters; // m_futurePos
+      yDist =
+          m_futurePos.getY() - speaker.m_yMeters; // m_futurePos
+    } else {
+      xDist = m_futurePos.getX() - 2;
+      yDist = m_futurePos.getY() - 6.8;
+    }
     // System.out.println(Math.toDegrees(Math.atan2(yDist, xDist)));
     return ParadoxField.normalizeAngle(
         Math.toDegrees(Math.atan2(yDist, xDist)) +
         (Constants.States.m_shootIntakeSide ? 0 : 180));
+  }
+
+  public boolean inPassZone() {
+    boolean isRed = Constants.States.m_alliance == DriverStation.Alliance.Red;
+    double xPose = getPose().getX();
+    return isRed ? xPose > 6 : xPose < 11;
   }
 
   // Is in speaker or amp aiming zone
@@ -233,8 +246,13 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   // is in zone and has game piece and auto aim not disabled
-  public boolean shouldAim() {
+  public boolean shouldAimSpeaker() {
     return (isInAimingZone() && Constants.States.m_hasGamePiece &&
+            Constants.States.m_autoRotateAim);
+  }
+
+  public boolean shouldAimPass() {
+    return (!isInAimingZone() && Constants.States.m_hasGamePiece &&
             Constants.States.m_autoRotateAim);
   }
 

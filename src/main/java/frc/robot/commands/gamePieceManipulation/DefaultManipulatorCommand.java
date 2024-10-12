@@ -31,7 +31,7 @@ public class DefaultManipulatorCommand extends Command {
   @Override
   public void execute() {
           System.out.println(m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters());
-      System.out.println(m_driveSubsytem.shouldAim());
+      System.out.println(m_driveSubsytem.shouldAimSpeaker());
     if (Constants.States.m_hasGamePiece && !Constants.States.m_isGamePieceStowed) {
       double adjustPower = m_front ? Constants.FrontConstants.k_adjustGamePiecePower : Constants.BackConstants.k_adjustGamePiecePower;
       m_subsystem.setPower(Constants.States.m_shootIntakeSide ? -adjustPower : adjustPower);

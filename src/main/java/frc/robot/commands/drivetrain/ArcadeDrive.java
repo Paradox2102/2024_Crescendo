@@ -8,7 +8,6 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.apriltagsCamera.Logger;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
@@ -42,9 +41,13 @@ public class ArcadeDrive extends Command {
     double x = -MathUtil.applyDeadband(m_getX.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
     double y = -MathUtil.applyDeadband(m_getY.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
     double rot = -MathUtil.applyDeadband(m_getRot.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
-    // if (m_subsystem.shouldAim() && rot == 0) {
-    //   rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getFutureRotationalGoalFromTargetDegrees()), 0);
-    // }
+    if (rot == 0) {
+      if (m_subsystem.shouldAimSpeaker()) {
+         rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getFutureRotationalGoalFromTargetDegrees()), 0);
+      } else if (m_subsystem.shouldAimPass()) {
+         rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getFutureRotationalGoalFromTargetDegrees()), 0);
+      }
+    }
     if (Constants.States.m_slowMode) {
       x *= .3;
       y *= .3;

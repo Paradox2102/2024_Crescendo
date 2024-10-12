@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.io.File;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -389,5 +390,7 @@ public final class Constants {
     public static boolean m_autoRotateAim = true;
     public static boolean m_slowMode = false;
     public static DriverStation.Alliance m_alliance = DriverStation.Alliance.Blue;
+
+    public static Pose2d m_sourcePos = new Pose2d();
   }
 }

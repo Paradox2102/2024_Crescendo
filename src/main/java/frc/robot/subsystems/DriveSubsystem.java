@@ -86,6 +86,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   private Pose2d m_futurePos = new Pose2d();
 
+  private int m_sourceLocation = 1;
+  private static final double k_fieldXMeters = 16.54;
+
   private final SwerveDriveKinematics m_swerve = new SwerveDriveKinematics(
       new Translation2d(.298, .298), new Translation2d(.298, -.298),
       new Translation2d(-.298, .298), new Translation2d(-.298, -.298));
@@ -163,6 +166,19 @@ public class DriveSubsystem extends SubsystemBase {
 
     return ApriltagLocations.findTag(
         Constants.States.m_alliance == DriverStation.Alliance.Red ? 5 : 6);
+  }
+
+  public Pose2d getSourceLocation() {
+    boolean red = Constants.States.m_alliance == DriverStation.Alliance.Red;
+    Pose2d pos = new Pose2d();
+    if (m_sourceLocation == 1) {
+      pos = new Pose2d(red ? k_fieldXMeters - 14.6 : 14.6, .7, Rotation2d.fromDegrees(21.5));
+    } else if (m_sourceLocation == 2) {
+      pos = new Pose2d(red ? k_fieldXMeters - 15.4 : 15.4, 1, Rotation2d.fromDegrees(21.5));
+    } else if (m_sourceLocation == 3) {
+      pos = new Pose2d(red ? k_fieldXMeters - 15.9 : 15.9, 1.3, Rotation2d.fromDegrees(21.5));
+    }
+    return pos;
   }
 
   public double getTranslationalDistanceFromSpeakerMeters() {
@@ -304,6 +320,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    Constants.States.m_sourcePos = getSourceLocation();
+    
     // SmartDashboard.putNumber("Rotate Error", getRotationDistanceFromTargetError());
     // // Update the odometry in the periodic block
     SmartDashboard.putNumber("Turn FR",

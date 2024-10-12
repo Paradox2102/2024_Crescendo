@@ -60,8 +60,8 @@ public final class Constants {
       DriveConstants.k_maxSpeedMetersPerSecond = 4.8;
 
       // Front
-      FrontConstants.k_f = 1.1 / FrontConstants.k_maxVelocityRPM;
-      FrontConstants.k_p = 0.0004; // 0.00005
+      FrontConstants.k_f = 2 / FrontConstants.k_maxVelocityRPM;
+      FrontConstants.k_p = 0.0006; // 0.00005
       FrontConstants.k_i = 0.0000003; // 0.0000001
       FrontConstants.k_d = 0;
       FrontConstants.k_iZone = 400;
@@ -229,6 +229,8 @@ public final class Constants {
         new SwerveModuleState(0, new Rotation2d(3 * Math.PI / 4)),
         new SwerveModuleState(0, new Rotation2d(Math.PI / 4))
     };
+
+    public static final double k_rotateF = 0;
     public static final double k_rotateP = .016;
     public static final double k_rotateI = .013;// .01;
     public static final double k_rotateD = .0008;
@@ -323,14 +325,15 @@ public final class Constants {
     public static final int k_backSensor = 2;
 
     public static double k_f = 1.5 / k_maxVelocityRPM;
-    public static double k_p = 0;//.00025;
-    public static double k_i = 0;//.00052;
+    public static double k_p = .00025;
+    public static double k_i = .00052;
     public static double k_d = 0;
     public static double k_iZone = 0;
 
     public static final double[] k_revDistances = { 5.8, 6.5, 8, 10, 12 };
     public static final double[] k_revSpeeds = { -5000, -6000, -6000, -4000, -2000 }; // {-5000, -5500, -5750, -4000,
-                                                                                      // -2000}
+                                                                                      // -2000}6
+    public static final double k_idleRevSpeed = -2000;
   }
 
   // Positive is intake. negative is shoot intake side

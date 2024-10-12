@@ -36,7 +36,7 @@ public class DefaultManipulatorCommand extends Command {
     } else if (Constants.States.m_isGamePieceStowed && m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters() < k_revRangeMeters && Constants.States.m_autoRotateAim) {
       // front
       if (m_front && Constants.States.m_shootIntakeSide) { // if front and shoot intake side rev
-        m_subsystem.setVelocityRPM(Constants.States.m_speakerMode ? m_subsystem.getRevSpeed() : Constants.FrontConstants.k_ampShootVelocityRPM);
+        m_subsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.FrontConstants.k_idleRevSpeed : Constants.FrontConstants.k_ampShootVelocityRPM);
       } else if (m_front) { // else stop cause back is revving
         m_subsystem.stop();
       }
@@ -45,7 +45,7 @@ public class DefaultManipulatorCommand extends Command {
       if (!m_front && Constants.States.m_shootIntakeSide) { // if back and shoot intake side stop
         m_subsystem.stop();
       } else if (!m_front) { // else rev
-        m_subsystem.setVelocityRPM(-m_subsystem.getRevSpeed());
+        m_subsystem.setVelocityRPM(- Constants.FrontConstants.k_idleRevSpeed);
       }
     } else {
       m_subsystem.stop();

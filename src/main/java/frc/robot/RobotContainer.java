@@ -11,7 +11,6 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.StopEverything;
 import frc.robot.commands.ToggleAutoAim;
 import frc.robot.commands.PassShot;
-import frc.robot.commands.ResetGyro;
 import frc.robot.commands.ToggleShootSideCommand;
 import frc.robot.commands.apriltags.SetApriltagsDashboard;
 import frc.robot.commands.apriltags.SetApriltagsLogging;
@@ -23,6 +22,7 @@ import frc.robot.commands.autos.StartBack;
 import frc.robot.commands.autos.StartFront;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.AutoOrientCommand;
+import frc.robot.commands.drivetrain.DriveToPosition;
 import frc.robot.commands.drivetrain.EjectSpinCommand;
 import frc.robot.commands.elevator.ManualElevatorCommand;
 import frc.robot.commands.gamePieceManipulation.DefaultManipulatorCommand;
@@ -52,6 +52,8 @@ import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerPath;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -202,6 +204,7 @@ public class RobotContainer {
     m_joystick.button(10).onTrue(new InstantCommand(() -> {Constants.States.m_shootIntakeSide = !Constants.States.m_shootIntakeSide;}));
     m_joystick.button(3).whileTrue(new SetStickPos(m_stickSubsystem, false));
 
+    m_joystick.button(5).whileTrue(new DriveToPosition(m_driveSubsystem, new Pose2d(2.86, 7.16, Rotation2d.fromDegrees(0))));
     //ToggleTrigger m_brakeMode = new ToggleTrigger(m_joystick.button(12));
     //m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode), m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_backSubsystem, m_elevatorSubsystem, m_stickSubsystem));
   }

@@ -42,9 +42,9 @@ public class ArcadeDrive extends Command {
     double x = -MathUtil.applyDeadband(m_getX.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
     double y = -MathUtil.applyDeadband(m_getY.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
     double rot = -MathUtil.applyDeadband(m_getRot.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
-    if (m_subsystem.shouldAim() && rot == 0) {
-      rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getFutureRotationalGoalFromTargetDegrees()), 0);
-    }
+    // if (m_subsystem.shouldAim() && rot == 0) {
+    //   rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getFutureRotationalGoalFromTargetDegrees()), 0);
+    // }
     if (Constants.States.m_slowMode) {
       x *= .3;
       y *= .3;

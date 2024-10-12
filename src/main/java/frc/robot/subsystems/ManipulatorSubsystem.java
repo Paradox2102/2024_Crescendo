@@ -83,7 +83,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
   public void periodic() {
     double velocity = getVelocityRPM();
     SmartDashboard.putNumber(getName() + " Speed", Math.abs(velocity));
-    // SmartDashboard.putNumber(getName() + " Target Speed", m_velocity);
+    SmartDashboard.putNumber(getName() + " Target Speed", m_velocity);
     // SmartDashboard.putBoolean(getName() + "in shoot speed range", Math.abs(velocity) >= 4500);
     //Constants.FrontConstants.k_ampShootVelocityRPM = SmartDashboard.getEntry("Amp Velo").getDouble(0);
   }

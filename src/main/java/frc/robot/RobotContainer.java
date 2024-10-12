@@ -174,9 +174,7 @@ public class RobotContainer {
       m_driveSubsystem, 
       () -> m_driverController.getLeftX(), 
       () -> m_driverController.getLeftY(),
-      () -> m_driverController.getRightX(),
-      new Trigger(m_slowMode),
-      new Trigger(m_slowMode1)
+      () -> m_driverController.getRightX()
     ));
 
     m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));

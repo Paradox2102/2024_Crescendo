@@ -387,6 +387,7 @@ public final class Constants {
     public static boolean m_faceSpeaker = false;
     public static boolean m_intaking = false;
     public static boolean m_autoRotateAim = true;
+    public static boolean m_slowMode = false;
     public static DriverStation.Alliance m_alliance = DriverStation.Alliance.Blue;
   }
 }

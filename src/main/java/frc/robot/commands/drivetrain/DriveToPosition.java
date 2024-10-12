@@ -24,10 +24,10 @@ public class DriveToPosition extends Command {
   double m_currentY = 0;
   double m_currentRot = 0;
 
-  private static final double k_f = .2;
-  private static final double k_p = .003;
+  private static final double k_f = .5;
+  private static final double k_p = .005;
   private static final double k_i = 0;
-  private static final double k_d = .0001;
+  private static final double k_d = .0005;
   private static final double k_deadzoneMeters = .1;
   private static final double k_minPower = .2;
 

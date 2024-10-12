@@ -322,8 +322,8 @@ public final class Constants {
     public static final int k_frontSensor = 1;
     public static final int k_backSensor = 2;
 
-    public static double k_f = 1.5 / k_maxVelocityRPM;
-    public static double k_p = 0;//.00025;
+    public static double k_f = 1.1 / k_maxVelocityRPM;
+    public static double k_p = 0.0005;//.00025;
     public static double k_i = 0;//.00052;
     public static double k_d = 0;
     public static double k_iZone = 0;

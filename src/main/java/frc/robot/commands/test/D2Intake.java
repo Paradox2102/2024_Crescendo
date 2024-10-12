@@ -5,6 +5,7 @@
 package frc.robot.commands.test;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.ManipulatorSubsystem;
 
 public class D2Intake extends Command {
@@ -42,6 +43,6 @@ public class D2Intake extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Constants.States.m_hasGamePiece;
   }
 }

@@ -30,6 +30,8 @@ public class DefaultManipulatorCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+          System.out.println(m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters());
+      System.out.println(m_driveSubsytem.shouldAim());
     if (Constants.States.m_hasGamePiece && !Constants.States.m_isGamePieceStowed) {
       double adjustPower = m_front ? Constants.FrontConstants.k_adjustGamePiecePower : Constants.BackConstants.k_adjustGamePiecePower;
       m_subsystem.setPower(Constants.States.m_shootIntakeSide ? -adjustPower : adjustPower);

@@ -131,7 +131,7 @@
     },
     {
       "waypointRelativePos": 5,
-      "rotationDegrees": 0,
+      "rotationDegrees": 0.0,
       "rotateFast": false
     }
   ],

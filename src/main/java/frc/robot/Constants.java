@@ -312,7 +312,7 @@ public final class Constants {
   public static class FrontConstants {
     public static final int k_frontMotor = 11;
     public static double k_intakeVelocityRPM = 3000;
-    public static final double k_speakerShootVelocityRPM = -5750; // 5000
+    public static final double k_speakerShootVelocityRPM = -5500; // 5000
     public static double k_ampShootVelocityRPM = -1950; // -1950
     public static final double k_maxVelocityRPM = 6250; // 6000
 

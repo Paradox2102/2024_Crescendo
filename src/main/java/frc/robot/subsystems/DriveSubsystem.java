@@ -172,13 +172,18 @@ public class DriveSubsystem extends SubsystemBase {
     boolean red = Constants.States.m_alliance == DriverStation.Alliance.Red;
     Pose2d pos = new Pose2d();
     if (m_sourceLocation == 1) {
-      pos = new Pose2d(red ? k_fieldXMeters - 14.6 : 14.6, .7, Rotation2d.fromDegrees(21.5));
+      pos = new Pose2d(red ? k_fieldXMeters - 14.6 : 14.6, .7, Rotation2d.fromDegrees(21.5 + (red ? 180 : 0)));
     } else if (m_sourceLocation == 2) {
-      pos = new Pose2d(red ? k_fieldXMeters - 15.4 : 15.4, 1, Rotation2d.fromDegrees(21.5));
+      pos = new Pose2d(red ? k_fieldXMeters - 15.4 : 15.4, 1, Rotation2d.fromDegrees(21.55 + (red ? 180 : 0)));
     } else if (m_sourceLocation == 3) {
-      pos = new Pose2d(red ? k_fieldXMeters - 15.9 : 15.9, 1.3, Rotation2d.fromDegrees(21.5));
+      pos = new Pose2d(red ? k_fieldXMeters - 15.9 : 15.9, 1.3, Rotation2d.fromDegrees(21.55 + (red ? 180 : 0)));
     }
     return pos;
+  }
+
+  public Pose2d getAmpLocation() {
+    boolean red = Constants.States.m_alliance == DriverStation.Alliance.Red;
+    return new Pose2d(red ? k_fieldXMeters - 1.9 : 1.9, 7.65, Rotation2d.fromDegrees(-905 + (red ? 180 : 0)));
   }
 
   public double getTranslationalDistanceFromSpeakerMeters() {
@@ -321,6 +326,7 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     Constants.States.m_sourcePos = getSourceLocation();
+    Constants.States.m_ampPos = getAmpLocation();
     
     // SmartDashboard.putNumber("Rotate Error", getRotationDistanceFromTargetError());
     // // Update the odometry in the periodic block

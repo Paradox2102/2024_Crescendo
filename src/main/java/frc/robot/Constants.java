@@ -49,9 +49,10 @@ public final class Constants {
       PivotConstants.k_i = 0.00005;
       PivotConstants.k_d = .0005;
       PivotConstants.k_iZone = 10;
-      PivotConstants.k_resetPositionDegrees = 10;
+      PivotConstants.k_resetPositionDegrees = 35;
       PivotConstants.k_offset = .3;
       PivotConstants.k_ampPositionDegrees = 25;
+      PivotConstants.k_sourceAngle = 17;
 
       // Drive
       DriveConstants.k_FLOffset = 5.18 - (Math.PI / 2);
@@ -63,7 +64,7 @@ public final class Constants {
       // Front
       FrontConstants.k_f = 2 / FrontConstants.k_maxVelocityRPM;
       FrontConstants.k_p = 0.0006; // 0.00005
-      FrontConstants.k_i = 0.0000003; // 0.0000001
+      FrontConstants.k_i = 0.000003; // 0.0000001
       FrontConstants.k_d = 0;
       FrontConstants.k_iZone = 400;
 
@@ -256,6 +257,8 @@ public final class Constants {
 
   public static class PivotConstants {
 
+    public static double k_sourceAngle = 20;
+
     public static double k_f = .015;
     public static double k_p = 0.017; // .017
     public static double k_i = 0.02; // .02
@@ -270,7 +273,7 @@ public final class Constants {
 
     // Positions
     public static double k_intakePositionDegrees = 112;
-    public static double k_resetPositionDegrees = 23;
+    public static double k_resetPositionDegrees = 50;
     public static double k_ampPositionDegrees = 23;
 
     public static double[] k_distancesFront = {
@@ -285,7 +288,8 @@ public final class Constants {
         4.5,
         5,
         5.5,
-        6.1
+        6.1,
+        6.2
     };
 
     public static double[] k_anglesFront = {
@@ -301,7 +305,8 @@ public final class Constants {
         26.8, // 4.5
         27.1, // 5
         26.2, // 5.5
-        28.2 // 6.1
+        28.2, // 6.1
+        20 // 6.2
     };
 
     public static double[] k_distancesBack = {};
@@ -331,8 +336,8 @@ public final class Constants {
     public static double k_d = 0;
     public static double k_iZone = 0;
 
-    public static final double[] k_revDistances = { 5.8, 6.5, 8, 10, 12 };
-    public static final double[] k_revSpeeds = { -5000, -6000, -6000, -4000, -2000 }; // {-5000, -5500, -5750, -4000,
+    public static final double[] k_revDistances = { 5.8, 6.1, 6.2001, 8, 10, 12 };
+    public static final double[] k_revSpeeds = { -5000, -5000, -3500, -3500, -3500, -3500 }; // {-5000, -5500, -5750, -4000,
                                                                                       // -2000}6
     public static final double k_idleRevSpeed = -2000;
   }
@@ -391,6 +396,7 @@ public final class Constants {
     public static boolean m_slowMode = false;
     public static DriverStation.Alliance m_alliance = DriverStation.Alliance.Blue;
 
-    public static Pose2d m_sourcePos = new Pose2d();
+    public static Pose2d m_sourcePos = new Pose2d(14.6, .7, Rotation2d.fromDegrees(111.5));
+    public static Pose2d m_ampPos = new Pose2d(1.9, 7.65, Rotation2d.fromDegrees(-90));
   }
 }

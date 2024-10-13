@@ -27,7 +27,7 @@ public class AutoSourceFeed extends ParallelDeadlineGroup {
     );
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SetPivotPos(pivotSubsystem, 0),
+      new SetPivotPos(pivotSubsystem, Constants.PivotConstants.k_sourceAngle),
       new DriveToPosition(driveSubsystem, Constants.States.m_sourcePos)
     );
   }

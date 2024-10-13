@@ -25,6 +25,7 @@ import frc.robot.commands.drivetrain.AutoOrientCommand;
 import frc.robot.commands.drivetrain.DriveToPosition;
 import frc.robot.commands.drivetrain.EjectSpinCommand;
 import frc.robot.commands.elevator.ManualElevatorCommand;
+import frc.robot.commands.gamePieceManipulation.AutoSourceFeed;
 import frc.robot.commands.gamePieceManipulation.DefaultManipulatorCommand;
 import frc.robot.commands.gamePieceManipulation.EjectGamePiece;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
@@ -184,14 +185,15 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_backSubsystem));
-    m_driverController.leftTrigger().toggleOnTrue(new ShootSequence(m_frontSubsystem, m_backSubsystem, m_stickSubsystem, m_driveSubsystem));
+    m_driverController.leftTrigger().toggleOnTrue(new ShootSequence(m_frontSubsystem, m_backSubsystem, m_stickSubsystem, m_driveSubsystem, m_driverController));
     m_driverController.rightTrigger().whileTrue(new IntakeCommand(m_backSubsystem, m_frontSubsystem, m_pivotSubsystem));
         
     m_driverController.a().onTrue(new PassShot(m_driveSubsystem, m_frontSubsystem, m_backSubsystem, m_pivotSubsystem, m_driverController));
+    m_driverController.b().toggleOnTrue(new AutoSourceFeed(m_driveSubsystem, m_pivotSubsystem, m_frontSubsystem, m_backSubsystem));
 
     //ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
     m_joystick.button(1).toggleOnTrue(new RevCommand(m_frontSubsystem, m_backSubsystem));
-    m_joystick.button(2).whileTrue(new D2Intake(m_frontSubsystem, m_backSubsystem, true));
+    m_joystick.button(2).toggleOnTrue(new D2Intake(m_frontSubsystem, m_backSubsystem, true));
     m_joystick.button(4).whileTrue(new EjectGamePiece(m_pivotSubsystem, m_frontSubsystem, m_backSubsystem));
     m_joystick.button(7).onTrue(new InstantCommand(() -> {Constants.States.m_shootIntakeSide = !Constants.States.m_shootIntakeSide;}));
     m_joystick.button(8).toggleOnTrue(new FeedCommand(m_frontSubsystem, m_backSubsystem));

@@ -40,7 +40,7 @@ public class ShootCommand extends Command {
       if (Constants.States.m_speakerMode) {
         if (Constants.States.m_shootIntakeSide) {
           // shooting intake side to speaker
-          m_frontSubsystem.setVelocityRPM(Constants.FrontConstants.k_speakerShootVelocityRPM);
+          m_frontSubsystem.setVelocityRPM(m_frontSubsystem.getRevSpeed());
           if (m_frontSubsystem.isReady()) {
             m_backSubsystem.setPower(Constants.BackConstants.k_speakerFeedPower);
           }

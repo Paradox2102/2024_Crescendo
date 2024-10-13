@@ -451,7 +451,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @param pose The pose to which to set the odometry.
    */
   public void resetOdometry(Pose2d pose) {
-    m_tracker.setXYAngle(pose.getX(), pose.getY(), 180/*pose.getRotation().getDegrees()*/);
+    m_tracker.setXYAngle(pose.getX(), pose.getY(), pose.getRotation().getDegrees());
   }
 
   /**

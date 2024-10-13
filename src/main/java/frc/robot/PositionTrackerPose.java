@@ -63,7 +63,7 @@ public class PositionTrackerPose {
     Logger.log("PositionTracker", 1,
                String.format("x=%f, y=%f, angle=%f", x, y, angleInDegrees));
     m_poseEstimator.resetPosition(
-        Rotation2d.fromDegrees(angleInDegrees),
+        Rotation2d.fromDegrees(m_driveSubsystem.getGyro().getAngle()),
         m_driveSubsystem.getModulePosition(),
         new Pose2d(x, y, Rotation2d.fromDegrees(angleInDegrees)));
     System.out.println("pose2d " + getPose2d());

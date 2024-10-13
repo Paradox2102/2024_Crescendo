@@ -190,6 +190,7 @@ public class RobotContainer {
         
     m_driverController.a().onTrue(new PassShot(m_driveSubsystem, m_frontSubsystem, m_backSubsystem, m_pivotSubsystem, m_driverController));
     m_driverController.b().toggleOnTrue(new AutoSourceFeed(m_driveSubsystem, m_pivotSubsystem, m_frontSubsystem, m_backSubsystem));
+    m_driverController.x().onTrue(new InstantCommand(() -> {m_driveSubsystem.resetOdometry(new Pose2d());}));
 
     //ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
     m_joystick.button(1).toggleOnTrue(new RevCommand(m_frontSubsystem, m_backSubsystem));

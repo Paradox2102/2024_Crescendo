@@ -7729,7 +7729,7 @@
                     "isInitialGuess": false,
                     "translationConstrained": true,
                     "headingConstrained": true,
-                    "controlIntervalCount": 40
+                    "controlIntervalCount": 51
                 }
             ],
             "trajectory": [
@@ -12782,8 +12782,48 @@
             "defaultControlIntervalCount": 40,
             "usesDefaultFieldObstacles": true,
             "circleObstacles": [],
-            "eventMarkers": [],
-            "isTrajectoryStale": false
+            "eventMarkers": [
+                {
+                    "name": "Marker",
+                    "target": 2,
+                    "trajTargetIndex": 2,
+                    "targetTimestamp": 1.3980028234955686,
+                    "offset": 0,
+                    "command": {
+                        "type": "sequential",
+                        "data": {
+                            "commands": [
+                                {
+                                    "type": "named",
+                                    "data": {
+                                        "name": "intake"
+                                    }
+                                },
+                                {
+                                    "type": "parallel",
+                                    "data": {
+                                        "commands": [
+                                            {
+                                                "type": "named",
+                                                "data": {
+                                                    "name": "rev shooter"
+                                                }
+                                            },
+                                            {
+                                                "type": "named",
+                                                "data": {
+                                                    "name": "auto aim"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ],
+            "isTrajectoryStale": true
         },
         "cleanup wing": {
             "waypoints": [

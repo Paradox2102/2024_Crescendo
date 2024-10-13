@@ -4467,7 +4467,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "amp 4 rush end": {
             "waypoints": [
@@ -12823,7 +12823,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "cleanup wing": {
             "waypoints": [

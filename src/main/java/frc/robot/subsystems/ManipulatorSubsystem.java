@@ -76,7 +76,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
         return Constants.FrontConstants.k_revSpeeds[i];
       }
     }
-    return 0;
+    return Constants.FrontConstants.k_revSpeeds[Constants.FrontConstants.k_revSpeeds.length - 1];
   }
 
   @Override

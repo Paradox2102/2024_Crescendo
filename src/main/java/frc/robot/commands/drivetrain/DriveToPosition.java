@@ -24,16 +24,15 @@ public class DriveToPosition extends Command {
   double m_currentY = 0;
   double m_currentRot = 0;
 
-  private static final double k_f = .5;
-  private static final double k_p = .005;
+  private static final double k_f = .4;
+  private static final double k_p = .003;
   private static final double k_i = 0;
-  private static final double k_d = .0005;
+  private static final double k_d = .0007;
   private static final double k_deadzoneMeters = .1;
-  private static final double k_minPower = .2;
 
   PIDController m_xPID = new PIDController(k_p, k_i, k_d);
   PIDController m_yPID = new PIDController(k_p, k_i, k_d);
-  PIDController m_rotPID = new PIDController(Constants.DriveConstants.k_rotateP, Constants.DriveConstants.k_rotateI, Constants.DriveConstants.k_rotateD);
+  double m_rot = 0;
 
   public DriveToPosition(DriveSubsystem driveSubsystem, Pose2d pose) {
     m_subsystem = driveSubsystem;
@@ -41,7 +40,6 @@ public class DriveToPosition extends Command {
     m_yPos = pose.getY();
     m_rotationDegrees = pose.getRotation().getDegrees();
     m_tracker = m_subsystem.getTracker();
-    m_rotPID.enableContinuousInput(-180, 180);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }
@@ -51,7 +49,6 @@ public class DriveToPosition extends Command {
   public void initialize() {
     m_xPID.setSetpoint(m_xPos);
     m_yPID.setSetpoint(m_yPos);
-    m_rotPID.setSetpoint(m_rotationDegrees);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -64,7 +61,7 @@ public class DriveToPosition extends Command {
 
     double xVelocity = m_xPID.calculate(m_currentX);
     double yVelocity = m_yPID.calculate(m_currentY);
-    double rotVelocity = m_rotPID.calculate(m_currentRot);
+    double rotVelocity = m_subsystem.orientPID(m_rotationDegrees);
 
     xVelocity += k_f * Math.signum(xVelocity);
     yVelocity += k_f * Math.signum(yVelocity);
@@ -86,11 +83,15 @@ public class DriveToPosition extends Command {
   @Override
   public boolean isFinished() {
     return 
-      Math.abs(m_xPos - m_currentX) < k_deadzoneMeters
-      && 
-      Math.abs(m_yPos - m_currentY) < k_deadzoneMeters
-      &&
-      Math.abs(m_rotationDegrees - m_currentRot) < Constants.DriveConstants.k_rotateDeadzone
+      (
+        Math.abs(m_xPos - m_currentX) < k_deadzoneMeters
+        && 
+        Math.abs(m_yPos - m_currentY) < k_deadzoneMeters
+        &&
+        Math.abs(m_rotationDegrees - m_currentRot) < Constants.DriveConstants.k_rotateDeadzone
+      )
+      ||
+      !Constants.States.m_autoRotateAim
     ;
   }
 }

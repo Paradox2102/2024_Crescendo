@@ -10,8 +10,11 @@ import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.DriveToPosition;
 import frc.robot.commands.stick.SetStickPos;
 import frc.robot.subsystems.DriveSubsystem;
@@ -23,19 +26,25 @@ import frc.robot.subsystems.StickSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShootSequence extends SequentialCommandGroup {
   /** Creates a new ShootSequence. */
-  public ShootSequence(ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem, StickSubsystem stickSubsystem, DriveSubsystem driveSubsystem) {
+  public ShootSequence(ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem, StickSubsystem stickSubsystem, DriveSubsystem driveSubsystem, CommandXboxController joystick) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ConditionalCommand(
-        // new DriveToPosition(driveSubsystem, new Pose2d(4, 6, Rotation2d.fromDegrees(90))), 
-        new InstantCommand(),
+        new DriveToPosition(driveSubsystem, Constants.States.m_ampPos), 
         new InstantCommand(() -> {Constants.States.m_slowMode = true;}), 
         () -> !Constants.States.m_speakerMode
       ),
-      new ParallelDeadlineGroup(
-        new ShootCommand(frontSubsystem, backSubsystem),
-        new SetStickPos(stickSubsystem, true)
+      new ConditionalCommand(
+        new ParallelDeadlineGroup(
+          new ShootCommand(frontSubsystem, backSubsystem),
+          new SetStickPos(stickSubsystem, true)
+        ),
+        new ParallelDeadlineGroup(
+          new ShootCommand(frontSubsystem, backSubsystem), 
+          new ArcadeDrive(driveSubsystem, () -> joystick.getLeftX(), () -> joystick.getLeftY(), () -> 0)
+        ),
+        () -> !Constants.States.m_slowMode
       ),
       new InstantCommand(() -> {Constants.States.m_slowMode = false;})
     );

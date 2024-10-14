@@ -4,7 +4,6 @@
 
 package frc.robot.commands.gamePieceManipulation;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import frc.robot.Constants;
 import frc.robot.commands.drivetrain.DriveToPosition;
@@ -28,7 +27,7 @@ public class AutoSourceFeed extends ParallelDeadlineGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new SetPivotPos(pivotSubsystem, Constants.PivotConstants.k_sourceAngle),
-      new DriveToPosition(driveSubsystem, Constants.States.m_sourcePos)
+      new DriveToPosition(driveSubsystem, () -> Constants.States.m_sourcePos)
     );
   }
 }

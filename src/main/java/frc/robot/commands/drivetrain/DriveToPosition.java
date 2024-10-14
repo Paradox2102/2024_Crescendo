@@ -4,6 +4,8 @@
 
 package frc.robot.commands.drivetrain;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -34,8 +36,9 @@ public class DriveToPosition extends Command {
   PIDController m_yPID = new PIDController(k_p, k_i, k_d);
   double m_rot = 0;
 
-  public DriveToPosition(DriveSubsystem driveSubsystem, Pose2d pose) {
+  public DriveToPosition(DriveSubsystem driveSubsystem, Supplier<Pose2d> poseSupplier) {
     m_subsystem = driveSubsystem;
+    Pose2d pose = poseSupplier.get();
     m_xPos = pose.getX();
     m_yPos = pose.getY();
     m_rotationDegrees = pose.getRotation().getDegrees();

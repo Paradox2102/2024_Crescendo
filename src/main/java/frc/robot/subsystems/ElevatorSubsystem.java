@@ -25,7 +25,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_elevatorEncoder = m_elevatorMotor.getEncoder();
     m_elevatorMotor.setIdleMode(IdleMode.kBrake);
     m_elevatorMotor.burnFlash();
-    m_elevatorMotor.setSmartCurrentLimit(100); // 80
+    m_elevatorMotor.setSmartCurrentLimit(80); // 80
     
   }
 
@@ -50,10 +50,10 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (getCookedElevatorPosition() <= Constants.ElevatorConstants.k_maxDistance && m_desiredPosition == 1) {
-      setPower(1);
-    } else if (getCookedElevatorPosition() >= 1 && m_desiredPosition == 0) {
-      setPower(-1);
-      }
+    // if (getCookedElevatorPosition() <= Constants.ElevatorConstants.k_maxDistance && m_desiredPosition == 1) {
+    //   setPower(1);
+    // } else if (getCookedElevatorPosition() >= 1 && m_desiredPosition == 0) {
+    //   setPower(-1);
+    //   }
   }
 }

@@ -76,7 +76,7 @@ public class DriveToPosition extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_subsystem.drive(0, 0, 0, true, true, new Translation2d(0, 0));
+    m_subsystem.drive(0, 0, 0, true, false, new Translation2d(0, 0));
   }
 
   // Returns true when the command should end.

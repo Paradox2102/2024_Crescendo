@@ -62,11 +62,17 @@ public final class Constants {
       DriveConstants.k_maxSpeedMetersPerSecond = 4.8;
 
       // Front
-      FrontConstants.k_f = 2 / FrontConstants.k_maxVelocityRPM;
+      // FrontConstants.k_f = 1.5 / FrontConstants.k_maxVelocityRPM;
+      // FrontConstants.k_p = 0.0006; // 0.00005
+      // FrontConstants.k_i = 0.000003; // 0.0000001
+      // FrontConstants.k_d = 0.001;
+      // FrontConstants.k_iZone = 100;
+
+      FrontConstants.k_f = 1 / FrontConstants.k_maxVelocityRPM;
       FrontConstants.k_p = 0.0006; // 0.00005
       FrontConstants.k_i = 0.000003; // 0.0000001
       FrontConstants.k_d = 0;
-      FrontConstants.k_iZone = 400;
+      FrontConstants.k_iZone = 100;
 
       // Back
       BackConstants.k_f = 1.1 / FrontConstants.k_maxVelocityRPM;

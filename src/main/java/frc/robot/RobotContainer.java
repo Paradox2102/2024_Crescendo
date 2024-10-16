@@ -23,6 +23,7 @@ import frc.robot.commands.autos.StartFront;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.HoldSlowMode;
 import frc.robot.commands.elevator.ManualElevatorCommand;
+import frc.robot.commands.elevator.ToggleElevator;
 import frc.robot.commands.gamePieceManipulation.AutoSourceFeed;
 import frc.robot.commands.gamePieceManipulation.DefaultManipulatorCommand;
 import frc.robot.commands.gamePieceManipulation.EjectGamePiece;
@@ -47,6 +48,7 @@ import frc.robot.subsystems.StickSubsystem;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -183,6 +185,7 @@ public class RobotContainer {
 
     m_driverController.rightBumper().whileTrue(new HoldSlowMode());
     m_driverController.leftBumper().whileTrue(new HoldSlowMode());
+    m_driverController.y().toggleOnTrue(new ToggleElevator(m_elevatorSubsystem));
 
     //ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
     m_joystick.button(1).toggleOnTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));

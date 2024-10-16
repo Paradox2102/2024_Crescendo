@@ -7,9 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathCommand;
-import com.pathplanner.lib.commands.FollowPathHolonomic;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
-import com.pathplanner.lib.controllers.PathFollowingController;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -27,7 +25,6 @@ import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.apriltagsCamera.ApriltagLocation;
 import frc.apriltagsCamera.ApriltagLocations;
@@ -184,6 +181,10 @@ public class DriveSubsystem extends SubsystemBase {
   public Pose2d getAmpLocation() {
     boolean red = Constants.States.m_alliance == DriverStation.Alliance.Red;
     return new Pose2d(red ? k_fieldXMeters - 3 : 3, 7.65, Rotation2d.fromDegrees(-90 + (red ? 180 : 0)));
+  }
+
+  public void setSourcePos(int pos) {
+    m_sourceLocation = pos;
   }
 
   public double getTranslationalDistanceFromSpeakerMeters() {

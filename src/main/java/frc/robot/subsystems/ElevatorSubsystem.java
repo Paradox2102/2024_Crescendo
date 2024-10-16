@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.pathplanner.lib.util.PIDConstants;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -15,6 +16,8 @@ import frc.robot.Constants;
 public class ElevatorSubsystem extends SubsystemBase {
   private CANSparkFlex m_elevatorMotor = new CANSparkFlex(Constants.ElevatorConstants.k_elevatorMotor, MotorType.kBrushless);
   private RelativeEncoder m_elevatorEncoder;
+  private int m_power;
+  private int m_desiredPosition;
 
   /** Creates a new ElevatorSubsystem. */
   public ElevatorSubsystem() {
@@ -23,6 +26,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_elevatorMotor.setIdleMode(IdleMode.kBrake);
     m_elevatorMotor.burnFlash();
     m_elevatorMotor.setSmartCurrentLimit(100); // 80
+    
   }
 
   public double getRawElevatorPosition() {
@@ -38,6 +42,18 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_elevatorMotor.set(power);
   }
 
+  public void setPosition(int desiredPos) {
+    // 1 is max extension. 0 is all the way down.
+    m_desiredPosition = desiredPos;
+  }
+  
+
   @Override
-  public void periodic() {}
+  public void periodic() {
+    if (getCookedElevatorPosition() <= Constants.ElevatorConstants.k_maxDistance && m_desiredPosition == 1) {
+      setPower(1);
+    } else if (getCookedElevatorPosition() >= 1 && m_desiredPosition == 0) {
+      setPower(-1);
+      }
+  }
 }

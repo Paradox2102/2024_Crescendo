@@ -21,16 +21,14 @@ import frc.robot.commands.autos.RevBackShooter;
 import frc.robot.commands.autos.StartBack;
 import frc.robot.commands.autos.StartFront;
 import frc.robot.commands.drivetrain.ArcadeDrive;
-import frc.robot.commands.drivetrain.AutoOrientCommand;
-import frc.robot.commands.drivetrain.DriveToPosition;
-import frc.robot.commands.drivetrain.EjectSpinCommand;
+import frc.robot.commands.drivetrain.HoldSlowMode;
 import frc.robot.commands.elevator.ManualElevatorCommand;
+import frc.robot.commands.elevator.ToggleElevator;
 import frc.robot.commands.gamePieceManipulation.AutoSourceFeed;
 import frc.robot.commands.gamePieceManipulation.DefaultManipulatorCommand;
 import frc.robot.commands.gamePieceManipulation.EjectGamePiece;
 import frc.robot.commands.gamePieceManipulation.FeedCommand;
 import frc.robot.commands.gamePieceManipulation.IntakeCommand;
-import frc.robot.commands.gamePieceManipulation.JukeShot;
 import frc.robot.commands.gamePieceManipulation.ResetSubsystemsCommand;
 import frc.robot.commands.gamePieceManipulation.RevCommand;
 import frc.robot.commands.gamePieceManipulation.ShootCommand;
@@ -46,20 +44,15 @@ import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSensors;
 import frc.robot.subsystems.StickSubsystem;
-import frc.triggers.HoldTrigger;
 
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.PathPlannerPath;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -169,8 +162,6 @@ public class RobotContainer {
     new Trigger(() -> getPositionServerButtonState(3)).onTrue(new SetApriltagsDashboard(m_apriltagCamera, m_apriltagCameraSide, true));
     new Trigger(() -> getPositionServerButtonState(4)).onTrue(new SetApriltagsDashboard(m_apriltagCamera, m_apriltagCameraSide, false));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    HoldTrigger m_slowMode = new HoldTrigger(m_driverController.rightBumper());
-    HoldTrigger m_slowMode1 = new HoldTrigger(m_driverController.leftBumper());
     m_driveSubsystem.setDefaultCommand(new ArcadeDrive(
       m_driveSubsystem, 
       () -> m_driverController.getLeftX(), 
@@ -190,22 +181,24 @@ public class RobotContainer {
         
     m_driverController.a().onTrue(new PassShot(m_driveSubsystem, m_frontSubsystem, m_backSubsystem, m_pivotSubsystem, m_driverController));
     m_driverController.b().toggleOnTrue(new AutoSourceFeed(m_driveSubsystem, m_pivotSubsystem, m_frontSubsystem, m_backSubsystem));
-    m_driverController.x().onTrue(new InstantCommand(() -> {m_driveSubsystem.resetOdometry(new Pose2d());}));
+    m_driverController.x().whileTrue(new EjectGamePiece(m_pivotSubsystem, m_frontSubsystem, m_backSubsystem));
+
+    m_driverController.rightBumper().whileTrue(new HoldSlowMode());
+    m_driverController.leftBumper().whileTrue(new HoldSlowMode());
+    m_driverController.y().toggleOnTrue(new ToggleElevator(m_elevatorSubsystem));
 
     //ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
-    m_joystick.button(1).toggleOnTrue(new RevCommand(m_frontSubsystem, m_backSubsystem));
+    m_joystick.button(1).toggleOnTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));
     m_joystick.button(2).toggleOnTrue(new D2Intake(m_frontSubsystem, m_backSubsystem, true));
     m_joystick.button(4).whileTrue(new EjectGamePiece(m_pivotSubsystem, m_frontSubsystem, m_backSubsystem));
-    m_joystick.button(7).onTrue(new InstantCommand(() -> {Constants.States.m_shootIntakeSide = !Constants.States.m_shootIntakeSide;}));
     m_joystick.button(8).toggleOnTrue(new FeedCommand(m_frontSubsystem, m_backSubsystem));
-    m_joystick.button(9).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));
-    m_joystick.button(10).whileTrue(new EjectSpinCommand(m_driveSubsystem, m_pivotSubsystem, () -> m_joystick.getY()));
-    m_joystick.button(11).onTrue(new StopEverything(m_driveSubsystem, m_frontSubsystem, m_backSubsystem, m_pivotSubsystem));
+    m_joystick.button(5).onTrue(new StopEverything(m_driveSubsystem, m_frontSubsystem, m_backSubsystem, m_pivotSubsystem));
     m_joystick.button(6).onTrue(new ToggleAutoAim());
-    m_joystick.button(10).onTrue(new InstantCommand(() -> {Constants.States.m_shootIntakeSide = !Constants.States.m_shootIntakeSide;}));
     m_joystick.button(3).whileTrue(new SetStickPos(m_stickSubsystem, false));
 
-    m_joystick.button(5).whileTrue(new DriveToPosition(m_driveSubsystem, new Pose2d(2.86, 7.16, Rotation2d.fromDegrees(0))));
+    m_joystick.button(7).onTrue(new InstantCommand(() -> {m_driveSubsystem.setSourcePos(3);}));
+    m_joystick.button(9).onTrue(new InstantCommand(() -> {m_driveSubsystem.setSourcePos(2);}));
+    m_joystick.button(11).onTrue(new InstantCommand(() -> {m_driveSubsystem.setSourcePos(1);}));
     //ToggleTrigger m_brakeMode = new ToggleTrigger(m_joystick.button(12));
     //m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode), m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_backSubsystem, m_elevatorSubsystem, m_stickSubsystem));
   }

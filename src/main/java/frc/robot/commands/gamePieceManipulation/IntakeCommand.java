@@ -39,9 +39,9 @@ public class IntakeCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
     m_backSubsystem.stop();
     m_frontSubsystem.stop();
-    m_pivotSubsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
     Constants.States.m_intaking = false;
   }
 

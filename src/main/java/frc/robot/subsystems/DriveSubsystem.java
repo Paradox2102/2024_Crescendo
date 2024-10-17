@@ -180,7 +180,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   public Pose2d getAmpLocation() {
     boolean red = Constants.States.m_alliance == DriverStation.Alliance.Red;
-    return new Pose2d(red ? k_fieldXMeters - 3 : 3, 7.65, Rotation2d.fromDegrees(-90 + (red ? 180 : 0)));
+    return new Pose2d(red ? k_fieldXMeters - 3 : 3, 7.8, Rotation2d.fromDegrees(-90 + (red ? 180 : 0)));
   }
 
   public void setSourcePos(int pos) {

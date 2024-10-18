@@ -180,7 +180,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   public Pose2d getAmpLocation() {
     boolean red = Constants.States.m_alliance == DriverStation.Alliance.Red;
-    return new Pose2d(red ? k_fieldXMeters - 3 : 3, 7.65, Rotation2d.fromDegrees(-90 + (red ? 180 : 0)));
+    return new Pose2d(red ? 14.69 : 1.85, 7.8, Rotation2d.fromDegrees(-90 + (red ? 180 : 0)));
   }
 
   public void setSourcePos(int pos) {
@@ -226,7 +226,7 @@ public class DriveSubsystem extends SubsystemBase {
   public double getFutureRotationalGoalFromTargetDegrees() {
     boolean isRed = Constants.States.m_alliance == DriverStation.Alliance.Red;
     if (!Constants.States.m_speakerMode) {
-      return (isRed ? 90 : -90);
+      return -90;
     }
     ApriltagLocation speaker = getSpeakerLocationMeters();
     // BUG: This code is using current position, not future position.  -Gavin

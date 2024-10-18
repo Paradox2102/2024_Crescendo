@@ -69,8 +69,8 @@ public final class Constants {
       // FrontConstants.k_iZone = 100;
 
       FrontConstants.k_f = 1 / FrontConstants.k_maxVelocityRPM;
-      FrontConstants.k_p = 0.0006; // 0.00005
-      FrontConstants.k_i = 0.000003; // 0.0000001
+      FrontConstants.k_p = 0.0005; // 0.00005
+      FrontConstants.k_i = 0.00000; // 0.0000001
       FrontConstants.k_d = 0;
       FrontConstants.k_iZone = 100;
 
@@ -329,7 +329,7 @@ public final class Constants {
     public static final double k_maxVelocityRPM = 6250; // 6000
 
     public static final double k_speakerFeedPower = 1;
-    public static final double k_deadzone = 25;
+    public static final double k_deadzone = 100;
 
     public static final double k_adjustGamePiecePower = -.2;
 

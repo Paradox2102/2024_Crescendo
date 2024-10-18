@@ -14,7 +14,7 @@ public class DefaultManipulatorCommand extends Command {
   ManipulatorSubsystem m_subsystem;
   DriveSubsystem m_driveSubsytem;
   boolean m_front;
-  private final double k_revRangeMeters = 10;
+  private final double k_revRangeMeters = 6;
   public DefaultManipulatorCommand(ManipulatorSubsystem subsystem, DriveSubsystem driveSubsystem, boolean front) {
     m_subsystem = subsystem;
     m_driveSubsytem = driveSubsystem;
@@ -36,7 +36,7 @@ public class DefaultManipulatorCommand extends Command {
     } else if (Constants.States.m_isGamePieceStowed && m_driveSubsytem.getTranslationalDistanceFromSpeakerMeters() < k_revRangeMeters && Constants.States.m_autoRotateAim) {
       // front
       if (m_front && Constants.States.m_shootIntakeSide) { // if front and shoot intake side rev
-        m_subsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.FrontConstants.k_idleRevSpeed : Constants.FrontConstants.k_ampShootVelocityRPM);
+        m_subsystem.setVelocityRPM(Constants.States.m_speakerMode ? m_subsystem.getRevSpeed() : Constants.FrontConstants.k_ampShootVelocityRPM);
       } else if (m_front) { // else stop cause back is revving
         m_subsystem.stop();
       }

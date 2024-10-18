@@ -9,6 +9,7 @@ import java.util.function.Supplier;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.PositionTrackerPose;
@@ -28,7 +29,7 @@ public class DriveToPosition extends Command {
 
   private static final double k_f = .4;
   private static final double k_p = .003;
-  private static final double k_i = 0;
+  private static final double k_i = 0.003;
   private static final double k_d = .0007;
   private static final double k_deadzoneMeters = .1;
 
@@ -52,6 +53,9 @@ public class DriveToPosition extends Command {
   public void initialize() {
     m_xPID.setSetpoint(m_xPos);
     m_yPID.setSetpoint(m_yPos);
+    System.out.print(m_xPos);
+    System.out.print(" ");
+    System.out.print(m_yPos);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -72,6 +76,9 @@ public class DriveToPosition extends Command {
     
     xVelocity = Math.abs(m_currentX - m_xPos) < k_deadzoneMeters ? 0 : xVelocity;
     yVelocity = Math.abs(m_currentY - m_yPos) < k_deadzoneMeters ? 0 : yVelocity;
+
+    boolean red = Constants.States.m_alliance == DriverStation.Alliance.Red;
+    yVelocity *= red ? -1 : 1;
 
     m_subsystem.drive(xVelocity, yVelocity, rotVelocity, true, true, new Translation2d(0, 0));
   }

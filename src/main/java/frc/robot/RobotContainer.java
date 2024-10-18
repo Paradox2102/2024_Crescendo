@@ -24,6 +24,7 @@ import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.HoldSlowMode;
 import frc.robot.commands.elevator.ManualElevatorCommand;
 import frc.robot.commands.elevator.ToggleElevator;
+import frc.robot.commands.gamePieceManipulation.AutoAmp;
 import frc.robot.commands.gamePieceManipulation.AutoSourceFeed;
 import frc.robot.commands.gamePieceManipulation.DefaultManipulatorCommand;
 import frc.robot.commands.gamePieceManipulation.EjectGamePiece;
@@ -185,13 +186,13 @@ public class RobotContainer {
 
     m_driverController.rightBumper().whileTrue(new HoldSlowMode());
     m_driverController.leftBumper().whileTrue(new HoldSlowMode());
-    m_driverController.y().toggleOnTrue(new ToggleElevator(m_elevatorSubsystem));
+    m_driverController.y().toggleOnTrue(new AutoAmp(m_driveSubsystem, m_frontSubsystem, m_backSubsystem, m_stickSubsystem));
 
     //ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
-    m_joystick.button(1).toggleOnTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));
+    m_joystick.button(8).toggleOnTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));
     m_joystick.button(2).toggleOnTrue(new D2Intake(m_frontSubsystem, m_backSubsystem, true));
     m_joystick.button(4).whileTrue(new EjectGamePiece(m_pivotSubsystem, m_frontSubsystem, m_backSubsystem));
-    m_joystick.button(8).toggleOnTrue(new FeedCommand(m_frontSubsystem, m_backSubsystem));
+    m_joystick.button(1).toggleOnTrue(new RevCommand(m_frontSubsystem, m_backSubsystem));
     m_joystick.button(5).onTrue(new StopEverything(m_driveSubsystem, m_frontSubsystem, m_backSubsystem, m_pivotSubsystem));
     m_joystick.button(6).onTrue(new ToggleAutoAim());
     m_joystick.button(3).whileTrue(new SetStickPos(m_stickSubsystem, false));

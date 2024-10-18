@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.pathplanner.lib.util.PIDConstants;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;

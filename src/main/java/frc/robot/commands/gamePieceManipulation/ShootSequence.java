@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.commands.drivetrain.ArcadeDrive;
-import frc.robot.commands.drivetrain.DriveToPosition;
 import frc.robot.commands.stick.SetStickPos;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
@@ -27,7 +26,8 @@ public class ShootSequence extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ConditionalCommand(
-        new DriveToPosition(driveSubsystem, () -> Constants.States.m_ampPos), 
+        // new DriveToPosition(driveSubsystem, () -> Constants.States.m_ampPos),
+        new InstantCommand(), 
         new InstantCommand(() -> {Constants.States.m_slowMode = true;}), 
         () -> !Constants.States.m_speakerMode
       ),

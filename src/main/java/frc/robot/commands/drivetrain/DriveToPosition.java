@@ -78,7 +78,7 @@ public class DriveToPosition extends Command {
     yVelocity = Math.abs(m_currentY - m_yPos) < k_deadzoneMeters ? 0 : yVelocity;
 
     boolean red = Constants.States.m_alliance == DriverStation.Alliance.Red;
-    yVelocity *= red ? -1 : 1;
+    // yVelocity *= red ? -1 : 1;
 
     m_subsystem.drive(xVelocity, yVelocity, rotVelocity, true, true, new Translation2d(0, 0));
   }

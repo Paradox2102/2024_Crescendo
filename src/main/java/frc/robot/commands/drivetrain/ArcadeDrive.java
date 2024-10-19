@@ -38,14 +38,19 @@ public class ArcadeDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double oldRot = -MathUtil.applyDeadband(m_getRot.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
+
     double x = -MathUtil.applyDeadband(m_getX.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
     double y = -MathUtil.applyDeadband(m_getY.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
-    double rot = -MathUtil.applyDeadband(m_getRot.getAsDouble(), Constants.DriveConstants.k_driveDeadband);
+    double rot = oldRot;
     if (rot == 0) {
-      if (m_subsystem.shouldAimSpeaker()) {
-         rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getFutureRotationalGoalFromTargetDegrees()), 0);
+      double goal = m_subsystem.getFutureRotationalGoalFromTargetDegrees();
+      if (goal == 2102) {
+        rot = 0;
+      } else if (m_subsystem.shouldAimSpeaker()) {
+         rot = MathUtil.applyDeadband(m_subsystem.orientPID(goal), 0);
       } else if (m_subsystem.shouldAimPass()) {
-         rot = MathUtil.applyDeadband(m_subsystem.orientPID(m_subsystem.getFutureRotationalGoalFromTargetDegrees()), 0);
+         rot = MathUtil.applyDeadband(m_subsystem.orientPID(goal), 0);
       }
     }
     if (Constants.States.m_slowMode) {

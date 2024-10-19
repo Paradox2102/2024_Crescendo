@@ -43,7 +43,7 @@ public final class Constants {
       // Pivot
       PivotConstants.k_pivotZeroAngle = 157.7;
       PivotConstants.k_isInverted = true;
-      PivotConstants.k_intakePositionDegrees = 131;
+      PivotConstants.k_intakePositionDegrees = 132;
       PivotConstants.k_f = .015;
       PivotConstants.k_p = .032;
       PivotConstants.k_i = 0.00005;
@@ -51,7 +51,7 @@ public final class Constants {
       PivotConstants.k_iZone = 10;
       PivotConstants.k_resetPositionDegrees = 35;
       PivotConstants.k_offset = .3;
-      PivotConstants.k_ampPositionDegrees = 25;
+      PivotConstants.k_ampPositionDegrees = 15;
       PivotConstants.k_sourceAngle = 17;
 
       // Drive
@@ -133,16 +133,16 @@ public final class Constants {
 
       };
       PivotConstants.k_anglesBack = new double[] {
-          117, // 1.5
-          112, // 1.75
-          110, // 2
-          107, // 2.25
-          105, // 2.5
-          101, // 2.75
-          99, // 3
-          96, // 3.5
-          95, // 4
-          70 // 8
+          120, // 1.5
+          115, // 1.75
+          113, // 2
+          110, // 2.25
+          108, // 2.5
+          104, // 2.75
+          102, // 3
+          99, // 3.5
+          98, // 4
+          73 // 8
       };
 
     } else {
@@ -280,7 +280,7 @@ public final class Constants {
     // Positions
     public static double k_intakePositionDegrees = 112;
     public static double k_resetPositionDegrees = 50;
-    public static double k_ampPositionDegrees = 23;
+    public static double k_ampPositionDegrees = 13;
 
     public static double[] k_distancesFront = {
         1.6,
@@ -325,7 +325,7 @@ public final class Constants {
     public static final int k_frontMotor = 11;
     public static double k_intakeVelocityRPM = 3000;
     public static final double k_speakerShootVelocityRPM = -5500; // 5000
-    public static double k_ampShootVelocityRPM = -1950; // -1950
+    public static double k_ampShootVelocityRPM = -2250; // -1950
     public static final double k_maxVelocityRPM = 6250; // 6000
 
     public static final double k_speakerFeedPower = 1;
@@ -342,8 +342,8 @@ public final class Constants {
     public static double k_d = 0;
     public static double k_iZone = 0;
 
-    public static final double[] k_revDistances = { 5.8, 6.1, 6.2001, 8, 10, 12, 15 };
-    public static final double[] k_revSpeeds = { -5000, -5000, -3500, -4500, -4500, -4500, -4500 }; // {-5000, -5500, -5750, -4000,
+    public static final double[] k_revDistances = { 2, 2.00001, 5.8, 6.1, 6.2001, 8, 10, 12, 15 };
+    public static final double[] k_revSpeeds = { -4000, -5000, -5000, -5000, -3500, -4500, -4500, -4500, -4500 }; // {-5000, -5500, -5750, -4000,
                                                                                       // -2000}6
     public static final double k_idleRevSpeed = -2000;
   }

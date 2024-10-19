@@ -226,7 +226,7 @@ public class DriveSubsystem extends SubsystemBase {
   public double getFutureRotationalGoalFromTargetDegrees() {
     boolean isRed = Constants.States.m_alliance == DriverStation.Alliance.Red;
     if (!Constants.States.m_speakerMode) {
-      return -90;
+      return 2102;
     }
     ApriltagLocation speaker = getSpeakerLocationMeters();
     // BUG: This code is using current position, not future position.  -Gavin
@@ -240,7 +240,7 @@ public class DriveSubsystem extends SubsystemBase {
        xDist =
         m_futurePos.getX() - speaker.m_xMeters; // m_futurePos
       yDist =
-          m_futurePos.getY() - speaker.m_yMeters + .25; // m_futurePos
+          m_futurePos.getY() - speaker.m_yMeters + .125; // m_futurePos
     } else {
       xDist = m_futurePos.getX() - (isRed ? 14.5 : 2);
       yDist = m_futurePos.getY() - 6.8;

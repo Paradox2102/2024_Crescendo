@@ -219,7 +219,7 @@ public class DriveSubsystem extends SubsystemBase {
     double xDist = m_futurePos.getX() - corner.m_xMeters;
     double yDist = m_futurePos.getY() - corner.m_yMeters;
     return ParadoxField.normalizeAngle(
-        Math.toDegrees(Math.atan2(yDist, xDist)) + (isRed ? 180 : 0));
+        Math.toDegrees(Math.atan2(yDist, xDist)));
   }
 
   // returns rotational distance based off amp or speaker
@@ -242,7 +242,7 @@ public class DriveSubsystem extends SubsystemBase {
       yDist =
           m_futurePos.getY() - speaker.m_yMeters; // m_futurePos
     } else {
-      xDist = m_futurePos.getX() - 2;
+      xDist = m_futurePos.getX() - (isRed ? 14.5 : 2);
       yDist = m_futurePos.getY() - 6.8;
     }
     // System.out.println(Math.toDegrees(Math.atan2(yDist, xDist)));

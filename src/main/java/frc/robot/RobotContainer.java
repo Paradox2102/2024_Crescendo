@@ -189,7 +189,7 @@ public class RobotContainer {
     m_driverController.y().toggleOnTrue(new AutoAmp(m_driveSubsystem, m_frontSubsystem, m_backSubsystem, m_stickSubsystem));
 
     //ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
-    m_joystick.button(8).toggleOnTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));
+    m_joystick.button(8).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));
     m_joystick.button(2).toggleOnTrue(new D2Intake(m_frontSubsystem, m_backSubsystem, true));
     m_joystick.button(4).whileTrue(new EjectGamePiece(m_pivotSubsystem, m_frontSubsystem, m_backSubsystem));
     m_joystick.button(1).toggleOnTrue(new RevCommand(m_frontSubsystem, m_backSubsystem));

@@ -14,7 +14,7 @@ public class DefaultManipulatorCommand extends Command {
   ManipulatorSubsystem m_subsystem;
   DriveSubsystem m_driveSubsytem;
   boolean m_front;
-  private final double k_revRangeMeters = 6;
+  private final double k_revRangeMeters = 15;
   public DefaultManipulatorCommand(ManipulatorSubsystem subsystem, DriveSubsystem driveSubsystem, boolean front) {
     m_subsystem = subsystem;
     m_driveSubsytem = driveSubsystem;

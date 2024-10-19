@@ -342,8 +342,8 @@ public final class Constants {
     public static double k_d = 0;
     public static double k_iZone = 0;
 
-    public static final double[] k_revDistances = { 5.8, 6.1, 6.2001, 8, 10, 12 };
-    public static final double[] k_revSpeeds = { -5000, -5000, -2000, -3500, -3500, -3500 }; // {-5000, -5500, -5750, -4000,
+    public static final double[] k_revDistances = { 5.8, 6.1, 6.2001, 8, 10, 12, 15 };
+    public static final double[] k_revSpeeds = { -5000, -5000, -3500, -4500, -4500, -4500, -4500 }; // {-5000, -5500, -5750, -4000,
                                                                                       // -2000}6
     public static final double k_idleRevSpeed = -2000;
   }

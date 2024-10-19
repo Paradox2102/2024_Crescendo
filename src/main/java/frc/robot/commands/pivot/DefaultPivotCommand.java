@@ -33,7 +33,7 @@ public class DefaultPivotCommand extends Command {
       m_subsystem.setPositionDegrees(Constants.PivotConstants.k_ampPositionDegrees);
     } else if (Constants.States.m_speakerMode && m_driveSubsystem.shouldAimSpeaker()) {
       // doesn't need to check aiming zone because getPivotAngleFromRobotPos() does it for you
-      m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromRobotPos(m_predictFuture) + 2);
+      m_subsystem.setPositionDegrees(m_subsystem.getPivotAngleFromRobotPos(m_predictFuture) + 1.5);
     } else if (Constants.States.m_hasGamePiece) {
       m_subsystem.setPositionDegrees(Constants.PivotConstants.k_resetPositionDegrees);
     } else {

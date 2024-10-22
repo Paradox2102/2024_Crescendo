@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4669729471206665,
-      "y": 2.6553516387939453
+      "x": 1.4809370040893557,
+      "y": 5.515402793884277
     },
-    "rotation": 179.99469134034814
+    "rotation": 180.0
   },
   "command": {
     "type": "sequential",
@@ -20,7 +20,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "source 4 rush"
+            "pathName": "cleanup wing"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "money"
           }
         }
       ]

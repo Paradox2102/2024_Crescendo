@@ -12,6 +12,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "start front"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "source 4 rush.1"

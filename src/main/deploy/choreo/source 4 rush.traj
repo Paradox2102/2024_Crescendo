@@ -4993,15 +4993,6 @@
           ]
         }
       }
-    },
-    {
-      "timestamp": 10.138238271941702,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "shoot"
-        }
-      }
     }
   ]
 }

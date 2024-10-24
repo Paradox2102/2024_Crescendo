@@ -196,7 +196,7 @@ public final class Constants {
 
     public static final boolean k_turningEncoderInverted = true;
 
-    public static final double k_freeSpeedRPM = 5676;
+    public static final double k_freeSpeedRPM = 6784;
     public static final double k_drivingMotorFreeSpeedRps = k_freeSpeedRPM / 60.0;
     public static final double k_wheelCircumferenceMeters = k_wheelDiameterMeters * Math.PI;
     public static final double k_driveWheelFreeSpeedRps = (k_drivingMotorFreeSpeedRps * k_wheelCircumferenceMeters)
@@ -222,8 +222,8 @@ public final class Constants {
     public static final int k_turnMotorCurrentLimit = 20; // amps
 
     // Driving Constants
-    public static double k_maxSpeedMetersPerSecond = 4.8;
-    public static final double k_maxDriveAcceleration = 3;
+    public static double k_maxSpeedMetersPerSecond = 5.74;
+    public static final double k_maxDriveAcceleration = 7.427;
     public static final double k_maxAngularSpeed = Math.PI * 2; // radians per second
     public static final double k_maxAngularAcceleration = Math.PI;
 

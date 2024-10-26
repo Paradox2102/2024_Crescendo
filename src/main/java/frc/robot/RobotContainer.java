@@ -21,6 +21,7 @@ import frc.robot.commands.autos.RevBackShooter;
 import frc.robot.commands.autos.StartBack;
 import frc.robot.commands.autos.StartFront;
 import frc.robot.commands.drivetrain.ArcadeDrive;
+import frc.robot.commands.drivetrain.AutoOrientCommand;
 import frc.robot.commands.drivetrain.HoldSlowMode;
 import frc.robot.commands.elevator.ManualElevatorCommand;
 import frc.robot.commands.elevator.ToggleElevator;
@@ -187,6 +188,8 @@ public class RobotContainer {
     m_driverController.rightBumper().whileTrue(new HoldSlowMode());
     m_driverController.leftBumper().whileTrue(new HoldSlowMode());
     m_driverController.y().toggleOnTrue(new AutoAmp(m_driveSubsystem, m_frontSubsystem, m_backSubsystem, m_stickSubsystem));
+    m_driverController.leftStick().toggleOnTrue(new AutoOrientCommand(m_driveSubsystem, 0, () -> 0, () -> 0));
+    m_driverController.leftStick().toggleOnFalse(new AutoOrientCommand(m_driveSubsystem, 180, () -> 0, () -> 0));
 
     //ToggleTrigger shootIntake = new ToggleTrigger(m_joystick.button(7));
     m_joystick.button(8).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_joystick.getY()));

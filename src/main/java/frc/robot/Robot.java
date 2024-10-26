@@ -102,7 +102,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    Constants.States.m_shootIntakeSide = true; // true
+    Constants.States.m_shootIntakeSide = true;
     try {
       Constants.States.m_alliance = DriverStation.getAlliance().get();
     }

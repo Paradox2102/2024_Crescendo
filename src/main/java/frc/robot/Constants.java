@@ -240,7 +240,7 @@ public final class Constants {
 
     public static final double k_rotateF = 0;
     public static final double k_rotateP = .016;
-    public static final double k_rotateI = .013;// .01;
+    public static final double k_rotateI = .05;// .01;
     public static final double k_rotateD = .0008;
     public static final double k_rotateIZone = 20; // 70
     public static final double k_rotateDeadzone = 2;

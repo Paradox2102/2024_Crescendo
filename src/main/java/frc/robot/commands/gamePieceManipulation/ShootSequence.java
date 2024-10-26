@@ -21,7 +21,7 @@ import frc.robot.subsystems.StickSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShootSequence extends SequentialCommandGroup {
   /** Creates a new ShootSequence. */
-  public ShootSequence(ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem, StickSubsystem stickSubsystem, DriveSubsystem driveSubsystem, CommandXboxController joystick) {
+  public ShootSequence(ManipulatorSubsystem frontSubsystem, ManipulatorSubsystem backSubsystem, StickSubsystem stickSubsystem, CommandXboxController joystick) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -36,10 +36,8 @@ public class ShootSequence extends SequentialCommandGroup {
           new ShootCommand(frontSubsystem, backSubsystem),
           new SetStickPos(stickSubsystem, true)
         ),
-        new ParallelDeadlineGroup(
-          new ShootCommand(frontSubsystem, backSubsystem), 
-          new ArcadeDrive(driveSubsystem, () -> joystick.getLeftX(), () -> joystick.getLeftY(), () -> 0)
-        ),
+        new ShootCommand(frontSubsystem, backSubsystem), 
+
         () -> !Constants.States.m_slowMode
       ),
       new InstantCommand(() -> {Constants.States.m_slowMode = false;})

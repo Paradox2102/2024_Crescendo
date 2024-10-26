@@ -29,7 +29,7 @@ public class DefaultPivotCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!Constants.States.m_speakerMode) {
+    if (!Constants.States.m_speakerMode && Constants.States.m_hasGamePiece) {
       m_subsystem.setPositionDegrees(Constants.PivotConstants.k_ampPositionDegrees);
     } else if (Constants.States.m_speakerMode && m_driveSubsystem.shouldAimSpeaker()) {
       // doesn't need to check aiming zone because getPivotAngleFromRobotPos() does it for you

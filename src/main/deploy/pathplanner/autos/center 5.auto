@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.373976469039917,
-      "y": 5.473943710327148
+      "x": 1.3494476079940796,
+      "y": 5.543188571929932
     },
     "rotation": 180.0
   },
@@ -18,34 +18,59 @@
           }
         },
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "auto aim"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "subwoofer aim"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.0
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "back feed"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "5 piece start"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "5 piece end"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "back feed"
+                      }
+                    }
+                  ]
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "shoot"
+                  "name": "rev back"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "5 piece start"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "5 piece end"
           }
         }
       ]

@@ -16,6 +16,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.PivotConstants;
 
 public class ManipulatorSubsystem extends SubsystemBase {
   private CANSparkFlex m_motor;
@@ -70,13 +71,30 @@ public class ManipulatorSubsystem extends SubsystemBase {
     setPower(0);
   }
 
+  // public double getRevSpeed() {
+  //   for (int i = 0; i < Constants.FrontConstants.k_revDistances.length; i++) {
+  //     if (m_distanceFromSpeaker.getAsDouble() <= Constants.FrontConstants.k_revDistances[i]) {
+  //       return Constants.FrontConstants.k_revSpeeds[i];
+  //     }
+  //   }
+  //   return Constants.FrontConstants.k_revSpeeds[Constants.FrontConstants.k_revSpeeds.length - 1];
+  // }
+
   public double getRevSpeed() {
-    for (int i = 0; i < Constants.FrontConstants.k_revDistances.length; i++) {
-      if (m_distanceFromSpeaker.getAsDouble() <= Constants.FrontConstants.k_revDistances[i]) {
-        return Constants.FrontConstants.k_revSpeeds[i];
+    double distance = m_distanceFromSpeaker.getAsDouble();
+    double[] distances = Constants.FrontConstants.k_revDistances;
+    double[] speeds = Constants.FrontConstants.k_revSpeeds;
+    if (distance > distances[distances.length - 1] || distance < distances[0]){
+      return 0;
+    }
+    for (int i = 0; i < distances.length; i++) {
+      if (distance > distances[i] && distance <= distances[i+1]) {
+        double roc = (speeds[i+1] - speeds[i]) / (distances[i+1] - distances[i]);
+        double dist = distance -distances[i];
+        return (speeds[i] + dist * roc); 
       }
     }
-    return Constants.FrontConstants.k_revSpeeds[Constants.FrontConstants.k_revSpeeds.length - 1];
+    return 0;
   }
 
   @Override

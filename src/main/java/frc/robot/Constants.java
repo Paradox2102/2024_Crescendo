@@ -49,7 +49,7 @@ public final class Constants {
       PivotConstants.k_i = 0.00005;
       PivotConstants.k_d = .0005;
       PivotConstants.k_iZone = 10;
-      PivotConstants.k_resetPositionDegrees = 35;
+      PivotConstants.k_resetPositionDegrees = 30;
       PivotConstants.k_offset = .3;
       PivotConstants.k_ampPositionDegrees = 15;
       PivotConstants.k_sourceAngle = 17;
@@ -294,8 +294,7 @@ public final class Constants {
         4.5,
         5,
         5.5,
-        6.1,
-        6.2
+        6,
     };
 
     public static double[] k_anglesFront = {
@@ -311,8 +310,7 @@ public final class Constants {
         26.8, // 4.5
         27.1, // 5
         26.2, // 5.5
-        28.2, // 6.1
-        20 // 6.2
+        28.2, // 6
     };
 
     public static double[] k_distancesBack = {};
@@ -342,8 +340,8 @@ public final class Constants {
     public static double k_d = 0;
     public static double k_iZone = 0;
 
-    public static final double[] k_revDistances = { 2, 2.00001, 5.8, 6.1, 6.2001, 8, 10, 12, 15 };
-    public static final double[] k_revSpeeds = { -4000, -5000, -5000, -5000, -3500, -4500, -4500, -4500, -4500 }; // {-5000, -5500, -5750, -4000,
+    public static final double[] k_revDistances = { 2, 2.00001, 5.8, 6.1, 6.2001, 8, 9, 10, 13, 17 };
+    public static final double[] k_revSpeeds = { -4000, -5000, -5000, -5000, -3000, -3000, -3500, -4250, -3900, -3900 }; // {-5000, -5500, -5750, -4000,
                                                                                       // -2000}6
     public static final double k_idleRevSpeed = -2000;
   }

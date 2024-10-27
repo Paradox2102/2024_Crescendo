@@ -240,7 +240,10 @@ public class DriveSubsystem extends SubsystemBase {
        xDist =
         m_futurePos.getX() - speaker.m_xMeters; // m_futurePos
       yDist =
-          m_futurePos.getY() - speaker.m_yMeters;// + .125; // m_futurePos
+          m_futurePos.getY() - speaker.m_yMeters + .125; // m_futurePos
+    } else if (getFutureTranslationDistanceFromSpeakerMeters() > 13) {
+      xDist = m_futurePos.getX() - (isRed ? 10 : 6.63);
+      yDist = m_futurePos.getY() - 7.54;
     } else {
       xDist = m_futurePos.getX() - (isRed ? 14.5 : 2);
       yDist = m_futurePos.getY() - 6.8;

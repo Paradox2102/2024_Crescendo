@@ -125,8 +125,9 @@ public class RobotContainer {
     m_autoSelection.addOption("Amp Side 5", new PathPlannerAuto("amp side 5"));
     m_autoSelection.addOption("Wing 4 Piece PHR", new PathPlannerAuto("wing 4 piece source up"));
     m_autoSelection.addOption("Wing 4 Piece RHP", new PathPlannerAuto("wing 4 piece amp down"));
-    m_autoSelection.addOption("Source Side 4", new PathPlannerAuto("source rush"));
+    m_autoSelection.addOption("Source Side Rush", new PathPlannerAuto("source rush"));
     m_autoSelection.addOption("Amp Side Rush", new PathPlannerAuto("amp 3 rush"));
+    m_autoSelection.addOption("Center 5", new PathPlannerAuto("center 5"));
     SmartDashboard.putData(m_autoSelection);
 
     // m_apriltagCamera.setCameraInfo(8.375, 12, 180, ApriltagsCameraType.GS_6mm); // y = 6

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.45,
-      "y": 7.343323707580566
+      "x": 1.4362021684646609,
+      "y": 7.336669445037842
     },
-    "rotation": 89.95437383553926
+    "rotation": 90.00001499435761
   },
   "command": {
     "type": "sequential",
@@ -20,13 +20,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "amp 3 rush start"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "amp 3 rush end"
+            "pathName": "amp rush test"
           }
         }
       ]

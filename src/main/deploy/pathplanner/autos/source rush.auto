@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4669729471206665,
-      "y": 2.6553516387939453
+      "x": 1.458545207977295,
+      "y": 1.50523579120636
     },
-    "rotation": -89.95437383553926
+    "rotation": -90.00003208389887
   },
   "command": {
     "type": "sequential",
@@ -18,15 +18,27 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "source 2 start"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "feedthrough"
+            "name": "shoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "source 2 rush"
+            "pathName": "source 2 end"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
           }
         }
       ]

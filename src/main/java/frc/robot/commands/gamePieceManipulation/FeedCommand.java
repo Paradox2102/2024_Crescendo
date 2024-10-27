@@ -28,13 +28,8 @@ public class FeedCommand extends Command {
   public void initialize() {
     m_dwellTimer.reset();
     m_dwellTimer.start();
-    if (Constants.States.m_shootIntakeSide) {
-      m_frontSubsystem.setVelocityRPM(Constants.States.m_speakerMode ? Constants.BackConstants.k_speakerShootVelocityRPM : Constants.FrontConstants.k_ampShootVelocityRPM);
-      m_backSubsystem.setPower(Constants.States.m_speakerMode ? Constants.BackConstants.k_speakerFeedPower : Constants.BackConstants.k_ampFeedPower);
-    } else {
-      m_frontSubsystem.setVelocityRPM(Constants.FrontConstants.k_speakerFeedPower);
-      m_backSubsystem.setVelocityRPM(Constants.BackConstants.k_speakerShootVelocityRPM);
-    }
+    m_frontSubsystem.setPower(-1);
+    m_backSubsystem.setPower(-0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -55,6 +50,6 @@ public class FeedCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_dwellTimer.get() > .5;
+    return m_dwellTimer.get() > .25;
   }
 }

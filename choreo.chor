@@ -16008,7 +16008,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "cleanup wing": {
             "waypoints": [

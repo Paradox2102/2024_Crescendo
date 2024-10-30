@@ -49,7 +49,7 @@ public final class Constants {
       PivotConstants.k_i = 0.00005;
       PivotConstants.k_d = .0005;
       PivotConstants.k_iZone = 10;
-      PivotConstants.k_resetPositionDegrees = 30;
+      PivotConstants.k_resetPositionDegrees = 15;
       PivotConstants.k_offset = .3;
       PivotConstants.k_ampPositionDegrees = 25;
       PivotConstants.k_sourceAngle = 17;
@@ -99,7 +99,9 @@ public final class Constants {
           5.5,
           5.8,
           6.25,
-          7
+          7,
+          7.25, 
+          13
       };
       //THIS ONE BMR
       PivotConstants.k_anglesFront = new double[] {
@@ -118,7 +120,9 @@ public final class Constants {
           44.8, // 5.5
           44.3, // 5.8
           44.4, // 6.25
-          44.1 // 7
+          44.1, // 7
+          30, // 7.25
+          30 // 13
       };
       PivotConstants.k_distancesBack = new double[] {
           1.4,
@@ -295,7 +299,7 @@ public final class Constants {
         4.5,
         5,
         5.5,
-        6,
+        6
     };
 
     public static double[] k_anglesFront = {
@@ -342,7 +346,7 @@ public final class Constants {
     public static double k_iZone = 0;
 
     public static final double[] k_revDistances = { 2, 2.00001, 5.8, 6.1, 6.2001, 8, 9, 10, 13, 17 };
-    public static final double[] k_revSpeeds = { -4000, -5000, -5000, -5000, -3000, -3000, -3500, -4250, -3900, -3900 }; // {-5000, -5500, -5750, -4000,
+    public static final double[] k_revSpeeds = { -4000, -5000, -5000, -5000, -5000, -3500, -4500, -4500, -4500, -3900 }; // {-5000, -5500, -5750, -4000,
                                                                                       // -2000}6
     public static final double k_idleRevSpeed = -2000;
   }

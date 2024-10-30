@@ -101,6 +101,7 @@ public final class Constants {
           6.25,
           7
       };
+      //THIS ONE BMR
       PivotConstants.k_anglesFront = new double[] {
           10, // 1.3,
           22.9, // 2,
@@ -224,7 +225,7 @@ public final class Constants {
     // Driving Constants
     public static double k_maxSpeedMetersPerSecond = 5.74;
     public static final double k_maxDriveAcceleration = 7.427;
-    public static final double k_maxAngularSpeed = Math.PI * 2; // radians per second
+    public static final double k_maxAngularSpeed = Math.PI * 1.5; // radians per second
     public static final double k_maxAngularAcceleration = Math.PI;
 
     public static final double k_directionSlewRate = 3; // radians per second

@@ -60,6 +60,8 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import java.util.Vector;
 
+import org.photonvision.PhotonCamera;
+
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -73,6 +75,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.aiCamera.AiCamera;
+import frc.aiCamera.PhotonTracker;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -100,12 +104,13 @@ public class RobotContainer implements Sendable {
         private final StickSubsystem m_stickSubsystem = new StickSubsystem();
         private int m_numLastSeenNotes = 0;
         private boolean m_noteCanBeSeen = false;
+        private PhotonTracker tracker = new PhotonTracker();
         private final Pose2d k_offScreenPose = new Pose2d(-100, -100, new Rotation2d());
         private final CommandJoystick m_joystick = new CommandJoystick(1);
 
         private final CommandJoystick m_testStick = new CommandJoystick(2);
         public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);
-
+       
         public final AiCamera m_aiCamera = new AiCamera(m_tracker);
 
         SendableChooser<Command> m_autoSelection = new SendableChooser<>();
@@ -119,6 +124,7 @@ public class RobotContainer implements Sendable {
          */
         public RobotContainer(Robot robot) {
                 // Configure the trigger bindings
+
                 configureBindings();
                 m_ledConfig = new LEDConfig(robot, m_apriltagCamera, m_apriltagCameraSide);
                 SmartDashboard.putData(this);
@@ -362,6 +368,10 @@ public class RobotContainer implements Sendable {
 
         public double getThrottle() {
                 return m_joystick.getThrottle();
+        }
+
+        public void callCamera3d(){
+            tracker.findBestGamePiece();
         }
 
         /**

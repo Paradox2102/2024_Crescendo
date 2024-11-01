@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.apriltagsCamera.ApriltagsCamera;
 import frc.aiCamera.*;
 
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to
@@ -75,7 +76,7 @@ public class Robot extends TimedRobot {
     // ApriltagsCameraStats stats = m_robotContainer.m_apriltagCamera.getStats();
     // SmartDashboard.putNumber("cam avg delay", stats.m_averageDelay);
     // SmartDashboard.putNumber("cam min delay", stats.m_minDelay);
-
+   m_robotContainer.callCamera3d();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

@@ -264,9 +264,7 @@ public class DriveSubsystem extends SubsystemBase {
   private boolean isInAimingZone() {
     return Constants.States.m_speakerMode
         ? getTranslationalDistanceFromSpeakerMeters() <
-              Constants.PivotConstants.k_distancesFront
-                      [Constants.PivotConstants.k_distancesFront.length - 1] +
-                  1
+              6
         : getTranslationalDistanceFromAmpMeters() < -10; // 5, turned to -10 so it will never aim
   }
 

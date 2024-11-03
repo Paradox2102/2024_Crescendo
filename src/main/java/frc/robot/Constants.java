@@ -51,7 +51,7 @@ public final class Constants {
       PivotConstants.k_iZone = 10;
       PivotConstants.k_resetPositionDegrees = 15;
       PivotConstants.k_offset = .3;
-      PivotConstants.k_ampPositionDegrees = 22;
+      PivotConstants.k_ampPositionDegrees = 20;
       PivotConstants.k_sourceAngle = 17;
 
       // Drive
@@ -101,28 +101,28 @@ public final class Constants {
           6.25,
           7,
           7.25, 
-          13
+          17
       };
       //THIS ONE BMR
       PivotConstants.k_anglesFront = new double[] {
           10, // 1.3,
-          22.9, // 2,
-          29, // 2.55,
-          36.4, // 3.1,
-          37.3, // 3.5,
-          39.8, // 3.75,
-          41, // 4
-          42, // 4.25,
-          43.6, // 4.5,
-          44.1, // 4.75,
-          44.7, // 5,
-          44.8, // 5.25,
-          44.8, // 5.5
-          44.3, // 5.8
-          44.4, // 6.25
-          44.1, // 7
-          30, // 7.25
-          30 // 13
+          22.8, // 2,
+          28.9, // 2.55,
+          36.3, // 3.1,
+          37.2, // 3.5,
+          39.7, // 3.75,
+          40.9, // 4
+          41.9, // 4.25,
+          43.5, // 4.5,
+          44, // 4.75,
+          44.6, // 5,
+          44.7, // 5.25,
+          44.7, // 5.5
+          44.2, // 5.8
+          44.3, // 6.25
+          44, // 7
+          25, // 7.25
+          25 // 17
       };
       PivotConstants.k_distancesBack = new double[] {
           1.4,
@@ -346,7 +346,7 @@ public final class Constants {
     public static double k_iZone = 0;
 
     public static final double[] k_revDistances = { 0, 2.00001, 5.8, 6.1, 6.2001, 8, 9, 10, 13, 17 };
-    public static final double[] k_revSpeeds = { -4000, -5000, -5000, -5000, -5000, -3500, -4500, -4500, -4500, -3900 }; // {-5000, -5500, -5750, -4000,
+    public static final double[] k_revSpeeds = { -4000, -5000, -5000, -5000, -5000, -4000, -4250, -4250, -4250, -3900 }; // {-5000, -5500, -5750, -4000,
                                                                                       // -2000}6
     public static final double k_idleRevSpeed = -2000;
   }

@@ -371,6 +371,7 @@ public final class Constants {
 
   public static class ElevatorConstants {
     public static final int k_elevatorMotor = 12;
+    // Why is this negative?  Should invert the encoder, and probably the motor too. -Gavin
     public static final double k_ticksToInches = -25.0 / 113.559;
 
     // manual command

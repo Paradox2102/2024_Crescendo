@@ -29,6 +29,17 @@ public class DefaultPivotCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // I think this code is doing the following:
+    //     If we don't have a gamepiece:
+    //         Go to reset posiion
+    //     Else if we're not in speaker mode:
+    //         Go to amp position
+    //     Else if we're close enough to the speaker and "auto rotate aim" is set:
+    //         Position using distance from speaker* and then mysteriously add one degree
+    //     Else:
+    //         Position using distance from speaker*
+    // * getPivotAngleFromRobotPos returns reset position over a certain distance.
+    // - Gavin
     if (!Constants.States.m_speakerMode && Constants.States.m_hasGamePiece) {
       m_subsystem.setPositionDegrees(Constants.PivotConstants.k_ampPositionDegrees);
     } else if (Constants.States.m_speakerMode && m_driveSubsystem.shouldAimSpeaker()) {

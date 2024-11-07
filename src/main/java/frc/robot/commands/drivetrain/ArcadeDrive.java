@@ -20,6 +20,7 @@ public class ArcadeDrive extends Command {
   private DoubleSupplier m_getY;
   private DoubleSupplier m_getRot;
 
+  // ArcadeDrive is a means to control a differential drive, so this class is misnamed. -Gavin
   public ArcadeDrive(DriveSubsystem driveSubsystem, DoubleSupplier getX, DoubleSupplier getY, DoubleSupplier getRot) {
     m_subsystem = driveSubsystem;
     m_getX = getX;

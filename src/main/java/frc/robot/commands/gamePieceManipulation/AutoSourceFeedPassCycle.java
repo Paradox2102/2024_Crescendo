@@ -26,7 +26,9 @@ public class AutoSourceFeedPassCycle extends SequentialCommandGroup {
         new SequentialCommandGroup(
           new AutoSourceFeed(driveSubsystem, pivotSubsystem, frontRollers, backRollers),
           new ParallelDeadlineGroup(
+            // This command consists solely of an isFinished() method.  It should have been a call to until() instead. -Gavin
             new IsInPassingZone(driveSubsystem),
+            // BUG: This -1 here moves us in the positive X direction, regardless of alliance colour. -Gavin
             new ArcadeDrive(driveSubsystem, () -> -1, () -> 0, () -> 0)
           ),
           new ShootCommand(frontRollers, backRollers)

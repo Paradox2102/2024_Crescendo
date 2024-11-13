@@ -50,10 +50,11 @@ public class PhotonTracker{
     Mat camera_matrix;
     MatOfDouble distortion_coefficients;
     MatOfPoint3f object_points;      
-
+    
     public PhotonTracker(PositionTrackerPose tracker){
-        camera = new PhotonCamera("photonvision");
+        camera = new PhotonCamera("HD_Camera");
         m_tracker = tracker;
+
     }
 
     public class AiRegion {
@@ -141,23 +142,36 @@ public class PhotonTracker{
 		// }
 	}
     
-    public AiRegion findNoteLocation(double x1,double y1, double x2,double y2){//returns an AiRegion of a given bounding box of a note. Calcuates distance
-       MatOfPoint2f image_points; //TODO: initialize image points
+    public Pose2d findNoteLocation(double x1,double y1, double x2,double y2){//returns an AiRegion of a given bounding box of a note. Calcuates distance
+       MatOfPoint2f image_points = new MatOfPoint2f(); //TODO: initialize image points
        double transx;
        double transy;
        double transz;
+       double m_Robot_x = m_tracker.getPose2d().getTranslation().getX();
+	   double m_Robot_y = m_tracker.getPose2d().getTranslation().getY();
+        double x_distance;
+		double y_distance;
+		double xr; // xr is x position of note
+		double yr; // yr is y position of note
+		double alpha;// the degrees the robot needs to turn
+		double beta;// robot angle - alpha
+		double cx;
+		double cy;
+		double total_distance; // distance from cam to note
+		double distance_from_camera_to_center = -9*.0254;
        Mat rvec = new Mat();
        Mat tvec = new Mat();
        Calib3d.solvePnP(object_points, image_points, camera_matrix, distortion_coefficients, rvec, tvec);
        transy = tvec.get(0,0)[0];
        transx = tvec.get(0,2)[0]; //converting to NWU coordinate system
        transz = tvec.get(0,1)[0];
-       return new AiRegion(x1, y1, x2, y2, transy, transx, transy); //
+       return new Pose2d(transx, transy,new Rotation2d()); //
     } 
 
     public AiRegions getRegions() {
             var result = camera.getLatestResult();
 			boolean hasTargets = result.hasTargets();
+            
             if(hasTargets){
                 List<PhotonTrackedTarget> targets = result.getTargets();
                 for(PhotonTrackedTarget target:targets){
@@ -174,7 +188,7 @@ public class PhotonTracker{
                     ly=corners.get(1).y;
 
                     //TODO: review this
-                    m_nextRegions.m_regions.add(findNoteLocation(ux,uy,lx,ly)); //adding returned AIRegion from findNoteLocatioon to m_regions
+                    // m_nextRegions.m_regions.add(findNoteLocation(ux,uy,lx,ly)); //adding returned AIRegion from findNoteLocatioon to m_regions
                     //not sure whether to return nextRegions or m_regions
                     // not sure what nextRegions is
                     
@@ -282,25 +296,26 @@ public class PhotonTracker{
 
 
 
-    // public void findBestGamePiece(){
-    //     var result = camera.getLatestResult();
-    //     boolean hasTargets = result.hasTargets();
-    //     if(hasTargets){
-    //         PhotonTrackedTarget target = result.getBestTarget();
-    //         List<TargetCorner> corners = target.getDetectedCorners();
+    public void findBestGamePiece(){
+        var result = camera.getLatestResult();
+        boolean hasTargets = result.hasTargets();
+        if(hasTargets){
+            PhotonTrackedTarget target = result.getBestTarget();
+            System.out.println("target: "+target);
+            List<TargetCorner> corners = target.getDetectedCorners();
             
-    //         Transform3d camToTarget = target.getBestCameraToTarget();
-    //         System.out.println("cam to target \n"+camToTarget+"\n corners: \n+"+corners); //only if photon vision can find note position relative to camera. This probably only works for apriltags.
+            Transform3d camToTarget = target.getBestCameraToTarget();
+            System.out.println("cam to target \n"+camToTarget+"\n corners: \n+"+corners); //only if photon vision can find note position relative to camera. This probably only works for apriltags.
 
 
-    //         TargetCorner corner1 = corners.get(0);
-    //         TargetCorner corner2 = corners.get(1);   //getting all the corners
-    //         TargetCorner corner3 = corners.get(2);
-    //         TargetCorner corner4 = corners.get(3);
+            // TargetCorner corner1 = corners.get(0);
+            // TargetCorner corner2 = corners.get(1);   //getting all the corners
+            // TargetCorner corner3 = corners.get(2);
+            // TargetCorner corner4 = corners.get(3);
             
 
-    //     }
-    // }
+        }
+    }
 
 
 

@@ -104,7 +104,7 @@ public class RobotContainer implements Sendable {
         private final StickSubsystem m_stickSubsystem = new StickSubsystem();
         private int m_numLastSeenNotes = 0;
         private boolean m_noteCanBeSeen = false;
-        private PhotonTracker tracker = new PhotonTracker();
+        
         private final Pose2d k_offScreenPose = new Pose2d(-100, -100, new Rotation2d());
         private final CommandJoystick m_joystick = new CommandJoystick(1);
 
@@ -112,7 +112,7 @@ public class RobotContainer implements Sendable {
         public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);
        
         public final AiCamera m_aiCamera = new AiCamera(m_tracker);
-
+      private PhotonTracker tracker = new PhotonTracker(m_tracker);
         SendableChooser<Command> m_autoSelection = new SendableChooser<>();
 
         // Replace with CommandPS4Controller or CommandJoystick if needed

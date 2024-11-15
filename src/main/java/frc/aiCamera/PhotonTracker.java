@@ -10,6 +10,7 @@ import org.opencv.photo.CalibrateDebevec;
 import org.opencv.calib3d.Calib3d;
 
 import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;
 import org.photonvision.estimation.OpenCVHelp;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import org.photonvision.targeting.TargetCorner;
@@ -47,9 +48,9 @@ public class PhotonTracker{
     int radius = 7;
 
     //TODO: CALIBRATE THESE FOR SOLVEPNP TO WORK
-    Mat camera_matrix;
-    MatOfDouble distortion_coefficients;
-    MatOfPoint3f object_points;      
+    // Mat camera_matrix;
+    // MatOfDouble distortion_coefficients;
+    // MatOfPoint3f object_points;      
     
     public PhotonTracker(PositionTrackerPose tracker){
         camera = new PhotonCamera("HD_Camera");
@@ -142,8 +143,8 @@ public class PhotonTracker{
 		// }
 	}
     
-    public Pose2d findNoteLocation(double x1,double y1, double x2,double y2){//returns an AiRegion of a given bounding box of a note. Calcuates distance
-       MatOfPoint2f image_points = new MatOfPoint2f(); //TODO: initialize image points
+    public Pose2d findNoteLocation(double x1,double y1, double x2,double y2,PhotonTrackedTarget target){//returns an AiRegion of a given bounding box of a note. Calcuates distance
+    //    MatOfPoint2f image_points = new MatOfPoint2f(); //TODO: initialize image points
        double transx;
        double transy;
        double transz;
@@ -159,13 +160,35 @@ public class PhotonTracker{
 		double cy;
 		double total_distance; // distance from cam to note
 		double distance_from_camera_to_center = -9*.0254;
-       Mat rvec = new Mat();
-       Mat tvec = new Mat();
-       Calib3d.solvePnP(object_points, image_points, camera_matrix, distortion_coefficients, rvec, tvec);
-       transy = tvec.get(0,0)[0];
-       transx = tvec.get(0,2)[0]; //converting to NWU coordinate system
-       transz = tvec.get(0,1)[0];
-       return new Pose2d(transx, transy,new Rotation2d()); //
+    //    Mat rvec = new Mat();
+    //    Mat tvec = new Mat();
+    //    Calib3d.solvePnP(object_points, image_points, camera_matrix, distortion_coefficients, rvec, tvec);
+       
+       double range = PhotonUtils.calculateDistanceToTargetMeters(1, 0, 0, target.getPitch());
+       
+       Translation2d camToTarget = PhotonUtils.estimateCameraToTargetTranslation(range, new Rotation2d(target.getYaw()));
+       transx = camToTarget.getX();
+       transy = camToTarget.getY(); //converting meters to inches by dividing by 39.37
+       
+       double robot_angle = ParadoxField.normalizeAngle(m_tracker.getPose2d().getRotation().getDegrees()-180);
+       alpha = new Rotation2d(transx,transy).getDegrees()*-1;//Math.atan2(transx, transz);
+       beta = robot_angle - alpha;
+       cx = distance_from_camera_to_center*Math.cos(robot_angle);
+       cy = distance_from_camera_to_center*Math.sin(robot_angle);
+       y_distance = Math.sin(Math.toRadians(beta)) * Math.sqrt(transx * transx + transy * transy);
+       x_distance = Math.cos(Math.toRadians(beta)) * Math.sqrt(transx * transx + transy * transy);
+       total_distance = Math.sqrt(x_distance*x_distance+y_distance*y_distance);
+       SmartDashboard.putNumber("note distance from robot",total_distance);
+       xr = m_Robot_x+x_distance+cx;
+       yr = m_Robot_y+y_distance+cy;
+       System.out.println("distance to target: "+range);
+       System.out.println("yaw: "+target.getYaw());
+
+    //    transy = tvec.get(0,0)[0];   
+    //    transx = tvec.get(0,2)[0]; //converting to NWU coordinate system
+    //    transz = tvec.get(0,1)[0];
+    //    return new Pose2d(transx, transy,new Rotation2d()); //
+    return null;
     } 
 
     public AiRegions getRegions() {
@@ -243,7 +266,6 @@ public class PhotonTracker{
 				SmartDashboard.putNumber("note distance from robot",total_distance);
 				xr = m_Robot_x+x_distance+cx;
 				yr = m_Robot_y+y_distance+cy;
-				poses.add(new Pose2d(xr, yr, Rotation2d.fromDegrees(alpha)));
 				
 			}
 			Vector<GamePiece> newGamePieces = new Vector<GamePiece>();
@@ -296,18 +318,28 @@ public class PhotonTracker{
 
 
 
-    public void findBestGamePiece(){
+    public Pose2d findBestGamePiece(){
         var result = camera.getLatestResult();
         boolean hasTargets = result.hasTargets();
         if(hasTargets){
             PhotonTrackedTarget target = result.getBestTarget();
             System.out.println("target: "+target);
-            List<TargetCorner> corners = target.getDetectedCorners();
+            List<TargetCorner> corners = target.getMinAreaRectCorners();
+            System.out.println("number of corners: "+corners.size());
+            TargetCorner topLeft = corners.get(0); //top left
+            TargetCorner bottomRight = corners.get(2); //top left
+            double x1 = topLeft.x; 
+            double y1 = topLeft.x; 
+            double x2 = bottomRight.x; 
+            double y2 = bottomRight.x; 
+    
             
             Transform3d camToTarget = target.getBestCameraToTarget();
             System.out.println("cam to target \n"+camToTarget+"\n corners: \n+"+corners); //only if photon vision can find note position relative to camera. This probably only works for apriltags.
-
-
+            Pose2d notePos = findNoteLocation(x1,y1,x2,y2,target);
+            return notePos; //returning a po
+            
+            
             // TargetCorner corner1 = corners.get(0);
             // TargetCorner corner2 = corners.get(1);   //getting all the corners
             // TargetCorner corner3 = corners.get(2);
@@ -315,6 +347,7 @@ public class PhotonTracker{
             
 
         }
+        return null; //return null if no notes can be seen
     }
 
 

@@ -19,6 +19,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.aiCamera.AiCamera.AiRegions;
 import frc.aiCamera.AiCamera.GamePiece;
@@ -48,9 +49,9 @@ public class PhotonTracker{
     int radius = 7;
 
     //TODO: CALIBRATE THESE FOR SOLVEPNP TO WORK
-    // Mat camera_matrix;
-    // MatOfDouble distortion_coefficients;
-    // MatOfPoint3f object_points;      
+    Mat camera_matrix;
+    MatOfDouble distortion_coefficients;
+    MatOfPoint3f object_points;      
     
     public PhotonTracker(PositionTrackerPose tracker){
         camera = new PhotonCamera("HD_Camera");
@@ -160,15 +161,17 @@ public class PhotonTracker{
 		double cy;
 		double total_distance; // distance from cam to note
 		double distance_from_camera_to_center = -9*.0254;
-    //    Mat rvec = new Mat();
-    //    Mat tvec = new Mat();
-    //    Calib3d.solvePnP(object_points, image_points, camera_matrix, distortion_coefficients, rvec, tvec);
+       Mat rvec = new Mat();
+       Mat tvec = new Mat();
+       Calib3d.solvePnP(object_points, image_points, camera_matrix, distortion_coefficients, rvec, tvec);
+       double cameraHeight = 10*.0254; //10 inches to meters
+	   System.out.println("target: "+target);
+	   System.out.println("pitch: "+target.getPitch());
+    //    double range = PhotonUtils.calculateDistanceToTargetMeters(cameraHeight,0,Math.toRadians(-20), target.getPitch());
        
-       double range = PhotonUtils.calculateDistanceToTargetMeters(1, 0, 0, target.getPitch());
-       
-       Translation2d camToTarget = PhotonUtils.estimateCameraToTargetTranslation(range, new Rotation2d(target.getYaw()));
-       transx = camToTarget.getX();
-       transy = camToTarget.getY(); //converting meters to inches by dividing by 39.37
+    //    Translation2d camToTarget = PhotonUtils.estimateCameraToTargetTranslation(range, Rotation2d.fromDegrees(-target.getYaw()));
+    //    transx = camToTarget.getX();
+    //    transy = camToTarget.getY(); //converting meters to inches by dividing by 39.37
        
        double robot_angle = ParadoxField.normalizeAngle(m_tracker.getPose2d().getRotation().getDegrees()-180);
        alpha = new Rotation2d(transx,transy).getDegrees()*-1;//Math.atan2(transx, transz);
@@ -178,7 +181,10 @@ public class PhotonTracker{
        y_distance = Math.sin(Math.toRadians(beta)) * Math.sqrt(transx * transx + transy * transy);
        x_distance = Math.cos(Math.toRadians(beta)) * Math.sqrt(transx * transx + transy * transy);
        total_distance = Math.sqrt(x_distance*x_distance+y_distance*y_distance);
-       SmartDashboard.putNumber("note distance from robot",total_distance);
+       SmartDashboard.putNumber("note distance from robot (total distance)",total_distance);
+       SmartDashboard.putNumber("note distance from robot (range)",range);
+       SmartDashboard.putNumber("Yaw",target.getPitch());
+
        xr = m_Robot_x+x_distance+cx;
        yr = m_Robot_y+y_distance+cy;
        System.out.println("distance to target: "+range);
@@ -323,9 +329,9 @@ public class PhotonTracker{
         boolean hasTargets = result.hasTargets();
         if(hasTargets){
             PhotonTrackedTarget target = result.getBestTarget();
-            System.out.println("target: "+target);
+            // System.out.println("target: "+target);
             List<TargetCorner> corners = target.getMinAreaRectCorners();
-            System.out.println("number of corners: "+corners.size());
+            // System.out.println("number of corners: "+corners.size());
             TargetCorner topLeft = corners.get(0); //top left
             TargetCorner bottomRight = corners.get(2); //top left
             double x1 = topLeft.x; 
@@ -334,8 +340,8 @@ public class PhotonTracker{
             double y2 = bottomRight.x; 
     
             
-            Transform3d camToTarget = target.getBestCameraToTarget();
-            System.out.println("cam to target \n"+camToTarget+"\n corners: \n+"+corners); //only if photon vision can find note position relative to camera. This probably only works for apriltags.
+            // Transform3d camToTarget = target.getBestCameraToTarget();
+            // System.out.println("cam to target \n"+camToTarget+"\n corners: \n+"+corners); //only if photon vision can find note position relative to camera. This probably only works for apriltags.
             Pose2d notePos = findNoteLocation(x1,y1,x2,y2,target);
             return notePos; //returning a po
             

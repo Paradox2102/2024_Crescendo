@@ -47,6 +47,8 @@ import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSensors;
 import frc.robot.subsystems.StickSubsystem;
 
+import org.photonvision.PhotonCamera;
+
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
@@ -67,14 +69,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  ApriltagsCamera m_apriltagCamera = new ApriltagsCamera();
-  ApriltagsCamera m_apriltagCameraSide = new ApriltagsCamera();
-  PositionServer m_posServer = new PositionServer(m_apriltagCamera);
+  PhotonCamera m_frontCamera = new PhotonCamera("front");
+  PhotonCamera m_backCamera = new PhotonCamera("back");
   Constants m_constants = new Constants();
   LEDConfig m_ledConfig;
 
   final ShooterSensors m_shooterSensors = new ShooterSensors();
-  final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_apriltagCamera, m_apriltagCameraSide);
+  final DriveSubsystem m_driveSubsystem = new DriveSubsystem(m_frontCamera, m_backCamera);
   private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem(() -> m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters());
   private final ManipulatorSubsystem m_frontSubsystem = new ManipulatorSubsystem(true, () -> m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters());
   private final ManipulatorSubsystem m_backSubsystem = new ManipulatorSubsystem(false, () -> m_driveSubsystem.getFutureTranslationDistanceFromSpeakerMeters());
@@ -83,7 +84,7 @@ public class RobotContainer {
 
   private final CommandJoystick m_joystick = new CommandJoystick(1);
   //private final CommandJoystick m_testStick = new CommandJoystick(2);
-  public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);
+  public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_frontCamera, m_backCamera, 0, 0, m_driveSubsystem);
   SendableChooser<Command> m_autoSelection = new SendableChooser<>();
 
 
@@ -95,7 +96,7 @@ public class RobotContainer {
   public RobotContainer(Robot robot) {
     // Configure the trigger bindings
     configureBindings();
-    m_ledConfig = new LEDConfig(robot, m_apriltagCamera, m_apriltagCameraSide);
+    m_ledConfig = new LEDConfig(robot, m_frontCamera, m_backCamera);
 
     m_driveSubsystem.setTracker(m_tracker);
     NamedCommands.registerCommand("intake", new IntakeCommand(m_backSubsystem, m_frontSubsystem, m_pivotSubsystem));
@@ -132,21 +133,6 @@ public class RobotContainer {
     // m_apriltagCamera.setCameraInfo(8.375, 12, 180, ApriltagsCameraType.GS_6mm); // y = 6
     // m_apriltagCamera.setCameraInfo(5.125, 15.5, 0, ApriltagsCameraType.GS_6mm); // y = 9.5
     // Front
-    m_apriltagCamera.setCameraInfo(Constants.DriveConstants.k_cameraFrontX, Constants.DriveConstants.k_cameraFrontY, 180, ApriltagsCameraType.GS_6mm); // y = 6
-    // Back
-    m_apriltagCamera.setCameraInfo(Constants.DriveConstants.k_cameraBackX, Constants.DriveConstants.k_cameraBackY, 0, ApriltagsCameraType.GS_6mm); // y = 9.5
-    m_apriltagCamera.connect("10.21.2.12", 5800);
-    
-
-    m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraRightX, Constants.DriveConstants.k_cameraRightY, -90, ApriltagsCameraType.GS_6mm); 
-    m_apriltagCameraSide.setCameraInfo(Constants.DriveConstants.k_cameraLeftX, Constants.DriveConstants.k_cameraLeftY, 88, ApriltagsCameraType.GS_6mm); 
-    //m_apriltagCameraSide.connect("10.21.2.12", 5800);
-
-    m_posServer.start();
-  }
-
-  private boolean getPositionServerButtonState(int button) {
-    return m_posServer.getButtonState(button);
   }
 
   /**
@@ -159,10 +145,6 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    new Trigger(() -> getPositionServerButtonState(1)).onTrue(new SetApriltagsLogging(m_apriltagCamera, m_apriltagCameraSide, true));
-    new Trigger(() -> getPositionServerButtonState(2)).onTrue(new SetApriltagsLogging(m_apriltagCamera, m_apriltagCameraSide, false));
-    new Trigger(() -> getPositionServerButtonState(3)).onTrue(new SetApriltagsDashboard(m_apriltagCamera, m_apriltagCameraSide, true));
-    new Trigger(() -> getPositionServerButtonState(4)).onTrue(new SetApriltagsDashboard(m_apriltagCamera, m_apriltagCameraSide, false));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     m_driveSubsystem.setDefaultCommand(new ArcadeDrive(
       m_driveSubsystem, 

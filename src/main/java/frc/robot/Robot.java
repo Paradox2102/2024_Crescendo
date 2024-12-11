@@ -33,9 +33,6 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer(this);
     FollowPathCommand.warmupCommand().schedule();
-    m_robotContainer.m_apriltagCamera.setLogging(true);
-    m_robotContainer.m_apriltagCameraSide.setLogging(true);
-    
   }
 
   /**
@@ -64,8 +61,6 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    m_robotContainer.m_apriltagCamera.setLogging(false);
-    m_robotContainer.m_apriltagCameraSide.setLogging(false);
   }
 
   @Override

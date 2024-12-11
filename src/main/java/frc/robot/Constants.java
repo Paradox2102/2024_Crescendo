@@ -8,7 +8,10 @@ import java.io.File;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -257,8 +260,16 @@ public final class Constants {
 
     public static double k_cameraFrontX = 8.375;
     public static double k_cameraFrontY = 9.5;
+    public static double k_cameraFrontZ = 0;
     public static double k_cameraBackX = 11.5;
     public static double k_cameraBackY = 6;
+    public static double k_cameraBackZ = 0;
+
+    public static Rotation3d k_cameraFrontRot = new Rotation3d();
+    public static Rotation3d k_cameraBackRot = new Rotation3d();
+
+    public static Transform3d k_CameraFrontToRobot = new Transform3d(k_cameraFrontX,k_cameraFrontY,k_cameraFrontZ, k_cameraFrontRot);
+    public static Transform3d k_CameraBackToRobot = new Transform3d(k_cameraBackX,k_cameraBackY,k_cameraBackZ, k_cameraBackRot);
 
     public static double k_cameraLeftX = -11.75;// + 10;
     public static double k_cameraLeftY = 5.6;

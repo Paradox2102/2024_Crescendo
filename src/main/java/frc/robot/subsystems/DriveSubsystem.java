@@ -37,6 +37,8 @@ import frc.visionCamera.Camera;
 import frc.visionCamera.Camera.CameraFrame;
 import java.util.function.BooleanSupplier;
 
+import org.photonvision.PhotonCamera;
+
 public class DriveSubsystem extends SubsystemBase {
   private final Field2d m_field = new Field2d();
   // Create MaxSwerveModules
@@ -91,11 +93,11 @@ public class DriveSubsystem extends SubsystemBase {
       new Translation2d(-.298, .298), new Translation2d(-.298, -.298));
 
   PositionTrackerPose m_tracker;
-  ApriltagsCamera m_frontBackCamera;
-  ApriltagsCamera m_sideCamera;
+  PhotonCamera m_frontCamera;
+  PhotonCamera m_backCamera;
 
   /** Creates a new DriveSubsystem. */
-  public DriveSubsystem(ApriltagsCamera frontBackCamera, ApriltagsCamera sideCamera) {
+  public DriveSubsystem(PhotonCamera frontCamera, PhotonCamera backCamera) {
     m_gyro.reset();
     SmartDashboard.putData("Field", m_field);
     m_visionCamera = new Camera();
@@ -103,8 +105,8 @@ public class DriveSubsystem extends SubsystemBase {
     m_orientPID.enableContinuousInput(-180, 180);
     m_orientPID.setIZone(Constants.DriveConstants.k_rotateIZone);
 
-    m_frontBackCamera = frontBackCamera;
-    m_sideCamera = sideCamera;
+    m_frontCamera = frontCamera;
+    m_backCamera = backCamera;
 
     AutoBuilder.configureHolonomic(
         this::getPose, 
@@ -367,7 +369,7 @@ public class DriveSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("BR Encoder Diff", m_backRight.getMagEncoderPosRadians() - m_backRight.getMotorPosRadians());
  
     // For efficiency. we could pass in the module states here, to avoid calling it twice.  Maybe also currentPos.  - Gavin
-     m_tracker.update(m_frontBackCamera, m_sideCamera);
+     m_tracker.update();
 
     // Estimate future position of robot
     // *****************************************

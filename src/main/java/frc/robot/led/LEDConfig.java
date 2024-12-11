@@ -1,5 +1,7 @@
 package frc.robot.led;
 
+import org.photonvision.PhotonCamera;
+
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -17,8 +19,8 @@ public class LEDConfig {
     private final LEDSubsystem m_string1 = new LEDSubsystem(0, 45);
     private final LEDSubsystem m_string2 = new LEDSubsystem(45, 46, true);
     private final LEDSubsystem m_string3 = new LEDSubsystem(45 + 46, 30);
-    private final ApriltagsCamera m_cameraFrontBack;
-    private final ApriltagsCamera m_cameraLeftRight;
+    private final PhotonCamera m_cameraFront;
+    private final PhotonCamera m_cameraBack;
     private final Robot m_robot;
 
     private Command m_currentCommand = null;
@@ -40,20 +42,20 @@ public class LEDConfig {
             new Blinker(m_string2, 0.2, Color.kGreen), new Blinker(m_string3, 0.2, Color.kGreen));
     private ParallelCommandGroup m_cameraError;
 
-    public LEDConfig(Robot robot, ApriltagsCamera cameraFrontBack, ApriltagsCamera cameraLeftRight) {
+    public LEDConfig(Robot robot, PhotonCamera cameraFront, PhotonCamera cameraBack) {
         m_robot = robot;
-        m_cameraFrontBack = cameraFrontBack;
-        m_cameraLeftRight = cameraLeftRight;
+        m_cameraFront = cameraFront;
+        m_cameraBack = cameraBack;
 
-        m_cameraError = new ParallelCommandGroup(new DisplayCameraError(m_string1, m_cameraFrontBack), new DisplayCameraError(m_string2, m_cameraFrontBack), new DisplayCameraError(m_string3, m_cameraFrontBack));
+        m_cameraError = new ParallelCommandGroup(new DisplayCameraError(m_string1, m_cameraFront), new DisplayCameraError(m_string2, m_cameraBack), new DisplayCameraError(m_string3, cameraFront));
     }
 
     public void periodic() {
         Command command = null;
 
-        if ((!m_cameraFrontBack.isConnected() && !m_cameraLeftRight.isConnected()) && Constants.States.m_autoRotateAim) {
+        if ((!m_cameraFront.isConnected() && !m_cameraBack.isConnected()) && Constants.States.m_autoRotateAim) {
             command = m_cameraFailure;
-        } else if (m_cameraFrontBack.isTagVisible() && m_robot.isDisabled()) {
+        } else if (m_cameraFront.getLatestResult().hasTargets() && m_robot.isDisabled()) {
             // command = m_paradox;
             command = m_cameraError;
         } else if (m_robot.isDisabled()) {

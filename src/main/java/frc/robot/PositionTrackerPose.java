@@ -1,14 +1,16 @@
 package frc.robot;
 
+import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonPoseEstimator;
+import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.apriltagsCamera.ApriltagLocation;
 import frc.apriltagsCamera.ApriltagsCamera;
 import frc.apriltagsCamera.Logger;
-import frc.apriltagsCamera.PositionServer;
 import frc.robot.subsystems.DriveSubsystem;
 
 // import frc.lib.CSVWriter;
@@ -17,13 +19,16 @@ import frc.robot.subsystems.DriveSubsystem;
 public class PositionTrackerPose {
   private SwerveDrivePoseEstimator m_poseEstimator;
   private DriveSubsystem m_driveSubsystem;
-  public PositionServer m_posServer;
+  private PhotonPoseEstimator m_frontEstimator;
+  private PhotonPoseEstimator m_backEstimator;
+  private AprilTagFieldLayout field = AprilTagFieldLayout.loadField(AprilTagFields.k2024Crescendo);
 
-  public PositionTrackerPose(PositionServer posServer, double x, double y,
+  public PositionTrackerPose(PhotonCamera frontCamera, PhotonCamera backCamera, double x, double y,
                              DriveSubsystem driveSubsystem) {
     super();
     m_driveSubsystem = driveSubsystem;
-    m_posServer = posServer;
+    m_frontEstimator = new PhotonPoseEstimator(field, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, frontCamera, Constants.DriveConstants.k_CameraFrontToRobot);
+    m_backEstimator = new PhotonPoseEstimator(field, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, backCamera, Constants.DriveConstants.k_CameraBackToRobot);
 
     // For the extended constructor, the default values are:
     // VecBuilder.fill(0.02, 0.02, 0.01) - SD of internal state
@@ -130,37 +135,39 @@ public class PositionTrackerPose {
 
   // }
 
-  private boolean m_front = true;
+  public void update() {
+    m_frontEstimator.setReferencePose(m_poseEstimator.getEstimatedPosition());
+    m_backEstimator.setReferencePose(m_poseEstimator.getEstimatedPosition());
+    m_poseEstimator.addVisionMeasurement(m_frontEstimator.update());
+    m_poseEstimator.addVisionMeasurement(m_backEstimator.update());
+    // // logUpdate();
+    // m_poseEstimator.updateWithTime(ApriltagsCamera.getTime(),
+    //                                m_driveSubsystem.getGyroRotation2d(),
+    //                                m_driveSubsystem.getModulePosition());
+    // double time = ApriltagsCamera.getTime();
+    // Rotation2d gyroRotation = m_driveSubsystem.getGyroRotation2d();
+    // SwerveModulePosition[] modules = m_driveSubsystem.getModulePosition();
+    // Pose2d pose = m_poseEstimator.updateWithTime(time, gyroRotation, modules);
+    // if(ApriltagsCamera.m_log) {
+    //   double rotationRateDegreesPerSecond = m_driveSubsystem.getRotationRateDegreesPerSecond();
+    //   frontBackCamera.logUpdate(time, gyroRotation, modules, pose, rotationRateDegreesPerSecond);
+    // }
 
-  public void update(ApriltagsCamera frontBackCamera, ApriltagsCamera sideCamera) {
-    // logUpdate();
-    m_poseEstimator.updateWithTime(ApriltagsCamera.getTime(),
-                                   m_driveSubsystem.getGyroRotation2d(),
-                                   m_driveSubsystem.getModulePosition());
-    double time = ApriltagsCamera.getTime();
-    Rotation2d gyroRotation = m_driveSubsystem.getGyroRotation2d();
-    SwerveModulePosition[] modules = m_driveSubsystem.getModulePosition();
-    Pose2d pose = m_poseEstimator.updateWithTime(time, gyroRotation, modules);
-    if(ApriltagsCamera.m_log) {
-      double rotationRateDegreesPerSecond = m_driveSubsystem.getRotationRateDegreesPerSecond();
-      frontBackCamera.logUpdate(time, gyroRotation, modules, pose, rotationRateDegreesPerSecond);
-    }
-
-    if (m_front) {
-      frontBackCamera.processRegions(m_poseEstimator);
-    } else {
-      sideCamera.processRegions(m_poseEstimator);
-    }
-    m_front = !m_front;
+    // if (m_front) {
+    //   frontBackCamera.processRegions(m_poseEstimator);
+    // } else {
+    //   sideCamera.processRegions(m_poseEstimator);
+    // }
+    // m_front = !m_front;
     
-    //Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+    // //Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
 
-    Pose2d pos = m_poseEstimator.getEstimatedPosition();
-    SmartDashboard.putNumber("xPos", pos.getX());
-    SmartDashboard.putNumber("yPos", pos.getY());
-    SmartDashboard.putNumber("Robot Angle", pos.getRotation().getDegrees());
-    m_posServer.setPosition(pos.getX(), pos.getY(),
-                            pos.getRotation().getDegrees());
+    // Pose2d pos = m_poseEstimator.getEstimatedPosition();
+    // SmartDashboard.putNumber("xPos", pos.getX());
+    // SmartDashboard.putNumber("yPos", pos.getY());
+    // SmartDashboard.putNumber("Robot Angle", pos.getRotation().getDegrees());
+    // m_posServer.setPosition(pos.getX(), pos.getY(),
+    //                         pos.getRotation().getDegrees());
 
     // PositionServer.Target target = m_posServer.getTarget();
 

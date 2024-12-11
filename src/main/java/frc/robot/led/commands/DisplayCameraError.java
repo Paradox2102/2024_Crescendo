@@ -4,6 +4,8 @@
 
 package frc.robot.led.commands;
 
+import org.photonvision.PhotonCamera;
+
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.apriltagsCamera.ApriltagsCamera;
@@ -13,11 +15,11 @@ import frc.robot.led.subsystems.LEDSubsystem;
 
 public class DisplayCameraError extends Command {
   private final LEDSubsystem m_subsystem;
-  private final ApriltagsCamera m_camera;
+  private final PhotonCamera m_camera;
   private final double k_minError = 20.0;
 
   /** Creates a new DisplayCameraError. */
-  public DisplayCameraError(LEDSubsystem subsystem, ApriltagsCamera camera) {
+  public DisplayCameraError(LEDSubsystem subsystem, PhotonCamera camera) {
     Logger.log("DisplayCameraError", 3, "DisplayCameraError()");
     m_subsystem = subsystem;
     m_camera = camera;

@@ -46,6 +46,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
     m_motor.burnFlash();
   }
 
+  // BUG: This is not the right way to do this test.  Why not use MathUtil.isNear()? - Gavin
   public boolean isReady() {
     return Math.abs(getVelocityRPM()) > Math.abs(m_velocity) - (m_front ? Constants.FrontConstants.k_deadzone : Constants.BackConstants.k_deadzone);
   }

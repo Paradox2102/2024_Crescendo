@@ -56,9 +56,9 @@ public final class Constants {
 
       // Drive
       DriveConstants.k_FLOffset = 4.9 - (Math.PI / 2);
-      DriveConstants.k_FROffset = 3.316;
-      DriveConstants.k_BLOffset = 5.247 + (Math.PI);
-      DriveConstants.k_BROffset = 6.11 + (Math.PI / 2);
+      DriveConstants.k_FROffset = 3.32;
+      DriveConstants.k_BLOffset = 2.16 + (Math.PI);
+      DriveConstants.k_BROffset = 6.16 + (Math.PI / 2);
       DriveConstants.k_maxSpeedMetersPerSecond = 5.74;
 
       // Front
@@ -371,6 +371,7 @@ public final class Constants {
 
   public static class ElevatorConstants {
     public static final int k_elevatorMotor = 12;
+    // Why is this negative?  Should invert the encoder, and probably the motor too. -Gavin
     public static final double k_ticksToInches = -25.0 / 113.559;
 
     // manual command

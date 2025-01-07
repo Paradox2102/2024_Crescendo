@@ -69,7 +69,7 @@ public class PivotSubsystem extends SubsystemBase {
     m_setPoint = angle;
   }
 
-  //potentially for both this and getPivotAngleFromRobotPos we should use the WPILib linear interpolation classes
+  // We should not be implementing code like this when we can just use InterpolatingDoubleTreeMap. - Gavin
   // Autos only, to be removed
   public double getPivotAngleFromDistanceFromSpeaker(double distance) {
     double[] distances = Constants.States.m_shootIntakeSide ? k_frontDistances : k_backDistances;

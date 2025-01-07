@@ -354,6 +354,9 @@ public class DriveSubsystem extends SubsystemBase {
     // Dashboard.putNumber("Tracker
     // Rotation2D", m_tracker.getPose2d().getRotation().getDegrees());
     SmartDashboard.putNumber("Speaker Distance Translation", getTranslationalDistanceFromSpeakerMeters());
+    SmartDashboard.putNumber("Gryo Angle", ParadoxField.normalizeAngle(m_gyro.getAngle())); 
+    // spin robot very fast for many rotations eventually back to the original angle, look at the gyro angle and see the offset
+
     // SmartDashboard.putNumber("Speaker X",
     // getSpeakerLocationMeters().m_xMeters); SmartDashboard.putNumber("Speaker
     // Y", getSpeakerLocationMeters().m_yMeters);

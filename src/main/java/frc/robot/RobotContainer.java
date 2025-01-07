@@ -18,6 +18,7 @@ import frc.robot.commands.autos.BackFeedCommand;
 import frc.robot.commands.autos.CountBulldoze;
 import frc.robot.commands.autos.IntakeAndGoToBackShooter;
 import frc.robot.commands.autos.RevBackShooter;
+import frc.robot.commands.autos.ShootPreload;
 import frc.robot.commands.autos.StartBack;
 import frc.robot.commands.autos.StartFront;
 import frc.robot.commands.drivetrain.ArcadeDrive;
@@ -37,6 +38,7 @@ import frc.robot.commands.gamePieceManipulation.ShootCommand;
 import frc.robot.commands.gamePieceManipulation.ShootSequence;
 import frc.robot.commands.pivot.DefaultPivotCommand;
 import frc.robot.commands.pivot.SetPivotOffInputDistance;
+import frc.robot.commands.pivot.TogglePivotDownUp;
 import frc.robot.commands.stick.SetStickPos;
 import frc.robot.commands.test.D2Intake;
 import frc.robot.led.LEDConfig;
@@ -178,6 +180,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_driverController.leftTrigger().toggleOnTrue(new ShootCommand(m_shooterSubsystem, m_backSubsystem));
+    m_autoSelection.addOption("Shoot Preload", new ShootPreload(m_pivotSubsystem, m_frontSubsystem, m_backSubsystem));
     m_driverController.leftTrigger().toggleOnTrue(new ShootSequence(m_frontSubsystem, m_backSubsystem, m_stickSubsystem, m_driverController));
     m_driverController.rightTrigger().whileTrue(new IntakeCommand(m_backSubsystem, m_frontSubsystem, m_pivotSubsystem));
         
@@ -203,6 +206,7 @@ public class RobotContainer {
     m_joystick.button(7).onTrue(new InstantCommand(() -> {m_driveSubsystem.setSourcePos(3);}));
     m_joystick.button(9).onTrue(new InstantCommand(() -> {m_driveSubsystem.setSourcePos(2);}));
     m_joystick.button(11).onTrue(new InstantCommand(() -> {m_driveSubsystem.setSourcePos(1);}));
+    m_joystick.button(12).toggleOnTrue(new TogglePivotDownUp(m_pivotSubsystem));
     //ToggleTrigger m_brakeMode = new ToggleTrigger(m_joystick.button(12));
     //m_joystick.button(12).onTrue(new SetRobotBreakMode(new Trigger(m_brakeMode), m_driveSubsystem, m_pivotSubsystem, m_shooterSubsystem, m_backSubsystem, m_elevatorSubsystem, m_stickSubsystem));
   }

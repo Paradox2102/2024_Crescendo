@@ -8,6 +8,7 @@ import com.pathplanner.lib.commands.FollowPathCommand;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,7 +46,6 @@ public class Robot extends TimedRobot {
     FollowPathCommand.warmupCommand().schedule();
     ApriltagsCamera.setLogging(true);
     ApriltagsCamera.setLogging(true);
-
   }
 
   /**
@@ -73,6 +73,7 @@ public class Robot extends TimedRobot {
     // Constants.ShooterConstants.k_ampShootVelocityRPM =
     // -SmartDashboard.getEntry("Amp Velo").getDouble(1950);
     m_robotContainer.updateAICamera();
+
     // ApriltagsCameraStats stats = m_robotContainer.m_apriltagCamera.getStats();
     // SmartDashboard.putNumber("cam avg delay", stats.m_averageDelay);
     // SmartDashboard.putNumber("cam min delay", stats.m_minDelay);

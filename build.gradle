@@ -1,3 +1,4 @@
+
 plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2024.3.2"
@@ -28,6 +29,8 @@ deploy {
 
                 frcJava(getArtifactTypeClass('FRCJavaArtifact')) {
                     // Enable VisualVM connection
+                    jvmArgs.add("-XX:+HeapDumpOnOutOfMemoryError")
+                    jvmArgs.add("-XX:HeapDumpPath=/u/frc-usercode.hprof")
                     // jvmArgs.add("-Dcom.sun.management.jmxremote=true")
                     // jvmArgs.add("-Dcom.sun.management.jmxremote.port=1198")
                     // jvmArgs.add("-Dcom.sun.management.jmxremote.local.only=false")

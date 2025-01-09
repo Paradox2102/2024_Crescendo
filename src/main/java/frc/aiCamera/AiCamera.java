@@ -64,7 +64,7 @@ public class AiCamera implements Network.NetworkReceiver {
 	public final PositionTrackerPose m_tracker;
 	public double m_Robot_x;
 	public double m_Robot_y;
-	private double m_filterDistanceThreshold = 12*.0254; // the distance in which old notes are erased from new notes. This
+	private double m_filterDistnaceThreshold = 12*.0254; // the distance in which old notes are erased from new notes. This
 													// prevents the robot from storing old note positions in memory
 
 	public final long k_timeThresh = 3000; // 3000 milliseconds as a time threshold to when detected notes should be
@@ -235,7 +235,7 @@ public class AiCamera implements Network.NetworkReceiver {
 				for(Pose2d new_piece : poses){
 	
 					//calcuating distance between old note and new note
-					if(new_piece.getTranslation().getDistance(new Translation2d(old_piece.m_translation_x,old_piece.m_translation_y))<m_filterDistanceThreshold){ // checking if old piece is in x vicinity of new game piece.
+					if(new_piece.getTranslation().getDistance(new Translation2d(old_piece.m_translation_x,old_piece.m_translation_y))<m_filterDistnaceThreshold){ // checking if old piece is in x vicinity of new game piece.
 						passCondition = false;
 						break;
 					}

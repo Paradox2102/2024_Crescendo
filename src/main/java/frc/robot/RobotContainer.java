@@ -54,7 +54,7 @@ import frc.robot.subsystems.ShooterSensors;
 import frc.robot.subsystems.StickSubsystem;
 // import frc.triggers.HoldTrigger;
 import frc.triggers.HoldTrigger;
-
+import java.util.ArrayList;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
@@ -67,6 +67,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -75,7 +76,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.aiCamera.AiCamera;
+import frc.aiCamera.DriveToNoteAI;
 import frc.aiCamera.PhotonTracker;
+import frc.aiCamera.PhotonTracker.GamePiece;
 
 
 /**
@@ -109,8 +112,9 @@ public class RobotContainer implements Sendable {
         private final CommandJoystick m_joystick = new CommandJoystick(1);
 
         private final CommandJoystick m_testStick = new CommandJoystick(2);
+
         public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);
-       
+
         public final AiCamera m_aiCamera = new AiCamera(m_tracker);
       private PhotonTracker tracker = new PhotonTracker(m_tracker);
         SendableChooser<Command> m_autoSelection = new SendableChooser<>();
@@ -118,7 +122,6 @@ public class RobotContainer implements Sendable {
         // Replace with CommandPS4Controller or CommandJoystick if needed
         private final CommandXboxController m_driverController = new CommandXboxController(
                         OperatorConstants.kDriverControllerPort);
-
         /**
          * The container for the robot. Contains subsystems, OI devices, and commands.
          */
@@ -197,47 +200,64 @@ public class RobotContainer implements Sendable {
                                 88, ApriltagsCameraType.GS_6mm);
                 // m_apriltagCameraSide.connect("10.21.2.12", 5800);
 
-                m_aiCamera.connect("10.21.2.10", 5800);
+                // m_aiCamera.connect("10.21.2.10", 5800);
 
                 m_posServer.start();
         }
-
+        // DriveToNoteAI driveToNoteAI = 
         public void updateAICamera() {
+                // boolean isButton13Pressed = Joystick.button13Pressed
+                //replace arcadeDrive with DriveToNoteAI
+
                 boolean isHome = m_pivotSubsystem.isHome();
-
-                if (!isHome) {
-                        return; // seeing if the pivot point is in its default position
-                }
-
-                Vector<Pose2d> note_positions = m_aiCamera.FindNotePositions();
-
-                if (note_positions != null && !note_positions.isEmpty()) {
+                // if (!isHome) {
+                //         return; // seeing if the pivot point is in its default position
+                // }
+                tracker.updateGamePieces(); //adds new notes to memory with their corresponding positions on field, and filters out old notes. Notes are sorted based on how close they are to the robot
+                ArrayList<GamePiece> note_positions = tracker.getGamePieces(); //gets all notes currently in memory
+                if (note_positions != null) {
                         int list_count = note_positions.size();
-                        m_noteCanBeSeen = true;
+                        System.out.println("notes in memory:"+list_count);
                         for (int index = 0; index < note_positions.size(); index++) {
-                                m_driveSubsystem.getField().getObject("note " + index)
-                                                .setPose(note_positions.get(index));
-                                // SmartDashboard.putNumber("note " + index+
-                                // "xr",note_positions.get(index).getX());
-                                // SmartDashboard.putNumber("note " +index+"yr",
-                                // note_positions.get(index).getY());
+                                double gamePieceX = note_positions.get(index).xr;
+                                double gamePieceY = note_positions.get(index).yr;
+                                System.out.println("note position:"+"("+gamePieceX+", "+gamePieceY+")");
+                                //adding new notes from memory to field
+                                m_driveSubsystem.getField().getObject("note " + index).setPose(new Pose2d(gamePieceX,gamePieceY,new Rotation2d()));
+
+
                         }
-                        for (int index = list_count; index < m_numLastSeenNotes; index++) {
-                                m_driveSubsystem.getField().getObject("note " + index).setPose(k_offScreenPose);
+                        //getting rid of old notes from the field in smart dashboard (notes not in memory)
+                        for(int i=0;i<m_numLastSeenNotes;i++){
+                                boolean noteValid = false;
+                                double noteX = m_driveSubsystem.getField().getObject("note " + i).getPose().getX();
+                                double noteY = m_driveSubsystem.getField().getObject("note " + i).getPose().getY();
+                                for(int index=0;index<note_positions.size();index++){
+                                        if(note_positions.get(index).xr==noteX&&note_positions.get(index).yr==noteY){
+                                                noteValid = true;
+                                                break;
+                                        }
+                                }
+                                if(!noteValid){
+                                        m_driveSubsystem.getField().getObject("note " + i).setPose(k_offScreenPose);
+                                }      
                         }
 
-                        m_numLastSeenNotes = list_count;
-                        SmartDashboard.putBoolean("note can be seen", true);
+                        m_numLastSeenNotes = list_count; //setting number of last seen notes to the current number of notes in the field
+
+                        
+                        //registering on smart dashboard if there are any notes in the camera view
+                        if(tracker.canSeeNote()){
+                                SmartDashboard.putBoolean("note can be seen", true); 
+                        }
+                        else{
+                                SmartDashboard.putBoolean("note can be seen", false);
+                        }
                         SmartDashboard.putNumber("# of notes in memory", list_count);
-                        // SmartDashboard.putNumber("note xr", pose.getX());
-                        // SmartDashboard.putNumber("note yr", pose.getY());
-                        // SmartDashboard.putNumber("note Rotation2d degrees alpha",
-                        // pose.getRotation().getDegrees());
 
-                } else {
-                        m_noteCanBeSeen = false;
-                        SmartDashboard.putBoolean("note can be seen", false);
-                        SmartDashboard.putNumber("# of notes in memory", 0);
+                        GamePiece bestNote = tracker.findBestGamePiece(); //will use this later
+
+
 
                 }
 
@@ -278,13 +298,14 @@ public class RobotContainer implements Sendable {
                 // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
                 HoldTrigger m_slowMode = new HoldTrigger(m_driverController.rightBumper());
                 HoldTrigger m_slowMode1 = new HoldTrigger(m_driverController.leftBumper());
-                m_driveSubsystem.setDefaultCommand(new ArcadeDrive(
-                                m_driveSubsystem,
-                                () -> m_driverController.getLeftX(),
-                                () -> m_driverController.getLeftY(),
-                                () -> m_driverController.getRightX(),
-                                new Trigger(m_slowMode),
-                                new Trigger(m_slowMode1)));
+                // if(m_joystick.button(13).getAsBoolean();
+                // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(
+                //                 m_driveSubsystem,
+                //                 () -> m_driverController.getLeftX(),
+                //                 () -> m_driverController.getLeftY(),
+                //                 () -> m_driverController.getRightX(),
+                //                 new Trigger(m_slowMode),
+                //                 new Trigger(m_slowMode1)));
 
                 m_pivotSubsystem.setDefaultCommand(new DefaultPivotCommand(m_pivotSubsystem, m_driveSubsystem, true));
                 m_shooterSubsystem
@@ -309,7 +330,7 @@ public class RobotContainer implements Sendable {
                                 .whileTrue(
                                                 new IntakeCommand(m_holderSubsystem, m_shooterSubsystem,
                                                                 m_pivotSubsystem, m_shooterSensors));
-
+                m_driverController.b().whileTrue(getAutonomousCommand())
                 m_driverController.a().onTrue(
                                 new PassShot(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_shooterSensors,
                                                 m_pivotSubsystem, m_driverController));
@@ -364,7 +385,14 @@ public class RobotContainer implements Sendable {
                 m_testStick.button(11).onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem, m_driveSubsystem));
                 m_testStick.button(12)
                                 .toggleOnTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem, m_shooterSensors));
-        }
+                // m_joystick.button(13).whileTrue(new DriveToNoteAI( //while button 13 is held, the driver can aim the robot at the gamepiece
+                //         m_driveSubsystem,
+                //         () -> m_driverController.getLeftX(),
+                //         () -> m_driverController.getLeftY(),
+                //         () -> m_driverController.getRightX(),
+                //         new Trigger(m_slowMode),
+                //         new Trigger(m_slowMode1)));
+                //         }
 
         public double getThrottle() {
                 return m_joystick.getThrottle();

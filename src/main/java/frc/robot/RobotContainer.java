@@ -107,7 +107,7 @@ public class RobotContainer implements Sendable {
         private final StickSubsystem m_stickSubsystem = new StickSubsystem();
         private int m_numLastSeenNotes = 0;
         private boolean m_noteCanBeSeen = false;
-        
+
         private final Pose2d k_offScreenPose = new Pose2d(-100, -100, new Rotation2d());
         private final CommandJoystick m_joystick = new CommandJoystick(1);
 
@@ -116,7 +116,7 @@ public class RobotContainer implements Sendable {
         public final PositionTrackerPose m_tracker = new PositionTrackerPose(m_posServer, 0, 0, m_driveSubsystem);
 
         public final AiCamera m_aiCamera = new AiCamera(m_tracker);
-      private PhotonTracker tracker = new PhotonTracker(m_tracker);
+        private PhotonTracker tracker = new PhotonTracker(m_tracker);
         SendableChooser<Command> m_autoSelection = new SendableChooser<>();
 
         // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -330,7 +330,7 @@ public class RobotContainer implements Sendable {
                                 .whileTrue(
                                                 new IntakeCommand(m_holderSubsystem, m_shooterSubsystem,
                                                                 m_pivotSubsystem, m_shooterSensors));
-                m_driverController.b().whileTrue(getAutonomousCommand())
+                m_driverController.b().whileTrue(getAutonomousCommand());
                 m_driverController.a().onTrue(
                                 new PassShot(m_driveSubsystem, m_shooterSubsystem, m_holderSubsystem, m_shooterSensors,
                                                 m_pivotSubsystem, m_driverController));
@@ -385,6 +385,7 @@ public class RobotContainer implements Sendable {
                 m_testStick.button(11).onTrue(new SetPivotOffRobotLocation(m_pivotSubsystem, m_driveSubsystem));
                 m_testStick.button(12)
                                 .toggleOnTrue(new FeedCommand(m_shooterSubsystem, m_holderSubsystem, m_shooterSensors));
+        }
                 // m_joystick.button(13).whileTrue(new DriveToNoteAI( //while button 13 is held, the driver can aim the robot at the gamepiece
                 //         m_driveSubsystem,
                 //         () -> m_driverController.getLeftX(),
@@ -399,8 +400,8 @@ public class RobotContainer implements Sendable {
         }
 
         public void callCamera3d(){
-            tracker.findBestGamePiece();
-            
+                tracker.findBestGamePiece();
+                
         }
 
         /**
@@ -412,4 +413,5 @@ public class RobotContainer implements Sendable {
                 // An example command will be run in autonomous
                 return m_autoSelection.getSelected();
         }
+
 }

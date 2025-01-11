@@ -6,7 +6,7 @@ import frc.visionCamera.PiCamera.PiCameraRegions;
 
 public class Camera {
     // @SuppressWarnings("unused")
-    private final static String m_ip = "10.21.2.10";
+    private final static String m_ip = "10.21.2.15";
 
     private final PiCamera m_camera = new PiCamera();
 

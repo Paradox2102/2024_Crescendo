@@ -327,6 +327,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    //SmartDashboard.putNumber("Target Horizontal Position", m_frontBackCamera.getRegions(0).getRegionCount());
     Constants.States.m_sourcePos = getSourceLocation();
     Constants.States.m_ampPos = getAmpLocation();
     

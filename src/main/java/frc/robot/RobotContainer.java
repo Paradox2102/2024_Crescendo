@@ -21,6 +21,7 @@ import frc.robot.commands.autos.RevBackShooter;
 import frc.robot.commands.autos.ShootPreload;
 import frc.robot.commands.autos.StartBack;
 import frc.robot.commands.autos.StartFront;
+import frc.robot.commands.drivetrain.ApriltagAimCommand;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.AutoOrientCommand;
 import frc.robot.commands.drivetrain.HoldSlowMode;
@@ -190,7 +191,7 @@ public class RobotContainer {
 
     m_driverController.rightBumper().whileTrue(new HoldSlowMode());
     m_driverController.leftBumper().whileTrue(new HoldSlowMode());
-    m_driverController.y().toggleOnTrue(new AutoAmp(m_driveSubsystem, m_frontSubsystem, m_backSubsystem, m_stickSubsystem));
+    m_driverController.y().whileTrue(new ApriltagAimCommand(m_apriltagCamera, m_driveSubsystem));
     m_driverController.leftStick().toggleOnTrue(new AutoOrientCommand(m_driveSubsystem, 0, () -> 0, () -> 0));
     m_driverController.leftStick().toggleOnFalse(new AutoOrientCommand(m_driveSubsystem, 180, () -> 0, () -> 0));
 
